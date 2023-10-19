@@ -25,6 +25,7 @@
   - [VXLAN Interface](#vxlan-interface)
 - [Routing](#routing)
   - [Service Routing Protocols Model](#service-routing-protocols-model)
+  - [Virtual Router MAC Address](#virtual-router-mac-address)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
   - [Router BGP](#router-bgp)
@@ -361,6 +362,19 @@ Multi agent routing protocol model enabled
 ```eos
 !
 service routing protocols model multi-agent
+```
+
+### Virtual Router MAC Address
+
+#### Virtual Router MAC Address Summary
+
+##### Virtual Router MAC Address: 00:1c:73:00:00:01
+
+#### Virtual Router MAC Address Configuration
+
+```eos
+!
+ip virtual-router mac-address 00:1c:73:00:00:01
 ```
 
 ### IP Routing

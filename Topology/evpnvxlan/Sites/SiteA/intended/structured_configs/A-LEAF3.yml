@@ -242,6 +242,7 @@ router_bfd:
     multiplier: 3
 ip_igmp_snooping:
   globally_enabled: true
+ip_virtual_router_mac_address: 00:1c:73:00:00:01
 vxlan_interface:
   Vxlan1:
     description: A-LEAF3_VTEP
