@@ -81,6 +81,43 @@ router_bgp:
     peer_groups:
     - name: EVPN-OVERLAY-PEERS
       activate: true
+  vrfs:
+  - name: PROD
+    router_id: 10.0.0.18
+    rd: 10.0.0.18:50001
+    route_targets:
+      import:
+      - address_family: evpn
+        route_targets:
+        - 50001:50001
+      export:
+      - address_family: evpn
+        route_targets:
+        - 50001:50001
+    redistribute_routes:
+    - source_protocol: connected
+    neighbors:
+    - ip_address: 192.0.0.0
+      peer_group: MLAG-IPv4-UNDERLAY-PEER
+    updates:
+      wait_install: true
+  vlans:
+  - id: 10
+    tenant: PROD_TENANT
+    rd: 10.0.0.18:10010
+    route_targets:
+      both:
+      - 10010:10010
+    redistribute_routes:
+    - learned
+  - id: 30
+    tenant: PROD_TENANT
+    rd: 10.0.0.18:10030
+    route_targets:
+      both:
+      - 10030:10030
+    redistribute_routes:
+    - learned
 service_routing_protocols_model: multi-agent
 ip_routing: true
 vlan_internal_order:
@@ -91,6 +128,9 @@ vlan_internal_order:
 vrfs:
 - name: MGMT
   ip_routing: false
+- name: PROD
+  tenant: PROD_TENANT
+  ip_routing: true
 management_interfaces:
 - name: Management1
   description: oob_management
@@ -116,6 +156,17 @@ vlans:
   name: MLAG_PEER
   trunk_groups:
   - MLAG
+- id: 10
+  name: PROD_10
+  tenant: PROD_TENANT
+- id: 30
+  name: PROD_30
+  tenant: PROD_TENANT
+- id: 53000
+  name: MLAG_iBGP_PROD
+  trunk_groups:
+  - LEAF_PEER_L3
+  tenant: PROD_TENANT
 vlan_interfaces:
 - name: Vlan4093
   description: MLAG_PEER_L3_PEERING
@@ -128,6 +179,26 @@ vlan_interfaces:
   ip_address: 169.254.0.1/31
   no_autostate: true
   mtu: 9214
+- name: Vlan10
+  tenant: PROD_TENANT
+  description: PROD_10
+  shutdown: false
+  ip_address_virtual: 10.10.10.1/24
+  vrf: PROD
+- name: Vlan30
+  tenant: PROD_TENANT
+  description: PROD_30
+  shutdown: false
+  ip_address_virtual: 10.30.30.1/24
+  vrf: PROD
+- name: Vlan53000
+  tenant: PROD_TENANT
+  type: underlay_peering
+  shutdown: false
+  description: 'MLAG_PEER_L3_iBGP: vrf PROD'
+  vrf: PROD
+  mtu: 9214
+  ip_address: 192.0.0.1/31
 port_channel_interfaces:
 - name: Port-Channel5
   description: MLAG_PEER_A-LEAF7_Po5
@@ -250,3 +321,11 @@ vxlan_interface:
       udp_port: 4789
       source_interface: Loopback1
       virtual_router_encapsulation_mac_address: mlag-system-id
+      vlans:
+      - id: 10
+        vni: 10010
+      - id: 30
+        vni: 10030
+      vrfs:
+      - name: PROD
+        vni: 50001

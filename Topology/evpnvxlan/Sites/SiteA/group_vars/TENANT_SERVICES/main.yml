@@ -1,0 +1,5 @@
+---
+# Define network services keys
+network_services_keys:
+  - name: tenants # preserving default value
+  - name: PROD
