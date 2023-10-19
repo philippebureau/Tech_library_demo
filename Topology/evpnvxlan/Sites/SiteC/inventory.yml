@@ -1,0 +1,56 @@
+---
+all:
+  children:
+    CVP:
+      hosts:
+        ACT_CVP:
+          ansible_host: 10.255.x.x
+    eos:
+      children:
+        lab:
+          hosts:
+###############################################################
+###############################################################
+#                     DOMAIN "C"                         #
+###############################################################
+###############################################################
+            C-SPINE1:
+              ansible_host: 127.0.0.1
+              ansible_port: 22027
+              ansible_httpapi_port: 44327
+            C-SPINE2:
+              ansible_host: 127.0.0.1
+              ansible_port: 22028
+              ansible_httpapi_port: 44328
+            C-LEAF1:
+              ansible_host: 127.0.0.1
+              ansible_port: 22029
+              ansible_httpapi_port: 44329
+            C-LEAF2:
+              ansible_host: 127.0.0.1
+              ansible_port: 22030
+              ansible_httpapi_port: 44330
+            C-LEAF3:
+              ansible_host: 127.0.0.1
+              ansible_port: 22031
+              ansible_httpapi_port: 44331
+            C-LEAF4:
+              ansible_host: 127.0.0.1
+              ansible_port: 22032
+              ansible_httpapi_port: 44332
+            C-LEAF5:
+              ansible_host: 127.0.0.1
+              ansible_port: 22033
+              ansible_httpapi_port: 44333
+            C-LEAF6:
+              ansible_host: 127.0.0.1
+              ansible_port: 22034
+              ansible_httpapi_port: 44334
+            C-LEAF7:
+              ansible_host: 127.0.0.1
+              ansible_port: 22035
+              ansible_httpapi_port: 44335
+            C-LEAF8:
+              ansible_host: 127.0.0.1
+              ansible_port: 22036
+              ansible_httpapi_port: 44336

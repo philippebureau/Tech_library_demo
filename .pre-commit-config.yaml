@@ -1,0 +1,15 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+        files: Topology/evpnvxlan/(global_vars\/|Sites\/)
+
+      - id: end-of-file-fixer
+        exclude_types: [svg, json]
+        files: Topology/evpnvxlan/(global_vars\/|Sites\/)
+
+      - id: check-yaml
+        files: Topology/evpnvxlan/(global_vars\/|Sites\/)
