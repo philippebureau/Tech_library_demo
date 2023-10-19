@@ -11,5 +11,5 @@ ansible_python_interpreter: $(which python3)
 cv_collection: v3
 
 # Task execution automation
-# Ran from makefile 
+# Ran from makefile
 # execute_tasks: false

@@ -6,10 +6,19 @@ repos:
     hooks:
       - id: trailing-whitespace
         files: Topology/evpnvxlan/(global_vars\/|Sites\/)
+        exclude: |
+          ^intended/
+          ^documentation
 
       - id: end-of-file-fixer
         exclude_types: [svg, json]
         files: Topology/evpnvxlan/(global_vars\/|Sites\/)
+        exclude: |
+          ^intended/
+          ^documentation
 
       - id: check-yaml
         files: Topology/evpnvxlan/(global_vars\/|Sites\/)
+        exclude: |
+          ^intended/
+          ^documentation
