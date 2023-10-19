@@ -6,7 +6,25 @@ l3leaf:
     platform: vEOS-LAB
     loopback_ipv4_pool: 10.0.0.0/24
     loopback_ipv4_offset: 10
-    
+    vtep_loopback_ipv4_pool: 10.1.1.0/24
+    uplink_ipv4_pool: 192.168.0.0/24
+    uplink_interfaces:
+      - Ethernet1
+      - Ethernet2
+      - Ethernet3
+      - Ethernet4
+    uplink_switches:
+      - A-SPINE1
+      - A-SPINE2
+      - A-SPINE3
+      - A-SPINE4
+    mlag_dual_primary_detection: true
+    mlag_interfaces:
+      - Ethernet5
+      - Ethernet6
+    mlag_peer_l3_ipv4_pool: 192.0.0.0/31
+    mlag_peer_ipv4_pool: 169.254.0.0/31
+    virtual_router_mac_address: 00:1c:73:00:00:01
   node_groups:
     - group: A-LEAF12
       bgp_as: 65112
@@ -14,33 +32,73 @@ l3leaf:
         - name: A-LEAF1
           id: 1
           mgmt_ip: 172.100.100.105/24
+          uplink_switch_interfaces:
+            - Ethernet1
+            - Ethernet1
+            - Ethernet1
+            - Ethernet1
         - name: A-LEAF2
           id: 2
           mgmt_ip: 172.100.100.106/24
+          uplink_switch_interfaces:
+            - Ethernet2
+            - Ethernet2
+            - Ethernet2
+            - Ethernet2
     - group: A-LEAF34
       bgp_as: 65134
       nodes:
         - name: A-LEAF3
           id: 3
           mgmt_ip: 172.100.100.107/24
+          uplink_switch_interfaces:
+            - Ethernet3
+            - Ethernet3
+            - Ethernet3
+            - Ethernet3
         - name: A-LEAF4
           id: 4
           mgmt_ip: 172.100.100.108/24
+          uplink_switch_interfaces:
+            - Ethernet4
+            - Ethernet4
+            - Ethernet4
+            - Ethernet4
     - group: A-LEAF56
       bgp_as: 65156
       nodes:
         - name: A-LEAF5
           id: 5
           mgmt_ip: 172.100.100.109/24
+          uplink_switch_interfaces:
+            - Ethernet5
+            - Ethernet5
+            - Ethernet5
+            - Ethernet5
         - name: A-LEAF6
           id: 6
           mgmt_ip: 172.100.100.110/24
+          uplink_switch_interfaces:
+            - Ethernet6
+            - Ethernet6
+            - Ethernet6
+            - Ethernet6
     - group: A-LEAF78
       bgp_as: 65178
       nodes:
         - name: A-LEAF7
           id: 7
           mgmt_ip: 172.100.100.111/24
+          uplink_switch_interfaces:
+            - Ethernet7
+            - Ethernet7
+            - Ethernet7
+            - Ethernet7
         - name: A-LEAF8
           id: 8
           mgmt_ip: 172.100.100.112/24
+          uplink_switch_interfaces:
+            - Ethernet8
+            - Ethernet8
+            - Ethernet8
+            - Ethernet8

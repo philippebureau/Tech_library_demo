@@ -10,7 +10,7 @@ local_users:
 
 # Timezone
 clock:
-  timezone: EST 
+  timezone: EST
 
 # aaa authorization exec
 aaa_authorization:
