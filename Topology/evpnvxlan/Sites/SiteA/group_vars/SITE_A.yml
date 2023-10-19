@@ -1,0 +1,8 @@
+---
+# SITE A fabric variables
+
+fabric_name: SITE_A
+
+fabric_ip_addressing:
+  mlag:
+    algorithm: same_subnet

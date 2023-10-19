@@ -1,0 +1,46 @@
+---
+type: l3leaf
+
+l3leaf:
+  defaults:
+    platform: vEOS-LAB
+    loopback_ipv4_pool: 10.0.0.0/24
+    loopback_ipv4_offset: 10
+    
+  node_groups:
+    - group: A-LEAF12
+      bgp_as: 65112
+      nodes:
+        - name: A-LEAF1
+          id: 1
+          mgmt_ip: 172.100.100.105/24
+        - name: A-LEAF2
+          id: 2
+          mgmt_ip: 172.100.100.106/24
+    - group: A-LEAF34
+      bgp_as: 65134
+      nodes:
+        - name: A-LEAF3
+          id: 3
+          mgmt_ip: 172.100.100.107/24
+        - name: A-LEAF4
+          id: 4
+          mgmt_ip: 172.100.100.108/24
+    - group: A-LEAF56
+      bgp_as: 65156
+      nodes:
+        - name: A-LEAF5
+          id: 5
+          mgmt_ip: 172.100.100.109/24
+        - name: A-LEAF6
+          id: 6
+          mgmt_ip: 172.100.100.110/24
+    - group: A-LEAF78
+      bgp_as: 65178
+      nodes:
+        - name: A-LEAF7
+          id: 7
+          mgmt_ip: 172.100.100.111/24
+        - name: A-LEAF8
+          id: 8
+          mgmt_ip: 172.100.100.112/24

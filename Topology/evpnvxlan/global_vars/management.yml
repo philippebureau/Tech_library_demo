@@ -1,0 +1,25 @@
+---
+# Basic Management variables shared by all Sites
+
+# local users
+local_users:
+  - name: cvpadmin
+    privilege: 15
+    role: network-admin
+    sha512_password: "$6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt."
+
+# Timezone
+clock:
+  timezone: EST 
+
+# aaa authorization exec
+aaa_authorization:
+  exec:
+    default: local
+
+# DNS servers.
+name_servers:
+ - 8.8.8.8
+ - 8.8.4.4
+
+dns_domain: lab.lab

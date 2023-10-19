@@ -12,11 +12,11 @@ help: ## Display help message (*: main entry points / []: part of an entry point
 
 .PHONY: build-site-A
 build-site-A: ## Run ansible playbook to build EVPN Fabric configuration
-	ansible-playbook playbooks/build.yml -i Sites/SiteA/inventory.yml -e "target_hosts=SITE_A" --diff
+	ansible-playbook Topology/evpnvxlan/playbooks/build.yml -i Topology/evpnvxlan/Sites/SiteA/inventory.yml -e "target_hosts=SITE_A" --diff
 
 .PHONY: deploy-site-A
 deploy-site-A: ## Run ansible playbook to deploy EVPN Fabric.
-	ansible-playbook playbooks/deploy.yml -i Sites/SiteA/inventory.yml -e "target_hosts=SITE_A" --diff
+	ansible-playbook Topology/evpnvxlan/playbooks/deploy.yml -i Topology/evpnvxlan/Sites/SiteA/inventory.yml -e "target_hosts=SITE_A" --diff
 
 .PHONY: validate-site-A
 validate-site-A: ## Run ansible playbook to validate EVPN Fabric.

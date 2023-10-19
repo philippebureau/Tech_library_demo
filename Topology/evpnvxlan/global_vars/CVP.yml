@@ -1,4 +1,5 @@
 ---
+# CVP connectivity
 ansible_user: cvpadmin
 ansible_password: arista123 # integration with GitHub action-> "{{ lookup('env', 'LABPASSPHRASE') }}"
 ansible_connection: httpapi
