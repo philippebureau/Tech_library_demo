@@ -200,8 +200,8 @@ vlan_interfaces:
   mtu: 9214
   ip_address: 192.0.0.1/31
 port_channel_interfaces:
-- name: Port-Channel5
-  description: MLAG_PEER_A-LEAF3_Po5
+- name: Port-Channel1000
+  description: MLAG_PEER_A-LEAF3_Po1000
   type: switched
   shutdown: false
   mode: trunk
@@ -217,7 +217,7 @@ ethernet_interfaces:
   type: port-channel-member
   shutdown: false
   channel_group:
-    id: 5
+    id: 1000
     mode: active
 - name: Ethernet6
   peer: A-LEAF3
@@ -227,7 +227,7 @@ ethernet_interfaces:
   type: port-channel-member
   shutdown: false
   channel_group:
-    id: 5
+    id: 1000
     mode: active
 - name: Ethernet1
   peer: A-SPINE1
@@ -269,7 +269,7 @@ mlag_configuration:
   domain_id: A-LEAF34
   local_interface: Vlan4094
   peer_address: 169.254.0.0
-  peer_link: Port-Channel5
+  peer_link: Port-Channel1000
   reload_delay_mlag: '300'
   reload_delay_non_mlag: '330'
   peer_address_heartbeat:

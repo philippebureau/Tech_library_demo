@@ -24,6 +24,7 @@ l3leaf:
       - Ethernet6
     mlag_peer_l3_ipv4_pool: 192.0.0.0/31
     mlag_peer_ipv4_pool: 169.254.0.0/31
+    mlag_port_channel_id: 1000
     virtual_router_mac_address: 00:1c:73:00:00:01
   node_groups:
     - group: A-LEAF12

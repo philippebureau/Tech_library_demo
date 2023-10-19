@@ -101,7 +101,7 @@ management api http-commands
 
 | Domain-id | Local-interface | Peer-address | Peer-link |
 | --------- | --------------- | ------------ | --------- |
-| A-LEAF78 | Vlan4094 | 169.254.0.0 | Port-Channel5 |
+| A-LEAF78 | Vlan4094 | 169.254.0.0 | Port-Channel1000 |
 
 Dual primary detection is enabled. The detection delay is 5 seconds.
 
@@ -114,7 +114,7 @@ mlag configuration
    local-interface Vlan4094
    peer-address 169.254.0.0
    peer-address heartbeat 172.100.100.111 vrf MGMT
-   peer-link Port-Channel5
+   peer-link Port-Channel1000
    dual-primary detection delay 5 action errdisable all-interfaces
    reload-delay mlag 300
    reload-delay non-mlag 330
@@ -197,8 +197,8 @@ vlan 4094
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet5 | MLAG_PEER_A-LEAF7_Ethernet5 | *trunk | *- | *- | *['LEAF_PEER_L3', 'MLAG'] | 5 |
-| Ethernet6 | MLAG_PEER_A-LEAF7_Ethernet6 | *trunk | *- | *- | *['LEAF_PEER_L3', 'MLAG'] | 5 |
+| Ethernet5 | MLAG_PEER_A-LEAF7_Ethernet5 | *trunk | *- | *- | *['LEAF_PEER_L3', 'MLAG'] | 1000 |
+| Ethernet6 | MLAG_PEER_A-LEAF7_Ethernet6 | *trunk | *- | *- | *['LEAF_PEER_L3', 'MLAG'] | 1000 |
 
 *Inherited from Port-Channel Interface
 
@@ -246,12 +246,12 @@ interface Ethernet4
 interface Ethernet5
    description MLAG_PEER_A-LEAF7_Ethernet5
    no shutdown
-   channel-group 5 mode active
+   channel-group 1000 mode active
 !
 interface Ethernet6
    description MLAG_PEER_A-LEAF7_Ethernet6
    no shutdown
-   channel-group 5 mode active
+   channel-group 1000 mode active
 ```
 
 ### Port-Channel Interfaces
@@ -262,14 +262,14 @@ interface Ethernet6
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel5 | MLAG_PEER_A-LEAF7_Po5 | switched | trunk | - | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
+| Port-Channel1000 | MLAG_PEER_A-LEAF7_Po1000 | switched | trunk | - | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
 
 #### Port-Channel Interfaces Device Configuration
 
 ```eos
 !
-interface Port-Channel5
-   description MLAG_PEER_A-LEAF7_Po5
+interface Port-Channel1000
+   description MLAG_PEER_A-LEAF7_Po1000
    no shutdown
    switchport
    switchport mode trunk
