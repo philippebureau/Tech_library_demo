@@ -5,60 +5,40 @@ all:
       hosts:
         ACT_CVP:
           ansible_host: 10.255.x.x
-    eos:
+    EVPN_VXLAN:
       children:
-        lab:
-          hosts:
 ###############################################################
 ###############################################################
-#                     DOMAIN "A"                         #
+#                         SITE "A"                            #
 ###############################################################
 ###############################################################
-            A-SPINE1:
-              ansible_host: 127.0.0.1
-              ansible_port: 22001
-              ansible_httpapi_port: 44301
-            A-SPINE2:
-              ansible_host: 127.0.0.1
-              ansible_port: 22002
-              ansible_httpapi_port: 44302
-            A-SPINE3:
-              ansible_host: 127.0.0.1
-              ansible_port: 22003
-              ansible_httpapi_port: 44303
-            A-SPINE4:
-              ansible_host: 127.0.0.1
-              ansible_port: 22004
-              ansible_httpapi_port: 44304
-            A-LEAF1:
-              ansible_host: 127.0.0.1
-              ansible_port: 22005
-              ansible_httpapi_port: 44305
-            A-LEAF2:
-              ansible_host: 127.0.0.1
-              ansible_port: 22006
-              ansible_httpapi_port: 44306
-            A-LEAF3:
-              ansible_host: 127.0.0.1
-              ansible_port: 22007
-              ansible_httpapi_port: 44307
-            A-LEAF4:
-              ansible_host: 127.0.0.1
-              ansible_port: 22008
-              ansible_httpapi_port: 44308
-            A-LEAF5:
-              ansible_host: 127.0.0.1
-              ansible_port: 22009
-              ansible_httpapi_port: 44309
-            A-LEAF6:
-              ansible_host: 127.0.0.1
-              ansible_port: 22010
-              ansible_httpapi_port: 44310
-            A-LEAF7:
-              ansible_host: 127.0.0.1
-              ansible_port: 22011
-              ansible_httpapi_port: 44311
-            A-LEAF8:
-              ansible_host: 127.0.0.1
-              ansible_port: 22012
-              ansible_httpapi_port: 44312
+        SITE_A:
+          children:
+            A_SPINES:
+              hosts:
+                A-SPINE1:
+                  ansible_host: 127.0.0.1
+                A-SPINE2:
+                  ansible_host: 127.0.0.1
+                A-SPINE3:
+                  ansible_host: 127.0.0.1
+                A-SPINE4:
+                  ansible_host: 127.0.0.1
+            A_LEAFS:
+              hosts:
+                A-LEAF1:
+                  ansible_host: 127.0.0.1
+                A-LEAF2:
+                  ansible_host: 127.0.0.1
+                A-LEAF3:
+                  ansible_host: 127.0.0.1
+                A-LEAF4:
+                  ansible_host: 127.0.0.1
+                A-LEAF5:
+                  ansible_host: 127.0.0.1
+                A-LEAF6:
+                  ansible_host: 127.0.0.1
+                A-LEAF7:
+                  ansible_host: 127.0.0.1
+                A-LEAF8:
+                  ansible_host: 127.0.0.1

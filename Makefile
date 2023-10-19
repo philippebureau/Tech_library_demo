@@ -12,36 +12,12 @@ help: ## Display help message (*: main entry points / []: part of an entry point
 
 .PHONY: build-site-A
 build-site-A: ## Run ansible playbook to build EVPN Fabric configuration
-	ansible-playbook playbooks/build.yml -i Sites/SiteA/inventory.yml --diff
+	ansible-playbook playbooks/build.yml -i Sites/SiteA/inventory.yml -e "target_hosts=SITE_A" --diff
 
-.PHONY: fabric-cvp-provision
-fabric-cvp-provision: ## Run ansible playbook to deploy EVPN Fabric.
-	ansible-playbook playbooks/cvp-fabric-deploy.yml --tags provision -i inventory/inventory.yml --diff
+.PHONY: deploy-site-A
+deploy-site-A: ## Run ansible playbook to deploy EVPN Fabric.
+	ansible-playbook playbooks/deploy.yml -i Sites/SiteA/inventory.yml -e "target_hosts=SITE_A" --diff
 
-.PHONY: fabric-deploy
-fabric-deploy: ## Run ansible playbook to deploy EVPN Fabric.
-	ansible-playbook playbooks/cvp-fabric-deploy.yml --extra-vars "execute_tasks=true" --tags "build,provision,apply" -i inventory/inventory.yml --diff
-
-.PHONY: fabric-validate
-fabric-validate: ## Run ansible playbook to validate EVPN Fabric.
-	ansible-playbook playbooks/fabric-validate-state.yml -i inventory/inventory.yml --diff
-
-################################################################################
-# FOR ACCESS REMOTELY, ANSIBLE RUNNING FROM VPN INSTEAD OF LOCAL ACT NODE
-################################################################################
-
-.PHONY: fabric-build_remote
-fabric-build_remote: ## Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
-	ansible-playbook playbooks/cvp-fabric-deploy.yml --tags build -i inventory/inventory_remote.yml --diff
-
-.PHONY: fabric-cvp-provision_remote
-fabric-cvp-provision_remote: ## Run ansible playbook to deploy EVPN Fabric.
-	ansible-playbook playbooks/cvp-fabric-deploy.yml --tags provision -i inventory/inventory_remote.yml --diff
-
-.PHONY: fabric-deploy_remote
-fabric-deploy_remote: ## Run ansible playbook to deploy EVPN Fabric.
-	ansible-playbook playbooks/cvp-fabric-deploy.yml --extra-vars "execute_tasks=true" --tags "build,provision,apply" -i inventory/inventory_remote.yml --diff
-
-.PHONY: fabric-validate_remote
-fabric-validate_remote: ## Run ansible playbook to validate EVPN Fabric.
-	ansible-playbook playbooks/fabric-validate-state.yml -i inventory/inventory_remote.yml --diff
+.PHONY: validate-site-A
+validate-site-A: ## Run ansible playbook to validate EVPN Fabric.
+	ansible-playbook playbooks/fabric-validate-state.yml -i Sites/SiteA/inventory.yml -e "target_hosts=SITE_A" --diff
