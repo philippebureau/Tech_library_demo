@@ -1,0 +1,5 @@
+.vscode/
+.vscode/configurationCache.log
+.vscode/targets.log
+ansible.cfg
+nornir.log
