@@ -160,9 +160,9 @@ vlan internal order ascending range 1006 1199
 | ------- | ---- | ------------ |
 | 10 | PROD_10 | - |
 | 30 | PROD_30 | - |
+| 3001 | MLAG_iBGP_PROD | LEAF_PEER_L3 |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
 | 4094 | MLAG_PEER | MLAG |
-| 53000 | MLAG_iBGP_PROD | LEAF_PEER_L3 |
 
 ### VLANs Device Configuration
 
@@ -174,6 +174,10 @@ vlan 10
 vlan 30
    name PROD_30
 !
+vlan 3001
+   name MLAG_iBGP_PROD
+   trunk group LEAF_PEER_L3
+!
 vlan 4093
    name LEAF_PEER_L3
    trunk group LEAF_PEER_L3
@@ -181,10 +185,6 @@ vlan 4093
 vlan 4094
    name MLAG_PEER
    trunk group MLAG
-!
-vlan 53000
-   name MLAG_iBGP_PROD
-   trunk group LEAF_PEER_L3
 ```
 
 ## Interfaces
@@ -319,9 +319,9 @@ interface Loopback1
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan10 | PROD_10 | PROD | - | False |
 | Vlan30 | PROD_30 | PROD | - | False |
+| Vlan3001 | MLAG_PEER_L3_iBGP: vrf PROD | PROD | 9214 | False |
 | Vlan4093 | MLAG_PEER_L3_PEERING | default | 9214 | False |
 | Vlan4094 | MLAG_PEER | default | 9214 | False |
-| Vlan53000 | MLAG_PEER_L3_iBGP: vrf PROD | PROD | 9214 | False |
 
 ##### IPv4
 
@@ -329,9 +329,9 @@ interface Loopback1
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan10 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
 | Vlan30 |  PROD  |  -  |  10.30.30.1/24  |  -  |  -  |  -  |  -  |
+| Vlan3001 |  PROD  |  192.0.0.0/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  192.0.0.0/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  169.254.0.0/31  |  -  |  -  |  -  |  -  |  -  |
-| Vlan53000 |  PROD  |  192.0.0.0/31  |  -  |  -  |  -  |  -  |  -  |
 
 #### VLAN Interfaces Device Configuration
 
@@ -349,6 +349,13 @@ interface Vlan30
    vrf PROD
    ip address virtual 10.30.30.1/24
 !
+interface Vlan3001
+   description MLAG_PEER_L3_iBGP: vrf PROD
+   no shutdown
+   mtu 9214
+   vrf PROD
+   ip address 192.0.0.0/31
+!
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
@@ -361,13 +368,6 @@ interface Vlan4094
    mtu 9214
    no autostate
    ip address 169.254.0.0/31
-!
-interface Vlan53000
-   description MLAG_PEER_L3_iBGP: vrf PROD
-   no shutdown
-   mtu 9214
-   vrf PROD
-   ip address 192.0.0.0/31
 ```
 
 ### VXLAN Interface

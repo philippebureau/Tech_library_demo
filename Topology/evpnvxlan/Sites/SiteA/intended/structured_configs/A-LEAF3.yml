@@ -162,7 +162,7 @@ vlans:
 - id: 30
   name: PROD_30
   tenant: PROD_TENANT
-- id: 53000
+- id: 3001
   name: MLAG_iBGP_PROD
   trunk_groups:
   - LEAF_PEER_L3
@@ -191,7 +191,7 @@ vlan_interfaces:
   shutdown: false
   ip_address_virtual: 10.30.30.1/24
   vrf: PROD
-- name: Vlan53000
+- name: Vlan3001
   tenant: PROD_TENANT
   type: underlay_peering
   shutdown: false

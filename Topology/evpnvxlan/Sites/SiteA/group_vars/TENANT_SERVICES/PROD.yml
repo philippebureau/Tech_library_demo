@@ -6,6 +6,7 @@ PROD:
     vrfs:
       - name: PROD
         vrf_vni: 50001
+        mlag_ibgp_peering_vlan: 3001
         vtep_diagnostic:
           loopback: 101
           loopback_ip_pools:
