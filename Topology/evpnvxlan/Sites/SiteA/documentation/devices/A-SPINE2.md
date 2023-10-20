@@ -4,7 +4,13 @@
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
+  - [DNS Domain](#dns-domain)
+  - [IP Name Servers](#ip-name-servers)
+  - [Clock Settings](#clock-settings)
   - [Management API HTTP](#management-api-http)
+- [Authentication](#authentication)
+  - [Local Users](#local-users)
+  - [AAA Authorization](#aaa-authorization)
 - [Spanning Tree](#spanning-tree)
   - [Spanning Tree Summary](#spanning-tree-summary)
   - [Spanning Tree Device Configuration](#spanning-tree-device-configuration)
@@ -57,6 +63,46 @@ interface Management1
    ip address 172.100.100.102/24
 ```
 
+### DNS Domain
+
+#### DNS domain: lab.lab
+
+#### DNS Domain Device Configuration
+
+```eos
+dns domain lab.lab
+!
+```
+
+### IP Name Servers
+
+#### IP Name Servers Summary
+
+| Name Server | VRF | Priority |
+| ----------- | --- | -------- |
+| 8.8.8.8 | MGMT | - |
+| 8.8.4.4 | MGMT | - |
+
+#### IP Name Servers Device Configuration
+
+```eos
+ip name-server vrf MGMT 8.8.4.4
+ip name-server vrf MGMT 8.8.8.8
+```
+
+### Clock Settings
+
+#### Clock Timezone Settings
+
+Clock Timezone is set to **EST**.
+
+#### Clock Configuration
+
+```eos
+!
+clock timezone EST
+```
+
 ### Management API HTTP
 
 #### Management API HTTP Summary
@@ -81,6 +127,40 @@ management api http-commands
    !
    vrf MGMT
       no shutdown
+```
+
+## Authentication
+
+### Local Users
+
+#### Local Users Summary
+
+| User | Privilege | Role | Disabled | Shell |
+| ---- | --------- | ---- | -------- | ----- |
+| cvpadmin | 15 | network-admin | False | - |
+
+#### Local Users Device Configuration
+
+```eos
+!
+username cvpadmin privilege 15 role network-admin secret sha512 <removed>
+```
+
+### AAA Authorization
+
+#### AAA Authorization Summary
+
+| Type | User Stores |
+| ---- | ----------- |
+| Exec | local |
+
+Authorization for configuration commands is disabled.
+
+#### AAA Authorization Device Configuration
+
+```eos
+aaa authorization exec default local
+!
 ```
 
 ## Spanning Tree
@@ -128,14 +208,14 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 | P2P_LINK_TO_A-LEAF1_Ethernet2 | routed | - | 192.168.0.2/31 | default | 9214 | False | - | - |
-| Ethernet2 | P2P_LINK_TO_A-LEAF2_Ethernet2 | routed | - | 192.168.0.10/31 | default | 9214 | False | - | - |
-| Ethernet3 | P2P_LINK_TO_A-LEAF3_Ethernet2 | routed | - | 192.168.0.18/31 | default | 9214 | False | - | - |
-| Ethernet4 | P2P_LINK_TO_A-LEAF4_Ethernet2 | routed | - | 192.168.0.26/31 | default | 9214 | False | - | - |
-| Ethernet5 | P2P_LINK_TO_A-LEAF5_Ethernet2 | routed | - | 192.168.0.34/31 | default | 9214 | False | - | - |
-| Ethernet6 | P2P_LINK_TO_A-LEAF6_Ethernet2 | routed | - | 192.168.0.42/31 | default | 9214 | False | - | - |
-| Ethernet7 | P2P_LINK_TO_A-LEAF7_Ethernet2 | routed | - | 192.168.0.50/31 | default | 9214 | False | - | - |
-| Ethernet8 | P2P_LINK_TO_A-LEAF8_Ethernet2 | routed | - | 192.168.0.58/31 | default | 9214 | False | - | - |
+| Ethernet1 | P2P_LINK_TO_A-LEAF1_Ethernet2 | routed | - | 192.168.0.2/31 | default | 1500 | False | - | - |
+| Ethernet2 | P2P_LINK_TO_A-LEAF2_Ethernet2 | routed | - | 192.168.0.10/31 | default | 1500 | False | - | - |
+| Ethernet3 | P2P_LINK_TO_A-LEAF3_Ethernet2 | routed | - | 192.168.0.18/31 | default | 1500 | False | - | - |
+| Ethernet4 | P2P_LINK_TO_A-LEAF4_Ethernet2 | routed | - | 192.168.0.26/31 | default | 1500 | False | - | - |
+| Ethernet5 | P2P_LINK_TO_A-LEAF5_Ethernet2 | routed | - | 192.168.0.34/31 | default | 1500 | False | - | - |
+| Ethernet6 | P2P_LINK_TO_A-LEAF6_Ethernet2 | routed | - | 192.168.0.42/31 | default | 1500 | False | - | - |
+| Ethernet7 | P2P_LINK_TO_A-LEAF7_Ethernet2 | routed | - | 192.168.0.50/31 | default | 1500 | False | - | - |
+| Ethernet8 | P2P_LINK_TO_A-LEAF8_Ethernet2 | routed | - | 192.168.0.58/31 | default | 1500 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -144,56 +224,56 @@ vlan internal order ascending range 1006 1199
 interface Ethernet1
    description P2P_LINK_TO_A-LEAF1_Ethernet2
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.2/31
 !
 interface Ethernet2
    description P2P_LINK_TO_A-LEAF2_Ethernet2
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.10/31
 !
 interface Ethernet3
    description P2P_LINK_TO_A-LEAF3_Ethernet2
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.18/31
 !
 interface Ethernet4
    description P2P_LINK_TO_A-LEAF4_Ethernet2
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.26/31
 !
 interface Ethernet5
    description P2P_LINK_TO_A-LEAF5_Ethernet2
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.34/31
 !
 interface Ethernet6
    description P2P_LINK_TO_A-LEAF6_Ethernet2
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.42/31
 !
 interface Ethernet7
    description P2P_LINK_TO_A-LEAF7_Ethernet2
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.50/31
 !
 interface Ethernet8
    description P2P_LINK_TO_A-LEAF8_Ethernet2
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.58/31
 ```
@@ -272,8 +352,10 @@ no ip routing vrf MGMT
 
 | BGP Tuning |
 | ---------- |
-| update wait-install |
+| graceful-restart restart-time 300 |
+| graceful-restart |
 | no bgp default ipv4-unicast |
+| distance bgp 20 200 200 |
 | maximum-paths 4 ecmp 4 |
 
 #### Router BGP Peer Groups
@@ -333,8 +415,10 @@ no ip routing vrf MGMT
 !
 router bgp 65100
    router-id 10.0.0.112
+   distance bgp 20 200 200
+   graceful-restart restart-time 300
+   graceful-restart
    maximum-paths 4 ecmp 4
-   update wait-install
    no bgp default ipv4-unicast
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
@@ -412,14 +496,14 @@ router bgp 65100
 
 | Interval | Minimum RX | Multiplier |
 | -------- | ---------- | ---------- |
-| 300 | 300 | 3 |
+| 1200 | 1200 | 3 |
 
 #### Router BFD Device Configuration
 
 ```eos
 !
 router bfd
-   multihop interval 300 min-rx 300 multiplier 3
+   multihop interval 1200 min-rx 1200 multiplier 3
 ```
 
 ## Filters

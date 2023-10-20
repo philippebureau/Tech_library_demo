@@ -4,7 +4,13 @@
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
+  - [DNS Domain](#dns-domain)
+  - [IP Name Servers](#ip-name-servers)
+  - [Clock Settings](#clock-settings)
   - [Management API HTTP](#management-api-http)
+- [Authentication](#authentication)
+  - [Local Users](#local-users)
+  - [AAA Authorization](#aaa-authorization)
 - [MLAG](#mlag)
   - [MLAG Summary](#mlag-summary)
   - [MLAG Device Configuration](#mlag-device-configuration)
@@ -69,6 +75,46 @@ interface Management1
    ip address 172.100.100.110/24
 ```
 
+### DNS Domain
+
+#### DNS domain: lab.lab
+
+#### DNS Domain Device Configuration
+
+```eos
+dns domain lab.lab
+!
+```
+
+### IP Name Servers
+
+#### IP Name Servers Summary
+
+| Name Server | VRF | Priority |
+| ----------- | --- | -------- |
+| 8.8.8.8 | MGMT | - |
+| 8.8.4.4 | MGMT | - |
+
+#### IP Name Servers Device Configuration
+
+```eos
+ip name-server vrf MGMT 8.8.4.4
+ip name-server vrf MGMT 8.8.8.8
+```
+
+### Clock Settings
+
+#### Clock Timezone Settings
+
+Clock Timezone is set to **EST**.
+
+#### Clock Configuration
+
+```eos
+!
+clock timezone EST
+```
+
 ### Management API HTTP
 
 #### Management API HTTP Summary
@@ -93,6 +139,40 @@ management api http-commands
    !
    vrf MGMT
       no shutdown
+```
+
+## Authentication
+
+### Local Users
+
+#### Local Users Summary
+
+| User | Privilege | Role | Disabled | Shell |
+| ---- | --------- | ---- | -------- | ----- |
+| cvpadmin | 15 | network-admin | False | - |
+
+#### Local Users Device Configuration
+
+```eos
+!
+username cvpadmin privilege 15 role network-admin secret sha512 <removed>
+```
+
+### AAA Authorization
+
+#### AAA Authorization Summary
+
+| Type | User Stores |
+| ---- | ----------- |
+| Exec | local |
+
+Authorization for configuration commands is disabled.
+
+#### AAA Authorization Device Configuration
+
+```eos
+aaa authorization exec default local
+!
 ```
 
 ## MLAG
@@ -206,10 +286,10 @@ vlan 4094
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 | P2P_LINK_TO_A-SPINE1_Ethernet6 | routed | - | 192.168.0.41/31 | default | 9214 | False | - | - |
-| Ethernet2 | P2P_LINK_TO_A-SPINE2_Ethernet6 | routed | - | 192.168.0.43/31 | default | 9214 | False | - | - |
-| Ethernet3 | P2P_LINK_TO_A-SPINE3_Ethernet6 | routed | - | 192.168.0.45/31 | default | 9214 | False | - | - |
-| Ethernet4 | P2P_LINK_TO_A-SPINE4_Ethernet6 | routed | - | 192.168.0.47/31 | default | 9214 | False | - | - |
+| Ethernet1 | P2P_LINK_TO_A-SPINE1_Ethernet6 | routed | - | 192.168.0.41/31 | default | 1500 | False | - | - |
+| Ethernet2 | P2P_LINK_TO_A-SPINE2_Ethernet6 | routed | - | 192.168.0.43/31 | default | 1500 | False | - | - |
+| Ethernet3 | P2P_LINK_TO_A-SPINE3_Ethernet6 | routed | - | 192.168.0.45/31 | default | 1500 | False | - | - |
+| Ethernet4 | P2P_LINK_TO_A-SPINE4_Ethernet6 | routed | - | 192.168.0.47/31 | default | 1500 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -218,28 +298,28 @@ vlan 4094
 interface Ethernet1
    description P2P_LINK_TO_A-SPINE1_Ethernet6
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.41/31
 !
 interface Ethernet2
    description P2P_LINK_TO_A-SPINE2_Ethernet6
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.43/31
 !
 interface Ethernet3
    description P2P_LINK_TO_A-SPINE3_Ethernet6
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.45/31
 !
 interface Ethernet4
    description P2P_LINK_TO_A-SPINE4_Ethernet6
    no shutdown
-   mtu 9214
+   mtu 1500
    no switchport
    ip address 192.168.0.47/31
 !
@@ -319,9 +399,9 @@ interface Loopback1
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan10 | PROD_10 | PROD | - | False |
 | Vlan30 | PROD_30 | PROD | - | False |
-| Vlan3001 | MLAG_PEER_L3_iBGP: vrf PROD | PROD | 9214 | False |
-| Vlan4093 | MLAG_PEER_L3_PEERING | default | 9214 | False |
-| Vlan4094 | MLAG_PEER | default | 9214 | False |
+| Vlan3001 | MLAG_PEER_L3_iBGP: vrf PROD | PROD | 1500 | False |
+| Vlan4093 | MLAG_PEER_L3_PEERING | default | 1500 | False |
+| Vlan4094 | MLAG_PEER | default | 1500 | False |
 
 ##### IPv4
 
@@ -352,20 +432,20 @@ interface Vlan30
 interface Vlan3001
    description MLAG_PEER_L3_iBGP: vrf PROD
    no shutdown
-   mtu 9214
+   mtu 1500
    vrf PROD
    ip address 192.0.0.1/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
-   mtu 9214
+   mtu 1500
    ip address 192.0.0.1/31
 !
 interface Vlan4094
    description MLAG_PEER
    no shutdown
-   mtu 9214
+   mtu 1500
    no autostate
    ip address 169.254.0.1/31
 ```
@@ -470,8 +550,10 @@ ip routing vrf PROD
 
 | BGP Tuning |
 | ---------- |
-| update wait-install |
+| graceful-restart restart-time 300 |
+| graceful-restart |
 | no bgp default ipv4-unicast |
+| distance bgp 20 200 200 |
 | maximum-paths 4 ecmp 4 |
 
 #### Router BGP Peer Groups
@@ -547,8 +629,10 @@ ip routing vrf PROD
 !
 router bgp 65156
    router-id 10.0.0.16
+   distance bgp 20 200 200
+   graceful-restart restart-time 300
+   graceful-restart
    maximum-paths 4 ecmp 4
-   update wait-install
    no bgp default ipv4-unicast
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -617,7 +701,6 @@ router bgp 65156
       route-target import evpn 50001:50001
       route-target export evpn 50001:50001
       router-id 10.0.0.16
-      update wait-install
       neighbor 192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER
       redistribute connected
 ```
@@ -630,14 +713,14 @@ router bgp 65156
 
 | Interval | Minimum RX | Multiplier |
 | -------- | ---------- | ---------- |
-| 300 | 300 | 3 |
+| 1200 | 1200 | 3 |
 
 #### Router BFD Device Configuration
 
 ```eos
 !
 router bfd
-   multihop interval 300 min-rx 300 multiplier 3
+   multihop interval 1200 min-rx 1200 multiplier 3
 ```
 
 ## Multicast

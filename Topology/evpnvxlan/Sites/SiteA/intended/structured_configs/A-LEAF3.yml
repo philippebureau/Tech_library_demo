@@ -2,14 +2,19 @@ hostname: A-LEAF3
 router_bgp:
   as: '65134'
   router_id: 10.0.0.13
+  distance:
+    external_routes: 20
+    internal_routes: 200
+    local_routes: 200
   bgp:
     default:
       ipv4_unicast: false
   maximum_paths:
     paths: 4
     ecmp: 4
-  updates:
-    wait_install: true
+  graceful_restart:
+    enabled: true
+    restart_time: 300
   peer_groups:
   - name: MLAG-IPv4-UNDERLAY-PEER
     type: ipv4
@@ -99,8 +104,6 @@ router_bgp:
     neighbors:
     - ip_address: 192.0.0.1
       peer_group: MLAG-IPv4-UNDERLAY-PEER
-    updates:
-      wait_install: true
   vlans:
   - id: 10
     tenant: PROD_TENANT
@@ -125,6 +128,16 @@ vlan_internal_order:
   range:
     beginning: 1006
     ending: 1199
+ip_name_servers:
+- ip_address: 8.8.8.8
+  vrf: MGMT
+- ip_address: 8.8.4.4
+  vrf: MGMT
+local_users:
+- name: cvpadmin
+  privilege: 15
+  role: network-admin
+  sha512_password: $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.
 vrfs:
 - name: MGMT
   ip_routing: false
@@ -171,14 +184,14 @@ vlan_interfaces:
 - name: Vlan4093
   description: MLAG_PEER_L3_PEERING
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   ip_address: 192.0.0.0/31
 - name: Vlan4094
   description: MLAG_PEER
   shutdown: false
   ip_address: 169.254.0.0/31
   no_autostate: true
-  mtu: 9214
+  mtu: 1500
 - name: Vlan10
   tenant: PROD_TENANT
   description: PROD_10
@@ -197,7 +210,7 @@ vlan_interfaces:
   shutdown: false
   description: 'MLAG_PEER_L3_iBGP: vrf PROD'
   vrf: PROD
-  mtu: 9214
+  mtu: 1500
   ip_address: 192.0.0.0/31
 port_channel_interfaces:
 - name: Port-Channel1000
@@ -235,7 +248,7 @@ ethernet_interfaces:
   peer_type: spine
   description: P2P_LINK_TO_A-SPINE1_Ethernet3
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.17/31
 - name: Ethernet2
@@ -244,7 +257,7 @@ ethernet_interfaces:
   peer_type: spine
   description: P2P_LINK_TO_A-SPINE2_Ethernet3
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.19/31
 - name: Ethernet3
@@ -253,7 +266,7 @@ ethernet_interfaces:
   peer_type: spine
   description: P2P_LINK_TO_A-SPINE3_Ethernet3
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.21/31
 - name: Ethernet4
@@ -262,7 +275,7 @@ ethernet_interfaces:
   peer_type: spine
   description: P2P_LINK_TO_A-SPINE4_Ethernet3
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.23/31
 mlag_configuration:
@@ -308,8 +321,8 @@ prefix_lists:
     action: permit 10.1.1.0/24 eq 32
 router_bfd:
   multihop:
-    interval: 300
-    min_rx: 300
+    interval: 1200
+    min_rx: 1200
     multiplier: 3
 ip_igmp_snooping:
   globally_enabled: true

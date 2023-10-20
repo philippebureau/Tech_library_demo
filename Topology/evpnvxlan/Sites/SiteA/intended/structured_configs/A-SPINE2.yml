@@ -2,14 +2,19 @@ hostname: A-SPINE2
 router_bgp:
   as: '65100'
   router_id: 10.0.0.112
+  distance:
+    external_routes: 20
+    internal_routes: 200
+    local_routes: 200
   bgp:
     default:
       ipv4_unicast: false
   maximum_paths:
     paths: 4
     ecmp: 4
-  updates:
-    wait_install: true
+  graceful_restart:
+    enabled: true
+    restart_time: 300
   peer_groups:
   - name: IPv4-UNDERLAY-PEERS
     type: ipv4
@@ -108,8 +113,18 @@ vlan_internal_order:
   range:
     beginning: 1006
     ending: 1199
+ip_name_servers:
+- ip_address: 8.8.8.8
+  vrf: MGMT
+- ip_address: 8.8.4.4
+  vrf: MGMT
 spanning_tree:
   mode: none
+local_users:
+- name: cvpadmin
+  privilege: 15
+  role: network-admin
+  sha512_password: $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.
 vrfs:
 - name: MGMT
   ip_routing: false
@@ -132,7 +147,7 @@ ethernet_interfaces:
   peer_type: l3leaf
   description: P2P_LINK_TO_A-LEAF1_Ethernet2
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.2/31
 - name: Ethernet2
@@ -141,7 +156,7 @@ ethernet_interfaces:
   peer_type: l3leaf
   description: P2P_LINK_TO_A-LEAF2_Ethernet2
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.10/31
 - name: Ethernet3
@@ -150,7 +165,7 @@ ethernet_interfaces:
   peer_type: l3leaf
   description: P2P_LINK_TO_A-LEAF3_Ethernet2
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.18/31
 - name: Ethernet4
@@ -159,7 +174,7 @@ ethernet_interfaces:
   peer_type: l3leaf
   description: P2P_LINK_TO_A-LEAF4_Ethernet2
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.26/31
 - name: Ethernet5
@@ -168,7 +183,7 @@ ethernet_interfaces:
   peer_type: l3leaf
   description: P2P_LINK_TO_A-LEAF5_Ethernet2
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.34/31
 - name: Ethernet6
@@ -177,7 +192,7 @@ ethernet_interfaces:
   peer_type: l3leaf
   description: P2P_LINK_TO_A-LEAF6_Ethernet2
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.42/31
 - name: Ethernet7
@@ -186,7 +201,7 @@ ethernet_interfaces:
   peer_type: l3leaf
   description: P2P_LINK_TO_A-LEAF7_Ethernet2
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.50/31
 - name: Ethernet8
@@ -195,7 +210,7 @@ ethernet_interfaces:
   peer_type: l3leaf
   description: P2P_LINK_TO_A-LEAF8_Ethernet2
   shutdown: false
-  mtu: 9214
+  mtu: 1500
   type: routed
   ip_address: 192.168.0.58/31
 loopback_interfaces:
@@ -217,6 +232,6 @@ route_maps:
     - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 router_bfd:
   multihop:
-    interval: 300
-    min_rx: 300
+    interval: 1200
+    min_rx: 1200
     multiplier: 3
