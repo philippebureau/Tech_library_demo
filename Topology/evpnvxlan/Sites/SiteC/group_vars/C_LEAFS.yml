@@ -6,7 +6,7 @@ l3leaf:
     platform: vEOS-LAB
     loopback_ipv4_pool: 10.0.0.0/24
     loopback_ipv4_offset: 30
-    vtep_loopback_ipv4_pool: 10.1.1.0/24
+    vtep_loopback_ipv4_pool: 10.3.3.0/24
     uplink_ipv4_pool: 192.168.0.0/24
     uplink_interfaces:
       - Ethernet1

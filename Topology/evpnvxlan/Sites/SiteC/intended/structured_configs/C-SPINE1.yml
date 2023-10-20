@@ -1,0 +1,217 @@
+hostname: C-SPINE1
+router_bgp:
+  as: '65300'
+  router_id: 10.0.0.131
+  distance:
+    external_routes: 20
+    internal_routes: 200
+    local_routes: 200
+  bgp:
+    default:
+      ipv4_unicast: false
+  maximum_paths:
+    paths: 4
+    ecmp: 4
+  graceful_restart:
+    enabled: true
+    restart_time: 300
+  peer_groups:
+  - name: EVPN-OVERLAY-PEERS
+    type: evpn
+    update_source: Loopback0
+    bfd: true
+    send_community: all
+    maximum_routes: 0
+    ebgp_multihop: 3
+    next_hop_unchanged: true
+  address_family_ipv4:
+    peer_groups:
+    - name: EVPN-OVERLAY-PEERS
+      activate: false
+  address_family_evpn:
+    peer_groups:
+    - name: EVPN-OVERLAY-PEERS
+      activate: true
+  neighbors:
+  - ip_address: 10.0.0.31
+    peer_group: EVPN-OVERLAY-PEERS
+    description: C-LEAF1
+    remote_as: '65312'
+  - ip_address: 10.0.0.32
+    peer_group: EVPN-OVERLAY-PEERS
+    description: C-LEAF2
+    remote_as: '65312'
+  - ip_address: 10.0.0.33
+    peer_group: EVPN-OVERLAY-PEERS
+    description: C-LEAF3
+    remote_as: '65334'
+  - ip_address: 10.0.0.34
+    peer_group: EVPN-OVERLAY-PEERS
+    description: C-LEAF4
+    remote_as: '65334'
+  - ip_address: 10.0.0.35
+    peer_group: EVPN-OVERLAY-PEERS
+    description: C-LEAF5
+    remote_as: '65356'
+  - ip_address: 10.0.0.36
+    peer_group: EVPN-OVERLAY-PEERS
+    description: C-LEAF6
+    remote_as: '65356'
+  - ip_address: 10.0.0.37
+    peer_group: EVPN-OVERLAY-PEERS
+    description: C-LEAF7
+    remote_as: '65378'
+  - ip_address: 10.0.0.38
+    peer_group: EVPN-OVERLAY-PEERS
+    description: C-LEAF8
+    remote_as: '65378'
+service_routing_protocols_model: multi-agent
+ip_routing: true
+vlan_internal_order:
+  allocation: ascending
+  range:
+    beginning: 1006
+    ending: 1199
+ip_name_servers:
+- ip_address: 8.8.8.8
+  vrf: default
+- ip_address: 8.8.4.4
+  vrf: default
+spanning_tree:
+  mode: none
+local_users:
+- name: cvpadmin
+  privilege: 15
+  role: network-admin
+  sha512_password: $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.
+vrfs:
+- name: default
+  ip_routing: false
+management_interfaces:
+- name: Management1
+  description: oob_management
+  shutdown: false
+  vrf: default
+  ip_address: 172.100.100.127/24
+  gateway: null
+  type: oob
+management_api_http:
+  enable_vrfs:
+  - name: default
+  enable_https: true
+ethernet_interfaces:
+- name: Ethernet1
+  peer: C-LEAF1
+  peer_interface: Ethernet1
+  peer_type: l3leaf
+  description: P2P_LINK_TO_C-LEAF1_Ethernet1
+  shutdown: false
+  mtu: 1500
+  type: routed
+  ip_address: 192.168.0.0/31
+  ospf_network_point_to_point: true
+  ospf_area: 0.0.0.0
+- name: Ethernet2
+  peer: C-LEAF2
+  peer_interface: Ethernet1
+  peer_type: l3leaf
+  description: P2P_LINK_TO_C-LEAF2_Ethernet1
+  shutdown: false
+  mtu: 1500
+  type: routed
+  ip_address: 192.168.0.4/31
+  ospf_network_point_to_point: true
+  ospf_area: 0.0.0.0
+- name: Ethernet3
+  peer: C-LEAF3
+  peer_interface: Ethernet1
+  peer_type: l3leaf
+  description: P2P_LINK_TO_C-LEAF3_Ethernet1
+  shutdown: false
+  mtu: 1500
+  type: routed
+  ip_address: 192.168.0.8/31
+  ospf_network_point_to_point: true
+  ospf_area: 0.0.0.0
+- name: Ethernet4
+  peer: C-LEAF4
+  peer_interface: Ethernet1
+  peer_type: l3leaf
+  description: P2P_LINK_TO_C-LEAF4_Ethernet1
+  shutdown: false
+  mtu: 1500
+  type: routed
+  ip_address: 192.168.0.12/31
+  ospf_network_point_to_point: true
+  ospf_area: 0.0.0.0
+- name: Ethernet5
+  peer: C-LEAF5
+  peer_interface: Ethernet1
+  peer_type: l3leaf
+  description: P2P_LINK_TO_C-LEAF5_Ethernet1
+  shutdown: false
+  mtu: 1500
+  type: routed
+  ip_address: 192.168.0.16/31
+  ospf_network_point_to_point: true
+  ospf_area: 0.0.0.0
+- name: Ethernet6
+  peer: C-LEAF6
+  peer_interface: Ethernet1
+  peer_type: l3leaf
+  description: P2P_LINK_TO_C-LEAF6_Ethernet1
+  shutdown: false
+  mtu: 1500
+  type: routed
+  ip_address: 192.168.0.20/31
+  ospf_network_point_to_point: true
+  ospf_area: 0.0.0.0
+- name: Ethernet7
+  peer: C-LEAF7
+  peer_interface: Ethernet1
+  peer_type: l3leaf
+  description: P2P_LINK_TO_C-LEAF7_Ethernet1
+  shutdown: false
+  mtu: 1500
+  type: routed
+  ip_address: 192.168.0.24/31
+  ospf_network_point_to_point: true
+  ospf_area: 0.0.0.0
+- name: Ethernet8
+  peer: C-LEAF8
+  peer_interface: Ethernet1
+  peer_type: l3leaf
+  description: P2P_LINK_TO_C-LEAF8_Ethernet1
+  shutdown: false
+  mtu: 1500
+  type: routed
+  ip_address: 192.168.0.28/31
+  ospf_network_point_to_point: true
+  ospf_area: 0.0.0.0
+loopback_interfaces:
+- name: Loopback0
+  description: EVPN_Overlay_Peering
+  shutdown: false
+  ip_address: 10.0.0.131/32
+  ospf_area: 0.0.0.0
+router_ospf:
+  process_ids:
+  - id: 100
+    passive_interface_default: true
+    router_id: 10.0.0.131
+    max_lsa: 12000
+    no_passive_interfaces:
+    - Ethernet1
+    - Ethernet2
+    - Ethernet3
+    - Ethernet4
+    - Ethernet5
+    - Ethernet6
+    - Ethernet7
+    - Ethernet8
+    bfd_enable: false
+router_bfd:
+  multihop:
+    interval: 1200
+    min_rx: 1200
+    multiplier: 3
