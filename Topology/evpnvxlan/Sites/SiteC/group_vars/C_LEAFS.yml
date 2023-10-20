@@ -1,0 +1,103 @@
+---
+type: l3leaf
+
+l3leaf:
+  defaults:
+    platform: vEOS-LAB
+    loopback_ipv4_pool: 10.0.0.0/24
+    loopback_ipv4_offset: 30
+    vtep_loopback_ipv4_pool: 10.1.1.0/24
+    uplink_ipv4_pool: 192.168.0.0/24
+    uplink_interfaces:
+      - Ethernet1
+      - Ethernet2
+    uplink_switches:
+      - C-SPINE1
+      - C-SPINE2
+    mlag_dual_primary_detection: true
+    mlag_interfaces:
+      - Ethernet5
+      - Ethernet6
+    mlag_peer_l3_ipv4_pool: 192.0.0.0/31
+    mlag_peer_ipv4_pool: 169.254.0.0/31
+    mlag_port_channel_id: 1000
+    virtual_router_mac_address: 00:1c:73:00:00:01
+  node_groups:
+    - group: C-LEAF12
+      bgp_as: 65312
+      filter:
+        tags: [ blue, orange ]
+      nodes:
+        - name: C-LEAF1
+          id: 1
+          mgmt_ip: 172.100.100.129/24
+          uplink_switch_interfaces:
+            - Ethernet1
+            - Ethernet1
+        - name: C-LEAF2
+          id: 2
+          mgmt_ip: 172.100.100.130/24
+          uplink_switch_interfaces:
+            - Ethernet2
+            - Ethernet2
+    - group: A-LEAF34
+      bgp_as: 65334
+      filter:
+        tags: [ blue, orange, yellow ]
+      nodes:
+        - name: C-LEAF3
+          id: 3
+          mgmt_ip: 172.100.100.131/24
+          uplink_switch_interfaces:
+            - Ethernet3
+            - Ethernet3
+        - name: C-LEAF4
+          id: 4
+          mgmt_ip: 172.100.100.132/24
+          uplink_switch_interfaces:
+            - Ethernet4
+            - Ethernet4
+    - group: C-LEAF56
+      bgp_as: 65356
+      filter:
+        tags: [ brown ]
+      nodes:
+        - name: C-LEAF5
+          id: 5
+          mgmt_ip: 172.100.100.133/24
+          uplink_switch_interfaces:
+            - Ethernet5
+            - Ethernet5
+        - name: C-LEAF6
+          id: 6
+          mgmt_ip: 172.100.100.134/24
+          uplink_switch_interfaces:
+            - Ethernet6
+            - Ethernet6
+    - group: C-LEAF78
+      bgp_as: 65378
+      filter:
+        tags: [ blue, yellow, brown ]
+      evpn_gateway:
+        remote_peers:
+          - hostname: BB1
+            ip_address: 172.16.0.1
+            bgp_as: 65000
+          - hostname: BB2
+            ip_address: 172.16.0.2
+            bgp_as: 65000
+        evpn_l3:
+          enabled: true
+      nodes:
+        - name: C-LEAF7
+          id: 7
+          mgmt_ip: 172.100.100.135/24
+          uplink_switch_interfaces:
+            - Ethernet7
+            - Ethernet7
+        - name: C-LEAF8
+          id: 8
+          mgmt_ip: 172.100.100.136/24
+          uplink_switch_interfaces:
+            - Ethernet8
+            - Ethernet8

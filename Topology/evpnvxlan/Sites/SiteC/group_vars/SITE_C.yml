@@ -1,0 +1,10 @@
+---
+# SITE A fabric variables
+
+fabric_name: SITE_C
+
+fabric_ip_addressing:
+  mlag:
+    algorithm: same_subnet
+
+underlay_routing_protocol: ospf
