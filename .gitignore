@@ -3,3 +3,7 @@
 .vscode/targets.log
 ansible.cfg
 nornir.log
+.DS_Store
+.venv
+.python-version
+*-debug-vars.yml
