@@ -44,13 +44,13 @@
 
 | Management Interface | description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | oob_management | oob | MGMT | 172.100.100.103/24 | - |
+| Management1 | oob_management | oob | default | 172.100.100.103/24 | - |
 
 ##### IPv6
 
 | Management Interface | description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management1 | oob_management | oob | MGMT | - | - |
+| Management1 | oob_management | oob | default | - | - |
 
 #### Management Interfaces Device Configuration
 
@@ -59,7 +59,6 @@
 interface Management1
    description oob_management
    no shutdown
-   vrf MGMT
    ip address 172.100.100.103/24
 ```
 
@@ -80,14 +79,14 @@ dns domain lab.lab
 
 | Name Server | VRF | Priority |
 | ----------- | --- | -------- |
-| 8.8.8.8 | MGMT | - |
-| 8.8.4.4 | MGMT | - |
+| 8.8.8.8 | default | - |
+| 8.8.4.4 | default | - |
 
 #### IP Name Servers Device Configuration
 
 ```eos
-ip name-server vrf MGMT 8.8.4.4
-ip name-server vrf MGMT 8.8.8.8
+ip name-server vrf default 8.8.4.4
+ip name-server vrf default 8.8.8.8
 ```
 
 ### Clock Settings
@@ -115,7 +114,7 @@ clock timezone EST
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT | - | - |
+| default | - | - |
 
 #### Management API HTTP Configuration
 
@@ -125,7 +124,7 @@ management api http-commands
    protocol https
    no shutdown
    !
-   vrf MGMT
+   vrf default
       no shutdown
 ```
 
@@ -323,14 +322,12 @@ service routing protocols model multi-agent
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True |
-| MGMT | False |
 
 #### IP Routing Device Configuration
 
 ```eos
 !
 ip routing
-no ip routing vrf MGMT
 ```
 
 ### IPv6 Routing
@@ -340,7 +337,7 @@ no ip routing vrf MGMT
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | False |
-| MGMT | false |
+| default | false |
 
 ### Router BGP
 
@@ -550,11 +547,8 @@ route-map RM-CONN-2-BGP permit 10
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
-| MGMT | disabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
-!
-vrf instance MGMT
 ```

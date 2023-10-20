@@ -56,13 +56,13 @@
 
 | Management Interface | description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | oob_management | oob | MGMT | 172.100.100.111/24 | - |
+| Management1 | oob_management | oob | default | 172.100.100.111/24 | - |
 
 ##### IPv6
 
 | Management Interface | description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management1 | oob_management | oob | MGMT | - | - |
+| Management1 | oob_management | oob | default | - | - |
 
 #### Management Interfaces Device Configuration
 
@@ -71,7 +71,6 @@
 interface Management1
    description oob_management
    no shutdown
-   vrf MGMT
    ip address 172.100.100.111/24
 ```
 
@@ -92,14 +91,14 @@ dns domain lab.lab
 
 | Name Server | VRF | Priority |
 | ----------- | --- | -------- |
-| 8.8.8.8 | MGMT | - |
-| 8.8.4.4 | MGMT | - |
+| 8.8.8.8 | default | - |
+| 8.8.4.4 | default | - |
 
 #### IP Name Servers Device Configuration
 
 ```eos
-ip name-server vrf MGMT 8.8.4.4
-ip name-server vrf MGMT 8.8.8.8
+ip name-server vrf default 8.8.4.4
+ip name-server vrf default 8.8.8.8
 ```
 
 ### Clock Settings
@@ -127,7 +126,7 @@ clock timezone EST
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT | - | - |
+| default | - | - |
 
 #### Management API HTTP Configuration
 
@@ -137,7 +136,7 @@ management api http-commands
    protocol https
    no shutdown
    !
-   vrf MGMT
+   vrf default
       no shutdown
 ```
 
@@ -193,7 +192,7 @@ mlag configuration
    domain-id A-LEAF78
    local-interface Vlan4094
    peer-address 169.254.0.1
-   peer-address heartbeat 172.100.100.112 vrf MGMT
+   peer-address heartbeat 172.100.100.112
    peer-link Port-Channel1000
    dual-primary detection delay 5 action errdisable all-interfaces
    reload-delay mlag 300
@@ -518,7 +517,6 @@ ip virtual-router mac-address 00:1c:73:00:00:01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True |
-| MGMT | False |
 | PROD | True |
 
 #### IP Routing Device Configuration
@@ -526,7 +524,6 @@ ip virtual-router mac-address 00:1c:73:00:00:01
 ```eos
 !
 ip routing
-no ip routing vrf MGMT
 ip routing vrf PROD
 ```
 
@@ -537,7 +534,7 @@ ip routing vrf PROD
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | False |
-| MGMT | false |
+| default | false |
 | PROD | false |
 
 ### Router BGP
@@ -794,14 +791,11 @@ route-map RM-MLAG-PEER-IN permit 10
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
-| MGMT | disabled |
 | PROD | enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
-!
-vrf instance MGMT
 !
 vrf instance PROD
 ```
