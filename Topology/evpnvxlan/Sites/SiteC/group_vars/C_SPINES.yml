@@ -8,9 +8,9 @@ spine:
     loopback_ipv4_pool: 10.0.0.0/24
     loopback_ipv4_offset: 130
   nodes:
-    - name: A-SPINE1
+    - name: C-SPINE1
       id: 1
       mgmt_ip: 172.100.100.127/24
-    - name: A-SPINE2
+    - name: C-SPINE2
       id: 2
       mgmt_ip: 172.100.100.128/24
