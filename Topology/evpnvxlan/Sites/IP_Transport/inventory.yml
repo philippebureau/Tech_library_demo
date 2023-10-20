@@ -15,6 +15,6 @@ all:
         IP_TRANSPORT:
           hosts:
             BB1:
-              ansible_host: 127.0.0.1
+              ansible_host: 172.100.100.138
             BB2:
-              ansible_host: 127.0.0.1
+              ansible_host: 172.100.100.126

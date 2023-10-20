@@ -7,7 +7,7 @@ help: ## Display help message (*: main entry points / []: part of an entry point
 
 
 ################################################################################
-# AVD SiteA
+# SiteA
 ################################################################################
 
 .PHONY: build-site-A
@@ -21,3 +21,19 @@ deploy-site-A: ## Run ansible playbook to deploy EVPN Fabric.
 .PHONY: validate-site-A
 validate-site-A: ## Run ansible playbook to validate EVPN Fabric.
 	ansible-playbook playbooks/fabric-validate-state.yml -i Sites/SiteA/inventory.yml -e "target_hosts=SITE_A" --diff
+
+################################################################################
+# IP TRANSPORT
+################################################################################
+
+.PHONY: build-transport
+build-transport: ## Run ansible playbook to build EVPN Fabric configuration
+	ansible-playbook Topology/evpnvxlan/playbooks/build.yml -i Topology/evpnvxlan/Sites/IP_Transport/inventory.yml -e "target_hosts=EVPN_VXLAN" --diff
+
+.PHONY: deploy-transport
+deploy-transport: ## Run ansible playbook to deploy EVPN Fabric.
+	ansible-playbook Topology/evpnvxlan/playbooks/deploy.yml -i Topology/evpnvxlan/Sites/IP_Transport/inventory.yml -e "target_hosts=EVPN_VXLAN" --diff
+
+.PHONY: validate-transport
+validate-transport: ## Run ansible playbook to validate EVPN Fabric.
+	ansible-playbook playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/IP_Transport/inventory.yml -e "target_hosts=EVPN_VXLAN" --diff
