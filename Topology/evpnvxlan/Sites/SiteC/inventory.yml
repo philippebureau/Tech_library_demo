@@ -18,12 +18,8 @@ all:
               hosts:
                 C-SPINE1:
                   ansible_host: 127.0.0.1
-                  ansible_port: 22027
-                  ansible_httpapi_port: 44327
                 C-SPINE2:
                   ansible_host: 127.0.0.1
-                  ansible_port: 22028
-                  ansible_httpapi_port: 44328
             C_LEAFS:
               hosts:
                 C-LEAF1:
