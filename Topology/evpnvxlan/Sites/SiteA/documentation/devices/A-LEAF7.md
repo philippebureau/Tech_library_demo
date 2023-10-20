@@ -289,6 +289,8 @@ vlan 4094
 | Ethernet2 | P2P_LINK_TO_A-SPINE2_Ethernet7 | routed | - | 192.168.0.51/31 | default | 1500 | False | - | - |
 | Ethernet3 | P2P_LINK_TO_A-SPINE3_Ethernet7 | routed | - | 192.168.0.53/31 | default | 1500 | False | - | - |
 | Ethernet4 | P2P_LINK_TO_A-SPINE4_Ethernet7 | routed | - | 192.168.0.55/31 | default | 1500 | False | - | - |
+| Ethernet7 | P2P_LINK_TO_BB1_Ethernet1 | routed | - | 172.16.1.1/31 | default | 1500 | False | - | - |
+| Ethernet8 | P2P_LINK_TO_BB2_Ethernet1 | routed | - | 172.16.1.5/31 | default | 1500 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -331,6 +333,20 @@ interface Ethernet6
    description MLAG_PEER_A-LEAF8_Ethernet6
    no shutdown
    channel-group 1000 mode active
+!
+interface Ethernet7
+   description P2P_LINK_TO_BB1_Ethernet1
+   no shutdown
+   mtu 1500
+   no switchport
+   ip address 172.16.1.1/31
+!
+interface Ethernet8
+   description P2P_LINK_TO_BB2_Ethernet1
+   no shutdown
+   mtu 1500
+   no switchport
+   ip address 172.16.1.5/31
 ```
 
 ### Port-Channel Interfaces
@@ -592,6 +608,8 @@ ip routing vrf PROD
 | 10.0.0.112 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
 | 10.0.0.113 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
 | 10.0.0.114 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
+| 172.16.1.0 | 65000 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
+| 172.16.1.4 | 65000 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 | 192.0.0.1 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - |
 | 192.168.0.48 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 | 192.168.0.50 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
@@ -659,6 +677,12 @@ router bgp 65178
    neighbor 10.0.0.114 peer group EVPN-OVERLAY-PEERS
    neighbor 10.0.0.114 remote-as 65100
    neighbor 10.0.0.114 description A-SPINE4
+   neighbor 172.16.1.0 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.16.1.0 remote-as 65000
+   neighbor 172.16.1.0 description BB1
+   neighbor 172.16.1.4 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.16.1.4 remote-as 65000
+   neighbor 172.16.1.4 description BB2
    neighbor 192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER
    neighbor 192.0.0.1 description A-LEAF8
    neighbor 192.168.0.48 peer group IPv4-UNDERLAY-PEERS

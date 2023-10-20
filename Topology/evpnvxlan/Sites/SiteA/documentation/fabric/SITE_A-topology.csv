@@ -41,12 +41,16 @@ l3leaf,A-LEAF7,Ethernet3,spine,A-SPINE3,Ethernet7,True
 l3leaf,A-LEAF7,Ethernet4,spine,A-SPINE4,Ethernet7,True
 l3leaf,A-LEAF7,Ethernet5,mlag_peer,A-LEAF8,Ethernet5,True
 l3leaf,A-LEAF7,Ethernet6,mlag_peer,A-LEAF8,Ethernet6,True
+l3leaf,A-LEAF7,Ethernet7,other,BB1,Ethernet1,True
+l3leaf,A-LEAF7,Ethernet8,other,BB2,Ethernet1,True
 l3leaf,A-LEAF8,Ethernet1,spine,A-SPINE1,Ethernet8,True
 l3leaf,A-LEAF8,Ethernet2,spine,A-SPINE2,Ethernet8,True
 l3leaf,A-LEAF8,Ethernet3,spine,A-SPINE3,Ethernet8,True
 l3leaf,A-LEAF8,Ethernet4,spine,A-SPINE4,Ethernet8,True
 l3leaf,A-LEAF8,Ethernet5,mlag_peer,A-LEAF7,Ethernet5,True
 l3leaf,A-LEAF8,Ethernet6,mlag_peer,A-LEAF7,Ethernet6,True
+l3leaf,A-LEAF8,Ethernet7,other,BB1,Ethernet2,True
+l3leaf,A-LEAF8,Ethernet8,other,BB2,Ethernet2,True
 spine,A-SPINE1,Ethernet1,l3leaf,A-LEAF1,Ethernet1,True
 spine,A-SPINE1,Ethernet2,l3leaf,A-LEAF2,Ethernet1,True
 spine,A-SPINE1,Ethernet3,l3leaf,A-LEAF3,Ethernet1,True
