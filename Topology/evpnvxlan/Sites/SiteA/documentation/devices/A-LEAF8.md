@@ -604,6 +604,17 @@ ip routing vrf PROD
 
 #### Router BGP Peer Groups
 
+##### EVPN-OVERLAY-CORE
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | evpn |
+| Source | Loopback0 |
+| BFD | True |
+| Ebgp multihop | 15 |
+| Send community | all |
+| Maximum routes | 0 (no limit) |
+
 ##### EVPN-OVERLAY-PEERS
 
 | Settings | Value |
@@ -641,6 +652,8 @@ ip routing vrf PROD
 | 10.0.0.112 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
 | 10.0.0.113 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
 | 10.0.0.114 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
+| 172.16.0.1 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - |
+| 172.16.0.2 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - |
 | 172.16.1.2 | 65000 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 | 172.16.1.6 | 65000 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 | 192.0.0.0 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - |
@@ -657,7 +670,16 @@ ip routing vrf PROD
 
 | Peer Group | Activate | Encapsulation |
 | ---------- | -------- | ------------- |
+| EVPN-OVERLAY-CORE | True | default |
 | EVPN-OVERLAY-PEERS | True | default |
+
+##### EVPN DCI Gateway Summary
+
+| Settings | Value |
+| -------- | ----- |
+| Remote Domain Peer Groups | EVPN-OVERLAY-CORE |
+| L3 Gateway Configured | True |
+| L3 Gateway Inter-domain | True |
 
 #### Router BGP VLANs
 
@@ -685,6 +707,12 @@ router bgp 65178
    graceful-restart
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
+   neighbor EVPN-OVERLAY-CORE peer group
+   neighbor EVPN-OVERLAY-CORE update-source Loopback0
+   neighbor EVPN-OVERLAY-CORE bfd
+   neighbor EVPN-OVERLAY-CORE ebgp-multihop 15
+   neighbor EVPN-OVERLAY-CORE send-community
+   neighbor EVPN-OVERLAY-CORE maximum-routes 0
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
@@ -713,6 +741,12 @@ router bgp 65178
    neighbor 10.0.0.114 peer group EVPN-OVERLAY-PEERS
    neighbor 10.0.0.114 remote-as 65100
    neighbor 10.0.0.114 description A-SPINE4
+   neighbor 172.16.0.1 peer group EVPN-OVERLAY-CORE
+   neighbor 172.16.0.1 remote-as 65000
+   neighbor 172.16.0.1 description BB1
+   neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE
+   neighbor 172.16.0.2 remote-as 65000
+   neighbor 172.16.0.2 description BB2
    neighbor 172.16.1.2 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.16.1.2 remote-as 65000
    neighbor 172.16.1.2 description BB1
@@ -751,9 +785,13 @@ router bgp 65178
       redistribute learned
    !
    address-family evpn
+      neighbor EVPN-OVERLAY-CORE activate
+      neighbor EVPN-OVERLAY-CORE domain remote
       neighbor EVPN-OVERLAY-PEERS activate
+      neighbor default next-hop-self received-evpn-routes route-type ip-prefix inter-domain
    !
    address-family ipv4
+      no neighbor EVPN-OVERLAY-CORE activate
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
