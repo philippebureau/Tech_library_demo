@@ -237,8 +237,8 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 10 | PROD_10 | - |
-| 30 | PROD_30 | - |
+| 10 | Blue | - |
+| 30 | Orange | - |
 | 3001 | MLAG_iBGP_PROD | LEAF_PEER_L3 |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
 | 4094 | MLAG_PEER | MLAG |
@@ -248,10 +248,10 @@ vlan internal order ascending range 1006 1199
 ```eos
 !
 vlan 10
-   name PROD_10
+   name Blue
 !
 vlan 30
-   name PROD_30
+   name Orange
 !
 vlan 3001
    name MLAG_iBGP_PROD
@@ -396,8 +396,8 @@ interface Loopback1
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
-| Vlan10 | PROD_10 | PROD | - | False |
-| Vlan30 | PROD_30 | PROD | - | False |
+| Vlan10 | Blue | PROD | - | False |
+| Vlan30 | Orange | PROD | - | False |
 | Vlan3001 | MLAG_PEER_L3_iBGP: vrf PROD | PROD | 1500 | False |
 | Vlan4093 | MLAG_PEER_L3_PEERING | default | 1500 | False |
 | Vlan4094 | MLAG_PEER | default | 1500 | False |
@@ -417,13 +417,13 @@ interface Loopback1
 ```eos
 !
 interface Vlan10
-   description PROD_10
+   description Blue
    no shutdown
    vrf PROD
    ip address virtual 10.10.10.1/24
 !
 interface Vlan30
-   description PROD_30
+   description Orange
    no shutdown
    vrf PROD
    ip address virtual 10.30.30.1/24

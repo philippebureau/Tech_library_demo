@@ -1,0 +1,25 @@
+---
+# PROD VRF
+DEV:
+  - name: DEV_TENANT
+    mac_vrf_vni_base: 10000
+    vrfs:
+      - name: DEV
+        vrf_vni: 50002
+        mlag_ibgp_peering_vlan: 3002
+        vtep_diagnostic:
+          loopback: 102
+          loopback_ip_pools:
+            - pod: SITEA_POD
+              ipv4_pool: 10.102.102.0/24
+        svis:
+          - id: 50
+            name: Yellow
+            tags: [yellow]
+            enabled: true
+            ip_address_virtual: 10.50.50.1/24
+          - id: 70
+            name: Brown
+            tags: [brown]
+            enabled: true
+            ip_address_virtual: 10.70.70.1/24

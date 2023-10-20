@@ -29,6 +29,8 @@ l3leaf:
   node_groups:
     - group: A-LEAF12
       bgp_as: 65112
+      filter:
+        tags: [ blue, orange ]
       nodes:
         - name: A-LEAF1
           id: 1
@@ -48,6 +50,8 @@ l3leaf:
             - Ethernet2
     - group: A-LEAF34
       bgp_as: 65134
+      filter:
+        tags: [ blue, orange, yellow ]
       nodes:
         - name: A-LEAF3
           id: 3
@@ -67,6 +71,8 @@ l3leaf:
             - Ethernet4
     - group: A-LEAF56
       bgp_as: 65156
+      filter:
+        tags: [ brown ]
       nodes:
         - name: A-LEAF5
           id: 5
@@ -86,6 +92,8 @@ l3leaf:
             - Ethernet6
     - group: A-LEAF78
       bgp_as: 65178
+      filter:
+        tags: [ blue, yellow, brown ]
       nodes:
         - name: A-LEAF7
           id: 7
