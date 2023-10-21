@@ -1,0 +1,62 @@
+hostname: B-SW1
+service_routing_protocols_model: multi-agent
+vlan_internal_order:
+  allocation: ascending
+  range:
+    beginning: 1006
+    ending: 1199
+ip_name_servers:
+- ip_address: 8.8.8.8
+  vrf: default
+- ip_address: 8.8.4.4
+  vrf: default
+local_users:
+- name: cvpadmin
+  privilege: 15
+  role: network-admin
+  sha512_password: $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.
+vrfs:
+- name: default
+  ip_routing: false
+management_interfaces:
+- name: Management1
+  description: oob_management
+  shutdown: false
+  vrf: default
+  ip_address: 172.100.100.139/24
+  gateway: null
+  type: oob
+management_api_http:
+  enable_vrfs:
+  - name: default
+  enable_https: true
+ethernet_interfaces:
+- name: Ethernet1
+  peer: B-LEAF1
+  peer_interface: Ethernet7
+  peer_type: l3leaf
+  description: B-LEAF1_Ethernet7
+  shutdown: false
+  type: port-channel-member
+  channel_group:
+    id: 1
+    mode: active
+- name: Ethernet2
+  peer: B-LEAF2
+  peer_interface: Ethernet7
+  peer_type: l3leaf
+  description: B-LEAF2_Ethernet7
+  shutdown: false
+  type: port-channel-member
+  channel_group:
+    id: 1
+    mode: active
+port_channel_interfaces:
+- name: Port-Channel1
+  description: B-LEAF1_Po7
+  type: switched
+  shutdown: false
+  mode: trunk
+  vlans: none
+ip_igmp_snooping:
+  globally_enabled: true

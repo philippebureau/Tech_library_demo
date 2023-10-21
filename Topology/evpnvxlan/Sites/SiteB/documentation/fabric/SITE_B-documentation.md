@@ -30,6 +30,7 @@
 | SITE_B | spine | B-SPINE2 | 172.100.100.122/24 | vEOS-LAB | Provisioned | - |
 | SITE_B | spine | B-SPINE3 | 172.100.100.114/24 | vEOS-LAB | Provisioned | - |
 | SITE_B | spine | B-SPINE4 | 172.100.100.122/24 | vEOS-LAB | Provisioned | - |
+| SITE_B | l2leaf | B-SW1 | 172.100.100.139/24 | vEOS-LAB | Provisioned | - |
 
 > Provision status is based on Ansible inventory declaration and do not represent real status from CloudVision.
 
@@ -46,10 +47,12 @@
 | l3leaf | B-LEAF1 | Ethernet2 | spine | B-SPINE2 | Ethernet1 |
 | l3leaf | B-LEAF1 | Ethernet3 | spine | B-SPINE3 | Ethernet1 |
 | l3leaf | B-LEAF1 | Ethernet4 | spine | B-SPINE4 | Ethernet1 |
+| l3leaf | B-LEAF1 | Ethernet7 | l2leaf | B-SW1 | Ethernet1 |
 | l3leaf | B-LEAF2 | Ethernet1 | spine | B-SPINE1 | Ethernet2 |
 | l3leaf | B-LEAF2 | Ethernet2 | spine | B-SPINE2 | Ethernet2 |
 | l3leaf | B-LEAF2 | Ethernet3 | spine | B-SPINE3 | Ethernet2 |
 | l3leaf | B-LEAF2 | Ethernet4 | spine | B-SPINE4 | Ethernet2 |
+| l3leaf | B-LEAF2 | Ethernet7 | l2leaf | B-SW1 | Ethernet2 |
 | l3leaf | B-LEAF3 | Ethernet1 | spine | B-SPINE1 | Ethernet3 |
 | l3leaf | B-LEAF3 | Ethernet2 | spine | B-SPINE2 | Ethernet3 |
 | l3leaf | B-LEAF3 | Ethernet3 | spine | B-SPINE3 | Ethernet3 |

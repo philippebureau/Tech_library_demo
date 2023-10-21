@@ -153,6 +153,23 @@ ethernet_interfaces:
     ipv4:
       sparse_mode: true
   ip_address: unnumbered loopback0
+- name: Ethernet7
+  peer: B-SW1
+  peer_interface: Ethernet2
+  peer_type: l2leaf
+  description: B-SW1_Ethernet2
+  shutdown: false
+  type: port-channel-member
+  channel_group:
+    id: 7
+    mode: active
+port_channel_interfaces:
+- name: Port-Channel7
+  description: B-SW1_Po1
+  type: switched
+  shutdown: false
+  mode: trunk
+  vlans: none
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering
