@@ -42,5 +42,5 @@ all:
                   ansible_host: 127.0.0.1
                 B-LEAF8:
                   ansible_host: 127.0.0.1
-                B-SW1:
-                  ansible_host: 127.0.0.1
+              #  B-SW1:
+              #    ansible_host: 127.0.0.1

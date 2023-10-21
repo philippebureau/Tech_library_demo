@@ -1,0 +1,8 @@
+---
+# SITE B fabric variables
+
+fabric_name: SITE_B
+
+underlay_routing_protocol: isis
+underlay_multicast: true
+underlay_rfc5549: true

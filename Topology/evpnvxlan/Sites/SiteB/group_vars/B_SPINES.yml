@@ -1,0 +1,22 @@
+---
+type: spine
+
+spine:
+  defaults:
+    platform: vEOS-LAB
+    bgp_as: 65200
+    loopback_ipv4_pool: 10.0.0.0/24
+    loopback_ipv4_offset: 120
+  nodes:
+    - name: B-SPINE1
+      id: 1
+      mgmt_ip: 172.100.100.114/24
+    - name: B-SPINE2
+      id: 2
+      mgmt_ip: 172.100.100.122/24
+    - name: B-SPINE3
+      id: 3
+      mgmt_ip: 172.100.100.114/24
+    - name: B-SPINE4
+      id: 4
+      mgmt_ip: 172.100.100.122/24
