@@ -191,6 +191,14 @@ port_channel_interfaces:
   trunk_groups:
   - LEAF_PEER_L3
   - MLAG
+- name: Port-Channel7
+  description: HostN
+  type: switched
+  shutdown: false
+  mode: access
+  vlans: '10'
+  spanning_tree_portfast: edge
+  mlag: 7
 ethernet_interfaces:
 - name: Ethernet5
   peer: C-LEAF1
@@ -234,6 +242,16 @@ ethernet_interfaces:
   ip_address: 192.168.0.7/31
   ospf_network_point_to_point: true
   ospf_area: 0.0.0.0
+- name: Ethernet7
+  peer: HostN
+  peer_interface: NIC2
+  peer_type: server
+  description: HostN_NIC2
+  shutdown: false
+  type: port-channel-member
+  channel_group:
+    id: 7
+    mode: active
 mlag_configuration:
   domain_id: C-LEAF12
   local_interface: Vlan4094

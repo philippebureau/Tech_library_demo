@@ -38,3 +38,6 @@ all:
                   ansible_host: 127.0.0.1
                 C-LEAF8:
                   ansible_host: 127.0.0.1
+    CONNECTED_ENDPOINTS:
+      children:
+        C_LEAFS:
