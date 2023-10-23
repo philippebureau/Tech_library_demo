@@ -14,10 +14,14 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
+- [VLANs](#vlans)
+  - [VLANs Summary](#vlans-summary)
+  - [VLANs Device Configuration](#vlans-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
+  - [VLAN Interfaces](#vlan-interfaces)
   - [VXLAN Interface](#vxlan-interface)
 - [Routing](#routing)
   - [Service Routing Protocols Model](#service-routing-protocols-model)
@@ -179,6 +183,26 @@ aaa authorization exec default local
 vlan internal order ascending range 1006 1199
 ```
 
+## VLANs
+
+### VLANs Summary
+
+| VLAN ID | Name | Trunk Groups |
+| ------- | ---- | ------------ |
+| 20 | Green | - |
+| 40 | Purple | - |
+
+### VLANs Device Configuration
+
+```eos
+!
+vlan 20
+   name Green
+!
+vlan 40
+   name Purple
+```
+
 ## Interfaces
 
 ### Ethernet Interfaces
@@ -189,7 +213,7 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet7 | B-SW1_Ethernet1 | *trunk | *none | *- | *- | 7 |
+| Ethernet7 | B-SW1_Ethernet1 | *trunk | *40 | *- | *- | 7 |
 
 *Inherited from Port-Channel Interface
 
@@ -277,7 +301,7 @@ interface Ethernet7
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel7 | B-SW1_Po1 | switched | trunk | none | - | - | - | - | - | - |
+| Port-Channel7 | B-SW1_Po1 | switched | trunk | 40 | - | - | - | - | - | - |
 
 #### Port-Channel Interfaces Device Configuration
 
@@ -287,7 +311,7 @@ interface Port-Channel7
    description B-SW1_Po1
    no shutdown
    switchport
-   switchport trunk allowed vlan none
+   switchport trunk allowed vlan 40
    switchport mode trunk
 ```
 
@@ -335,6 +359,39 @@ interface Loopback1
    isis passive
 ```
 
+### VLAN Interfaces
+
+#### VLAN Interfaces Summary
+
+| Interface | Description | VRF |  MTU | Shutdown |
+| --------- | ----------- | --- | ---- | -------- |
+| Vlan20 | Green | PROD | - | False |
+| Vlan40 | Purple | PROD | - | False |
+
+##### IPv4
+
+| Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
+| --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
+| Vlan20 |  PROD  |  -  |  10.20.20.1/24  |  -  |  -  |  -  |  -  |
+| Vlan40 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
+
+#### VLAN Interfaces Device Configuration
+
+```eos
+!
+interface Vlan20
+   description Green
+   no shutdown
+   vrf PROD
+   ip address virtual 10.20.20.1/24
+!
+interface Vlan40
+   description Purple
+   no shutdown
+   vrf PROD
+   ip address virtual 10.10.10.1/24
+```
+
 ### VXLAN Interface
 
 #### VXLAN Interface Summary
@@ -344,6 +401,19 @@ interface Loopback1
 | Source Interface | Loopback1 |
 | UDP port | 4789 |
 
+##### VLAN to VNI, Flood List and Multicast Group Mappings
+
+| VLAN | VNI | Flood List | Multicast Group |
+| ---- | --- | ---------- | --------------- |
+| 20 | 10020 | - | - |
+| 40 | 10040 | - | - |
+
+##### VRF to VNI and Multicast Group Mappings
+
+| VRF | VNI | Multicast Group |
+| ---- | --- | --------------- |
+| PROD | 50001 | - |
+
 #### VXLAN Interface Device Configuration
 
 ```eos
@@ -352,6 +422,9 @@ interface Vxlan1
    description B-LEAF1_VTEP
    vxlan source-interface Loopback1
    vxlan udp-port 4789
+   vxlan vlan 20 vni 10020
+   vxlan vlan 40 vni 10040
+   vxlan vrf PROD vni 50001
 ```
 
 ## Routing
@@ -385,12 +458,14 @@ ip virtual-router mac-address 00:1c:73:00:00:01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True (ipv6 interfaces) |
+| PROD | True |
 
 #### IP Routing Device Configuration
 
 ```eos
 !
 ip routing ipv6 interfaces
+ip routing vrf PROD
 ```
 
 ### IPv6 Routing
@@ -401,6 +476,7 @@ ip routing ipv6 interfaces
 | --- | --------------- |
 | default | True |
 | default | false |
+| PROD | false |
 
 #### IPv6 Routing Device Configuration
 
@@ -500,6 +576,19 @@ router isis EVPN_UNDERLAY
 | ---------- | -------- | ------------- |
 | EVPN-OVERLAY-PEERS | True | default |
 
+#### Router BGP VLANs
+
+| VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
+| ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
+| 20 | 10.0.0.21:10020 | 10020:10020 | - | - | learned |
+| 40 | 10.0.0.21:10040 | 10040:10040 | - | - | learned |
+
+#### Router BGP VRFs
+
+| VRF | Route-Distinguisher | Redistribute |
+| --- | ------------------- | ------------ |
+| PROD | 10.0.0.21:50001 | connected |
+
 #### Router BGP Device Configuration
 
 ```eos
@@ -530,11 +619,28 @@ router bgp 65200
    neighbor 10.0.0.124 remote-as 65200
    neighbor 10.0.0.124 description B-SPINE4
    !
+   vlan 20
+      rd 10.0.0.21:10020
+      route-target both 10020:10020
+      redistribute learned
+   !
+   vlan 40
+      rd 10.0.0.21:10040
+      route-target both 10040:10040
+      redistribute learned
+   !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+   !
+   vrf PROD
+      rd 10.0.0.21:50001
+      route-target import evpn 50001:50001
+      route-target export evpn 50001:50001
+      router-id 10.0.0.21
+      redistribute connected
 ```
 
 ## BFD
@@ -605,8 +711,11 @@ router multicast
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
+| PROD | enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
+!
+vrf instance PROD
 ```

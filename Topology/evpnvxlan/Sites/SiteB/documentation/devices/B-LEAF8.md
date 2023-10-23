@@ -14,9 +14,13 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
+- [VLANs](#vlans)
+  - [VLANs Summary](#vlans-summary)
+  - [VLANs Device Configuration](#vlans-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
+  - [VLAN Interfaces](#vlan-interfaces)
   - [VXLAN Interface](#vxlan-interface)
 - [Routing](#routing)
   - [Service Routing Protocols Model](#service-routing-protocols-model)
@@ -176,6 +180,34 @@ aaa authorization exec default local
 ```eos
 !
 vlan internal order ascending range 1006 1199
+```
+
+## VLANs
+
+### VLANs Summary
+
+| VLAN ID | Name | Trunk Groups |
+| ------- | ---- | ------------ |
+| 10 | Blue | - |
+| 20 | Green | - |
+| 60 | Red | - |
+| 70 | Brown | - |
+
+### VLANs Device Configuration
+
+```eos
+!
+vlan 10
+   name Blue
+!
+vlan 20
+   name Green
+!
+vlan 60
+   name Red
+!
+vlan 70
+   name Brown
 ```
 
 ## Interfaces
@@ -343,6 +375,55 @@ interface Loopback1
    isis passive
 ```
 
+### VLAN Interfaces
+
+#### VLAN Interfaces Summary
+
+| Interface | Description | VRF |  MTU | Shutdown |
+| --------- | ----------- | --- | ---- | -------- |
+| Vlan10 | Blue | PROD | - | False |
+| Vlan20 | Green | PROD | - | False |
+| Vlan60 | Red | DEV | - | False |
+| Vlan70 | Brown | DEV | - | False |
+
+##### IPv4
+
+| Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
+| --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
+| Vlan10 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
+| Vlan20 |  PROD  |  -  |  10.20.20.1/24  |  -  |  -  |  -  |  -  |
+| Vlan60 |  DEV  |  -  |  10.50.50.1/24  |  -  |  -  |  -  |  -  |
+| Vlan70 |  DEV  |  -  |  10.70.70.1/24  |  -  |  -  |  -  |  -  |
+
+#### VLAN Interfaces Device Configuration
+
+```eos
+!
+interface Vlan10
+   description Blue
+   no shutdown
+   vrf PROD
+   ip address virtual 10.10.10.1/24
+!
+interface Vlan20
+   description Green
+   no shutdown
+   vrf PROD
+   ip address virtual 10.20.20.1/24
+!
+interface Vlan60
+   description Red
+   no shutdown
+   vrf DEV
+   ip address virtual 10.50.50.1/24
+!
+interface Vlan70
+   description Brown
+   no shutdown
+   vrf DEV
+   ip address virtual 10.70.70.1/24
+```
+
 ### VXLAN Interface
 
 #### VXLAN Interface Summary
@@ -352,6 +433,22 @@ interface Loopback1
 | Source Interface | Loopback1 |
 | UDP port | 4789 |
 
+##### VLAN to VNI, Flood List and Multicast Group Mappings
+
+| VLAN | VNI | Flood List | Multicast Group |
+| ---- | --- | ---------- | --------------- |
+| 10 | 10010 | - | - |
+| 20 | 10020 | - | - |
+| 60 | 10060 | - | - |
+| 70 | 10070 | - | - |
+
+##### VRF to VNI and Multicast Group Mappings
+
+| VRF | VNI | Multicast Group |
+| ---- | --- | --------------- |
+| DEV | 50002 | - |
+| PROD | 50001 | - |
+
 #### VXLAN Interface Device Configuration
 
 ```eos
@@ -360,6 +457,12 @@ interface Vxlan1
    description B-LEAF8_VTEP
    vxlan source-interface Loopback1
    vxlan udp-port 4789
+   vxlan vlan 10 vni 10010
+   vxlan vlan 20 vni 10020
+   vxlan vlan 60 vni 10060
+   vxlan vlan 70 vni 10070
+   vxlan vrf DEV vni 50002
+   vxlan vrf PROD vni 50001
 ```
 
 ## Routing
@@ -393,12 +496,16 @@ ip virtual-router mac-address 00:1c:73:00:00:01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True (ipv6 interfaces) |
+| DEV | True |
+| PROD | True |
 
 #### IP Routing Device Configuration
 
 ```eos
 !
 ip routing ipv6 interfaces
+ip routing vrf DEV
+ip routing vrf PROD
 ```
 
 ### IPv6 Routing
@@ -409,6 +516,8 @@ ip routing ipv6 interfaces
 | --- | --------------- |
 | default | True |
 | default | false |
+| DEV | false |
+| PROD | false |
 
 #### IPv6 Routing Device Configuration
 
@@ -532,6 +641,22 @@ router isis EVPN_UNDERLAY
 | L3 Gateway Configured | True |
 | L3 Gateway Inter-domain | True |
 
+#### Router BGP VLANs
+
+| VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
+| ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
+| 10 | 10.0.0.28:10010 | 10010:10010 | - | - | learned |
+| 20 | 10.0.0.28:10020 | 10020:10020 | - | - | learned |
+| 60 | 10.0.0.28:10060 | 10060:10060 | - | - | learned |
+| 70 | 10.0.0.28:10070 | 10070:10070 | - | - | learned |
+
+#### Router BGP VRFs
+
+| VRF | Route-Distinguisher | Redistribute |
+| --- | ------------------- | ------------ |
+| DEV | 10.0.0.28:50002 | connected |
+| PROD | 10.0.0.28:50001 | connected |
+
 #### Router BGP Device Configuration
 
 ```eos
@@ -574,6 +699,26 @@ router bgp 65200
    neighbor 172.16.0.2 remote-as 65000
    neighbor 172.16.0.2 description BB2
    !
+   vlan 10
+      rd 10.0.0.28:10010
+      route-target both 10010:10010
+      redistribute learned
+   !
+   vlan 20
+      rd 10.0.0.28:10020
+      route-target both 10020:10020
+      redistribute learned
+   !
+   vlan 60
+      rd 10.0.0.28:10060
+      route-target both 10060:10060
+      redistribute learned
+   !
+   vlan 70
+      rd 10.0.0.28:10070
+      route-target both 10070:10070
+      redistribute learned
+   !
    address-family evpn
       neighbor EVPN-OVERLAY-CORE activate
       neighbor EVPN-OVERLAY-CORE domain remote
@@ -583,6 +728,20 @@ router bgp 65200
    address-family ipv4
       no neighbor EVPN-OVERLAY-CORE activate
       no neighbor EVPN-OVERLAY-PEERS activate
+   !
+   vrf DEV
+      rd 10.0.0.28:50002
+      route-target import evpn 50002:50002
+      route-target export evpn 50002:50002
+      router-id 10.0.0.28
+      redistribute connected
+   !
+   vrf PROD
+      rd 10.0.0.28:50001
+      route-target import evpn 50001:50001
+      route-target export evpn 50001:50001
+      router-id 10.0.0.28
+      redistribute connected
 ```
 
 ## BFD
@@ -653,8 +812,14 @@ router multicast
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
+| DEV | enabled |
+| PROD | enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
+!
+vrf instance DEV
+!
+vrf instance PROD
 ```

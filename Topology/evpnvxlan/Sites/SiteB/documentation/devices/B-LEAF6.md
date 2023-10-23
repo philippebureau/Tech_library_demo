@@ -14,9 +14,13 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
+- [VLANs](#vlans)
+  - [VLANs Summary](#vlans-summary)
+  - [VLANs Device Configuration](#vlans-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
+  - [VLAN Interfaces](#vlan-interfaces)
   - [VXLAN Interface](#vxlan-interface)
 - [Routing](#routing)
   - [Service Routing Protocols Model](#service-routing-protocols-model)
@@ -178,6 +182,22 @@ aaa authorization exec default local
 vlan internal order ascending range 1006 1199
 ```
 
+## VLANs
+
+### VLANs Summary
+
+| VLAN ID | Name | Trunk Groups |
+| ------- | ---- | ------------ |
+| 40 | Purple | - |
+
+### VLANs Device Configuration
+
+```eos
+!
+vlan 40
+   name Purple
+```
+
 ## Interfaces
 
 ### Ethernet Interfaces
@@ -306,6 +326,31 @@ interface Loopback1
    isis passive
 ```
 
+### VLAN Interfaces
+
+#### VLAN Interfaces Summary
+
+| Interface | Description | VRF |  MTU | Shutdown |
+| --------- | ----------- | --- | ---- | -------- |
+| Vlan40 | Purple | PROD | - | False |
+
+##### IPv4
+
+| Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
+| --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
+| Vlan40 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
+
+#### VLAN Interfaces Device Configuration
+
+```eos
+!
+interface Vlan40
+   description Purple
+   no shutdown
+   vrf PROD
+   ip address virtual 10.10.10.1/24
+```
+
 ### VXLAN Interface
 
 #### VXLAN Interface Summary
@@ -315,6 +360,18 @@ interface Loopback1
 | Source Interface | Loopback1 |
 | UDP port | 4789 |
 
+##### VLAN to VNI, Flood List and Multicast Group Mappings
+
+| VLAN | VNI | Flood List | Multicast Group |
+| ---- | --- | ---------- | --------------- |
+| 40 | 10040 | - | - |
+
+##### VRF to VNI and Multicast Group Mappings
+
+| VRF | VNI | Multicast Group |
+| ---- | --- | --------------- |
+| PROD | 50001 | - |
+
 #### VXLAN Interface Device Configuration
 
 ```eos
@@ -323,6 +380,8 @@ interface Vxlan1
    description B-LEAF6_VTEP
    vxlan source-interface Loopback1
    vxlan udp-port 4789
+   vxlan vlan 40 vni 10040
+   vxlan vrf PROD vni 50001
 ```
 
 ## Routing
@@ -356,12 +415,14 @@ ip virtual-router mac-address 00:1c:73:00:00:01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True (ipv6 interfaces) |
+| PROD | True |
 
 #### IP Routing Device Configuration
 
 ```eos
 !
 ip routing ipv6 interfaces
+ip routing vrf PROD
 ```
 
 ### IPv6 Routing
@@ -372,6 +433,7 @@ ip routing ipv6 interfaces
 | --- | --------------- |
 | default | True |
 | default | false |
+| PROD | false |
 
 #### IPv6 Routing Device Configuration
 
@@ -471,6 +533,18 @@ router isis EVPN_UNDERLAY
 | ---------- | -------- | ------------- |
 | EVPN-OVERLAY-PEERS | True | default |
 
+#### Router BGP VLANs
+
+| VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
+| ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
+| 40 | 10.0.0.26:10040 | 10040:10040 | - | - | learned |
+
+#### Router BGP VRFs
+
+| VRF | Route-Distinguisher | Redistribute |
+| --- | ------------------- | ------------ |
+| PROD | 10.0.0.26:50001 | connected |
+
 #### Router BGP Device Configuration
 
 ```eos
@@ -501,11 +575,23 @@ router bgp 65200
    neighbor 10.0.0.124 remote-as 65200
    neighbor 10.0.0.124 description B-SPINE4
    !
+   vlan 40
+      rd 10.0.0.26:10040
+      route-target both 10040:10040
+      redistribute learned
+   !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+   !
+   vrf PROD
+      rd 10.0.0.26:50001
+      route-target import evpn 50001:50001
+      route-target export evpn 50001:50001
+      router-id 10.0.0.26
+      redistribute connected
 ```
 
 ## BFD
@@ -576,8 +662,11 @@ router multicast
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
+| PROD | enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
+!
+vrf instance PROD
 ```

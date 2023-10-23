@@ -72,6 +72,68 @@ router_bgp:
     peer_group: EVPN-OVERLAY-CORE
     description: BB2
     remote_as: '65000'
+  vrfs:
+  - name: DEV
+    router_id: 10.0.0.28
+    rd: 10.0.0.28:50002
+    route_targets:
+      import:
+      - address_family: evpn
+        route_targets:
+        - 50002:50002
+      export:
+      - address_family: evpn
+        route_targets:
+        - 50002:50002
+    redistribute_routes:
+    - source_protocol: connected
+  - name: PROD
+    router_id: 10.0.0.28
+    rd: 10.0.0.28:50001
+    route_targets:
+      import:
+      - address_family: evpn
+        route_targets:
+        - 50001:50001
+      export:
+      - address_family: evpn
+        route_targets:
+        - 50001:50001
+    redistribute_routes:
+    - source_protocol: connected
+  vlans:
+  - id: 60
+    tenant: DEV_TENANT
+    rd: 10.0.0.28:10060
+    route_targets:
+      both:
+      - 10060:10060
+    redistribute_routes:
+    - learned
+  - id: 70
+    tenant: DEV_TENANT
+    rd: 10.0.0.28:10070
+    route_targets:
+      both:
+      - 10070:10070
+    redistribute_routes:
+    - learned
+  - id: 10
+    tenant: PROD_TENANT
+    rd: 10.0.0.28:10010
+    route_targets:
+      both:
+      - 10010:10010
+    redistribute_routes:
+    - learned
+  - id: 20
+    tenant: PROD_TENANT
+    rd: 10.0.0.28:10020
+    route_targets:
+      both:
+      - 10020:10020
+    redistribute_routes:
+    - learned
 service_routing_protocols_model: multi-agent
 ipv6_unicast_routing: true
 ip_routing_ipv6_interfaces: true
@@ -97,6 +159,12 @@ local_users:
 vrfs:
 - name: default
   ip_routing: false
+- name: DEV
+  tenant: DEV_TENANT
+  ip_routing: true
+- name: PROD
+  tenant: PROD_TENANT
+  ip_routing: true
 management_interfaces:
 - name: Management1
   description: oob_management
@@ -235,12 +303,72 @@ router_bfd:
     interval: 1200
     min_rx: 1200
     multiplier: 3
+vlans:
+- id: 60
+  name: Red
+  tenant: DEV_TENANT
+- id: 70
+  name: Brown
+  tenant: DEV_TENANT
+- id: 10
+  name: Blue
+  tenant: PROD_TENANT
+- id: 20
+  name: Green
+  tenant: PROD_TENANT
 ip_igmp_snooping:
   globally_enabled: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:01
+vlan_interfaces:
+- name: Vlan60
+  tenant: DEV_TENANT
+  tags:
+  - red
+  description: Red
+  shutdown: false
+  ip_address_virtual: 10.50.50.1/24
+  vrf: DEV
+- name: Vlan70
+  tenant: DEV_TENANT
+  tags:
+  - brown
+  description: Brown
+  shutdown: false
+  ip_address_virtual: 10.70.70.1/24
+  vrf: DEV
+- name: Vlan10
+  tenant: PROD_TENANT
+  tags:
+  - blue
+  description: Blue
+  shutdown: false
+  ip_address_virtual: 10.10.10.1/24
+  vrf: PROD
+- name: Vlan20
+  tenant: PROD_TENANT
+  tags:
+  - green
+  description: Green
+  shutdown: false
+  ip_address_virtual: 10.20.20.1/24
+  vrf: PROD
 vxlan_interface:
   Vxlan1:
     description: B-LEAF8_VTEP
     vxlan:
       udp_port: 4789
       source_interface: Loopback1
+      vlans:
+      - id: 60
+        vni: 10060
+      - id: 70
+        vni: 10070
+      - id: 10
+        vni: 10010
+      - id: 20
+        vni: 10020
+      vrfs:
+      - name: DEV
+        vni: 50002
+      - name: PROD
+        vni: 50001
