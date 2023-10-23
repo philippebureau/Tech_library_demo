@@ -24,7 +24,7 @@ all:
                   ansible_host: 127.0.0.1
                 B-SPINE4:
                   ansible_host: 127.0.0.1
-            B_LEAFS:
+            B_L3LEAFS:
               hosts:
                 B-LEAF1:
                   ansible_host: 127.0.0.1
@@ -42,5 +42,7 @@ all:
                   ansible_host: 127.0.0.1
                 B-LEAF8:
                   ansible_host: 127.0.0.1
+            B_L2LEAFS:
+              hosts:
                 B-SW1:
                   ansible_host: 127.0.0.1

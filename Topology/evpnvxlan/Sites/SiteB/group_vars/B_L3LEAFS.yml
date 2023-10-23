@@ -4,14 +4,10 @@ type: l3leaf
 l3leaf:
   defaults:
     platform: vEOS-LAB
+    bgp_as: 65200
     loopback_ipv4_pool: 10.0.0.0/24
     loopback_ipv4_offset: 20
     vtep_loopback_ipv4_pool: 10.2.2.0/24
-    uplink_ipv4_pool: 192.168.0.0/24
-    isis_system_id_prefix: '0000.0001'
-    isis_maximum_paths: 4
-    bgp_defaults: ['distance bgp 20 200 200']
-    bgp_as: 65200
     uplink_interfaces:
       - Ethernet1
       - Ethernet2
@@ -22,10 +18,17 @@ l3leaf:
       - B-SPINE2
       - B-SPINE3
       - B-SPINE4
+    mlag: false
+    virtual_router_mac_address: 00:1c:73:00:00:01
+    isis_system_id_prefix: '0000.0001'
+    isis_maximum_paths: 4
+    uplink_structured_config:
+      ip_address: 'unnumbered loopback0'
+      ipv6_enable: false
   node_groups:
     - group: B-LEAF12
       filter:
-        tags: [ blue, orange ]
+        tags: [ green, purple ]
       nodes:
         - name: B-LEAF1
           id: 1
@@ -45,7 +48,7 @@ l3leaf:
             - Ethernet2
     - group: B-LEAF34
       filter:
-        tags: [ blue, orange, yellow ]
+        tags: [ blue, red, brown]
       nodes:
         - name: B-LEAF3
           id: 3
@@ -65,7 +68,7 @@ l3leaf:
             - Ethernet4
     - group: B-LEAF56
       filter:
-        tags: [ brown ]
+        tags: [ purple, black ]
       nodes:
         - name: B-LEAF5
           id: 5
@@ -84,9 +87,8 @@ l3leaf:
             - Ethernet6
             - Ethernet6
     - group: B-LEAF78
-      bgp_as: 65178
       filter:
-        tags: [ blue, yellow, brown ]
+        tags: [ blue, green, red, brown ]
       evpn_gateway:
         remote_peers:
           - hostname: BB1

@@ -3,11 +3,10 @@
 
 fabric_name: SITE_B
 
-# ISIS Parameters when underlay_routing_protocol=ISIS
+# ISIS Underlay variables
 underlay_routing_protocol: isis
-overlay_routing_protocol: ibgp
-bgp_as: 65200
+underlay_rfc5549: true
 isis_area_id: "49.1111"
 
-# Enable vlan aware bundles for EVPN MAC-VRF
-evpn_vlan_aware_bundles: true
+# Enable multicast
+underlay_multicast: true
