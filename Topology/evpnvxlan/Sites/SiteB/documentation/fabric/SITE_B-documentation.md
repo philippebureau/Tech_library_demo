@@ -47,12 +47,10 @@
 | l3leaf | B-LEAF1 | Ethernet2 | spine | B-SPINE2 | Ethernet1 |
 | l3leaf | B-LEAF1 | Ethernet3 | spine | B-SPINE3 | Ethernet1 |
 | l3leaf | B-LEAF1 | Ethernet4 | spine | B-SPINE4 | Ethernet1 |
-| l3leaf | B-LEAF1 | Ethernet7 | l2leaf | B-SW1 | Ethernet1 |
 | l3leaf | B-LEAF2 | Ethernet1 | spine | B-SPINE1 | Ethernet2 |
 | l3leaf | B-LEAF2 | Ethernet2 | spine | B-SPINE2 | Ethernet2 |
 | l3leaf | B-LEAF2 | Ethernet3 | spine | B-SPINE3 | Ethernet2 |
 | l3leaf | B-LEAF2 | Ethernet4 | spine | B-SPINE4 | Ethernet2 |
-| l3leaf | B-LEAF2 | Ethernet7 | l2leaf | B-SW1 | Ethernet2 |
 | l3leaf | B-LEAF3 | Ethernet1 | spine | B-SPINE1 | Ethernet3 |
 | l3leaf | B-LEAF3 | Ethernet2 | spine | B-SPINE2 | Ethernet3 |
 | l3leaf | B-LEAF3 | Ethernet3 | spine | B-SPINE3 | Ethernet3 |
@@ -65,10 +63,12 @@
 | l3leaf | B-LEAF5 | Ethernet2 | spine | B-SPINE2 | Ethernet5 |
 | l3leaf | B-LEAF5 | Ethernet3 | spine | B-SPINE3 | Ethernet5 |
 | l3leaf | B-LEAF5 | Ethernet4 | spine | B-SPINE4 | Ethernet5 |
+| l3leaf | B-LEAF5 | Ethernet7 | l2leaf | B-SW1 | Ethernet1 |
 | l3leaf | B-LEAF6 | Ethernet1 | spine | B-SPINE1 | Ethernet6 |
 | l3leaf | B-LEAF6 | Ethernet2 | spine | B-SPINE2 | Ethernet6 |
 | l3leaf | B-LEAF6 | Ethernet3 | spine | B-SPINE3 | Ethernet6 |
 | l3leaf | B-LEAF6 | Ethernet4 | spine | B-SPINE4 | Ethernet6 |
+| l3leaf | B-LEAF6 | Ethernet7 | l2leaf | B-SW1 | Ethernet2 |
 | l3leaf | B-LEAF7 | Ethernet1 | spine | B-SPINE1 | Ethernet7 |
 | l3leaf | B-LEAF7 | Ethernet2 | spine | B-SPINE2 | Ethernet7 |
 | l3leaf | B-LEAF7 | Ethernet3 | spine | B-SPINE3 | Ethernet7 |

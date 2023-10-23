@@ -120,6 +120,9 @@ management_api_http:
   enable_vrfs:
   - name: default
   enable_https: true
+link_tracking_groups:
+- name: ES-LINKS
+  recovery_delay: 300
 ethernet_interfaces:
 - name: Ethernet1
   peer: B-SPINE1
@@ -130,6 +133,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -147,6 +153,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -164,6 +173,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -181,6 +193,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -190,22 +205,23 @@ ethernet_interfaces:
       sparse_mode: true
   ip_address: unnumbered loopback0
 - name: Ethernet7
-  peer: B-SW1
-  peer_interface: Ethernet2
-  peer_type: l2leaf
-  description: B-SW1_Ethernet2
+  peer: HostG
+  peer_type: network_port
+  description: HostG
   shutdown: false
   type: port-channel-member
   channel_group:
     id: 7
     mode: active
-port_channel_interfaces:
-- name: Port-Channel7
-  description: B-SW1_Po1
-  type: switched
+- name: Ethernet8
+  peer: HostH
+  peer_type: network_port
+  description: HostH
   shutdown: false
-  mode: trunk
-  vlans: '40'
+  type: port-channel-member
+  channel_group:
+    id: 8
+    mode: active
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering
@@ -274,3 +290,32 @@ vxlan_interface:
       vrfs:
       - name: PROD
         vni: 50001
+port_channel_interfaces:
+- name: Port-Channel7
+  description: HostG
+  type: switched
+  shutdown: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: downstream
+  mode: access
+  vlans: '20'
+  spanning_tree_portfast: edge
+  evpn_ethernet_segment:
+    identifier: 0000:0000:0021:0022:0007
+    route_target: 00:21:00:22:00:07
+  lacp_id: 0021.0022.0007
+- name: Port-Channel8
+  description: HostH
+  type: switched
+  shutdown: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: downstream
+  mode: access
+  vlans: '40'
+  spanning_tree_portfast: edge
+  evpn_ethernet_segment:
+    identifier: 0000:0000:0021:0022:0008
+    route_target: 00:21:00:22:00:08
+  lacp_id: 0021.0022.0008

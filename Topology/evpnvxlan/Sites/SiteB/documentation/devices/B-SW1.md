@@ -200,8 +200,8 @@ vlan 40
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 | B-LEAF1_Ethernet7 | *trunk | *40 | *- | *- | 1 |
-| Ethernet2 | B-LEAF2_Ethernet7 | *trunk | *40 | *- | *- | 1 |
+| Ethernet1 | B-LEAF5_Ethernet7 | *trunk | *40 | *- | *- | 1 |
+| Ethernet2 | B-LEAF6_Ethernet7 | *trunk | *40 | *- | *- | 1 |
 
 *Inherited from Port-Channel Interface
 
@@ -210,12 +210,12 @@ vlan 40
 ```eos
 !
 interface Ethernet1
-   description B-LEAF1_Ethernet7
+   description B-LEAF5_Ethernet7
    no shutdown
    channel-group 1 mode active
 !
 interface Ethernet2
-   description B-LEAF2_Ethernet7
+   description B-LEAF6_Ethernet7
    no shutdown
    channel-group 1 mode active
 ```
@@ -228,14 +228,14 @@ interface Ethernet2
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | B-LEAF1_Po7 | switched | trunk | 40 | - | - | - | - | - | - |
+| Port-Channel1 | B-LEAF5_Po7 | switched | trunk | 40 | - | - | - | - | - | - |
 
 #### Port-Channel Interfaces Device Configuration
 
 ```eos
 !
 interface Port-Channel1
-   description B-LEAF1_Po7
+   description B-LEAF5_Po7
    no shutdown
    switchport
    switchport trunk allowed vlan 40

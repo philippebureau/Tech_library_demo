@@ -278,6 +278,8 @@ vlan 4094
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet5 | MLAG_PEER_A-LEAF2_Ethernet5 | *trunk | *- | *- | *['LEAF_PEER_L3', 'MLAG'] | 1000 |
 | Ethernet6 | MLAG_PEER_A-LEAF2_Ethernet6 | *trunk | *- | *- | *['LEAF_PEER_L3', 'MLAG'] | 1000 |
+| Ethernet7 | HostA_NIC1 | *access | *10 | *- | *- | 7 |
+| Ethernet8 | HostB_NIC1 | *access | *30 | *- | *- | 8 |
 
 *Inherited from Port-Channel Interface
 
@@ -331,6 +333,16 @@ interface Ethernet6
    description MLAG_PEER_A-LEAF2_Ethernet6
    no shutdown
    channel-group 1000 mode active
+!
+interface Ethernet7
+   description HostA_NIC1
+   no shutdown
+   channel-group 7 mode active
+!
+interface Ethernet8
+   description HostB_NIC1
+   no shutdown
+   channel-group 8 mode active
 ```
 
 ### Port-Channel Interfaces
@@ -341,11 +353,29 @@ interface Ethernet6
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
+| Port-Channel7 | HostA | switched | access | 10 | - | - | - | - | 7 | - |
+| Port-Channel8 | HostB | switched | access | 30 | - | - | - | - | 8 | - |
 | Port-Channel1000 | MLAG_PEER_A-LEAF2_Po1000 | switched | trunk | - | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
 
 #### Port-Channel Interfaces Device Configuration
 
 ```eos
+!
+interface Port-Channel7
+   description HostA
+   no shutdown
+   switchport
+   switchport access vlan 10
+   mlag 7
+   spanning-tree portfast
+!
+interface Port-Channel8
+   description HostB
+   no shutdown
+   switchport
+   switchport access vlan 30
+   mlag 8
+   spanning-tree portfast
 !
 interface Port-Channel1000
    description MLAG_PEER_A-LEAF2_Po1000

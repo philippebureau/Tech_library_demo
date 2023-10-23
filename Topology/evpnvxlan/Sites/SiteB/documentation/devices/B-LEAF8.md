@@ -11,6 +11,7 @@
 - [Authentication](#authentication)
   - [Local Users](#local-users)
   - [AAA Authorization](#aaa-authorization)
+  - [Link Tracking](#link-tracking)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
@@ -167,6 +168,22 @@ aaa authorization exec default local
 !
 ```
 
+### Link Tracking
+
+#### Link Tracking Groups Summary
+
+| Group Name | Minimum Links | Recovery Delay |
+| ---------- | ------------- | -------------- |
+| ES-LINKS | - | 300 |
+
+#### Link Tracking Groups Configuration
+
+```eos
+!
+link tracking group ES-LINKS
+   recovery delay 300
+```
+
 ## Internal VLAN Allocation Policy
 
 ### Internal VLAN Allocation Policy Summary
@@ -223,6 +240,15 @@ vlan 70
 
 *Inherited from Port-Channel Interface
 
+##### Link Tracking Groups
+
+| Interface | Group Name | Direction |
+| --------- | ---------- | --------- |
+| Ethernet1 | ES-LINKS | upstream |
+| Ethernet2 | ES-LINKS | upstream |
+| Ethernet3 | ES-LINKS | upstream |
+| Ethernet4 | ES-LINKS | upstream |
+
 ##### IPv4
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
@@ -267,6 +293,7 @@ interface Ethernet1
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
 !
 interface Ethernet2
    description P2P_LINK_TO_B-SPINE2_Ethernet8
@@ -279,6 +306,7 @@ interface Ethernet2
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
 !
 interface Ethernet3
    description P2P_LINK_TO_B-SPINE3_Ethernet8
@@ -291,6 +319,7 @@ interface Ethernet3
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
 !
 interface Ethernet4
    description P2P_LINK_TO_B-SPINE4_Ethernet8
@@ -303,6 +332,7 @@ interface Ethernet4
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
 !
 interface Ethernet7
    description P2P_LINK_TO_BB1_Ethernet4

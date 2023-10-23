@@ -32,20 +32,20 @@ management_api_http:
   enable_https: true
 ethernet_interfaces:
 - name: Ethernet1
-  peer: B-LEAF1
+  peer: B-LEAF5
   peer_interface: Ethernet7
   peer_type: l3leaf
-  description: B-LEAF1_Ethernet7
+  description: B-LEAF5_Ethernet7
   shutdown: false
   type: port-channel-member
   channel_group:
     id: 1
     mode: active
 - name: Ethernet2
-  peer: B-LEAF2
+  peer: B-LEAF6
   peer_interface: Ethernet7
   peer_type: l3leaf
-  description: B-LEAF2_Ethernet7
+  description: B-LEAF6_Ethernet7
   shutdown: false
   type: port-channel-member
   channel_group:
@@ -53,7 +53,7 @@ ethernet_interfaces:
     mode: active
 port_channel_interfaces:
 - name: Port-Channel1
-  description: B-LEAF1_Po7
+  description: B-LEAF5_Po7
   type: switched
   shutdown: false
   mode: trunk

@@ -112,6 +112,9 @@ management_api_http:
   enable_vrfs:
   - name: default
   enable_https: true
+link_tracking_groups:
+- name: ES-LINKS
+  recovery_delay: 300
 ethernet_interfaces:
 - name: Ethernet1
   peer: B-SPINE1
@@ -122,6 +125,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -139,6 +145,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -156,6 +165,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -173,6 +185,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -181,6 +196,23 @@ ethernet_interfaces:
     ipv4:
       sparse_mode: true
   ip_address: unnumbered loopback0
+- name: Ethernet7
+  peer: B-SW1
+  peer_interface: Ethernet2
+  peer_type: l2leaf
+  description: B-SW1_Ethernet2
+  shutdown: false
+  type: port-channel-member
+  channel_group:
+    id: 7
+    mode: active
+port_channel_interfaces:
+- name: Port-Channel7
+  description: B-SW1_Po1
+  type: switched
+  shutdown: false
+  mode: trunk
+  vlans: '40'
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering
