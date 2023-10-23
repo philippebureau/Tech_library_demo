@@ -7,6 +7,11 @@ spine:
     bgp_as: 65200
     loopback_ipv4_pool: 10.0.0.0/24
     loopback_ipv4_offset: 120
+    isis_system_id_prefix: '0000.0000'
+    isis_maximum_paths: 4
+    uplink_structured_config:
+      ip_address: 'unnumbered loopback0'
+      ipv6_enable: false
   nodes:
     - name: B-SPINE1
       id: 1

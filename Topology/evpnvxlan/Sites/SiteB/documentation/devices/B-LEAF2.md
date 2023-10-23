@@ -416,6 +416,7 @@ ipv6 unicast-routing
 | Settings | Value |
 | -------- | ----- |
 | Instance | EVPN_UNDERLAY |
+| Net-ID | 49.1111.0000.0001.0002.00 |
 | Type | level-2 |
 | Router-ID | 10.0.0.22 |
 | Log Adjacency Changes | True |
@@ -443,6 +444,7 @@ ipv6 unicast-routing
 ```eos
 !
 router isis EVPN_UNDERLAY
+   net 49.1111.0000.0001.0002.00
    is-type level-2
    router-id ipv4 10.0.0.22
    log-adjacency-changes

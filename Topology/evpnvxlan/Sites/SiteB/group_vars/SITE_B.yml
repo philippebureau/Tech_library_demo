@@ -3,6 +3,10 @@
 
 fabric_name: SITE_B
 
+# ISIS Underlay variables
 underlay_routing_protocol: isis
-underlay_multicast: true
 underlay_rfc5549: true
+isis_area_id: "49.1111"
+
+# Enable multicast
+underlay_multicast: true
