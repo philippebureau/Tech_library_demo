@@ -11,6 +11,7 @@
 - [Authentication](#authentication)
   - [Local Users](#local-users)
   - [AAA Authorization](#aaa-authorization)
+  - [Link Tracking](#link-tracking)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
@@ -19,6 +20,7 @@
   - [VLANs Device Configuration](#vlans-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
+  - [Port-Channel Interfaces](#port-channel-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
   - [VLAN Interfaces](#vlan-interfaces)
   - [VXLAN Interface](#vxlan-interface)
@@ -167,6 +169,22 @@ aaa authorization exec default local
 !
 ```
 
+### Link Tracking
+
+#### Link Tracking Groups Summary
+
+| Group Name | Minimum Links | Recovery Delay |
+| ---------- | ------------- | -------------- |
+| ES-LINKS | - | 300 |
+
+#### Link Tracking Groups Configuration
+
+```eos
+!
+link tracking group ES-LINKS
+   recovery delay 300
+```
+
 ## Internal VLAN Allocation Policy
 
 ### Internal VLAN Allocation Policy Summary
@@ -189,6 +207,7 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 40 | Purple | - |
+| 80 | Black | - |
 
 ### VLANs Device Configuration
 
@@ -196,6 +215,9 @@ vlan internal order ascending range 1006 1199
 !
 vlan 40
    name Purple
+!
+vlan 80
+   name Black
 ```
 
 ## Interfaces
@@ -208,8 +230,18 @@ vlan 40
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
+| Ethernet7 | B-SW1_Ethernet2 | *trunk | *40,80 | *- | *- | 7 |
 
 *Inherited from Port-Channel Interface
+
+##### Link Tracking Groups
+
+| Interface | Group Name | Direction |
+| --------- | ---------- | --------- |
+| Ethernet1 | ES-LINKS | upstream |
+| Ethernet2 | ES-LINKS | upstream |
+| Ethernet3 | ES-LINKS | upstream |
+| Ethernet4 | ES-LINKS | upstream |
 
 ##### IPv4
 
@@ -244,6 +276,7 @@ interface Ethernet1
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
 !
 interface Ethernet2
    description P2P_LINK_TO_B-SPINE2_Ethernet6
@@ -256,6 +289,7 @@ interface Ethernet2
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
 !
 interface Ethernet3
    description P2P_LINK_TO_B-SPINE3_Ethernet6
@@ -268,6 +302,7 @@ interface Ethernet3
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
 !
 interface Ethernet4
    description P2P_LINK_TO_B-SPINE4_Ethernet6
@@ -280,6 +315,34 @@ interface Ethernet4
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
+!
+interface Ethernet7
+   description B-SW1_Ethernet2
+   no shutdown
+   channel-group 7 mode active
+```
+
+### Port-Channel Interfaces
+
+#### Port-Channel Interfaces Summary
+
+##### L2
+
+| Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
+| --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
+| Port-Channel7 | B-SW1_Po1 | switched | trunk | 40,80 | - | - | - | - | - | - |
+
+#### Port-Channel Interfaces Device Configuration
+
+```eos
+!
+interface Port-Channel7
+   description B-SW1_Po1
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 40,80
+   switchport mode trunk
 ```
 
 ### Loopback Interfaces
@@ -333,12 +396,14 @@ interface Loopback1
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan40 | Purple | PROD | - | False |
+| Vlan80 | Black | DEV | - | False |
 
 ##### IPv4
 
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan40 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
+| Vlan80 |  DEV  |  -  |  10.80.80.1/24  |  -  |  -  |  -  |  -  |
 
 #### VLAN Interfaces Device Configuration
 
@@ -349,6 +414,12 @@ interface Vlan40
    no shutdown
    vrf PROD
    ip address virtual 10.10.10.1/24
+!
+interface Vlan80
+   description Black
+   no shutdown
+   vrf DEV
+   ip address virtual 10.80.80.1/24
 ```
 
 ### VXLAN Interface
@@ -365,11 +436,13 @@ interface Vlan40
 | VLAN | VNI | Flood List | Multicast Group |
 | ---- | --- | ---------- | --------------- |
 | 40 | 10040 | - | - |
+| 80 | 10080 | - | - |
 
 ##### VRF to VNI and Multicast Group Mappings
 
 | VRF | VNI | Multicast Group |
 | ---- | --- | --------------- |
+| DEV | 50002 | - |
 | PROD | 50001 | - |
 
 #### VXLAN Interface Device Configuration
@@ -381,6 +454,8 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
    vxlan vlan 40 vni 10040
+   vxlan vlan 80 vni 10080
+   vxlan vrf DEV vni 50002
    vxlan vrf PROD vni 50001
 ```
 
@@ -415,6 +490,7 @@ ip virtual-router mac-address 00:1c:73:00:00:01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True (ipv6 interfaces) |
+| DEV | True |
 | PROD | True |
 
 #### IP Routing Device Configuration
@@ -422,6 +498,7 @@ ip virtual-router mac-address 00:1c:73:00:00:01
 ```eos
 !
 ip routing ipv6 interfaces
+ip routing vrf DEV
 ip routing vrf PROD
 ```
 
@@ -433,6 +510,7 @@ ip routing vrf PROD
 | --- | --------------- |
 | default | True |
 | default | false |
+| DEV | false |
 | PROD | false |
 
 #### IPv6 Routing Device Configuration
@@ -538,11 +616,13 @@ router isis EVPN_UNDERLAY
 | VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
 | ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
 | 40 | 10.0.0.26:10040 | 10040:10040 | - | - | learned |
+| 80 | 10.0.0.26:10080 | 10080:10080 | - | - | learned |
 
 #### Router BGP VRFs
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
+| DEV | 10.0.0.26:50002 | connected |
 | PROD | 10.0.0.26:50001 | connected |
 
 #### Router BGP Device Configuration
@@ -580,11 +660,23 @@ router bgp 65200
       route-target both 10040:10040
       redistribute learned
    !
+   vlan 80
+      rd 10.0.0.26:10080
+      route-target both 10080:10080
+      redistribute learned
+   !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+   !
+   vrf DEV
+      rd 10.0.0.26:50002
+      route-target import evpn 50002:50002
+      route-target export evpn 50002:50002
+      router-id 10.0.0.26
+      redistribute connected
    !
    vrf PROD
       rd 10.0.0.26:50001
@@ -662,11 +754,14 @@ router multicast
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
+| DEV | enabled |
 | PROD | enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
+!
+vrf instance DEV
 !
 vrf instance PROD
 ```

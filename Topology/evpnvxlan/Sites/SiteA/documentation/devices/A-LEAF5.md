@@ -274,6 +274,7 @@ vlan 4094
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet5 | MLAG_PEER_A-LEAF6_Ethernet5 | *trunk | *- | *- | *['LEAF_PEER_L3', 'MLAG'] | 1000 |
 | Ethernet6 | MLAG_PEER_A-LEAF6_Ethernet6 | *trunk | *- | *- | *['LEAF_PEER_L3', 'MLAG'] | 1000 |
+| Ethernet7 | HostF_NIC1 | *access | *70 | *- | *- | 7 |
 
 *Inherited from Port-Channel Interface
 
@@ -327,6 +328,11 @@ interface Ethernet6
    description MLAG_PEER_A-LEAF6_Ethernet6
    no shutdown
    channel-group 1000 mode active
+!
+interface Ethernet7
+   description HostF_NIC1
+   no shutdown
+   channel-group 7 mode active
 ```
 
 ### Port-Channel Interfaces
@@ -337,11 +343,20 @@ interface Ethernet6
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
+| Port-Channel7 | HostF | switched | access | 70 | - | - | - | - | 7 | - |
 | Port-Channel1000 | MLAG_PEER_A-LEAF6_Po1000 | switched | trunk | - | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
 
 #### Port-Channel Interfaces Device Configuration
 
 ```eos
+!
+interface Port-Channel7
+   description HostF
+   no shutdown
+   switchport
+   switchport access vlan 70
+   mlag 7
+   spanning-tree portfast
 !
 interface Port-Channel1000
    description MLAG_PEER_A-LEAF6_Po1000

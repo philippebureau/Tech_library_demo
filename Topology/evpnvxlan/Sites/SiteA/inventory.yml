@@ -42,3 +42,7 @@ all:
                   ansible_host: 127.0.0.1
                 A-LEAF8:
                   ansible_host: 127.0.0.1
+
+    CONNECTED_ENDPOINTS:
+      children:
+        A_LEAFS:

@@ -46,3 +46,8 @@ all:
               hosts:
                 B-SW1:
                   ansible_host: 127.0.0.1
+
+    CONNECTED_ENDPOINTS:
+      children:
+        B_L3LEAFS:
+        B_L2LEAFS:

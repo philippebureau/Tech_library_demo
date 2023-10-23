@@ -25,6 +25,11 @@ l3leaf:
     uplink_structured_config:
       ip_address: 'unnumbered loopback0'
       ipv6_enable: false
+    link_tracking:
+      enabled: true
+      groups:
+        - name: ES-LINKS
+          recovery_delay: 300
   node_groups:
     - group: B-LEAF12
       filter:

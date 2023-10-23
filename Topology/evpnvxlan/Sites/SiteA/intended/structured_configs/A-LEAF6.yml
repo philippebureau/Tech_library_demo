@@ -206,6 +206,14 @@ port_channel_interfaces:
   trunk_groups:
   - LEAF_PEER_L3
   - MLAG
+- name: Port-Channel7
+  description: HostF
+  type: switched
+  shutdown: false
+  mode: access
+  vlans: '70'
+  spanning_tree_portfast: edge
+  mlag: 7
 ethernet_interfaces:
 - name: Ethernet5
   peer: A-LEAF5
@@ -263,6 +271,16 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.47/31
+- name: Ethernet7
+  peer: HostF
+  peer_interface: NIC2
+  peer_type: server
+  description: HostF_NIC2
+  shutdown: false
+  type: port-channel-member
+  channel_group:
+    id: 7
+    mode: active
 mlag_configuration:
   domain_id: A-LEAF56
   local_interface: Vlan4094

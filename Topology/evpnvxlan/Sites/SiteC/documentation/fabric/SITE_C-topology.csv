@@ -3,10 +3,12 @@ l3leaf,C-LEAF1,Ethernet1,spine,C-SPINE1,Ethernet1,True
 l3leaf,C-LEAF1,Ethernet2,spine,C-SPINE2,Ethernet1,True
 l3leaf,C-LEAF1,Ethernet5,mlag_peer,C-LEAF2,Ethernet5,True
 l3leaf,C-LEAF1,Ethernet6,mlag_peer,C-LEAF2,Ethernet6,True
+l3leaf,C-LEAF1,Ethernet7,server,HostN,NIC1,True
 l3leaf,C-LEAF2,Ethernet1,spine,C-SPINE1,Ethernet2,True
 l3leaf,C-LEAF2,Ethernet2,spine,C-SPINE2,Ethernet2,True
 l3leaf,C-LEAF2,Ethernet5,mlag_peer,C-LEAF1,Ethernet5,True
 l3leaf,C-LEAF2,Ethernet6,mlag_peer,C-LEAF1,Ethernet6,True
+l3leaf,C-LEAF2,Ethernet7,server,HostN,NIC2,True
 l3leaf,C-LEAF3,Ethernet1,spine,C-SPINE1,Ethernet3,True
 l3leaf,C-LEAF3,Ethernet2,spine,C-SPINE2,Ethernet3,True
 l3leaf,C-LEAF3,Ethernet5,mlag_peer,C-LEAF4,Ethernet5,True

@@ -11,6 +11,7 @@
 - [Authentication](#authentication)
   - [Local Users](#local-users)
   - [AAA Authorization](#aaa-authorization)
+  - [Link Tracking](#link-tracking)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
@@ -19,6 +20,7 @@
   - [VLANs Device Configuration](#vlans-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
+  - [Port-Channel Interfaces](#port-channel-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
   - [VLAN Interfaces](#vlan-interfaces)
   - [VXLAN Interface](#vxlan-interface)
@@ -167,6 +169,22 @@ aaa authorization exec default local
 !
 ```
 
+### Link Tracking
+
+#### Link Tracking Groups Summary
+
+| Group Name | Minimum Links | Recovery Delay |
+| ---------- | ------------- | -------------- |
+| ES-LINKS | - | 300 |
+
+#### Link Tracking Groups Configuration
+
+```eos
+!
+link tracking group ES-LINKS
+   recovery delay 300
+```
+
 ## Internal VLAN Allocation Policy
 
 ### Internal VLAN Allocation Policy Summary
@@ -216,8 +234,19 @@ vlan 70
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
+| Ethernet7 |  HostI | access | 60 | - | - | - |
+| Ethernet8 | HostJ | *access | *10 | *- | *- | 8 |
 
 *Inherited from Port-Channel Interface
+
+##### Link Tracking Groups
+
+| Interface | Group Name | Direction |
+| --------- | ---------- | --------- |
+| Ethernet1 | ES-LINKS | upstream |
+| Ethernet2 | ES-LINKS | upstream |
+| Ethernet3 | ES-LINKS | upstream |
+| Ethernet4 | ES-LINKS | upstream |
 
 ##### IPv4
 
@@ -252,6 +281,7 @@ interface Ethernet1
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
 !
 interface Ethernet2
    description P2P_LINK_TO_B-SPINE2_Ethernet3
@@ -264,6 +294,7 @@ interface Ethernet2
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
 !
 interface Ethernet3
    description P2P_LINK_TO_B-SPINE3_Ethernet3
@@ -276,6 +307,7 @@ interface Ethernet3
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
 !
 interface Ethernet4
    description P2P_LINK_TO_B-SPINE4_Ethernet3
@@ -288,6 +320,61 @@ interface Ethernet4
    isis circuit-type level-2
    isis metric 50
    isis network point-to-point
+   link tracking group ES-LINKS upstream
+!
+interface Ethernet7
+   description HostI
+   no shutdown
+   switchport access vlan 60
+   switchport mode access
+   switchport
+   spanning-tree portfast
+!
+interface Ethernet8
+   description HostJ
+   no shutdown
+   channel-group 8 mode active
+```
+
+### Port-Channel Interfaces
+
+#### Port-Channel Interfaces Summary
+
+##### L2
+
+| Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
+| --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
+| Port-Channel8 | HostJ | switched | access | 10 | - | - | - | - | - | 0000:0000:0023:0024:0008 |
+
+##### EVPN Multihoming
+
+####### EVPN Multihoming Summary
+
+| Interface | Ethernet Segment Identifier | Multihoming Redundancy Mode | Route Target |
+| --------- | --------------------------- | --------------------------- | ------------ |
+| Port-Channel8 | 0000:0000:0023:0024:0008 | all-active | 00:23:00:24:00:08 |
+
+##### Link Tracking Groups
+
+| Interface | Group Name | Direction |
+| --------- | ---------- | --------- |
+| Port-Channel8 | ES-LINKS | downstream |
+
+#### Port-Channel Interfaces Device Configuration
+
+```eos
+!
+interface Port-Channel8
+   description HostJ
+   no shutdown
+   switchport
+   switchport access vlan 10
+   evpn ethernet-segment
+      identifier 0000:0000:0023:0024:0008
+      route-target import 00:23:00:24:00:08
+   lacp system-id 0023.0024.0008
+   spanning-tree portfast
+   link tracking group ES-LINKS downstream
 ```
 
 ### Loopback Interfaces

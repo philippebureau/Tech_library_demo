@@ -1,0 +1,94 @@
+---
+# Endpoint connectivity
+# Using Connected endpoint model
+servers:
+  - name: HostA
+    adapters:
+      - switch_ports:
+          - Ethernet7
+          - Ethernet7
+        switches:
+          - A-LEAF1
+          - A-LEAF2
+        endpoint_ports:
+          - NIC1
+          - NIC2
+        mode: access
+        vlans: 10
+        spanning_tree_portfast: edge
+        port_channel:
+          mode: active
+          enabled: true
+  - name: HostB
+    adapters:
+      - switch_ports:
+          - Ethernet8
+          - Ethernet8
+        switches:
+          - A-LEAF1
+          - A-LEAF2
+        endpoint_ports:
+          - NIC1
+          - NIC2
+        mode: access
+        vlans: 30
+        spanning_tree_portfast: edge
+        port_channel:
+          mode: active
+          enabled: true
+  - name: HostC
+    adapters:
+      - switch_ports:
+          - Ethernet7
+        switches:
+          - A-LEAF3
+        endpoint_ports:
+          - NIC1
+        mode: access
+        vlans: 50
+        spanning_tree_portfast: edge
+  - name: HostD
+    adapters:
+      - switch_ports:
+          - Ethernet8
+          - Ethernet8
+        switches:
+          - A-LEAF3
+          - A-LEAF4
+        endpoint_ports:
+          - NIC1
+          - NIC2
+        mode: access
+        vlans: 10
+        spanning_tree_portfast: edge
+        port_channel:
+          mode: active
+          enabled: true
+  - name: HostE
+    adapters:
+      - switch_ports:
+          - Ethernet7
+        switches:
+          - A-LEAF4
+        endpoint_ports:
+          - NIC1
+        mode: access
+        vlans: 30
+        spanning_tree_portfast: edge
+  - name: HostF
+    adapters:
+      - switch_ports:
+          - Ethernet7
+          - Ethernet7
+        switches:
+          - A-LEAF5
+          - A-LEAF6
+        endpoint_ports:
+          - NIC1
+          - NIC2
+        mode: access
+        vlans: 70
+        spanning_tree_portfast: edge
+        port_channel:
+          mode: active
+          enabled: true

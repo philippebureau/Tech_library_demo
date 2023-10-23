@@ -177,6 +177,9 @@ management_api_http:
   enable_vrfs:
   - name: default
   enable_https: true
+link_tracking_groups:
+- name: ES-LINKS
+  recovery_delay: 300
 ethernet_interfaces:
 - name: Ethernet1
   peer: B-SPINE1
@@ -187,6 +190,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -204,6 +210,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -221,6 +230,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true
@@ -238,6 +250,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ipv6_enable: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: upstream
   isis_enable: EVPN_UNDERLAY
   isis_metric: 50
   isis_network_point_to_point: true

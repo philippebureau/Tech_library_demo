@@ -8,8 +8,8 @@ l2leaf:
       - Ethernet1
       - Ethernet2
     uplink_switches:
-      - B-LEAF1
-      - B-LEAF2
+      - B-LEAF5
+      - B-LEAF6
   nodes:
     - name: B-SW1
       id: 1

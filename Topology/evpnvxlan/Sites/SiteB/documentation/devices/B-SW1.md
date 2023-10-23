@@ -181,6 +181,7 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 40 | Purple | - |
+| 80 | Black | - |
 
 ### VLANs Device Configuration
 
@@ -188,6 +189,9 @@ vlan internal order ascending range 1006 1199
 !
 vlan 40
    name Purple
+!
+vlan 80
+   name Black
 ```
 
 ## Interfaces
@@ -200,8 +204,10 @@ vlan 40
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 | B-LEAF1_Ethernet7 | *trunk | *40 | *- | *- | 1 |
-| Ethernet2 | B-LEAF2_Ethernet7 | *trunk | *40 | *- | *- | 1 |
+| Ethernet1 | B-LEAF5_Ethernet7 | *trunk | *40,80 | *- | *- | 1 |
+| Ethernet2 | B-LEAF6_Ethernet7 | *trunk | *40,80 | *- | *- | 1 |
+| Ethernet3 |  HostL | access | 40 | - | - | - |
+| Ethernet4 |  HostM | access | 80 | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -210,14 +216,30 @@ vlan 40
 ```eos
 !
 interface Ethernet1
-   description B-LEAF1_Ethernet7
+   description B-LEAF5_Ethernet7
    no shutdown
    channel-group 1 mode active
 !
 interface Ethernet2
-   description B-LEAF2_Ethernet7
+   description B-LEAF6_Ethernet7
    no shutdown
    channel-group 1 mode active
+!
+interface Ethernet3
+   description HostL
+   no shutdown
+   switchport access vlan 40
+   switchport mode access
+   switchport
+   spanning-tree portfast
+!
+interface Ethernet4
+   description HostM
+   no shutdown
+   switchport access vlan 80
+   switchport mode access
+   switchport
+   spanning-tree portfast
 ```
 
 ### Port-Channel Interfaces
@@ -228,17 +250,17 @@ interface Ethernet2
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | B-LEAF1_Po7 | switched | trunk | 40 | - | - | - | - | - | - |
+| Port-Channel1 | B-LEAF5_Po7 | switched | trunk | 40,80 | - | - | - | - | - | - |
 
 #### Port-Channel Interfaces Device Configuration
 
 ```eos
 !
 interface Port-Channel1
-   description B-LEAF1_Po7
+   description B-LEAF5_Po7
    no shutdown
    switchport
-   switchport trunk allowed vlan 40
+   switchport trunk allowed vlan 40,80
    switchport mode trunk
 ```
 
