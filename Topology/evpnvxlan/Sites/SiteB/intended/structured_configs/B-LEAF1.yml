@@ -48,6 +48,38 @@ router_bgp:
     peer_group: EVPN-OVERLAY-PEERS
     description: B-SPINE4
     remote_as: '65200'
+  vrfs:
+  - name: PROD
+    router_id: 10.0.0.21
+    rd: 10.0.0.21:50001
+    route_targets:
+      import:
+      - address_family: evpn
+        route_targets:
+        - 50001:50001
+      export:
+      - address_family: evpn
+        route_targets:
+        - 50001:50001
+    redistribute_routes:
+    - source_protocol: connected
+  vlans:
+  - id: 20
+    tenant: PROD_TENANT
+    rd: 10.0.0.21:10020
+    route_targets:
+      both:
+      - 10020:10020
+    redistribute_routes:
+    - learned
+  - id: 40
+    tenant: PROD_TENANT
+    rd: 10.0.0.21:10040
+    route_targets:
+      both:
+      - 10040:10040
+    redistribute_routes:
+    - learned
 service_routing_protocols_model: multi-agent
 ipv6_unicast_routing: true
 ip_routing_ipv6_interfaces: true
@@ -73,6 +105,9 @@ local_users:
 vrfs:
 - name: default
   ip_routing: false
+- name: PROD
+  tenant: PROD_TENANT
+  ip_routing: true
 management_interfaces:
 - name: Management1
   description: oob_management
@@ -170,7 +205,7 @@ port_channel_interfaces:
   type: switched
   shutdown: false
   mode: trunk
-  vlans: none
+  vlans: '40'
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering
@@ -198,12 +233,44 @@ router_bfd:
     interval: 1200
     min_rx: 1200
     multiplier: 3
+vlans:
+- id: 20
+  name: Green
+  tenant: PROD_TENANT
+- id: 40
+  name: Purple
+  tenant: PROD_TENANT
 ip_igmp_snooping:
   globally_enabled: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:01
+vlan_interfaces:
+- name: Vlan20
+  tenant: PROD_TENANT
+  tags:
+  - green
+  description: Green
+  shutdown: false
+  ip_address_virtual: 10.20.20.1/24
+  vrf: PROD
+- name: Vlan40
+  tenant: PROD_TENANT
+  tags:
+  - purple
+  description: Purple
+  shutdown: false
+  ip_address_virtual: 10.10.10.1/24
+  vrf: PROD
 vxlan_interface:
   Vxlan1:
     description: B-LEAF1_VTEP
     vxlan:
       udp_port: 4789
       source_interface: Loopback1
+      vlans:
+      - id: 20
+        vni: 10020
+      - id: 40
+        vni: 10040
+      vrfs:
+      - name: PROD
+        vni: 50001

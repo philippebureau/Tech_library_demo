@@ -57,7 +57,11 @@ port_channel_interfaces:
   type: switched
   shutdown: false
   mode: trunk
-  vlans: none
+  vlans: '40'
+vlans:
+- id: 40
+  name: Purple
+  tenant: PROD_TENANT
 ip_igmp_snooping:
   globally_enabled: true
 router_multicast:
