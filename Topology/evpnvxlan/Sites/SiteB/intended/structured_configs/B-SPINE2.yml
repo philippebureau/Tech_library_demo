@@ -96,7 +96,7 @@ management_interfaces:
   description: oob_management
   shutdown: false
   vrf: default
-  ip_address: 172.100.100.122/24
+  ip_address: 172.100.100.115/24
   gateway: null
   type: oob
 management_api_http:

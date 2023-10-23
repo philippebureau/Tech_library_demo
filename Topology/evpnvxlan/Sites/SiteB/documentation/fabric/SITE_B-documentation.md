@@ -27,9 +27,9 @@
 | SITE_B | l3leaf | B-LEAF7 | 172.100.100.124/24 | vEOS-LAB | Provisioned | - |
 | SITE_B | l3leaf | B-LEAF8 | 172.100.100.125/24 | vEOS-LAB | Provisioned | - |
 | SITE_B | spine | B-SPINE1 | 172.100.100.114/24 | vEOS-LAB | Provisioned | - |
-| SITE_B | spine | B-SPINE2 | 172.100.100.122/24 | vEOS-LAB | Provisioned | - |
-| SITE_B | spine | B-SPINE3 | 172.100.100.114/24 | vEOS-LAB | Provisioned | - |
-| SITE_B | spine | B-SPINE4 | 172.100.100.122/24 | vEOS-LAB | Provisioned | - |
+| SITE_B | spine | B-SPINE2 | 172.100.100.115/24 | vEOS-LAB | Provisioned | - |
+| SITE_B | spine | B-SPINE3 | 172.100.100.116/24 | vEOS-LAB | Provisioned | - |
+| SITE_B | spine | B-SPINE4 | 172.100.100.117/24 | vEOS-LAB | Provisioned | - |
 | SITE_B | l2leaf | B-SW1 | 172.100.100.139/24 | vEOS-LAB | Provisioned | - |
 
 > Provision status is based on Ansible inventory declaration and do not represent real status from CloudVision.
