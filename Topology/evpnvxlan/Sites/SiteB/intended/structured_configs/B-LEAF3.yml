@@ -229,6 +229,24 @@ ethernet_interfaces:
     ipv4:
       sparse_mode: true
   ip_address: unnumbered loopback0
+- name: Ethernet7
+  peer: HostI
+  peer_type: network_port
+  description: HostI
+  shutdown: false
+  type: switched
+  mode: access
+  vlans: '60'
+  spanning_tree_portfast: edge
+- name: Ethernet8
+  peer: HostJ
+  peer_type: network_port
+  description: HostJ
+  shutdown: false
+  type: port-channel-member
+  channel_group:
+    id: 8
+    mode: active
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering
@@ -312,3 +330,18 @@ vxlan_interface:
         vni: 50002
       - name: PROD
         vni: 50001
+port_channel_interfaces:
+- name: Port-Channel8
+  description: HostJ
+  type: switched
+  shutdown: false
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: downstream
+  mode: access
+  vlans: '10'
+  spanning_tree_portfast: edge
+  evpn_ethernet_segment:
+    identifier: 0000:0000:0023:0024:0008
+    route_target: 00:23:00:24:00:08
+  lacp_id: 0023.0024.0008

@@ -28,3 +28,8 @@ DEV:
             tags: [brown]
             enabled: true
             ip_address_virtual: 10.70.70.1/24
+          - id: 80
+            name: Black
+            tags: [black]
+            enabled: true
+            ip_address_virtual: 10.80.80.1/24

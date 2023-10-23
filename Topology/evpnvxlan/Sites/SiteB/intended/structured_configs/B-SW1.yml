@@ -51,14 +51,35 @@ ethernet_interfaces:
   channel_group:
     id: 1
     mode: active
+- name: Ethernet3
+  peer: HostL
+  peer_type: network_port
+  description: HostL
+  shutdown: false
+  type: switched
+  mode: access
+  vlans: '40'
+  spanning_tree_portfast: edge
+- name: Ethernet4
+  peer: HostM
+  peer_type: network_port
+  description: HostM
+  shutdown: false
+  type: switched
+  mode: access
+  vlans: '80'
+  spanning_tree_portfast: edge
 port_channel_interfaces:
 - name: Port-Channel1
   description: B-LEAF5_Po7
   type: switched
   shutdown: false
   mode: trunk
-  vlans: '40'
+  vlans: 40,80
 vlans:
+- id: 80
+  name: Black
+  tenant: DEV_TENANT
 - id: 40
   name: Purple
   tenant: PROD_TENANT

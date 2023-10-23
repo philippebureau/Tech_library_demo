@@ -49,6 +49,20 @@ router_bgp:
     description: B-SPINE4
     remote_as: '65200'
   vrfs:
+  - name: DEV
+    router_id: 10.0.0.26
+    rd: 10.0.0.26:50002
+    route_targets:
+      import:
+      - address_family: evpn
+        route_targets:
+        - 50002:50002
+      export:
+      - address_family: evpn
+        route_targets:
+        - 50002:50002
+    redistribute_routes:
+    - source_protocol: connected
   - name: PROD
     router_id: 10.0.0.26
     rd: 10.0.0.26:50001
@@ -64,6 +78,14 @@ router_bgp:
     redistribute_routes:
     - source_protocol: connected
   vlans:
+  - id: 80
+    tenant: DEV_TENANT
+    rd: 10.0.0.26:10080
+    route_targets:
+      both:
+      - 10080:10080
+    redistribute_routes:
+    - learned
   - id: 40
     tenant: PROD_TENANT
     rd: 10.0.0.26:10040
@@ -97,6 +119,9 @@ local_users:
 vrfs:
 - name: default
   ip_routing: false
+- name: DEV
+  tenant: DEV_TENANT
+  ip_routing: true
 - name: PROD
   tenant: PROD_TENANT
   ip_routing: true
@@ -212,7 +237,7 @@ port_channel_interfaces:
   type: switched
   shutdown: false
   mode: trunk
-  vlans: '40'
+  vlans: 40,80
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering
@@ -241,6 +266,9 @@ router_bfd:
     min_rx: 1200
     multiplier: 3
 vlans:
+- id: 80
+  name: Black
+  tenant: DEV_TENANT
 - id: 40
   name: Purple
   tenant: PROD_TENANT
@@ -248,6 +276,14 @@ ip_igmp_snooping:
   globally_enabled: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:01
 vlan_interfaces:
+- name: Vlan80
+  tenant: DEV_TENANT
+  tags:
+  - black
+  description: Black
+  shutdown: false
+  ip_address_virtual: 10.80.80.1/24
+  vrf: DEV
 - name: Vlan40
   tenant: PROD_TENANT
   tags:
@@ -263,8 +299,12 @@ vxlan_interface:
       udp_port: 4789
       source_interface: Loopback1
       vlans:
+      - id: 80
+        vni: 10080
       - id: 40
         vni: 10040
       vrfs:
+      - name: DEV
+        vni: 50002
       - name: PROD
         vni: 50001
