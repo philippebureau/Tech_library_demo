@@ -78,6 +78,7 @@ ip_routing_ipv6_interfaces: true
 router_multicast:
   ipv4:
     routing: true
+    software_forwarding: sfe
 vlan_internal_order:
   allocation: ascending
   range:

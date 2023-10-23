@@ -581,6 +581,7 @@ router bfd
 #### IP Router Multicast Summary
 
 - Routing for IPv4 multicast is enabled.
+- Software forwarding by the Software Forwarding Engine (SFE)
 
 #### Router Multicast Device Configuration
 
@@ -589,6 +590,7 @@ router bfd
 router multicast
    ipv4
       routing
+      software-forwarding sfe
 ```
 
 

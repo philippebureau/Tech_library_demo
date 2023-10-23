@@ -60,3 +60,6 @@ port_channel_interfaces:
   vlans: none
 ip_igmp_snooping:
   globally_enabled: true
+router_multicast:
+  ipv4:
+    software_forwarding: sfe
