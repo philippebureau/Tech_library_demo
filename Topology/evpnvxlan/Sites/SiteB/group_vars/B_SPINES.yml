@@ -18,13 +18,13 @@ spine:
       mgmt_ip: 172.100.100.114/24
     - name: B-SPINE2
       id: 2
-      mgmt_ip: 172.100.100.122/24
+      mgmt_ip: 172.100.100.115/24
     - name: B-SPINE3
       id: 3
-      mgmt_ip: 172.100.100.114/24
+      mgmt_ip: 172.100.100.116/24
     - name: B-SPINE4
       id: 4
-      mgmt_ip: 172.100.100.122/24
+      mgmt_ip: 172.100.100.117/24
 ---
 type: spine
 
