@@ -1,0 +1,18 @@
+---
+
+- name: Deploy hosts config on site A
+  hosts: host_nodes
+  connection: local
+  gather_facts: false
+  vars:
+      # EOS Configuration Directory name
+      eos_config_dir_name: 'hosts_configs'
+      eos_config_deploy_eapi_pre_running_config_backup: false
+      pre_running_config_backup_dir: 'intended'
+      pre_running_config_backup_dir_name: 'hosts_configs'
+      post_running_config_backup_dir: 'intended'
+      post_running_config_backup_dir_name: 'hosts_configs'
+  tasks:
+    - name: Deploy configuration to hosts on site B
+      ansible.builtin.import_role:
+         name: arista.avd.eos_config_deploy_eapi
