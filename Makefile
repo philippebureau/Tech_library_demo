@@ -74,6 +74,6 @@ validate-site-C: ## Run ansible playbook to validate the Fabric.
 # AVD Hosts configuration
 ################################################################################
 
-.PHONY: build-hosts
-build-hosts: ## Run ansible playbook to config hosts for Sites A, B and C
+.PHONY: deploy-hosts
+deploy-hosts: ## Run ansible playbook to config hosts for Sites A, B and C
 	ansible-playbook Topology/evpnvxlan/playbooks/deploy-hosts.yml -i Topology/evpnvxlan/Sites/SiteA/inventory.yml -i Topology/evpnvxlan/Sites/SiteB/inventory.yml -i Topology/evpnvxlan/Sites/SiteC/inventory.yml
