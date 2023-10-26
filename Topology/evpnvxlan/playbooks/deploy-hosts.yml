@@ -1,0 +1,14 @@
+---
+
+- name: Deploy hosts config for all sites
+  hosts: host_nodes
+  connection: local
+  gather_facts: false
+
+  tasks:
+
+    - name: Deploy configuration to all hosts
+      arista.eos.eos_config:
+        src: "{{ inventory_dir }}/intended/hosts_configs/{{ inventory_hostname }}.cfg"
+        replace: config
+        save_when: modified

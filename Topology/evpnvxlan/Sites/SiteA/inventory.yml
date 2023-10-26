@@ -5,6 +5,20 @@ all:
       hosts:
         ACT_CVP:
           ansible_host: 10.255.x.x
+    host_nodes:
+      hosts:
+        A-HOST-A:
+          ansible_host: 127.0.0.1
+        A-HOST-B:
+          ansible_host: 127.0.0.1
+        A-HOST-C:
+          ansible_host: 127.0.0.1
+        A-HOST-D:
+          ansible_host: 127.0.0.1
+        A-HOST-E:
+          ansible_host: 127.0.0.1
+        A-HOST-F:
+          ansible_host: 127.0.0.1
     EVPN_VXLAN:
       children:
 ###############################################################
