@@ -15,10 +15,10 @@ veos:
 nodes:
   - cvp:
       auto_configuration: true
-      ip_addr: 172.100.0.5
+      ip_addr: 172.100.100.5
       node_type: cvp
   - ansible:
-      ip_addr: 172.100.0.6
+      ip_addr: 172.100.100.6
       node_type: generic
   - BB1:
       ip_addr: 172.100.100.138
