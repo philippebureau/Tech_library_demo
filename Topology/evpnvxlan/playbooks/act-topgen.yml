@@ -1,0 +1,10 @@
+---
+- name: Build ACT Topology
+  hosts: EVPN_VXLAN
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Generate ACT Topology File
+      import_role:
+        name: act-topgen
