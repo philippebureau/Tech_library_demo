@@ -1,0 +1,51 @@
+---
+cvp_devices:
+  - fqdn: C-LEAF1
+    parentContainerName: C_LEAFS
+    configlets:
+      - AVD_C-LEAF1
+  - fqdn: C-LEAF2
+    parentContainerName: C_LEAFS
+    configlets:
+      - AVD_C-LEAF2
+  - fqdn: C-LEAF3
+    parentContainerName: C_LEAFS
+    configlets:
+      - AVD_C-LEAF3
+  - fqdn: C-LEAF4
+    parentContainerName: C_LEAFS
+    configlets:
+      - AVD_C-LEAF4
+  - fqdn: C-LEAF5
+    parentContainerName: C_LEAFS
+    configlets:
+      - AVD_C-LEAF5
+  - fqdn: C-LEAF6
+    parentContainerName: C_LEAFS
+    configlets:
+      - AVD_C-LEAF6
+  - fqdn: C-LEAF7
+    parentContainerName: C_LEAFS
+    configlets:
+      - AVD_C-LEAF7
+  - fqdn: C-LEAF8
+    parentContainerName: C_LEAFS
+    configlets:
+      - AVD_C-LEAF8
+  - fqdn: C-SPINE1
+    parentContainerName: C_SPINES
+    configlets:
+      - AVD_C-SPINE1
+  - fqdn: C-SPINE2
+    parentContainerName: C_SPINES
+    configlets:
+      - AVD_C-SPINE2
+cvp_containers:
+  C_LEAFS:
+    parentContainerName: SITE_C
+  C_SPINES:
+    parentContainerName: SITE_C
+  EVPN_VXLAN:
+    parentContainerName: Tenant
+  SITE_C:
+    parentContainerName: EVPN_VXLAN

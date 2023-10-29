@@ -7,10 +7,13 @@
   - [DNS Domain](#dns-domain)
   - [IP Name Servers](#ip-name-servers)
   - [Clock Settings](#clock-settings)
+  - [NTP](#ntp)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
   - [AAA Authorization](#aaa-authorization)
+- [Monitoring](#monitoring)
+  - [TerminAttr Daemon](#terminattr-daemon)
 - [MLAG](#mlag)
   - [MLAG Summary](#mlag-summary)
   - [MLAG Device Configuration](#mlag-device-configuration)
@@ -45,6 +48,7 @@
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
+- [EOS CLI](#eos-cli)
 
 ## Management
 
@@ -114,6 +118,25 @@ Clock Timezone is set to **EST**.
 clock timezone EST
 ```
 
+### NTP
+
+#### NTP Summary
+
+##### NTP Servers
+
+| Server | VRF | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
+| ------ | --- | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
+| 0.north-america.pool.ntp.org | default | True | - | - | - | - | - | - | - |
+| 1.north-america.pool.ntp.org | default | - | - | - | - | - | - | - | - |
+
+#### NTP Device Configuration
+
+```eos
+!
+ntp server 0.north-america.pool.ntp.org prefer
+ntp server 1.north-america.pool.ntp.org
+```
+
 ### Management API HTTP
 
 #### Management API HTTP Summary
@@ -148,13 +171,20 @@ management api http-commands
 
 | User | Privilege | Role | Disabled | Shell |
 | ---- | --------- | ---- | -------- | ----- |
+| arista | 15 | network-admin | False | - |
 | cvpadmin | 15 | network-admin | False | - |
+| ec2-user | - | - | False | /bin/bash |
+| service | - | - | False | /bin/bash |
 
 #### Local Users Device Configuration
 
 ```eos
 !
+username arista privilege 15 role network-admin secret sha512 <removed>
 username cvpadmin privilege 15 role network-admin secret sha512 <removed>
+username ec2-user shell /bin/bash nopassword
+username ec2-user ssh-key ssh-rsa ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE= root@buildkitsandbox
+username service shell /bin/bash secret sha512 <removed>
 ```
 
 ### AAA Authorization
@@ -172,6 +202,25 @@ Authorization for configuration commands is disabled.
 ```eos
 aaa authorization exec default local
 !
+```
+
+## Monitoring
+
+### TerminAttr Daemon
+
+#### TerminAttr Daemon Summary
+
+| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
+| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
+| gzip | 172.100.100.5:9910 | - | token,/tmp/token | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
+
+#### TerminAttr Daemon Device Configuration
+
+```eos
+!
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
+   no shutdown
 ```
 
 ## MLAG
@@ -287,6 +336,8 @@ vlan 4094
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet5 | MLAG_PEER_C-LEAF3_Ethernet5 | *trunk | *- | *- | *['LEAF_PEER_L3', 'MLAG'] | 1000 |
 | Ethernet6 | MLAG_PEER_C-LEAF3_Ethernet6 | *trunk | *- | *- | *['LEAF_PEER_L3', 'MLAG'] | 1000 |
+| Ethernet7 |  HostQ_NIC1 | access | 50 | - | - | - |
+| Ethernet8 | HostP_NIC2 | *access | *60 | *- | *- | 8 |
 
 *Inherited from Port-Channel Interface
 
@@ -328,6 +379,19 @@ interface Ethernet6
    description MLAG_PEER_C-LEAF3_Ethernet6
    no shutdown
    channel-group 1000 mode active
+!
+interface Ethernet7
+   description HostQ_NIC1
+   no shutdown
+   switchport access vlan 50
+   switchport mode access
+   switchport
+   spanning-tree portfast
+!
+interface Ethernet8
+   description HostP_NIC2
+   no shutdown
+   channel-group 8 mode active
 ```
 
 ### Port-Channel Interfaces
@@ -338,11 +402,20 @@ interface Ethernet6
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
+| Port-Channel8 | HostP | switched | access | 60 | - | - | - | - | 8 | - |
 | Port-Channel1000 | MLAG_PEER_C-LEAF3_Po1000 | switched | trunk | - | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
 
 #### Port-Channel Interfaces Device Configuration
 
 ```eos
+!
+interface Port-Channel8
+   description HostP
+   no shutdown
+   switchport
+   switchport access vlan 60
+   mlag 8
+   spanning-tree portfast
 !
 interface Port-Channel1000
    description MLAG_PEER_C-LEAF3_Po1000
@@ -804,4 +877,12 @@ route-map RM-MLAG-PEER-IN permit 10
 vrf instance DEV
 !
 vrf instance PROD
+```
+
+## EOS CLI
+
+```eos
+!
+agent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'
+
 ```

@@ -1,0 +1,65 @@
+---
+cvp_devices:
+  - fqdn: B-LEAF1
+    parentContainerName: B_L3LEAFS
+    configlets:
+      - AVD_B-LEAF1
+  - fqdn: B-LEAF2
+    parentContainerName: B_L3LEAFS
+    configlets:
+      - AVD_B-LEAF2
+  - fqdn: B-LEAF3
+    parentContainerName: B_L3LEAFS
+    configlets:
+      - AVD_B-LEAF3
+  - fqdn: B-LEAF4
+    parentContainerName: B_L3LEAFS
+    configlets:
+      - AVD_B-LEAF4
+  - fqdn: B-LEAF5
+    parentContainerName: B_L3LEAFS
+    configlets:
+      - AVD_B-LEAF5
+  - fqdn: B-LEAF6
+    parentContainerName: B_L3LEAFS
+    configlets:
+      - AVD_B-LEAF6
+  - fqdn: B-LEAF7
+    parentContainerName: B_L3LEAFS
+    configlets:
+      - AVD_B-LEAF7
+  - fqdn: B-LEAF8
+    parentContainerName: B_L3LEAFS
+    configlets:
+      - AVD_B-LEAF8
+  - fqdn: B-SPINE1
+    parentContainerName: B_SPINES
+    configlets:
+      - AVD_B-SPINE1
+  - fqdn: B-SPINE2
+    parentContainerName: B_SPINES
+    configlets:
+      - AVD_B-SPINE2
+  - fqdn: B-SPINE3
+    parentContainerName: B_SPINES
+    configlets:
+      - AVD_B-SPINE3
+  - fqdn: B-SPINE4
+    parentContainerName: B_SPINES
+    configlets:
+      - AVD_B-SPINE4
+  - fqdn: B-SW1
+    parentContainerName: B_L2LEAFS
+    configlets:
+      - AVD_B-SW1
+cvp_containers:
+  B_L2LEAFS:
+    parentContainerName: SITE_B
+  B_L3LEAFS:
+    parentContainerName: SITE_B
+  B_SPINES:
+    parentContainerName: SITE_B
+  EVPN_VXLAN:
+    parentContainerName: Tenant
+  SITE_B:
+    parentContainerName: EVPN_VXLAN
