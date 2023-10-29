@@ -1,0 +1,59 @@
+---
+cvp_devices:
+  - fqdn: A-LEAF1
+    parentContainerName: A_LEAFS
+    configlets:
+      - AVD_A-LEAF1
+  - fqdn: A-LEAF2
+    parentContainerName: A_LEAFS
+    configlets:
+      - AVD_A-LEAF2
+  - fqdn: A-LEAF3
+    parentContainerName: A_LEAFS
+    configlets:
+      - AVD_A-LEAF3
+  - fqdn: A-LEAF4
+    parentContainerName: A_LEAFS
+    configlets:
+      - AVD_A-LEAF4
+  - fqdn: A-LEAF5
+    parentContainerName: A_LEAFS
+    configlets:
+      - AVD_A-LEAF5
+  - fqdn: A-LEAF6
+    parentContainerName: A_LEAFS
+    configlets:
+      - AVD_A-LEAF6
+  - fqdn: A-LEAF7
+    parentContainerName: A_LEAFS
+    configlets:
+      - AVD_A-LEAF7
+  - fqdn: A-LEAF8
+    parentContainerName: A_LEAFS
+    configlets:
+      - AVD_A-LEAF8
+  - fqdn: A-SPINE1
+    parentContainerName: A_SPINES
+    configlets:
+      - AVD_A-SPINE1
+  - fqdn: A-SPINE2
+    parentContainerName: A_SPINES
+    configlets:
+      - AVD_A-SPINE2
+  - fqdn: A-SPINE3
+    parentContainerName: A_SPINES
+    configlets:
+      - AVD_A-SPINE3
+  - fqdn: A-SPINE4
+    parentContainerName: A_SPINES
+    configlets:
+      - AVD_A-SPINE4
+cvp_containers:
+  A_LEAFS:
+    parentContainerName: SITE_A
+  A_SPINES:
+    parentContainerName: SITE_A
+  EVPN_VXLAN:
+    parentContainerName: Tenant
+  SITE_A:
+    parentContainerName: EVPN_VXLAN

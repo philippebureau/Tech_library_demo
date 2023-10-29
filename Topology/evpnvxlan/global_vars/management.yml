@@ -2,7 +2,7 @@
 # Basic Management variables shared by all Sites
 
 # local users
-local_users:
+custom_structured_configuration_local_users:
   - name: cvpadmin
     privilege: 15
     role: network-admin

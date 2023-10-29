@@ -1,0 +1,15 @@
+---
+cvp_devices:
+  - fqdn: BB1
+    parentContainerName: IP_TRANSPORT
+    configlets:
+      - AVD_BB1
+  - fqdn: BB2
+    parentContainerName: IP_TRANSPORT
+    configlets:
+      - AVD_BB2
+cvp_containers:
+  EVPN_VXLAN:
+    parentContainerName: Tenant
+  IP_TRANSPORT:
+    parentContainerName: EVPN_VXLAN

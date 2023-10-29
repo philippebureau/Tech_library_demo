@@ -1,0 +1,116 @@
+cvp_configlets:
+  AVD_BB1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
+    -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
+    -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
+    internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
+    routing protocols model multi-agent\n!\nhostname BB1\nip name-server vrf default
+    8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode none\n!\naaa authorization exec default local\n!\nno enable password\nno
+    aaa root\n!\nusername arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
+    cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
+    ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
+    AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
+    root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
+    timezone EST\n!\ninterface Ethernet1\n   description P2P_LINK_TO_A-LEAF7_Ethernet7\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.1.0/31\n!\ninterface
+    Ethernet2\n   description P2P_LINK_TO_A-LEAF8_Ethernet7\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 172.16.1.2/31\n!\ninterface Ethernet3\n
+    \  description P2P_LINK_TO_B-LEAF7_Ethernet7\n   no shutdown\n   mtu 1500\n   no
+    switchport\n   ip address 172.16.2.0/31\n!\ninterface Ethernet4\n   description
+    P2P_LINK_TO_B-LEAF8_Ethernet7\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address 172.16.2.2/31\n!\ninterface Ethernet5\n   description P2P_LINK_TO_C-LEAF7_Ethernet7\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.3.0/31\n!\ninterface
+    Ethernet6\n   description P2P_LINK_TO_C-LEAF8_Ethernet7\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 172.16.3.2/31\n!\ninterface Loopback0\n
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 172.16.0.1/32\n!\ninterface
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.138/24\n!\nip
+    routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 172.16.0.0/26
+    eq 32\n!\nroute-map RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65000\n
+    \  router-id 172.16.0.1\n   distance bgp 20 200 200\n   graceful-restart restart-time
+    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS remote-as 65000\n
+    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n
+    \  neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 5\n   neighbor EVPN-OVERLAY-PEERS
+    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS
+    peer group\n   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS
+    maximum-routes 12000\n   neighbor 172.16.1.1 peer group IPv4-UNDERLAY-PEERS\n
+    \  neighbor 172.16.1.1 remote-as 65178\n   neighbor 172.16.1.1 description A-LEAF7\n
+    \  neighbor 172.16.1.3 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.1.3
+    remote-as 65178\n   neighbor 172.16.1.3 description A-LEAF8\n   neighbor 172.16.2.1
+    peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.2.1 remote-as 65200\n   neighbor
+    172.16.2.1 description B-LEAF7\n   neighbor 172.16.2.3 peer group IPv4-UNDERLAY-PEERS\n
+    \  neighbor 172.16.2.3 remote-as 65200\n   neighbor 172.16.2.3 description B-LEAF8\n
+    \  neighbor 172.16.3.1 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.3.1
+    remote-as 65378\n   neighbor 172.16.3.1 description C-LEAF7\n   neighbor 172.16.3.3
+    peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.3.3 remote-as 65378\n   neighbor
+    172.16.3.3 description C-LEAF8\n   redistribute connected route-map RM-CONN-2-BGP\n
+    \  !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n
+    \  address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor
+    IPv4-UNDERLAY-PEERS activate\n!\nmanagement api http-commands\n   protocol https\n
+    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
+    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+  AVD_BB2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
+    -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
+    -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
+    internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
+    routing protocols model multi-agent\n!\nhostname BB2\nip name-server vrf default
+    8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode none\n!\naaa authorization exec default local\n!\nno enable password\nno
+    aaa root\n!\nusername arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
+    cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
+    ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
+    AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
+    root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
+    timezone EST\n!\ninterface Ethernet1\n   description P2P_LINK_TO_A-LEAF7_Ethernet8\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.1.4/31\n!\ninterface
+    Ethernet2\n   description P2P_LINK_TO_A-LEAF8_Ethernet8\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 172.16.1.6/31\n!\ninterface Ethernet3\n
+    \  description P2P_LINK_TO_B-LEAF7_Ethernet8\n   no shutdown\n   mtu 1500\n   no
+    switchport\n   ip address 172.16.2.4/31\n!\ninterface Ethernet4\n   description
+    P2P_LINK_TO_B-LEAF8_Ethernet8\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address 172.16.2.6/31\n!\ninterface Ethernet5\n   description P2P_LINK_TO_C-LEAF7_Ethernet8\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.3.4/31\n!\ninterface
+    Ethernet6\n   description P2P_LINK_TO_C-LEAF8_Ethernet8\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 172.16.3.6/31\n!\ninterface Loopback0\n
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 172.16.0.2/32\n!\ninterface
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.126/24\n!\nip
+    routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 172.16.0.0/26
+    eq 32\n!\nroute-map RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65000\n
+    \  router-id 172.16.0.2\n   distance bgp 20 200 200\n   graceful-restart restart-time
+    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS remote-as 65000\n
+    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n
+    \  neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 5\n   neighbor EVPN-OVERLAY-PEERS
+    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS
+    peer group\n   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS
+    maximum-routes 12000\n   neighbor 172.16.1.5 peer group IPv4-UNDERLAY-PEERS\n
+    \  neighbor 172.16.1.5 remote-as 65178\n   neighbor 172.16.1.5 description A-LEAF7\n
+    \  neighbor 172.16.1.7 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.1.7
+    remote-as 65178\n   neighbor 172.16.1.7 description A-LEAF8\n   neighbor 172.16.2.5
+    peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.2.5 remote-as 65200\n   neighbor
+    172.16.2.5 description B-LEAF7\n   neighbor 172.16.2.7 peer group IPv4-UNDERLAY-PEERS\n
+    \  neighbor 172.16.2.7 remote-as 65200\n   neighbor 172.16.2.7 description B-LEAF8\n
+    \  neighbor 172.16.3.5 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.3.5
+    remote-as 65378\n   neighbor 172.16.3.5 description C-LEAF7\n   neighbor 172.16.3.7
+    peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.3.7 remote-as 65378\n   neighbor
+    172.16.3.7 description C-LEAF8\n   redistribute connected route-map RM-CONN-2-BGP\n
+    \  !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n
+    \  address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor
+    IPv4-UNDERLAY-PEERS activate\n!\nmanagement api http-commands\n   protocol https\n
+    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
+    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+cvp_topology:
+  EVPN_VXLAN:
+    devices: []
+    parent_container: Tenant
+  IP_TRANSPORT:
+    devices:
+    - BB1
+    - BB2
+    parent_container: EVPN_VXLAN
