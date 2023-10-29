@@ -5,20 +5,6 @@ all:
       hosts:
         ACT_CVP:
           ansible_host: 10.255.37.245
-    host_nodes:
-      hosts:
-        C-HOST-N:
-          ansible_host: 127.0.0.1
-        C-HOST-O:
-          ansible_host: 127.0.0.1
-        C-HOST-P:
-          ansible_host: 127.0.0.1
-        C-HOST-Q:
-          ansible_host: 127.0.0.1
-        C-HOST-R:
-          ansible_host: 127.0.0.1
-        C-HOST-S:
-          ansible_host: 127.0.0.1
     EVPN_VXLAN:
       children:
 ###############################################################
@@ -55,3 +41,17 @@ all:
     CONNECTED_ENDPOINTS:
       children:
         C_LEAFS:
+    host_nodes:
+      hosts:
+        C-HOST-N:
+          ansible_host: 10.255.35.165
+        C-HOST-O:
+          ansible_host: 10.255.66.96
+        C-HOST-P:
+          ansible_host: 10.255.59.98
+        C-HOST-Q:
+          ansible_host: 10.255.58.64
+        C-HOST-R:
+          ansible_host: 10.255.12.117
+        C-HOST-S:
+          ansible_host: 10.255.68.44
