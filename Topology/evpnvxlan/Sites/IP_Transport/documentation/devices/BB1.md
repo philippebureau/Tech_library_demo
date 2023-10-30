@@ -393,7 +393,7 @@ ip routing
 
 | Prefix | Peer-ID Include Router ID | Peer Group | Peer-Filter | Remote-AS | VRF |
 | ------ | ------------------------- | ---------- | ----------- | --------- | --- |
-| 10.0.0.0/24 | - | EVPN-OVERLAY-PEERS | - | 65000 | default |
+| 10.0.0.0/24 | - | EVPN-OVERLAY-PEERS | DC-ASN-RANGE | - | default |
 | 172.16.0.0/16 | - | IP-TRANSPORT-CLIENTS | DC-ASN-RANGE | - | default |
 
 #### Router BGP Peer Groups
@@ -452,7 +452,7 @@ router bgp 65000
    graceful-restart
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
-   bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS remote-as 65000
+   bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS peer-filter DC-ASN-RANGE
    bgp listen range 172.16.0.0/16 peer-group IP-TRANSPORT-CLIENTS peer-filter DC-ASN-RANGE
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
