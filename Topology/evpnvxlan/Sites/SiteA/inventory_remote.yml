@@ -21,7 +21,7 @@ all:
                 A-SPINE2:
                   ansible_host: 10.255.121.101
                 A-SPINE3:
-                  ansible_host: 10.255.94.164
+                  ansible_host: 10.255.93.164
                 A-SPINE4:
                   ansible_host: 10.255.125.54
             A_LEAFS:

@@ -20,7 +20,7 @@ deploy-transport: ## Run ansible playbook to deploy the Fabric.
 
 .PHONY: validate-transport
 validate-transport: ## Run ansible playbook to validate the Fabric.
-	ansible-playbook playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/IP_Transport/inventory.yml -e "target_hosts=EVPN_VXLAN" --diff
+	ansible-playbook Topology/evpnvxlan/playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/IP_Transport/inventory.yml -e "target_hosts=EVPN_VXLAN" --diff
 
 .PHONY: build-transport_remote
 build-transport_remote: ## Run ansible playbook to build the Fabric configuration
@@ -32,7 +32,7 @@ deploy-transport_remote: ## Run ansible playbook to deploy the Fabric.
 
 .PHONY: validate-transport_remote
 validate-transport_remote: ## Run ansible playbook to validate the Fabric.
-	ansible-playbook playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/IP_Transport/inventory_remote.yml -e "target_hosts=EVPN_VXLAN" --diff
+	ansible-playbook Topology/evpnvxlan/playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/IP_Transport/inventory_remote.yml -e "target_hosts=EVPN_VXLAN" --diff
 
 ################################################################################
 # SiteA
@@ -48,7 +48,7 @@ deploy-site-A: ## Run ansible playbook to deploy the Fabric.
 
 .PHONY: validate-site-A
 validate-site-A: ## Run ansible playbook to validate the Fabric.
-	ansible-playbook playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteA/inventory.yml -e "target_hosts=SITE_A" --diff
+	ansible-playbook Topology/evpnvxlan/playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteA/inventory.yml -e "target_hosts=SITE_A" --diff
 
 .PHONY: build-site-A_remote
 build-site-A_remote: ## Run ansible playbook to build the Fabric configuration
@@ -60,7 +60,7 @@ deploy-site-A_remote: ## Run ansible playbook to deploy the Fabric.
 
 .PHONY: validate-site-A_remote
 validate-site-A_remote: ## Run ansible playbook to validate the Fabric.
-	ansible-playbook playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteA/inventory_remote.yml -e "target_hosts=SITE_A" --diff
+	ansible-playbook Topology/evpnvxlan/playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteA/inventory_remote.yml -e "target_hosts=SITE_A" --diff
 
 ################################################################################
 # AVD SiteB
@@ -76,7 +76,7 @@ deploy-site-B: ## Run ansible playbook to deploy the Fabric.
 
 .PHONY: validate-site-B
 validate-site-B: ## Run ansible playbook to validate the Fabric.
-	ansible-playbook playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteB/inventory.yml -e "target_hosts=SITE_B" --diff
+	ansible-playbook Topology/evpnvxlan/playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteB/inventory.yml -e "target_hosts=SITE_B" --diff
 
 .PHONY: build-site-B_remote
 build-site-B_remote: ## Run ansible playbook to build the Fabric configuration
@@ -88,7 +88,7 @@ deploy-site-B_remote: ## Run ansible playbook to deploy the Fabric.
 
 .PHONY: validate-site-B_remote
 validate-site-B_remote: ## Run ansible playbook to validate the Fabric.
-	ansible-playbook playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteB/inventory_remote.yml -e "target_hosts=SITE_B" --diff
+	ansible-playbook Topology/evpnvxlan/playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteB/inventory_remote.yml -e "target_hosts=SITE_B" --diff
 
 ################################################################################
 # AVD SiteC
@@ -104,7 +104,7 @@ deploy-site-C: ## Run ansible playbook to deploy the Fabric.
 
 .PHONY: validate-site-C
 validate-site-C: ## Run ansible playbook to validate the Fabric.
-	ansible-playbook playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteC/inventory.yml -e "target_hosts=SITE_C" --diff
+	ansible-playbook Topology/evpnvxlan/playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteC/inventory.yml -e "target_hosts=SITE_C" --diff
 
 .PHONY: build-site-C_remote
 build-site-C_remote: ## Run ansible playbook to build the Fabric configuration
@@ -116,7 +116,7 @@ deploy-site-C_remote: ## Run ansible playbook to deploy the Fabric.
 
 .PHONY: validate-site-C_remote
 validate-site-C_remote: ## Run ansible playbook to validate the Fabric.
-	ansible-playbook playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteC/inventory_remote.yml -e "target_hosts=SITE_C" --diff
+	ansible-playbook Topology/evpnvxlan/playbooks/fabric-validate-state.yml -i Topology/evpnvxlan/Sites/SiteC/inventory_remote.yml -e "target_hosts=SITE_C" --diff
 
 ################################################################################
 # AVD Hosts configuration
