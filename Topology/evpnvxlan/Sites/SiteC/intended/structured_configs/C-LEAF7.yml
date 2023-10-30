@@ -38,6 +38,9 @@ router_bgp:
     maximum_routes: 12000
     send_community: all
     route_map_in: RM-MLAG-PEER-IN
+  - name: REMOTE-IPV4-PEERS
+    remote_as: '65000'
+    bfd: true
   address_family_ipv4:
     peer_groups:
     - name: EVPN-OVERLAY-PEERS
@@ -46,6 +49,12 @@ router_bgp:
       activate: false
     - name: MLAG-IPv4-UNDERLAY-PEER
       activate: true
+    - name: REMOTE-IPV4-PEERS
+      activate: true
+    networks:
+    - prefix: 10.0.0.37/32
+    - prefix: 10.0.0.38/32
+    - prefix: 10.3.3.37/32
   address_family_evpn:
     neighbor_default:
       next_hop_self_received_evpn_routes:
@@ -74,6 +83,10 @@ router_bgp:
     peer_group: EVPN-OVERLAY-CORE
     description: BB2
     remote_as: '65000'
+  - ip_address: 172.16.3.0
+    peer_group: REMOTE-IPV4-PEERS
+  - ip_address: 172.16.3.4
+    peer_group: REMOTE-IPV4-PEERS
   vrfs:
   - name: DEV
     router_id: 10.0.0.37
@@ -314,8 +327,6 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   ip_address: 172.16.3.1/31
-  ospf_network_point_to_point: true
-  ospf_area: 0.0.0.0
 - name: Ethernet8
   peer: BB2
   peer_interface: Ethernet5
@@ -325,8 +336,6 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   ip_address: 172.16.3.5/31
-  ospf_network_point_to_point: true
-  ospf_area: 0.0.0.0
 mlag_configuration:
   domain_id: C-LEAF78
   local_interface: Vlan4094
@@ -359,8 +368,6 @@ router_ospf:
     - Ethernet1
     - Ethernet2
     - Vlan4093
-    - Ethernet7
-    - Ethernet8
     bfd_enable: false
 router_bfd:
   multihop:

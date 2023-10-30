@@ -31,6 +31,7 @@
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
 - [Filters](#filters)
+  - [Peer Filters](#peer-filters)
   - [Prefix-lists](#prefix-lists)
   - [Route-maps](#route-maps)
 - [VRF Instances](#vrf-instances)
@@ -392,7 +393,8 @@ ip routing
 
 | Prefix | Peer-ID Include Router ID | Peer Group | Peer-Filter | Remote-AS | VRF |
 | ------ | ------------------------- | ---------- | ----------- | --------- | --- |
-| 10.0.0.0/24 | - | EVPN-OVERLAY-PEERS | - | 65000 | default |
+| 10.0.0.0/24 | - | EVPN-OVERLAY-PEERS | DC-ASN-RANGE | - | default |
+| 172.16.0.0/16 | - | IP-TRANSPORT-CLIENTS | DC-ASN-RANGE | - | default |
 
 #### Router BGP Peer Groups
 
@@ -408,6 +410,12 @@ ip routing
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
+##### IP-TRANSPORT-CLIENTS
+
+| Settings | Value |
+| -------- | ----- |
+| BFD | True |
+
 ##### IPv4-UNDERLAY-PEERS
 
 | Settings | Value |
@@ -422,8 +430,6 @@ ip routing
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- |
 | 172.16.1.5 | 65178 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 | 172.16.1.7 | 65178 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 172.16.2.5 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 172.16.2.7 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 | 172.16.3.5 | 65378 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 | 172.16.3.7 | 65378 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 
@@ -446,7 +452,8 @@ router bgp 65000
    graceful-restart
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
-   bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS remote-as 65000
+   bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS peer-filter DC-ASN-RANGE
+   bgp listen range 172.16.0.0/16 peer-group IP-TRANSPORT-CLIENTS peer-filter DC-ASN-RANGE
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -454,6 +461,8 @@ router bgp 65000
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 5
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor IP-TRANSPORT-CLIENTS peer group
+   neighbor IP-TRANSPORT-CLIENTS bfd
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
@@ -463,12 +472,6 @@ router bgp 65000
    neighbor 172.16.1.7 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.16.1.7 remote-as 65178
    neighbor 172.16.1.7 description A-LEAF8
-   neighbor 172.16.2.5 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.16.2.5 remote-as 65200
-   neighbor 172.16.2.5 description B-LEAF7
-   neighbor 172.16.2.7 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.16.2.7 remote-as 65200
-   neighbor 172.16.2.7 description B-LEAF8
    neighbor 172.16.3.5 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.16.3.5 remote-as 65378
    neighbor 172.16.3.5 description C-LEAF7
@@ -482,7 +485,9 @@ router bgp 65000
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor IP-TRANSPORT-CLIENTS activate
       neighbor IPv4-UNDERLAY-PEERS activate
+      network 172.16.0.2/32
 ```
 
 ## BFD
@@ -504,6 +509,24 @@ router bfd
 ```
 
 ## Filters
+
+### Peer Filters
+
+#### Peer Filters Summary
+
+##### DC-ASN-RANGE
+
+| Sequence | Match |
+| -------- | ----- |
+| 10 | as-range 65100-65499 result accept |
+
+#### Peer Filters Device Configuration
+
+```eos
+!
+peer-filter DC-ASN-RANGE
+   10 match as-range 65100-65499 result accept
+```
 
 ### Prefix-lists
 

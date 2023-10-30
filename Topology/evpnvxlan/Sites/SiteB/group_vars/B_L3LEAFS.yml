@@ -104,6 +104,16 @@ l3leaf:
             bgp_as: 65000
         evpn_l3:
           enabled: true
+      structured_config:
+        router_bgp:
+          peer_groups:
+            - name: REMOTE-IPV4-PEERS
+              remote_as: 65000
+              bfd: true
+          address_family_ipv4:
+            peer_groups:
+              - name: REMOTE-IPV4-PEERS
+                activate: true
       nodes:
         - name: B-LEAF7
           id: 7
@@ -113,6 +123,18 @@ l3leaf:
             - Ethernet7
             - Ethernet7
             - Ethernet7
+          structured_config:
+            router_bgp:
+              neighbors:
+                - ip_address: 172.16.2.0
+                  peer_group: REMOTE-IPV4-PEERS
+                - ip_address: 172.16.2.4
+                  peer_group: REMOTE-IPV4-PEERS
+              address_family_ipv4:
+                networks:
+                  - prefix: 10.0.0.27/32
+                  - prefix: 10.0.0.28/32
+                  - prefix: 10.2.2.27/32
         - name: B-LEAF8
           id: 8
           mgmt_ip: 172.100.100.125/24
@@ -121,3 +143,15 @@ l3leaf:
             - Ethernet8
             - Ethernet8
             - Ethernet8
+          structured_config:
+            router_bgp:
+              neighbors:
+                - ip_address: 172.16.2.2
+                  peer_group: REMOTE-IPV4-PEERS
+                - ip_address: 172.16.2.6
+                  peer_group: REMOTE-IPV4-PEERS
+              address_family_ipv4:
+                networks:
+                  - prefix: 10.0.0.27/32
+                  - prefix: 10.0.0.28/32
+                  - prefix: 10.2.2.28/32

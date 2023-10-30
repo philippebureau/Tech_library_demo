@@ -64,10 +64,7 @@ core_interfaces:
       interfaces:
         - Ethernet3
         - Ethernet7
-      as:
-        - 65000
-        - 65200
-      include_in_underlay_protocol: true
+      include_in_underlay_protocol: false
     - id: 2
       nodes:
         - BB1
@@ -76,10 +73,7 @@ core_interfaces:
       interfaces:
         - Ethernet4
         - Ethernet7
-      as:
-        - 65000
-        - 65200
-      include_in_underlay_protocol: true
+      include_in_underlay_protocol: false
     - id: 3
       nodes:
         - BB2
@@ -88,10 +82,7 @@ core_interfaces:
       interfaces:
         - Ethernet3
         - Ethernet8
-      as:
-        - 65000
-        - 65200
-      include_in_underlay_protocol: true
+      include_in_underlay_protocol: false
     - id: 4
       nodes:
         - BB2
@@ -100,10 +91,7 @@ core_interfaces:
       interfaces:
         - Ethernet4
         - Ethernet8
-      as:
-        - 65000
-        - 65200
-      include_in_underlay_protocol: true
+      include_in_underlay_protocol: false
     - id: 1
       nodes:
         - BB1
@@ -115,7 +103,7 @@ core_interfaces:
       as:
         - 65000
         - 65378
-      include_in_underlay_protocol: true
+      include_in_underlay_protocol: false
     - id: 2
       nodes:
         - BB1
@@ -127,7 +115,7 @@ core_interfaces:
       as:
         - 65000
         - 65378
-      include_in_underlay_protocol: true
+      include_in_underlay_protocol: false
     - id: 3
       nodes:
         - BB2
@@ -139,7 +127,7 @@ core_interfaces:
       as:
         - 65000
         - 65378
-      include_in_underlay_protocol: true
+      include_in_underlay_protocol: false
     - id: 4
       nodes:
         - BB2
@@ -151,4 +139,4 @@ core_interfaces:
       as:
         - 65000
         - 65378
-      include_in_underlay_protocol: true
+      include_in_underlay_protocol: false

@@ -386,8 +386,6 @@ interface Ethernet7
    mtu 1500
    no switchport
    ip address 172.16.3.1/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
 !
 interface Ethernet8
    description P2P_LINK_TO_BB2_Ethernet5
@@ -395,8 +393,6 @@ interface Ethernet8
    mtu 1500
    no switchport
    ip address 172.16.3.5/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
 ```
 
 ### Port-Channel Interfaces
@@ -637,7 +633,7 @@ ip routing vrf PROD
 
 | Process ID | Router ID | Default Passive Interface | No Passive Interface | BFD | Max LSA | Default Information Originate | Log Adjacency Changes Detail | Auto Cost Reference Bandwidth | Maximum Paths | MPLS LDP Sync Default | Distribute List In |
 | ---------- | --------- | ------------------------- | -------------------- | --- | ------- | ----------------------------- | ---------------------------- | ----------------------------- | ------------- | --------------------- | ------------------ |
-| 100 | 10.0.0.37 | enabled | Ethernet1 <br> Ethernet2 <br> Vlan4093 <br> Ethernet7 <br> Ethernet8 <br> | disabled | 12000 | disabled | disabled | - | - | - | - |
+| 100 | 10.0.0.37 | enabled | Ethernet1 <br> Ethernet2 <br> Vlan4093 <br> | disabled | 12000 | disabled | disabled | - | - | - | - |
 
 #### OSPF Interfaces
 
@@ -645,8 +641,6 @@ ip routing vrf PROD
 | -------- | -------- | -------- | -------- |
 | Ethernet1 | 0.0.0.0 | - | True |
 | Ethernet2 | 0.0.0.0 | - | True |
-| Ethernet7 | 0.0.0.0 | - | True |
-| Ethernet8 | 0.0.0.0 | - | True |
 | Vlan4093 | 0.0.0.0 | - | True |
 | Loopback0 | 0.0.0.0 | - | - |
 | Loopback1 | 0.0.0.0 | - | - |
@@ -661,8 +655,6 @@ router ospf 100
    no passive-interface Ethernet1
    no passive-interface Ethernet2
    no passive-interface Vlan4093
-   no passive-interface Ethernet7
-   no passive-interface Ethernet8
    max-lsa 12000
 ```
 
@@ -716,6 +708,13 @@ router ospf 100
 | Send community | all |
 | Maximum routes | 12000 |
 
+##### REMOTE-IPV4-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Remote AS | 65000 |
+| BFD | True |
+
 #### BGP Neighbors
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive |
@@ -724,6 +723,8 @@ router ospf 100
 | 10.0.0.132 | 65300 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
 | 172.16.0.1 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - |
 | 172.16.0.2 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - |
+| 172.16.3.0 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | Inherited from peer group REMOTE-IPV4-PEERS | - | - | - |
+| 172.16.3.4 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | Inherited from peer group REMOTE-IPV4-PEERS | - | - | - |
 | 192.0.0.1 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | DEV | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - |
 | 192.0.0.1 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | PROD | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - |
 
@@ -789,6 +790,9 @@ router bgp 65378
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
+   neighbor REMOTE-IPV4-PEERS peer group
+   neighbor REMOTE-IPV4-PEERS remote-as 65000
+   neighbor REMOTE-IPV4-PEERS bfd
    neighbor 10.0.0.131 peer group EVPN-OVERLAY-PEERS
    neighbor 10.0.0.131 remote-as 65300
    neighbor 10.0.0.131 description C-SPINE1
@@ -801,6 +805,8 @@ router bgp 65378
    neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE
    neighbor 172.16.0.2 remote-as 65000
    neighbor 172.16.0.2 description BB2
+   neighbor 172.16.3.0 peer group REMOTE-IPV4-PEERS
+   neighbor 172.16.3.4 peer group REMOTE-IPV4-PEERS
    !
    vlan 10
       rd 10.0.0.37:10010
@@ -827,6 +833,10 @@ router bgp 65378
       no neighbor EVPN-OVERLAY-CORE activate
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
+      neighbor REMOTE-IPV4-PEERS activate
+      network 10.0.0.37/32
+      network 10.0.0.38/32
+      network 10.3.3.37/32
    !
    vrf DEV
       rd 10.0.0.37:50002

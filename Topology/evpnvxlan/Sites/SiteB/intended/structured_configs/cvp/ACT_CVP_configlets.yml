@@ -492,56 +492,56 @@ cvp_configlets:
     \  isis circuit-type level-2\n   isis metric 50\n   isis network point-to-point\n
     \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
     P2P_LINK_TO_BB1_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n   ip
-    address 172.16.2.1/31\n   ipv6 enable\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis hello padding\n   isis network point-to-point\n!\ninterface
-    Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet3\n   no shutdown\n   mtu 1500\n
-    \  no switchport\n   ip address 172.16.2.5/31\n   ipv6 enable\n   isis enable
-    EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n   isis hello
-    padding\n   isis network point-to-point\n!\ninterface Loopback0\n   description
-    EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.27/32\n   isis enable
-    EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n
-    \  no shutdown\n   ip address 10.2.2.27/32\n   isis enable EVPN_UNDERLAY\n   isis
-    passive\n!\ninterface Management1\n   description oob_management\n   no shutdown\n
-    \  ip address 172.100.100.124/24\n!\ninterface Vlan10\n   description Blue\n   no
-    shutdown\n   vrf PROD\n   ip address virtual 10.10.10.1/24\n!\ninterface Vlan20\n
-    \  description Green\n   no shutdown\n   vrf PROD\n   ip address virtual 10.20.20.1/24\n!\ninterface
-    Vlan60\n   description Red\n   no shutdown\n   vrf DEV\n   ip address virtual
-    10.50.50.1/24\n!\ninterface Vlan70\n   description Brown\n   no shutdown\n   vrf
-    DEV\n   ip address virtual 10.70.70.1/24\n!\ninterface Vxlan1\n   description
-    B-LEAF7_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
-    vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan vlan 60 vni 10060\n   vxlan
-    vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip
-    virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
-    routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter bfd\n
-    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
-    10.0.0.27\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
-    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    address 172.16.2.1/31\n!\ninterface Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet3\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.2.5/31\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.27/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n
+    \  description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.27/32\n
+    \  isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n   description
+    oob_management\n   no shutdown\n   ip address 172.100.100.124/24\n!\ninterface
+    Vlan10\n   description Blue\n   no shutdown\n   vrf PROD\n   ip address virtual
+    10.10.10.1/24\n!\ninterface Vlan20\n   description Green\n   no shutdown\n   vrf
+    PROD\n   ip address virtual 10.20.20.1/24\n!\ninterface Vlan60\n   description
+    Red\n   no shutdown\n   vrf DEV\n   ip address virtual 10.50.50.1/24\n!\ninterface
+    Vlan70\n   description Brown\n   no shutdown\n   vrf DEV\n   ip address virtual
+    10.70.70.1/24\n!\ninterface Vxlan1\n   description B-LEAF7_VTEP\n   vxlan source-interface
+    Loopback1\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20
+    vni 10020\n   vxlan vlan 60 vni 10060\n   vxlan vlan 70 vni 10070\n   vxlan vrf
+    DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
+    routing ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
+    \  router-id 10.0.0.27\n   distance bgp 20 200 200\n   graceful-restart restart-time
+    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
     \  neighbor EVPN-OVERLAY-CORE peer group\n   neighbor EVPN-OVERLAY-CORE update-source
     Loopback0\n   neighbor EVPN-OVERLAY-CORE bfd\n   neighbor EVPN-OVERLAY-CORE ebgp-multihop
     15\n   neighbor EVPN-OVERLAY-CORE send-community\n   neighbor EVPN-OVERLAY-CORE
     maximum-routes 0\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS
     update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
     ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
-    maximum-routes 0\n   neighbor 10.0.0.121 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
-    10.0.0.122 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
-    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
-    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
-    description B-SPINE3\n   neighbor 10.0.0.124 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   neighbor
-    172.16.0.1 peer group EVPN-OVERLAY-CORE\n   neighbor 172.16.0.1 remote-as 65000\n
-    \  neighbor 172.16.0.1 description BB1\n   neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE\n
-    \  neighbor 172.16.0.2 remote-as 65000\n   neighbor 172.16.0.2 description BB2\n
-    \  !\n   vlan 10\n      rd 10.0.0.27:10010\n      route-target both 10010:10010\n
-    \     redistribute learned\n   !\n   vlan 20\n      rd 10.0.0.27:10020\n      route-target
-    both 10020:10020\n      redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.27:10060\n
-    \     route-target both 10060:10060\n      redistribute learned\n   !\n   vlan
-    70\n      rd 10.0.0.27:10070\n      route-target both 10070:10070\n      redistribute
-    learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-CORE activate\n
-    \     neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor EVPN-OVERLAY-PEERS
-    activate\n      neighbor default next-hop-self received-evpn-routes route-type
-    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE
-    activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf DEV\n      rd
+    maximum-routes 0\n   neighbor REMOTE-IPV4-PEERS peer group\n   neighbor REMOTE-IPV4-PEERS
+    remote-as 65000\n   neighbor REMOTE-IPV4-PEERS bfd\n   neighbor 10.0.0.121 peer
+    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
+    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group EVPN-OVERLAY-PEERS\n
+    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
+    \  neighbor 10.0.0.123 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as
+    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
+    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor
+    10.0.0.124 description B-SPINE4\n   neighbor 172.16.0.1 peer group EVPN-OVERLAY-CORE\n
+    \  neighbor 172.16.0.1 remote-as 65000\n   neighbor 172.16.0.1 description BB1\n
+    \  neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE\n   neighbor 172.16.0.2 remote-as
+    65000\n   neighbor 172.16.0.2 description BB2\n   neighbor 172.16.2.0 peer group
+    REMOTE-IPV4-PEERS\n   neighbor 172.16.2.4 peer group REMOTE-IPV4-PEERS\n   !\n
+    \  vlan 10\n      rd 10.0.0.27:10010\n      route-target both 10010:10010\n      redistribute
+    learned\n   !\n   vlan 20\n      rd 10.0.0.27:10020\n      route-target both 10020:10020\n
+    \     redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.27:10060\n      route-target
+    both 10060:10060\n      redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.27:10070\n
+    \     route-target both 10070:10070\n      redistribute learned\n   !\n   address-family
+    evpn\n      neighbor EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE
+    domain remote\n      neighbor EVPN-OVERLAY-PEERS activate\n      neighbor default
+    next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS
+    activate\n      neighbor REMOTE-IPV4-PEERS activate\n      network 10.0.0.27/32\n
+    \     network 10.0.0.28/32\n      network 10.2.2.27/32\n   !\n   vrf DEV\n      rd
     10.0.0.27:50002\n      route-target import evpn 50002:50002\n      route-target
     export evpn 50002:50002\n      router-id 10.0.0.27\n      redistribute connected\n
     \  !\n   vrf PROD\n      rd 10.0.0.27:50001\n      route-target import evpn 50001:50001\n
@@ -585,56 +585,56 @@ cvp_configlets:
     \  isis circuit-type level-2\n   isis metric 50\n   isis network point-to-point\n
     \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
     P2P_LINK_TO_BB1_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n   ip
-    address 172.16.2.3/31\n   ipv6 enable\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis hello padding\n   isis network point-to-point\n!\ninterface
-    Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet4\n   no shutdown\n   mtu 1500\n
-    \  no switchport\n   ip address 172.16.2.7/31\n   ipv6 enable\n   isis enable
-    EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n   isis hello
-    padding\n   isis network point-to-point\n!\ninterface Loopback0\n   description
-    EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.28/32\n   isis enable
-    EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n
-    \  no shutdown\n   ip address 10.2.2.28/32\n   isis enable EVPN_UNDERLAY\n   isis
-    passive\n!\ninterface Management1\n   description oob_management\n   no shutdown\n
-    \  ip address 172.100.100.125/24\n!\ninterface Vlan10\n   description Blue\n   no
-    shutdown\n   vrf PROD\n   ip address virtual 10.10.10.1/24\n!\ninterface Vlan20\n
-    \  description Green\n   no shutdown\n   vrf PROD\n   ip address virtual 10.20.20.1/24\n!\ninterface
-    Vlan60\n   description Red\n   no shutdown\n   vrf DEV\n   ip address virtual
-    10.50.50.1/24\n!\ninterface Vlan70\n   description Brown\n   no shutdown\n   vrf
-    DEV\n   ip address virtual 10.70.70.1/24\n!\ninterface Vxlan1\n   description
-    B-LEAF8_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
-    vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan vlan 60 vni 10060\n   vxlan
-    vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip
-    virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
-    routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter bfd\n
-    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
-    10.0.0.28\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
-    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    address 172.16.2.3/31\n!\ninterface Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet4\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.2.7/31\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.28/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n
+    \  description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.28/32\n
+    \  isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n   description
+    oob_management\n   no shutdown\n   ip address 172.100.100.125/24\n!\ninterface
+    Vlan10\n   description Blue\n   no shutdown\n   vrf PROD\n   ip address virtual
+    10.10.10.1/24\n!\ninterface Vlan20\n   description Green\n   no shutdown\n   vrf
+    PROD\n   ip address virtual 10.20.20.1/24\n!\ninterface Vlan60\n   description
+    Red\n   no shutdown\n   vrf DEV\n   ip address virtual 10.50.50.1/24\n!\ninterface
+    Vlan70\n   description Brown\n   no shutdown\n   vrf DEV\n   ip address virtual
+    10.70.70.1/24\n!\ninterface Vxlan1\n   description B-LEAF8_VTEP\n   vxlan source-interface
+    Loopback1\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20
+    vni 10020\n   vxlan vlan 60 vni 10060\n   vxlan vlan 70 vni 10070\n   vxlan vrf
+    DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
+    routing ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
+    \  router-id 10.0.0.28\n   distance bgp 20 200 200\n   graceful-restart restart-time
+    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
     \  neighbor EVPN-OVERLAY-CORE peer group\n   neighbor EVPN-OVERLAY-CORE update-source
     Loopback0\n   neighbor EVPN-OVERLAY-CORE bfd\n   neighbor EVPN-OVERLAY-CORE ebgp-multihop
     15\n   neighbor EVPN-OVERLAY-CORE send-community\n   neighbor EVPN-OVERLAY-CORE
     maximum-routes 0\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS
     update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
     ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
-    maximum-routes 0\n   neighbor 10.0.0.121 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
-    10.0.0.122 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
-    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
-    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
-    description B-SPINE3\n   neighbor 10.0.0.124 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   neighbor
-    172.16.0.1 peer group EVPN-OVERLAY-CORE\n   neighbor 172.16.0.1 remote-as 65000\n
-    \  neighbor 172.16.0.1 description BB1\n   neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE\n
-    \  neighbor 172.16.0.2 remote-as 65000\n   neighbor 172.16.0.2 description BB2\n
-    \  !\n   vlan 10\n      rd 10.0.0.28:10010\n      route-target both 10010:10010\n
-    \     redistribute learned\n   !\n   vlan 20\n      rd 10.0.0.28:10020\n      route-target
-    both 10020:10020\n      redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.28:10060\n
-    \     route-target both 10060:10060\n      redistribute learned\n   !\n   vlan
-    70\n      rd 10.0.0.28:10070\n      route-target both 10070:10070\n      redistribute
-    learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-CORE activate\n
-    \     neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor EVPN-OVERLAY-PEERS
-    activate\n      neighbor default next-hop-self received-evpn-routes route-type
-    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE
-    activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf DEV\n      rd
+    maximum-routes 0\n   neighbor REMOTE-IPV4-PEERS peer group\n   neighbor REMOTE-IPV4-PEERS
+    remote-as 65000\n   neighbor REMOTE-IPV4-PEERS bfd\n   neighbor 10.0.0.121 peer
+    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
+    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group EVPN-OVERLAY-PEERS\n
+    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
+    \  neighbor 10.0.0.123 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as
+    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
+    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor
+    10.0.0.124 description B-SPINE4\n   neighbor 172.16.0.1 peer group EVPN-OVERLAY-CORE\n
+    \  neighbor 172.16.0.1 remote-as 65000\n   neighbor 172.16.0.1 description BB1\n
+    \  neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE\n   neighbor 172.16.0.2 remote-as
+    65000\n   neighbor 172.16.0.2 description BB2\n   neighbor 172.16.2.2 peer group
+    REMOTE-IPV4-PEERS\n   neighbor 172.16.2.6 peer group REMOTE-IPV4-PEERS\n   !\n
+    \  vlan 10\n      rd 10.0.0.28:10010\n      route-target both 10010:10010\n      redistribute
+    learned\n   !\n   vlan 20\n      rd 10.0.0.28:10020\n      route-target both 10020:10020\n
+    \     redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.28:10060\n      route-target
+    both 10060:10060\n      redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.28:10070\n
+    \     route-target both 10070:10070\n      redistribute learned\n   !\n   address-family
+    evpn\n      neighbor EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE
+    domain remote\n      neighbor EVPN-OVERLAY-PEERS activate\n      neighbor default
+    next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS
+    activate\n      neighbor REMOTE-IPV4-PEERS activate\n      network 10.0.0.27/32\n
+    \     network 10.0.0.28/32\n      network 10.2.2.28/32\n   !\n   vrf DEV\n      rd
     10.0.0.28:50002\n      route-target import evpn 50002:50002\n      route-target
     export evpn 50002:50002\n      router-id 10.0.0.28\n      redistribute connected\n
     \  !\n   vrf PROD\n      rd 10.0.0.28:50001\n      route-target import evpn 50001:50001\n
