@@ -56,14 +56,6 @@ router_bgp:
     remote_as: '65178'
     description: A-LEAF8
     peer_group: IPv4-UNDERLAY-PEERS
-  - ip_address: 172.16.3.5
-    remote_as: '65378'
-    description: C-LEAF7
-    peer_group: IPv4-UNDERLAY-PEERS
-  - ip_address: 172.16.3.7
-    remote_as: '65378'
-    description: C-LEAF8
-    peer_group: IPv4-UNDERLAY-PEERS
   listen_ranges:
   - prefix: 10.0.0.0/24
     peer_group: EVPN-OVERLAY-PEERS

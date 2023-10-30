@@ -430,8 +430,6 @@ ip routing
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- |
 | 172.16.1.1 | 65178 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 | 172.16.1.3 | 65178 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 172.16.3.1 | 65378 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 172.16.3.3 | 65378 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -472,12 +470,6 @@ router bgp 65000
    neighbor 172.16.1.3 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.16.1.3 remote-as 65178
    neighbor 172.16.1.3 description A-LEAF8
-   neighbor 172.16.3.1 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.16.3.1 remote-as 65378
-   neighbor 172.16.3.1 description C-LEAF7
-   neighbor 172.16.3.3 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.16.3.3 remote-as 65378
-   neighbor 172.16.3.3 description C-LEAF8
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
