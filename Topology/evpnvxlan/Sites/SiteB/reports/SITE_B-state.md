@@ -1,0 +1,602 @@
+# Validate State Report
+
+**Table of Contents:**
+
+- [Validate State Report](validate-state-report)
+  - [Test Results Summary](#test-results-summary)
+  - [Failed Test Results Summary](#failed-test-results-summary)
+  - [All Test Results](#all-test-results)
+
+## Test Results Summary
+
+### Summary Totals
+
+| Total Tests | Total Tests Passed | Total Tests Failed |
+| ----------- | ------------------ | ------------------ |
+| 546 | 545 | 1 |
+
+### Summary Totals Devices Under Tests
+
+| DUT | Total Tests | Tests Passed | Tests Failed | Categories Failed |
+| --- | ----------- | ------------ | ------------ | ----------------- |
+| B-LEAF1 |  55 | 55 | 0 | - |
+| B-LEAF2 |  55 | 55 | 0 | - |
+| B-LEAF3 |  55 | 55 | 0 | - |
+| B-LEAF4 |  55 | 55 | 0 | - |
+| B-LEAF5 |  54 | 54 | 0 | - |
+| B-LEAF6 |  54 | 53 | 1 | Interface State |
+| B-LEAF7 |  51 | 51 | 0 | - |
+| B-LEAF8 |  51 | 51 | 0 | - |
+| B-SPINE1 |  27 | 27 | 0 | - |
+| B-SPINE2 |  27 | 27 | 0 | - |
+| B-SPINE3 |  27 | 27 | 0 | - |
+| B-SPINE4 |  27 | 27 | 0 | - |
+| B-SW1 |  8 | 8 | 0 | - |
+
+### Summary Totals Per Category
+
+| Test Category | Total Tests | Tests Passed | Tests Failed |
+| ------------- | ----------- | ------------ | ------------ |
+| NTP |  13 | 13 | 0 |
+| Interface State |  141 | 140 | 1 |
+| LLDP Topology |  68 | 68 | 0 |
+| BGP |  68 | 68 | 0 |
+| Routing Table |  160 | 160 | 0 |
+| Loopback0 Reachability |  96 | 96 | 0 |
+
+## Failed Test Results Summary
+
+| Test ID | Node | Test Category | Test Description | Test | Test Result | Failure Reason |
+| ------- | ---- | ------------- | ---------------- | ---- | ----------- | -------------- |
+| 103 | B-LEAF6 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel7 - B-SW1_Po1 | FAIL | Interface shutdown: False - interface status: down - line protocol status: lowerLayerDown |
+
+## All Test Results
+
+| Test ID | Node | Test Category | Test Description | Test | Test Result | Failure Reason |
+| ------- | ---- | ------------- | ---------------- | ---- | ----------- | -------------- |
+| 1 | B-LEAF1 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 2 | B-LEAF2 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 3 | B-LEAF3 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 4 | B-LEAF4 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 5 | B-LEAF5 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 6 | B-LEAF6 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 7 | B-LEAF7 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 8 | B-LEAF8 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 9 | B-SPINE1 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 10 | B-SPINE2 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 11 | B-SPINE3 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 12 | B-SPINE4 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 13 | B-SW1 | NTP | Synchronised with NTP server | NTP | PASS | - |
+| 14 | B-LEAF1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-SPINE1_Ethernet1 | PASS | - |
+| 15 | B-LEAF1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-SPINE2_Ethernet1 | PASS | - |
+| 16 | B-LEAF1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-SPINE3_Ethernet1 | PASS | - |
+| 17 | B-LEAF1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-SPINE4_Ethernet1 | PASS | - |
+| 18 | B-LEAF1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - HostG | PASS | - |
+| 19 | B-LEAF1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet8 - HostH | PASS | - |
+| 20 | B-LEAF2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-SPINE1_Ethernet2 | PASS | - |
+| 21 | B-LEAF2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-SPINE2_Ethernet2 | PASS | - |
+| 22 | B-LEAF2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-SPINE3_Ethernet2 | PASS | - |
+| 23 | B-LEAF2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-SPINE4_Ethernet2 | PASS | - |
+| 24 | B-LEAF2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - HostG | PASS | - |
+| 25 | B-LEAF2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet8 - HostH | PASS | - |
+| 26 | B-LEAF3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-SPINE1_Ethernet3 | PASS | - |
+| 27 | B-LEAF3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-SPINE2_Ethernet3 | PASS | - |
+| 28 | B-LEAF3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-SPINE3_Ethernet3 | PASS | - |
+| 29 | B-LEAF3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-SPINE4_Ethernet3 | PASS | - |
+| 30 | B-LEAF3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - HostI | PASS | - |
+| 31 | B-LEAF3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet8 - HostJ | PASS | - |
+| 32 | B-LEAF4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-SPINE1_Ethernet4 | PASS | - |
+| 33 | B-LEAF4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-SPINE2_Ethernet4 | PASS | - |
+| 34 | B-LEAF4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-SPINE3_Ethernet4 | PASS | - |
+| 35 | B-LEAF4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-SPINE4_Ethernet4 | PASS | - |
+| 36 | B-LEAF4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet8 - HostJ | PASS | - |
+| 37 | B-LEAF4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - HostK | PASS | - |
+| 38 | B-LEAF5 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-SPINE1_Ethernet5 | PASS | - |
+| 39 | B-LEAF5 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-SPINE2_Ethernet5 | PASS | - |
+| 40 | B-LEAF5 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-SPINE3_Ethernet5 | PASS | - |
+| 41 | B-LEAF5 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-SPINE4_Ethernet5 | PASS | - |
+| 42 | B-LEAF5 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - B-SW1_Ethernet1 | PASS | - |
+| 43 | B-LEAF6 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-SPINE1_Ethernet6 | PASS | - |
+| 44 | B-LEAF6 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-SPINE2_Ethernet6 | PASS | - |
+| 45 | B-LEAF6 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-SPINE3_Ethernet6 | PASS | - |
+| 46 | B-LEAF6 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-SPINE4_Ethernet6 | PASS | - |
+| 47 | B-LEAF6 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - B-SW1_Ethernet2 | PASS | - |
+| 48 | B-LEAF7 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-SPINE1_Ethernet7 | PASS | - |
+| 49 | B-LEAF7 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-SPINE2_Ethernet7 | PASS | - |
+| 50 | B-LEAF7 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-SPINE3_Ethernet7 | PASS | - |
+| 51 | B-LEAF7 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-SPINE4_Ethernet7 | PASS | - |
+| 52 | B-LEAF7 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - P2P_LINK_TO_BB1_Ethernet3 | PASS | - |
+| 53 | B-LEAF7 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet8 - P2P_LINK_TO_BB2_Ethernet3 | PASS | - |
+| 54 | B-LEAF8 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-SPINE1_Ethernet8 | PASS | - |
+| 55 | B-LEAF8 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-SPINE2_Ethernet8 | PASS | - |
+| 56 | B-LEAF8 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-SPINE3_Ethernet8 | PASS | - |
+| 57 | B-LEAF8 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-SPINE4_Ethernet8 | PASS | - |
+| 58 | B-LEAF8 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - P2P_LINK_TO_BB1_Ethernet4 | PASS | - |
+| 59 | B-LEAF8 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet8 - P2P_LINK_TO_BB2_Ethernet4 | PASS | - |
+| 60 | B-SPINE1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-LEAF1_Ethernet1 | PASS | - |
+| 61 | B-SPINE1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-LEAF2_Ethernet1 | PASS | - |
+| 62 | B-SPINE1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-LEAF3_Ethernet1 | PASS | - |
+| 63 | B-SPINE1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-LEAF4_Ethernet1 | PASS | - |
+| 64 | B-SPINE1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_B-LEAF5_Ethernet1 | PASS | - |
+| 65 | B-SPINE1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet6 - P2P_LINK_TO_B-LEAF6_Ethernet1 | PASS | - |
+| 66 | B-SPINE1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - P2P_LINK_TO_B-LEAF7_Ethernet1 | PASS | - |
+| 67 | B-SPINE1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet8 - P2P_LINK_TO_B-LEAF8_Ethernet1 | PASS | - |
+| 68 | B-SPINE2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-LEAF1_Ethernet2 | PASS | - |
+| 69 | B-SPINE2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-LEAF2_Ethernet2 | PASS | - |
+| 70 | B-SPINE2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-LEAF3_Ethernet2 | PASS | - |
+| 71 | B-SPINE2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-LEAF4_Ethernet2 | PASS | - |
+| 72 | B-SPINE2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_B-LEAF5_Ethernet2 | PASS | - |
+| 73 | B-SPINE2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet6 - P2P_LINK_TO_B-LEAF6_Ethernet2 | PASS | - |
+| 74 | B-SPINE2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - P2P_LINK_TO_B-LEAF7_Ethernet2 | PASS | - |
+| 75 | B-SPINE2 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet8 - P2P_LINK_TO_B-LEAF8_Ethernet2 | PASS | - |
+| 76 | B-SPINE3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-LEAF1_Ethernet3 | PASS | - |
+| 77 | B-SPINE3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-LEAF2_Ethernet3 | PASS | - |
+| 78 | B-SPINE3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-LEAF3_Ethernet3 | PASS | - |
+| 79 | B-SPINE3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-LEAF4_Ethernet3 | PASS | - |
+| 80 | B-SPINE3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_B-LEAF5_Ethernet3 | PASS | - |
+| 81 | B-SPINE3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet6 - P2P_LINK_TO_B-LEAF6_Ethernet3 | PASS | - |
+| 82 | B-SPINE3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - P2P_LINK_TO_B-LEAF7_Ethernet3 | PASS | - |
+| 83 | B-SPINE3 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet8 - P2P_LINK_TO_B-LEAF8_Ethernet3 | PASS | - |
+| 84 | B-SPINE4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - P2P_LINK_TO_B-LEAF1_Ethernet4 | PASS | - |
+| 85 | B-SPINE4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_B-LEAF2_Ethernet4 | PASS | - |
+| 86 | B-SPINE4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_B-LEAF3_Ethernet4 | PASS | - |
+| 87 | B-SPINE4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_B-LEAF4_Ethernet4 | PASS | - |
+| 88 | B-SPINE4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_B-LEAF5_Ethernet4 | PASS | - |
+| 89 | B-SPINE4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet6 - P2P_LINK_TO_B-LEAF6_Ethernet4 | PASS | - |
+| 90 | B-SPINE4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet7 - P2P_LINK_TO_B-LEAF7_Ethernet4 | PASS | - |
+| 91 | B-SPINE4 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet8 - P2P_LINK_TO_B-LEAF8_Ethernet4 | PASS | - |
+| 92 | B-SW1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet1 - B-LEAF5_Ethernet7 | PASS | - |
+| 93 | B-SW1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet2 - B-LEAF6_Ethernet7 | PASS | - |
+| 94 | B-SW1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet3 - HostL | PASS | - |
+| 95 | B-SW1 | Interface State | Ethernet Interface & Line Protocol == "up" | Ethernet4 - HostM | PASS | - |
+| 96 | B-LEAF1 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel7 - HostG | PASS | - |
+| 97 | B-LEAF1 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel8 - HostH | PASS | - |
+| 98 | B-LEAF2 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel7 - HostG | PASS | - |
+| 99 | B-LEAF2 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel8 - HostH | PASS | - |
+| 100 | B-LEAF3 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel8 - HostJ | PASS | - |
+| 101 | B-LEAF4 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel8 - HostJ | PASS | - |
+| 102 | B-LEAF5 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel7 - B-SW1_Po1 | PASS | - |
+| 103 | B-LEAF6 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel7 - B-SW1_Po1 | FAIL | Interface shutdown: False - interface status: down - line protocol status: lowerLayerDown |
+| 104 | B-SW1 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel1 - B-LEAF5_Po7 | PASS | - |
+| 105 | B-LEAF1 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan20 - Green | PASS | - |
+| 106 | B-LEAF1 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan40 - Purple | PASS | - |
+| 107 | B-LEAF2 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan20 - Green | PASS | - |
+| 108 | B-LEAF2 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan40 - Purple | PASS | - |
+| 109 | B-LEAF3 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan60 - Red | PASS | - |
+| 110 | B-LEAF3 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan70 - Brown | PASS | - |
+| 111 | B-LEAF3 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan10 - Blue | PASS | - |
+| 112 | B-LEAF4 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan60 - Red | PASS | - |
+| 113 | B-LEAF4 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan70 - Brown | PASS | - |
+| 114 | B-LEAF4 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan10 - Blue | PASS | - |
+| 115 | B-LEAF5 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan80 - Black | PASS | - |
+| 116 | B-LEAF5 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan40 - Purple | PASS | - |
+| 117 | B-LEAF6 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan80 - Black | PASS | - |
+| 118 | B-LEAF6 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan40 - Purple | PASS | - |
+| 119 | B-LEAF7 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan60 - Red | PASS | - |
+| 120 | B-LEAF7 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan70 - Brown | PASS | - |
+| 121 | B-LEAF7 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan10 - Blue | PASS | - |
+| 122 | B-LEAF7 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan20 - Green | PASS | - |
+| 123 | B-LEAF8 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan60 - Red | PASS | - |
+| 124 | B-LEAF8 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan70 - Brown | PASS | - |
+| 125 | B-LEAF8 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan10 - Blue | PASS | - |
+| 126 | B-LEAF8 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan20 - Green | PASS | - |
+| 127 | B-LEAF1 | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS | - |
+| 128 | B-LEAF2 | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS | - |
+| 129 | B-LEAF3 | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS | - |
+| 130 | B-LEAF4 | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS | - |
+| 131 | B-LEAF5 | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS | - |
+| 132 | B-LEAF6 | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS | - |
+| 133 | B-LEAF7 | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS | - |
+| 134 | B-LEAF8 | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS | - |
+| 135 | B-LEAF1 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 136 | B-LEAF1 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS | - |
+| 137 | B-LEAF2 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 138 | B-LEAF2 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS | - |
+| 139 | B-LEAF3 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 140 | B-LEAF3 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS | - |
+| 141 | B-LEAF4 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 142 | B-LEAF4 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS | - |
+| 143 | B-LEAF5 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 144 | B-LEAF5 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS | - |
+| 145 | B-LEAF6 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 146 | B-LEAF6 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS | - |
+| 147 | B-LEAF7 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 148 | B-LEAF7 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS | - |
+| 149 | B-LEAF8 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 150 | B-LEAF8 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS | - |
+| 151 | B-SPINE1 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 152 | B-SPINE2 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 153 | B-SPINE3 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 154 | B-SPINE4 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS | - |
+| 155 | B-LEAF1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-SPINE1_Ethernet1 | PASS | - |
+| 156 | B-LEAF1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-SPINE2_Ethernet1 | PASS | - |
+| 157 | B-LEAF1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-SPINE3_Ethernet1 | PASS | - |
+| 158 | B-LEAF1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-SPINE4_Ethernet1 | PASS | - |
+| 159 | B-LEAF2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-SPINE1_Ethernet2 | PASS | - |
+| 160 | B-LEAF2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-SPINE2_Ethernet2 | PASS | - |
+| 161 | B-LEAF2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-SPINE3_Ethernet2 | PASS | - |
+| 162 | B-LEAF2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-SPINE4_Ethernet2 | PASS | - |
+| 163 | B-LEAF3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-SPINE1_Ethernet3 | PASS | - |
+| 164 | B-LEAF3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-SPINE2_Ethernet3 | PASS | - |
+| 165 | B-LEAF3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-SPINE3_Ethernet3 | PASS | - |
+| 166 | B-LEAF3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-SPINE4_Ethernet3 | PASS | - |
+| 167 | B-LEAF4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-SPINE1_Ethernet4 | PASS | - |
+| 168 | B-LEAF4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-SPINE2_Ethernet4 | PASS | - |
+| 169 | B-LEAF4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-SPINE3_Ethernet4 | PASS | - |
+| 170 | B-LEAF4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-SPINE4_Ethernet4 | PASS | - |
+| 171 | B-LEAF5 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-SPINE1_Ethernet5 | PASS | - |
+| 172 | B-LEAF5 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-SPINE2_Ethernet5 | PASS | - |
+| 173 | B-LEAF5 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-SPINE3_Ethernet5 | PASS | - |
+| 174 | B-LEAF5 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-SPINE4_Ethernet5 | PASS | - |
+| 175 | B-LEAF5 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet7 - remote: B-SW1_Ethernet1 | PASS | - |
+| 176 | B-LEAF6 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-SPINE1_Ethernet6 | PASS | - |
+| 177 | B-LEAF6 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-SPINE2_Ethernet6 | PASS | - |
+| 178 | B-LEAF6 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-SPINE3_Ethernet6 | PASS | - |
+| 179 | B-LEAF6 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-SPINE4_Ethernet6 | PASS | - |
+| 180 | B-LEAF6 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet7 - remote: B-SW1_Ethernet2 | PASS | - |
+| 181 | B-LEAF7 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-SPINE1_Ethernet7 | PASS | - |
+| 182 | B-LEAF7 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-SPINE2_Ethernet7 | PASS | - |
+| 183 | B-LEAF7 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-SPINE3_Ethernet7 | PASS | - |
+| 184 | B-LEAF7 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-SPINE4_Ethernet7 | PASS | - |
+| 185 | B-LEAF8 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-SPINE1_Ethernet8 | PASS | - |
+| 186 | B-LEAF8 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-SPINE2_Ethernet8 | PASS | - |
+| 187 | B-LEAF8 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-SPINE3_Ethernet8 | PASS | - |
+| 188 | B-LEAF8 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-SPINE4_Ethernet8 | PASS | - |
+| 189 | B-SPINE1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-LEAF1_Ethernet1 | PASS | - |
+| 190 | B-SPINE1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-LEAF2_Ethernet1 | PASS | - |
+| 191 | B-SPINE1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-LEAF3_Ethernet1 | PASS | - |
+| 192 | B-SPINE1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-LEAF4_Ethernet1 | PASS | - |
+| 193 | B-SPINE1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: B-LEAF5_Ethernet1 | PASS | - |
+| 194 | B-SPINE1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet6 - remote: B-LEAF6_Ethernet1 | PASS | - |
+| 195 | B-SPINE1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet7 - remote: B-LEAF7_Ethernet1 | PASS | - |
+| 196 | B-SPINE1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet8 - remote: B-LEAF8_Ethernet1 | PASS | - |
+| 197 | B-SPINE2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-LEAF1_Ethernet2 | PASS | - |
+| 198 | B-SPINE2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-LEAF2_Ethernet2 | PASS | - |
+| 199 | B-SPINE2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-LEAF3_Ethernet2 | PASS | - |
+| 200 | B-SPINE2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-LEAF4_Ethernet2 | PASS | - |
+| 201 | B-SPINE2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: B-LEAF5_Ethernet2 | PASS | - |
+| 202 | B-SPINE2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet6 - remote: B-LEAF6_Ethernet2 | PASS | - |
+| 203 | B-SPINE2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet7 - remote: B-LEAF7_Ethernet2 | PASS | - |
+| 204 | B-SPINE2 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet8 - remote: B-LEAF8_Ethernet2 | PASS | - |
+| 205 | B-SPINE3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-LEAF1_Ethernet3 | PASS | - |
+| 206 | B-SPINE3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-LEAF2_Ethernet3 | PASS | - |
+| 207 | B-SPINE3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-LEAF3_Ethernet3 | PASS | - |
+| 208 | B-SPINE3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-LEAF4_Ethernet3 | PASS | - |
+| 209 | B-SPINE3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: B-LEAF5_Ethernet3 | PASS | - |
+| 210 | B-SPINE3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet6 - remote: B-LEAF6_Ethernet3 | PASS | - |
+| 211 | B-SPINE3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet7 - remote: B-LEAF7_Ethernet3 | PASS | - |
+| 212 | B-SPINE3 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet8 - remote: B-LEAF8_Ethernet3 | PASS | - |
+| 213 | B-SPINE4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-LEAF1_Ethernet4 | PASS | - |
+| 214 | B-SPINE4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-LEAF2_Ethernet4 | PASS | - |
+| 215 | B-SPINE4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: B-LEAF3_Ethernet4 | PASS | - |
+| 216 | B-SPINE4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: B-LEAF4_Ethernet4 | PASS | - |
+| 217 | B-SPINE4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: B-LEAF5_Ethernet4 | PASS | - |
+| 218 | B-SPINE4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet6 - remote: B-LEAF6_Ethernet4 | PASS | - |
+| 219 | B-SPINE4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet7 - remote: B-LEAF7_Ethernet4 | PASS | - |
+| 220 | B-SPINE4 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet8 - remote: B-LEAF8_Ethernet4 | PASS | - |
+| 221 | B-SW1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: B-LEAF5_Ethernet7 | PASS | - |
+| 222 | B-SW1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: B-LEAF6_Ethernet7 | PASS | - |
+| 223 | B-LEAF1 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 224 | B-LEAF2 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 225 | B-LEAF3 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 226 | B-LEAF4 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 227 | B-LEAF5 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 228 | B-LEAF6 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 229 | B-LEAF7 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 230 | B-LEAF8 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 231 | B-SPINE1 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 232 | B-SPINE2 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 233 | B-SPINE3 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 234 | B-SPINE4 | BGP | ArBGP is configured and operating | ArBGP | PASS | - |
+| 235 | B-LEAF1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.121 | PASS | - |
+| 236 | B-LEAF1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.122 | PASS | - |
+| 237 | B-LEAF1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.123 | PASS | - |
+| 238 | B-LEAF1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.124 | PASS | - |
+| 239 | B-LEAF2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.121 | PASS | - |
+| 240 | B-LEAF2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.122 | PASS | - |
+| 241 | B-LEAF2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.123 | PASS | - |
+| 242 | B-LEAF2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.124 | PASS | - |
+| 243 | B-LEAF3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.121 | PASS | - |
+| 244 | B-LEAF3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.122 | PASS | - |
+| 245 | B-LEAF3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.123 | PASS | - |
+| 246 | B-LEAF3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.124 | PASS | - |
+| 247 | B-LEAF4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.121 | PASS | - |
+| 248 | B-LEAF4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.122 | PASS | - |
+| 249 | B-LEAF4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.123 | PASS | - |
+| 250 | B-LEAF4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.124 | PASS | - |
+| 251 | B-LEAF5 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.121 | PASS | - |
+| 252 | B-LEAF5 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.122 | PASS | - |
+| 253 | B-LEAF5 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.123 | PASS | - |
+| 254 | B-LEAF5 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.124 | PASS | - |
+| 255 | B-LEAF6 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.121 | PASS | - |
+| 256 | B-LEAF6 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.122 | PASS | - |
+| 257 | B-LEAF6 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.123 | PASS | - |
+| 258 | B-LEAF6 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.124 | PASS | - |
+| 259 | B-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.21 | PASS | - |
+| 260 | B-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.22 | PASS | - |
+| 261 | B-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.23 | PASS | - |
+| 262 | B-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.24 | PASS | - |
+| 263 | B-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.25 | PASS | - |
+| 264 | B-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.26 | PASS | - |
+| 265 | B-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.27 | PASS | - |
+| 266 | B-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.28 | PASS | - |
+| 267 | B-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.21 | PASS | - |
+| 268 | B-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.22 | PASS | - |
+| 269 | B-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.23 | PASS | - |
+| 270 | B-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.24 | PASS | - |
+| 271 | B-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.25 | PASS | - |
+| 272 | B-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.26 | PASS | - |
+| 273 | B-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.27 | PASS | - |
+| 274 | B-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.28 | PASS | - |
+| 275 | B-SPINE3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.21 | PASS | - |
+| 276 | B-SPINE3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.22 | PASS | - |
+| 277 | B-SPINE3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.23 | PASS | - |
+| 278 | B-SPINE3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.24 | PASS | - |
+| 279 | B-SPINE3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.25 | PASS | - |
+| 280 | B-SPINE3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.26 | PASS | - |
+| 281 | B-SPINE3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.27 | PASS | - |
+| 282 | B-SPINE3 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.28 | PASS | - |
+| 283 | B-SPINE4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.21 | PASS | - |
+| 284 | B-SPINE4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.22 | PASS | - |
+| 285 | B-SPINE4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.23 | PASS | - |
+| 286 | B-SPINE4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.24 | PASS | - |
+| 287 | B-SPINE4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.25 | PASS | - |
+| 288 | B-SPINE4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.26 | PASS | - |
+| 289 | B-SPINE4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.27 | PASS | - |
+| 290 | B-SPINE4 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.0.0.28 | PASS | - |
+| 291 | B-LEAF1 | Routing Table | Remote VTEP address | 10.2.2.21 | PASS | - |
+| 292 | B-LEAF1 | Routing Table | Remote VTEP address | 10.2.2.22 | PASS | - |
+| 293 | B-LEAF1 | Routing Table | Remote VTEP address | 10.2.2.23 | PASS | - |
+| 294 | B-LEAF1 | Routing Table | Remote VTEP address | 10.2.2.24 | PASS | - |
+| 295 | B-LEAF1 | Routing Table | Remote VTEP address | 10.2.2.25 | PASS | - |
+| 296 | B-LEAF1 | Routing Table | Remote VTEP address | 10.2.2.26 | PASS | - |
+| 297 | B-LEAF1 | Routing Table | Remote VTEP address | 10.2.2.27 | PASS | - |
+| 298 | B-LEAF1 | Routing Table | Remote VTEP address | 10.2.2.28 | PASS | - |
+| 299 | B-LEAF2 | Routing Table | Remote VTEP address | 10.2.2.21 | PASS | - |
+| 300 | B-LEAF2 | Routing Table | Remote VTEP address | 10.2.2.22 | PASS | - |
+| 301 | B-LEAF2 | Routing Table | Remote VTEP address | 10.2.2.23 | PASS | - |
+| 302 | B-LEAF2 | Routing Table | Remote VTEP address | 10.2.2.24 | PASS | - |
+| 303 | B-LEAF2 | Routing Table | Remote VTEP address | 10.2.2.25 | PASS | - |
+| 304 | B-LEAF2 | Routing Table | Remote VTEP address | 10.2.2.26 | PASS | - |
+| 305 | B-LEAF2 | Routing Table | Remote VTEP address | 10.2.2.27 | PASS | - |
+| 306 | B-LEAF2 | Routing Table | Remote VTEP address | 10.2.2.28 | PASS | - |
+| 307 | B-LEAF3 | Routing Table | Remote VTEP address | 10.2.2.21 | PASS | - |
+| 308 | B-LEAF3 | Routing Table | Remote VTEP address | 10.2.2.22 | PASS | - |
+| 309 | B-LEAF3 | Routing Table | Remote VTEP address | 10.2.2.23 | PASS | - |
+| 310 | B-LEAF3 | Routing Table | Remote VTEP address | 10.2.2.24 | PASS | - |
+| 311 | B-LEAF3 | Routing Table | Remote VTEP address | 10.2.2.25 | PASS | - |
+| 312 | B-LEAF3 | Routing Table | Remote VTEP address | 10.2.2.26 | PASS | - |
+| 313 | B-LEAF3 | Routing Table | Remote VTEP address | 10.2.2.27 | PASS | - |
+| 314 | B-LEAF3 | Routing Table | Remote VTEP address | 10.2.2.28 | PASS | - |
+| 315 | B-LEAF4 | Routing Table | Remote VTEP address | 10.2.2.21 | PASS | - |
+| 316 | B-LEAF4 | Routing Table | Remote VTEP address | 10.2.2.22 | PASS | - |
+| 317 | B-LEAF4 | Routing Table | Remote VTEP address | 10.2.2.23 | PASS | - |
+| 318 | B-LEAF4 | Routing Table | Remote VTEP address | 10.2.2.24 | PASS | - |
+| 319 | B-LEAF4 | Routing Table | Remote VTEP address | 10.2.2.25 | PASS | - |
+| 320 | B-LEAF4 | Routing Table | Remote VTEP address | 10.2.2.26 | PASS | - |
+| 321 | B-LEAF4 | Routing Table | Remote VTEP address | 10.2.2.27 | PASS | - |
+| 322 | B-LEAF4 | Routing Table | Remote VTEP address | 10.2.2.28 | PASS | - |
+| 323 | B-LEAF5 | Routing Table | Remote VTEP address | 10.2.2.21 | PASS | - |
+| 324 | B-LEAF5 | Routing Table | Remote VTEP address | 10.2.2.22 | PASS | - |
+| 325 | B-LEAF5 | Routing Table | Remote VTEP address | 10.2.2.23 | PASS | - |
+| 326 | B-LEAF5 | Routing Table | Remote VTEP address | 10.2.2.24 | PASS | - |
+| 327 | B-LEAF5 | Routing Table | Remote VTEP address | 10.2.2.25 | PASS | - |
+| 328 | B-LEAF5 | Routing Table | Remote VTEP address | 10.2.2.26 | PASS | - |
+| 329 | B-LEAF5 | Routing Table | Remote VTEP address | 10.2.2.27 | PASS | - |
+| 330 | B-LEAF5 | Routing Table | Remote VTEP address | 10.2.2.28 | PASS | - |
+| 331 | B-LEAF6 | Routing Table | Remote VTEP address | 10.2.2.21 | PASS | - |
+| 332 | B-LEAF6 | Routing Table | Remote VTEP address | 10.2.2.22 | PASS | - |
+| 333 | B-LEAF6 | Routing Table | Remote VTEP address | 10.2.2.23 | PASS | - |
+| 334 | B-LEAF6 | Routing Table | Remote VTEP address | 10.2.2.24 | PASS | - |
+| 335 | B-LEAF6 | Routing Table | Remote VTEP address | 10.2.2.25 | PASS | - |
+| 336 | B-LEAF6 | Routing Table | Remote VTEP address | 10.2.2.26 | PASS | - |
+| 337 | B-LEAF6 | Routing Table | Remote VTEP address | 10.2.2.27 | PASS | - |
+| 338 | B-LEAF6 | Routing Table | Remote VTEP address | 10.2.2.28 | PASS | - |
+| 339 | B-LEAF7 | Routing Table | Remote VTEP address | 10.2.2.21 | PASS | - |
+| 340 | B-LEAF7 | Routing Table | Remote VTEP address | 10.2.2.22 | PASS | - |
+| 341 | B-LEAF7 | Routing Table | Remote VTEP address | 10.2.2.23 | PASS | - |
+| 342 | B-LEAF7 | Routing Table | Remote VTEP address | 10.2.2.24 | PASS | - |
+| 343 | B-LEAF7 | Routing Table | Remote VTEP address | 10.2.2.25 | PASS | - |
+| 344 | B-LEAF7 | Routing Table | Remote VTEP address | 10.2.2.26 | PASS | - |
+| 345 | B-LEAF7 | Routing Table | Remote VTEP address | 10.2.2.27 | PASS | - |
+| 346 | B-LEAF7 | Routing Table | Remote VTEP address | 10.2.2.28 | PASS | - |
+| 347 | B-LEAF8 | Routing Table | Remote VTEP address | 10.2.2.21 | PASS | - |
+| 348 | B-LEAF8 | Routing Table | Remote VTEP address | 10.2.2.22 | PASS | - |
+| 349 | B-LEAF8 | Routing Table | Remote VTEP address | 10.2.2.23 | PASS | - |
+| 350 | B-LEAF8 | Routing Table | Remote VTEP address | 10.2.2.24 | PASS | - |
+| 351 | B-LEAF8 | Routing Table | Remote VTEP address | 10.2.2.25 | PASS | - |
+| 352 | B-LEAF8 | Routing Table | Remote VTEP address | 10.2.2.26 | PASS | - |
+| 353 | B-LEAF8 | Routing Table | Remote VTEP address | 10.2.2.27 | PASS | - |
+| 354 | B-LEAF8 | Routing Table | Remote VTEP address | 10.2.2.28 | PASS | - |
+| 355 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.21 | PASS | - |
+| 356 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.22 | PASS | - |
+| 357 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.23 | PASS | - |
+| 358 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.24 | PASS | - |
+| 359 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.25 | PASS | - |
+| 360 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.26 | PASS | - |
+| 361 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.27 | PASS | - |
+| 362 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.28 | PASS | - |
+| 363 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.121 | PASS | - |
+| 364 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.122 | PASS | - |
+| 365 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.123 | PASS | - |
+| 366 | B-LEAF1 | Routing Table | Remote Lo0 address | 10.0.0.124 | PASS | - |
+| 367 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.21 | PASS | - |
+| 368 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.22 | PASS | - |
+| 369 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.23 | PASS | - |
+| 370 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.24 | PASS | - |
+| 371 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.25 | PASS | - |
+| 372 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.26 | PASS | - |
+| 373 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.27 | PASS | - |
+| 374 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.28 | PASS | - |
+| 375 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.121 | PASS | - |
+| 376 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.122 | PASS | - |
+| 377 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.123 | PASS | - |
+| 378 | B-LEAF2 | Routing Table | Remote Lo0 address | 10.0.0.124 | PASS | - |
+| 379 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.21 | PASS | - |
+| 380 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.22 | PASS | - |
+| 381 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.23 | PASS | - |
+| 382 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.24 | PASS | - |
+| 383 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.25 | PASS | - |
+| 384 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.26 | PASS | - |
+| 385 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.27 | PASS | - |
+| 386 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.28 | PASS | - |
+| 387 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.121 | PASS | - |
+| 388 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.122 | PASS | - |
+| 389 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.123 | PASS | - |
+| 390 | B-LEAF3 | Routing Table | Remote Lo0 address | 10.0.0.124 | PASS | - |
+| 391 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.21 | PASS | - |
+| 392 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.22 | PASS | - |
+| 393 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.23 | PASS | - |
+| 394 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.24 | PASS | - |
+| 395 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.25 | PASS | - |
+| 396 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.26 | PASS | - |
+| 397 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.27 | PASS | - |
+| 398 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.28 | PASS | - |
+| 399 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.121 | PASS | - |
+| 400 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.122 | PASS | - |
+| 401 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.123 | PASS | - |
+| 402 | B-LEAF4 | Routing Table | Remote Lo0 address | 10.0.0.124 | PASS | - |
+| 403 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.21 | PASS | - |
+| 404 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.22 | PASS | - |
+| 405 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.23 | PASS | - |
+| 406 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.24 | PASS | - |
+| 407 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.25 | PASS | - |
+| 408 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.26 | PASS | - |
+| 409 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.27 | PASS | - |
+| 410 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.28 | PASS | - |
+| 411 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.121 | PASS | - |
+| 412 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.122 | PASS | - |
+| 413 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.123 | PASS | - |
+| 414 | B-LEAF5 | Routing Table | Remote Lo0 address | 10.0.0.124 | PASS | - |
+| 415 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.21 | PASS | - |
+| 416 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.22 | PASS | - |
+| 417 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.23 | PASS | - |
+| 418 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.24 | PASS | - |
+| 419 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.25 | PASS | - |
+| 420 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.26 | PASS | - |
+| 421 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.27 | PASS | - |
+| 422 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.28 | PASS | - |
+| 423 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.121 | PASS | - |
+| 424 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.122 | PASS | - |
+| 425 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.123 | PASS | - |
+| 426 | B-LEAF6 | Routing Table | Remote Lo0 address | 10.0.0.124 | PASS | - |
+| 427 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.21 | PASS | - |
+| 428 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.22 | PASS | - |
+| 429 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.23 | PASS | - |
+| 430 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.24 | PASS | - |
+| 431 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.25 | PASS | - |
+| 432 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.26 | PASS | - |
+| 433 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.27 | PASS | - |
+| 434 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.28 | PASS | - |
+| 435 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.121 | PASS | - |
+| 436 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.122 | PASS | - |
+| 437 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.123 | PASS | - |
+| 438 | B-LEAF7 | Routing Table | Remote Lo0 address | 10.0.0.124 | PASS | - |
+| 439 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.21 | PASS | - |
+| 440 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.22 | PASS | - |
+| 441 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.23 | PASS | - |
+| 442 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.24 | PASS | - |
+| 443 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.25 | PASS | - |
+| 444 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.26 | PASS | - |
+| 445 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.27 | PASS | - |
+| 446 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.28 | PASS | - |
+| 447 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.121 | PASS | - |
+| 448 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.122 | PASS | - |
+| 449 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.123 | PASS | - |
+| 450 | B-LEAF8 | Routing Table | Remote Lo0 address | 10.0.0.124 | PASS | - |
+| 451 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.21 | PASS | - |
+| 452 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.22 | PASS | - |
+| 453 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.23 | PASS | - |
+| 454 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.24 | PASS | - |
+| 455 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.25 | PASS | - |
+| 456 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.26 | PASS | - |
+| 457 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.27 | PASS | - |
+| 458 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.28 | PASS | - |
+| 459 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.121 | PASS | - |
+| 460 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.122 | PASS | - |
+| 461 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.123 | PASS | - |
+| 462 | B-LEAF1 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF1 - 10.0.0.21 Destination: 10.0.0.124 | PASS | - |
+| 463 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.21 | PASS | - |
+| 464 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.22 | PASS | - |
+| 465 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.23 | PASS | - |
+| 466 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.24 | PASS | - |
+| 467 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.25 | PASS | - |
+| 468 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.26 | PASS | - |
+| 469 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.27 | PASS | - |
+| 470 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.28 | PASS | - |
+| 471 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.121 | PASS | - |
+| 472 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.122 | PASS | - |
+| 473 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.123 | PASS | - |
+| 474 | B-LEAF2 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF2 - 10.0.0.22 Destination: 10.0.0.124 | PASS | - |
+| 475 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.21 | PASS | - |
+| 476 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.22 | PASS | - |
+| 477 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.23 | PASS | - |
+| 478 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.24 | PASS | - |
+| 479 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.25 | PASS | - |
+| 480 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.26 | PASS | - |
+| 481 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.27 | PASS | - |
+| 482 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.28 | PASS | - |
+| 483 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.121 | PASS | - |
+| 484 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.122 | PASS | - |
+| 485 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.123 | PASS | - |
+| 486 | B-LEAF3 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF3 - 10.0.0.23 Destination: 10.0.0.124 | PASS | - |
+| 487 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.21 | PASS | - |
+| 488 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.22 | PASS | - |
+| 489 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.23 | PASS | - |
+| 490 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.24 | PASS | - |
+| 491 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.25 | PASS | - |
+| 492 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.26 | PASS | - |
+| 493 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.27 | PASS | - |
+| 494 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.28 | PASS | - |
+| 495 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.121 | PASS | - |
+| 496 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.122 | PASS | - |
+| 497 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.123 | PASS | - |
+| 498 | B-LEAF4 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF4 - 10.0.0.24 Destination: 10.0.0.124 | PASS | - |
+| 499 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.21 | PASS | - |
+| 500 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.22 | PASS | - |
+| 501 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.23 | PASS | - |
+| 502 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.24 | PASS | - |
+| 503 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.25 | PASS | - |
+| 504 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.26 | PASS | - |
+| 505 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.27 | PASS | - |
+| 506 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.28 | PASS | - |
+| 507 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.121 | PASS | - |
+| 508 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.122 | PASS | - |
+| 509 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.123 | PASS | - |
+| 510 | B-LEAF5 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF5 - 10.0.0.25 Destination: 10.0.0.124 | PASS | - |
+| 511 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.21 | PASS | - |
+| 512 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.22 | PASS | - |
+| 513 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.23 | PASS | - |
+| 514 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.24 | PASS | - |
+| 515 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.25 | PASS | - |
+| 516 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.26 | PASS | - |
+| 517 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.27 | PASS | - |
+| 518 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.28 | PASS | - |
+| 519 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.121 | PASS | - |
+| 520 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.122 | PASS | - |
+| 521 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.123 | PASS | - |
+| 522 | B-LEAF6 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF6 - 10.0.0.26 Destination: 10.0.0.124 | PASS | - |
+| 523 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.21 | PASS | - |
+| 524 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.22 | PASS | - |
+| 525 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.23 | PASS | - |
+| 526 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.24 | PASS | - |
+| 527 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.25 | PASS | - |
+| 528 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.26 | PASS | - |
+| 529 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.27 | PASS | - |
+| 530 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.28 | PASS | - |
+| 531 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.121 | PASS | - |
+| 532 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.122 | PASS | - |
+| 533 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.123 | PASS | - |
+| 534 | B-LEAF7 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF7 - 10.0.0.27 Destination: 10.0.0.124 | PASS | - |
+| 535 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.21 | PASS | - |
+| 536 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.22 | PASS | - |
+| 537 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.23 | PASS | - |
+| 538 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.24 | PASS | - |
+| 539 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.25 | PASS | - |
+| 540 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.26 | PASS | - |
+| 541 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.27 | PASS | - |
+| 542 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.28 | PASS | - |
+| 543 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.121 | PASS | - |
+| 544 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.122 | PASS | - |
+| 545 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.123 | PASS | - |
+| 546 | B-LEAF8 | Loopback0 Reachability | Loopback0 Reachability | Source: B-LEAF8 - 10.0.0.28 Destination: 10.0.0.124 | PASS | - |

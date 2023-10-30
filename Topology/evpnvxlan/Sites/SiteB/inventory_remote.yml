@@ -23,7 +23,7 @@ all:
                 B-SPINE3:
                   ansible_host: 10.255.117.227
                 B-SPINE4:
-                  ansible_host: 10.255.112.24
+                  ansible_host: 10.255.122.24
             B_L3LEAFS:
               hosts:
                 B-LEAF1:
@@ -39,7 +39,7 @@ all:
                 B-LEAF6:
                   ansible_host: 10.255.113.92
                 B-LEAF7:
-                  ansible_host: 10.255.112.16
+                  ansible_host: 10.255.122.16
                 B-LEAF8:
                   ansible_host: 10.255.89.228
             B_L2LEAFS:
