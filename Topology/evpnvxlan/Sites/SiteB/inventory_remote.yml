@@ -4,7 +4,7 @@ all:
     CVP:
       hosts:
         ACT_CVP:
-          ansible_host: 172.100.100.5
+          ansible_host: 10.255.37.245
     EVPN_VXLAN:
       children:
 ###############################################################
@@ -17,35 +17,35 @@ all:
             B_SPINES:
               hosts:
                 B-SPINE1:
-                  ansible_host: 172.100.100.114
+                  ansible_host: 10.255.85.154
                 B-SPINE2:
-                  ansible_host: 172.100.100.115
+                  ansible_host: 10.255.126.126
                 B-SPINE3:
-                  ansible_host: 172.100.100.116
+                  ansible_host: 10.255.117.227
                 B-SPINE4:
-                  ansible_host: 172.100.100.117
+                  ansible_host: 10.255.112.24
             B_L3LEAFS:
               hosts:
                 B-LEAF1:
-                  ansible_host: 172.100.100.118
+                  ansible_host: 10.255.93.32
                 B-LEAF2:
-                  ansible_host: 172.100.100.119
+                  ansible_host: 10.255.27.219
                 B-LEAF3:
-                  ansible_host: 172.100.100.120
+                  ansible_host: 10.255.86.70
                 B-LEAF4:
-                  ansible_host: 172.100.100.121
+                  ansible_host: 10.255.114.134
                 B-LEAF5:
-                  ansible_host: 172.100.100.122
+                  ansible_host: 10.255.101.90
                 B-LEAF6:
-                  ansible_host: 172.100.100.123
+                  ansible_host: 10.255.113.92
                 B-LEAF7:
-                  ansible_host: 172.100.100.124
+                  ansible_host: 10.255.112.16
                 B-LEAF8:
-                  ansible_host: 172.100.100.125
+                  ansible_host: 10.255.89.228
             B_L2LEAFS:
               hosts:
                 B-SW1:
-                  ansible_host: 172.100.100.139
+                  ansible_host: 10.255.100.211
 
     CONNECTED_ENDPOINTS:
       children:
@@ -54,16 +54,16 @@ all:
     host_nodes:
       hosts:
         B-HOST-G:
-          ansible_host: 172.100.100.207
+          ansible_host: 10.255.56.176
         B-HOST-H:
-          ansible_host: 172.100.100.208
+          ansible_host: 10.255.44.114
         B-HOST-I:
-          ansible_host: 172.100.100.209
+          ansible_host: 10.255.18.89
         B-HOST-J:
-          ansible_host: 172.100.100.210
+          ansible_host: 10.255.3.109
         B-HOST-K:
-          ansible_host: 172.100.100.211
+          ansible_host: 10.255.111.23
         B-HOST-L:
-          ansible_host: 172.100.100.212
+          ansible_host: 10.255.107.231
         B-HOST-M:
-          ansible_host: 172.100.100.213
+          ansible_host: 10.255.88.19
