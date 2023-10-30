@@ -4,7 +4,7 @@ all:
     CVP:
       hosts:
         ACT_CVP:
-          ansible_host: 172.100.100.5
+          ansible_host: 10.255.37.245
     EVPN_VXLAN:
       children:
 ###############################################################
@@ -15,6 +15,6 @@ all:
         IP_TRANSPORT:
           hosts:
             BB1:
-              ansible_host: 172.100.100.138
+              ansible_host: 10.255.124.137
             BB2:
-              ansible_host: 172.100.100.126
+              ansible_host: 10.255.102.137
