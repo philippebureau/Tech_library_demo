@@ -309,13 +309,6 @@ vlan 70
 | Ethernet7 | P2P_LINK_TO_BB1_Ethernet3 | routed | - | 172.16.2.1/31 | default | 1500 | False | - | - |
 | Ethernet8 | P2P_LINK_TO_BB2_Ethernet3 | routed | - | 172.16.2.5/31 | default | 1500 | False | - | - |
 
-##### IPv6
-
-| Interface | Description | Type | Channel Group | IPv6 Address | VRF | MTU | Shutdown | ND RA Disabled | Managed Config Flag | IPv6 ACL In | IPv6 ACL Out |
-| --------- | ----------- | ---- | --------------| ------------ | --- | --- | -------- | -------------- | -------------------| ----------- | ------------ |
-| Ethernet7 | P2P_LINK_TO_BB1_Ethernet3 | routed | - | - | default | 1500 | False | - | - | - | - |
-| Ethernet8 | P2P_LINK_TO_BB2_Ethernet3 | routed | - | - | default | 1500 | False | - | - | - | - |
-
 ##### ISIS
 
 | Interface | Channel Group | ISIS Instance | ISIS Metric | Mode | ISIS Circuit Type | Hello Padding | Authentication Mode |
@@ -324,8 +317,6 @@ vlan 70
 | Ethernet2 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
 | Ethernet3 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
 | Ethernet4 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet7 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | True | - |
-| Ethernet8 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | True | - |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -389,12 +380,6 @@ interface Ethernet7
    mtu 1500
    no switchport
    ip address 172.16.2.1/31
-   ipv6 enable
-   isis enable EVPN_UNDERLAY
-   isis circuit-type level-2
-   isis metric 50
-   isis hello padding
-   isis network point-to-point
 !
 interface Ethernet8
    description P2P_LINK_TO_BB2_Ethernet3
@@ -402,12 +387,6 @@ interface Ethernet8
    mtu 1500
    no switchport
    ip address 172.16.2.5/31
-   ipv6 enable
-   isis enable EVPN_UNDERLAY
-   isis circuit-type level-2
-   isis metric 50
-   isis hello padding
-   isis network point-to-point
 ```
 
 ### Loopback Interfaces
@@ -625,8 +604,6 @@ ipv6 unicast-routing
 | Ethernet2 | EVPN_UNDERLAY | 50 | point-to-point |
 | Ethernet3 | EVPN_UNDERLAY | 50 | point-to-point |
 | Ethernet4 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet7 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet8 | EVPN_UNDERLAY | 50 | point-to-point |
 | Loopback0 | EVPN_UNDERLAY | - | passive |
 | Loopback1 | EVPN_UNDERLAY | - | passive |
 
@@ -692,6 +669,13 @@ router isis EVPN_UNDERLAY
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
+##### REMOTE-IPV4-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Remote AS | 65000 |
+| BFD | True |
+
 #### BGP Neighbors
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive |
@@ -702,6 +686,8 @@ router isis EVPN_UNDERLAY
 | 10.0.0.124 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
 | 172.16.0.1 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - |
 | 172.16.0.2 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - |
+| 172.16.2.0 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | Inherited from peer group REMOTE-IPV4-PEERS | - | - | - |
+| 172.16.2.4 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | Inherited from peer group REMOTE-IPV4-PEERS | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -759,6 +745,9 @@ router bgp 65200
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor REMOTE-IPV4-PEERS peer group
+   neighbor REMOTE-IPV4-PEERS remote-as 65000
+   neighbor REMOTE-IPV4-PEERS bfd
    neighbor 10.0.0.121 peer group EVPN-OVERLAY-PEERS
    neighbor 10.0.0.121 remote-as 65200
    neighbor 10.0.0.121 description B-SPINE1
@@ -777,6 +766,8 @@ router bgp 65200
    neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE
    neighbor 172.16.0.2 remote-as 65000
    neighbor 172.16.0.2 description BB2
+   neighbor 172.16.2.0 peer group REMOTE-IPV4-PEERS
+   neighbor 172.16.2.4 peer group REMOTE-IPV4-PEERS
    !
    vlan 10
       rd 10.0.0.27:10010
@@ -807,6 +798,10 @@ router bgp 65200
    address-family ipv4
       no neighbor EVPN-OVERLAY-CORE activate
       no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor REMOTE-IPV4-PEERS activate
+      network 10.0.0.27/32
+      network 10.0.0.28/32
+      network 10.2.2.27/32
    !
    vrf DEV
       rd 10.0.0.27:50002
