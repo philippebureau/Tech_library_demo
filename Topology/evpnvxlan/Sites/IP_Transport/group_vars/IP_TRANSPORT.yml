@@ -58,4 +58,3 @@ custom_structured_configuration_peer_filters:
     sequence_numbers:
       - sequence: 10
         match: "as-range 65100-65499 result accept"
-

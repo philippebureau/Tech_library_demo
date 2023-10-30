@@ -525,14 +525,13 @@ cvp_configlets:
     \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet6\n   description
     MLAG_PEER_C-LEAF8_Ethernet6\n   no shutdown\n   channel-group 1000 mode active\n!\ninterface
     Ethernet7\n   description P2P_LINK_TO_BB1_Ethernet5\n   no shutdown\n   mtu 1500\n
-    \  no switchport\n   ip address 172.16.3.1/31\n   ip ospf network point-to-point\n
-    \  ip ospf area 0.0.0.0\n!\ninterface Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet5\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.3.5/31\n   ip
-    ospf network point-to-point\n   ip ospf area 0.0.0.0\n!\ninterface Loopback0\n
-    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.37/32\n
-    \  ip ospf area 0.0.0.0\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n
-    \  no shutdown\n   ip address 10.3.3.37/32\n   ip ospf area 0.0.0.0\n!\ninterface
-    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.135/24\n!\ninterface
+    \  no switchport\n   ip address 172.16.3.1/31\n!\ninterface Ethernet8\n   description
+    P2P_LINK_TO_BB2_Ethernet5\n   no shutdown\n   mtu 1500\n   no switchport\n   ip
+    address 172.16.3.5/31\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
+    \  no shutdown\n   ip address 10.0.0.37/32\n   ip ospf area 0.0.0.0\n!\ninterface
+    Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address
+    10.3.3.37/32\n   ip ospf area 0.0.0.0\n!\ninterface Management1\n   description
+    oob_management\n   no shutdown\n   ip address 172.100.100.135/24\n!\ninterface
     Vlan10\n   description Blue\n   no shutdown\n   vrf PROD\n   ip address virtual
     10.10.10.1/24\n!\ninterface Vlan50\n   description Yellow\n   no shutdown\n   vrf
     DEV\n   ip address virtual 10.50.50.1/24\n!\ninterface Vlan70\n   description
@@ -568,31 +567,34 @@ cvp_configlets:
     MLAG-IPv4-UNDERLAY-PEER remote-as 65378\n   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self\n
     \  neighbor MLAG-IPv4-UNDERLAY-PEER description C-LEAF8\n   neighbor MLAG-IPv4-UNDERLAY-PEER
     send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000\n   neighbor
-    MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in\n   neighbor 10.0.0.131 peer
-    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.131 remote-as 65300\n   neighbor
-    10.0.0.131 description C-SPINE1\n   neighbor 10.0.0.132 peer group EVPN-OVERLAY-PEERS\n
-    \  neighbor 10.0.0.132 remote-as 65300\n   neighbor 10.0.0.132 description C-SPINE2\n
-    \  neighbor 172.16.0.1 peer group EVPN-OVERLAY-CORE\n   neighbor 172.16.0.1 remote-as
-    65000\n   neighbor 172.16.0.1 description BB1\n   neighbor 172.16.0.2 peer group
-    EVPN-OVERLAY-CORE\n   neighbor 172.16.0.2 remote-as 65000\n   neighbor 172.16.0.2
-    description BB2\n   !\n   vlan 10\n      rd 10.0.0.37:10010\n      route-target
-    both 10010:10010\n      redistribute learned\n   !\n   vlan 50\n      rd 10.0.0.37:10050\n
-    \     route-target both 10050:10050\n      redistribute learned\n   !\n   vlan
-    70\n      rd 10.0.0.37:10070\n      route-target both 10070:10070\n      redistribute
-    learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-CORE activate\n
-    \     neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor EVPN-OVERLAY-PEERS
-    activate\n      neighbor default next-hop-self received-evpn-routes route-type
-    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE
-    activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER
-    activate\n   !\n   vrf DEV\n      rd 10.0.0.37:50002\n      route-target import
-    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.37\n      neighbor 192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
-    connected\n   !\n   vrf PROD\n      rd 10.0.0.37:50001\n      route-target import
-    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.37\n      neighbor 192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
-    connected\n!\nrouter ospf 100\n   router-id 10.0.0.37\n   passive-interface default\n
-    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
-    Vlan4093\n   no passive-interface Ethernet7\n   no passive-interface Ethernet8\n
+    MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in\n   neighbor REMOTE-IPV4-PEERS
+    peer group\n   neighbor REMOTE-IPV4-PEERS remote-as 65000\n   neighbor REMOTE-IPV4-PEERS
+    bfd\n   neighbor 10.0.0.131 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.131
+    remote-as 65300\n   neighbor 10.0.0.131 description C-SPINE1\n   neighbor 10.0.0.132
+    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.132 remote-as 65300\n   neighbor
+    10.0.0.132 description C-SPINE2\n   neighbor 172.16.0.1 peer group EVPN-OVERLAY-CORE\n
+    \  neighbor 172.16.0.1 remote-as 65000\n   neighbor 172.16.0.1 description BB1\n
+    \  neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE\n   neighbor 172.16.0.2 remote-as
+    65000\n   neighbor 172.16.0.2 description BB2\n   neighbor 172.16.3.0 peer group
+    REMOTE-IPV4-PEERS\n   neighbor 172.16.3.4 peer group REMOTE-IPV4-PEERS\n   !\n
+    \  vlan 10\n      rd 10.0.0.37:10010\n      route-target both 10010:10010\n      redistribute
+    learned\n   !\n   vlan 50\n      rd 10.0.0.37:10050\n      route-target both 10050:10050\n
+    \     redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.37:10070\n      route-target
+    both 10070:10070\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
+    EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor
+    EVPN-OVERLAY-PEERS activate\n      neighbor default next-hop-self received-evpn-routes
+    route-type ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor
+    EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor
+    MLAG-IPv4-UNDERLAY-PEER activate\n      neighbor REMOTE-IPV4-PEERS activate\n
+    \     network 10.0.0.37/32\n      network 10.0.0.38/32\n      network 10.3.3.37/32\n
+    \  !\n   vrf DEV\n      rd 10.0.0.37:50002\n      route-target import evpn 50002:50002\n
+    \     route-target export evpn 50002:50002\n      router-id 10.0.0.37\n      neighbor
+    192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n   !\n
+    \  vrf PROD\n      rd 10.0.0.37:50001\n      route-target import evpn 50001:50001\n
+    \     route-target export evpn 50001:50001\n      router-id 10.0.0.37\n      neighbor
+    192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n!\nrouter
+    ospf 100\n   router-id 10.0.0.37\n   passive-interface default\n   no passive-interface
+    Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface Vlan4093\n
     \  max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
     \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-LEAF8: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
@@ -625,14 +627,13 @@ cvp_configlets:
     \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet6\n   description
     MLAG_PEER_C-LEAF7_Ethernet6\n   no shutdown\n   channel-group 1000 mode active\n!\ninterface
     Ethernet7\n   description P2P_LINK_TO_BB1_Ethernet6\n   no shutdown\n   mtu 1500\n
-    \  no switchport\n   ip address 172.16.3.3/31\n   ip ospf network point-to-point\n
-    \  ip ospf area 0.0.0.0\n!\ninterface Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet6\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.3.7/31\n   ip
-    ospf network point-to-point\n   ip ospf area 0.0.0.0\n!\ninterface Loopback0\n
-    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.38/32\n
-    \  ip ospf area 0.0.0.0\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n
-    \  no shutdown\n   ip address 10.3.3.37/32\n   ip ospf area 0.0.0.0\n!\ninterface
-    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.136/24\n!\ninterface
+    \  no switchport\n   ip address 172.16.3.3/31\n!\ninterface Ethernet8\n   description
+    P2P_LINK_TO_BB2_Ethernet6\n   no shutdown\n   mtu 1500\n   no switchport\n   ip
+    address 172.16.3.7/31\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
+    \  no shutdown\n   ip address 10.0.0.38/32\n   ip ospf area 0.0.0.0\n!\ninterface
+    Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address
+    10.3.3.37/32\n   ip ospf area 0.0.0.0\n!\ninterface Management1\n   description
+    oob_management\n   no shutdown\n   ip address 172.100.100.136/24\n!\ninterface
     Vlan10\n   description Blue\n   no shutdown\n   vrf PROD\n   ip address virtual
     10.10.10.1/24\n!\ninterface Vlan50\n   description Yellow\n   no shutdown\n   vrf
     DEV\n   ip address virtual 10.50.50.1/24\n!\ninterface Vlan70\n   description
@@ -668,31 +669,34 @@ cvp_configlets:
     MLAG-IPv4-UNDERLAY-PEER remote-as 65378\n   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self\n
     \  neighbor MLAG-IPv4-UNDERLAY-PEER description C-LEAF7\n   neighbor MLAG-IPv4-UNDERLAY-PEER
     send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000\n   neighbor
-    MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in\n   neighbor 10.0.0.131 peer
-    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.131 remote-as 65300\n   neighbor
-    10.0.0.131 description C-SPINE1\n   neighbor 10.0.0.132 peer group EVPN-OVERLAY-PEERS\n
-    \  neighbor 10.0.0.132 remote-as 65300\n   neighbor 10.0.0.132 description C-SPINE2\n
-    \  neighbor 172.16.0.1 peer group EVPN-OVERLAY-CORE\n   neighbor 172.16.0.1 remote-as
-    65000\n   neighbor 172.16.0.1 description BB1\n   neighbor 172.16.0.2 peer group
-    EVPN-OVERLAY-CORE\n   neighbor 172.16.0.2 remote-as 65000\n   neighbor 172.16.0.2
-    description BB2\n   !\n   vlan 10\n      rd 10.0.0.38:10010\n      route-target
-    both 10010:10010\n      redistribute learned\n   !\n   vlan 50\n      rd 10.0.0.38:10050\n
-    \     route-target both 10050:10050\n      redistribute learned\n   !\n   vlan
-    70\n      rd 10.0.0.38:10070\n      route-target both 10070:10070\n      redistribute
-    learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-CORE activate\n
-    \     neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor EVPN-OVERLAY-PEERS
-    activate\n      neighbor default next-hop-self received-evpn-routes route-type
-    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE
-    activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER
-    activate\n   !\n   vrf DEV\n      rd 10.0.0.38:50002\n      route-target import
-    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.38\n      neighbor 192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
-    connected\n   !\n   vrf PROD\n      rd 10.0.0.38:50001\n      route-target import
-    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.38\n      neighbor 192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
-    connected\n!\nrouter ospf 100\n   router-id 10.0.0.38\n   passive-interface default\n
-    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
-    Vlan4093\n   no passive-interface Ethernet7\n   no passive-interface Ethernet8\n
+    MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in\n   neighbor REMOTE-IPV4-PEERS
+    peer group\n   neighbor REMOTE-IPV4-PEERS remote-as 65000\n   neighbor REMOTE-IPV4-PEERS
+    bfd\n   neighbor 10.0.0.131 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.131
+    remote-as 65300\n   neighbor 10.0.0.131 description C-SPINE1\n   neighbor 10.0.0.132
+    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.132 remote-as 65300\n   neighbor
+    10.0.0.132 description C-SPINE2\n   neighbor 172.16.0.1 peer group EVPN-OVERLAY-CORE\n
+    \  neighbor 172.16.0.1 remote-as 65000\n   neighbor 172.16.0.1 description BB1\n
+    \  neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE\n   neighbor 172.16.0.2 remote-as
+    65000\n   neighbor 172.16.0.2 description BB2\n   neighbor 172.16.3.2 peer group
+    REMOTE-IPV4-PEERS\n   neighbor 172.16.3.6 peer group REMOTE-IPV4-PEERS\n   !\n
+    \  vlan 10\n      rd 10.0.0.38:10010\n      route-target both 10010:10010\n      redistribute
+    learned\n   !\n   vlan 50\n      rd 10.0.0.38:10050\n      route-target both 10050:10050\n
+    \     redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.38:10070\n      route-target
+    both 10070:10070\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
+    EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor
+    EVPN-OVERLAY-PEERS activate\n      neighbor default next-hop-self received-evpn-routes
+    route-type ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor
+    EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor
+    MLAG-IPv4-UNDERLAY-PEER activate\n      neighbor REMOTE-IPV4-PEERS activate\n
+    \     network 10.0.0.37/32\n      network 10.0.0.38/32\n      network 10.3.3.38/32\n
+    \  !\n   vrf DEV\n      rd 10.0.0.38:50002\n      route-target import evpn 50002:50002\n
+    \     route-target export evpn 50002:50002\n      router-id 10.0.0.38\n      neighbor
+    192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n   !\n
+    \  vrf PROD\n      rd 10.0.0.38:50001\n      route-target import evpn 50001:50001\n
+    \     route-target export evpn 50001:50001\n      router-id 10.0.0.38\n      neighbor
+    192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n!\nrouter
+    ospf 100\n   router-id 10.0.0.38\n   passive-interface default\n   no passive-interface
+    Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface Vlan4093\n
     \  max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
     \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-SPINE1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
