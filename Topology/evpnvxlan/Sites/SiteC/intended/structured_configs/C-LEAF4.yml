@@ -94,20 +94,20 @@ router_bgp:
       - 10050:10050
     redistribute_routes:
     - learned
-  - id: 10
-    tenant: PROD_TENANT
-    rd: 10.0.0.34:10010
+  - id: 60
+    tenant: DEV_TENANT
+    rd: 10.0.0.34:10060
     route_targets:
       both:
-      - 10010:10010
+      - 10060:10060
     redistribute_routes:
     - learned
-  - id: 30
+  - id: 20
     tenant: PROD_TENANT
-    rd: 10.0.0.34:10030
+    rd: 10.0.0.34:10020
     route_targets:
       both:
-      - 10030:10030
+      - 10020:10020
     redistribute_routes:
     - learned
 service_routing_protocols_model: multi-agent
@@ -159,16 +159,16 @@ vlans:
 - id: 50
   name: Yellow
   tenant: DEV_TENANT
+- id: 60
+  name: Red
+  tenant: DEV_TENANT
 - id: 3002
   name: MLAG_iBGP_DEV
   trunk_groups:
   - LEAF_PEER_L3
   tenant: DEV_TENANT
-- id: 10
-  name: Blue
-  tenant: PROD_TENANT
-- id: 30
-  name: Orange
+- id: 20
+  name: Green
   tenant: PROD_TENANT
 - id: 3001
   name: MLAG_iBGP_PROD
@@ -197,6 +197,14 @@ vlan_interfaces:
   shutdown: false
   ip_address_virtual: 10.50.50.1/24
   vrf: DEV
+- name: Vlan60
+  tenant: DEV_TENANT
+  tags:
+  - red
+  description: Red
+  shutdown: false
+  ip_address_virtual: 10.60.60.1/24
+  vrf: DEV
 - name: Vlan3002
   tenant: DEV_TENANT
   type: underlay_peering
@@ -205,21 +213,13 @@ vlan_interfaces:
   vrf: DEV
   mtu: 1500
   ip_address: 192.0.0.1/31
-- name: Vlan10
+- name: Vlan20
   tenant: PROD_TENANT
   tags:
-  - blue
-  description: Blue
+  - green
+  description: Green
   shutdown: false
-  ip_address_virtual: 10.10.10.1/24
-  vrf: PROD
-- name: Vlan30
-  tenant: PROD_TENANT
-  tags:
-  - orange
-  description: Orange
-  shutdown: false
-  ip_address_virtual: 10.30.30.1/24
+  ip_address_virtual: 10.20.20.1/24
   vrf: PROD
 - name: Vlan3001
   tenant: PROD_TENANT
@@ -368,10 +368,10 @@ vxlan_interface:
       vlans:
       - id: 50
         vni: 10050
-      - id: 10
-        vni: 10010
-      - id: 30
-        vni: 10030
+      - id: 60
+        vni: 10060
+      - id: 20
+        vni: 10020
       vrfs:
       - name: DEV
         vni: 50002

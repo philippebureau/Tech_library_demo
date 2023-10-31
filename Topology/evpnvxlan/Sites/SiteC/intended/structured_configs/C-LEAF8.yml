@@ -137,20 +137,20 @@ router_bgp:
     rd_evpn_domain:
       domain: remote
       rd: 10.0.0.38:10050
-  - id: 70
+  - id: 60
     tenant: DEV_TENANT
-    rd: 10.0.0.38:10070
+    rd: 10.0.0.38:10060
     route_targets:
       both:
-      - 10070:10070
+      - 10060:10060
       import_export_evpn_domains:
       - domain: remote
-        route_target: 10070:10070
+        route_target: 10060:10060
     redistribute_routes:
     - learned
     rd_evpn_domain:
       domain: remote
-      rd: 10.0.0.38:10070
+      rd: 10.0.0.38:10060
   - id: 10
     tenant: PROD_TENANT
     rd: 10.0.0.38:10010
@@ -214,8 +214,8 @@ vlans:
 - id: 50
   name: Yellow
   tenant: DEV_TENANT
-- id: 70
-  name: Brown
+- id: 60
+  name: Red
   tenant: DEV_TENANT
 - id: 3002
   name: MLAG_iBGP_DEV
@@ -252,13 +252,13 @@ vlan_interfaces:
   shutdown: false
   ip_address_virtual: 10.50.50.1/24
   vrf: DEV
-- name: Vlan70
+- name: Vlan60
   tenant: DEV_TENANT
   tags:
-  - brown
-  description: Brown
+  - red
+  description: Red
   shutdown: false
-  ip_address_virtual: 10.70.70.1/24
+  ip_address_virtual: 10.60.60.1/24
   vrf: DEV
 - name: Vlan3002
   tenant: DEV_TENANT
@@ -413,8 +413,8 @@ vxlan_interface:
       vlans:
       - id: 50
         vni: 10050
-      - id: 70
-        vni: 10070
+      - id: 60
+        vni: 10060
       - id: 10
         vni: 10010
       vrfs:

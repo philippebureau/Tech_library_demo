@@ -26,7 +26,7 @@ l3leaf:
     - group: C-LEAF12
       bgp_as: 65312
       filter:
-        tags: [ blue, orange ]
+        tags: [ blue ]
       nodes:
         - name: C-LEAF1
           id: 1
@@ -43,7 +43,7 @@ l3leaf:
     - group: A-LEAF34
       bgp_as: 65334
       filter:
-        tags: [ blue, orange, yellow ]
+        tags: [ green, yellow, red ]
       nodes:
         - name: C-LEAF3
           id: 3
@@ -60,7 +60,7 @@ l3leaf:
     - group: C-LEAF56
       bgp_as: 65356
       filter:
-        tags: [ brown ]
+        tags: [ green, red ]
       nodes:
         - name: C-LEAF5
           id: 5
@@ -77,7 +77,7 @@ l3leaf:
     - group: C-LEAF78
       bgp_as: 65378
       filter:
-        tags: [ blue, yellow, brown ]
+        tags: [ blue, freen, yellow, red ]
       evpn_gateway:
         remote_peers:
           - hostname: BB1

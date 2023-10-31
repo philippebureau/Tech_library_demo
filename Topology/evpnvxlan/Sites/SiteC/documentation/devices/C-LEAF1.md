@@ -287,7 +287,6 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 10 | Blue | - |
-| 30 | Orange | - |
 | 3001 | MLAG_iBGP_PROD | LEAF_PEER_L3 |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
 | 4094 | MLAG_PEER | MLAG |
@@ -298,9 +297,6 @@ vlan internal order ascending range 1006 1199
 !
 vlan 10
    name Blue
-!
-vlan 30
-   name Orange
 !
 vlan 3001
    name MLAG_iBGP_PROD
@@ -451,7 +447,6 @@ interface Loopback1
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan10 | Blue | PROD | - | False |
-| Vlan30 | Orange | PROD | - | False |
 | Vlan3001 | MLAG_PEER_L3_iBGP: vrf PROD | PROD | 1500 | False |
 | Vlan4093 | MLAG_PEER_L3_PEERING | default | 1500 | False |
 | Vlan4094 | MLAG_PEER | default | 1500 | False |
@@ -461,7 +456,6 @@ interface Loopback1
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan10 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
-| Vlan30 |  PROD  |  -  |  10.30.30.1/24  |  -  |  -  |  -  |  -  |
 | Vlan3001 |  PROD  |  192.0.0.0/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  192.0.0.0/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  169.254.0.0/31  |  -  |  -  |  -  |  -  |  -  |
@@ -475,12 +469,6 @@ interface Vlan10
    no shutdown
    vrf PROD
    ip address virtual 10.10.10.1/24
-!
-interface Vlan30
-   description Orange
-   no shutdown
-   vrf PROD
-   ip address virtual 10.30.30.1/24
 !
 interface Vlan3001
    description MLAG_PEER_L3_iBGP: vrf PROD
@@ -520,7 +508,6 @@ interface Vlan4094
 | VLAN | VNI | Flood List | Multicast Group |
 | ---- | --- | ---------- | --------------- |
 | 10 | 10010 | - | - |
-| 30 | 10030 | - | - |
 
 ##### VRF to VNI and Multicast Group Mappings
 
@@ -538,7 +525,6 @@ interface Vxlan1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
    vxlan vlan 10 vni 10010
-   vxlan vlan 30 vni 10030
    vxlan vrf PROD vni 50001
 ```
 
@@ -684,7 +670,6 @@ router ospf 100
 | VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
 | ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
 | 10 | 10.0.0.31:10010 | 10010:10010 | - | - | learned |
-| 30 | 10.0.0.31:10030 | 10030:10030 | - | - | learned |
 
 #### Router BGP VRFs
 
@@ -726,11 +711,6 @@ router bgp 65312
    vlan 10
       rd 10.0.0.31:10010
       route-target both 10010:10010
-      redistribute learned
-   !
-   vlan 30
-      rd 10.0.0.31:10030
-      route-target both 10030:10030
       redistribute learned
    !
    address-family evpn
