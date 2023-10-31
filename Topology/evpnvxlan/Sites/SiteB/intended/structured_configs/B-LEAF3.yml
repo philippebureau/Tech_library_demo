@@ -16,6 +16,10 @@ router_bgp:
     enabled: true
     restart_time: 300
   peer_groups:
+  - name: IPv4-UNDERLAY-PEERS
+    type: ipv4
+    maximum_routes: 12000
+    send_community: all
   - name: EVPN-OVERLAY-PEERS
     type: evpn
     update_source: Loopback0
@@ -25,13 +29,30 @@ router_bgp:
     ebgp_multihop: 3
   address_family_ipv4:
     peer_groups:
+    - name: IPv4-UNDERLAY-PEERS
+      activate: true
     - name: EVPN-OVERLAY-PEERS
       activate: false
-  address_family_evpn:
-    peer_groups:
-    - name: EVPN-OVERLAY-PEERS
-      activate: true
+  redistribute_routes:
+  - source_protocol: connected
+    route_map: RM-CONN-2-BGP
   neighbors:
+  - ip_address: 9.9.9.16
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-SPINE1_Ethernet3
+  - ip_address: 9.9.9.18
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-SPINE2_Ethernet3
+  - ip_address: 9.9.9.20
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-SPINE3_Ethernet3
+  - ip_address: 9.9.9.22
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-SPINE4_Ethernet3
   - ip_address: 10.0.0.121
     peer_group: EVPN-OVERLAY-PEERS
     description: B-SPINE1
@@ -48,6 +69,10 @@ router_bgp:
     peer_group: EVPN-OVERLAY-PEERS
     description: B-SPINE4
     remote_as: '65200'
+  address_family_evpn:
+    peer_groups:
+    - name: EVPN-OVERLAY-PEERS
+      activate: true
   vrfs:
   - name: DEV
     router_id: 10.0.0.23
@@ -103,8 +128,7 @@ router_bgp:
     redistribute_routes:
     - learned
 service_routing_protocols_model: multi-agent
-ipv6_unicast_routing: true
-ip_routing_ipv6_interfaces: true
+ip_routing: true
 vlan_internal_order:
   allocation: ascending
   range:
@@ -148,15 +172,10 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
   link_tracking_groups:
   - name: ES-LINKS
     direction: upstream
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.17/31
 - name: Ethernet2
   peer: B-SPINE2
   peer_interface: Ethernet3
@@ -165,15 +184,10 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
   link_tracking_groups:
   - name: ES-LINKS
     direction: upstream
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.19/31
 - name: Ethernet3
   peer: B-SPINE3
   peer_interface: Ethernet3
@@ -182,15 +196,10 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
   link_tracking_groups:
   - name: ES-LINKS
     direction: upstream
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.21/31
 - name: Ethernet4
   peer: B-SPINE4
   peer_interface: Ethernet3
@@ -199,15 +208,10 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
   link_tracking_groups:
   - name: ES-LINKS
     direction: upstream
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.23/31
 - name: Ethernet7
   peer: HostI
   peer_type: network_port
@@ -217,37 +221,29 @@ ethernet_interfaces:
   mode: access
   vlans: '60'
   spanning_tree_portfast: edge
-- name: Ethernet8
-  peer: HostJ
-  peer_type: network_port
-  description: HostJ
-  shutdown: false
-  type: port-channel-member
-  channel_group:
-    id: 8
-    mode: active
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering
   shutdown: false
   ip_address: 10.0.0.23/32
-  isis_enable: EVPN_UNDERLAY
-  isis_passive: true
 - name: Loopback1
   description: VTEP_VXLAN_Tunnel_Source
   shutdown: false
   ip_address: 10.2.2.23/32
-  isis_enable: EVPN_UNDERLAY
-  isis_passive: true
-router_isis:
-  instance: EVPN_UNDERLAY
-  log_adjacency_changes: true
-  net: 49.1111.0000.0001.0003.00
-  router_id: 10.0.0.23
-  is_type: level-2
-  address_family_ipv4:
-    enabled: true
-    maximum_paths: 4
+prefix_lists:
+- name: PL-LOOPBACKS-EVPN-OVERLAY
+  sequence_numbers:
+  - sequence: 10
+    action: permit 10.0.0.0/24 eq 32
+  - sequence: 20
+    action: permit 10.2.2.0/24 eq 32
+route_maps:
+- name: RM-CONN-2-BGP
+  sequence_numbers:
+  - sequence: 10
+    type: permit
+    match:
+    - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 router_bfd:
   multihop:
     interval: 1200
@@ -309,21 +305,6 @@ vxlan_interface:
         vni: 50002
       - name: PROD
         vni: 50001
-port_channel_interfaces:
-- name: Port-Channel8
-  description: HostJ
-  type: switched
-  shutdown: false
-  link_tracking_groups:
-  - name: ES-LINKS
-    direction: downstream
-  mode: access
-  vlans: '10'
-  spanning_tree_portfast: edge
-  evpn_ethernet_segment:
-    identifier: 0000:0000:0023:0024:0008
-    route_target: 00:23:00:24:00:08
-  lacp_id: 0023.0024.0008
 daemon_terminattr:
   cvaddrs:
   - 172.100.100.5:9910

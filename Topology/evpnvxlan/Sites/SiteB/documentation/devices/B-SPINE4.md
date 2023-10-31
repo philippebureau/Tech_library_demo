@@ -27,10 +27,12 @@
   - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
-  - [Router ISIS](#router-isis)
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
+- [Filters](#filters)
+  - [Prefix-lists](#prefix-lists)
+  - [Route-maps](#route-maps)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -254,27 +256,14 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 | P2P_LINK_TO_B-LEAF1_Ethernet4 | routed | - | unnumbered loopback0 | default | 1500 | False | - | - |
-| Ethernet2 | P2P_LINK_TO_B-LEAF2_Ethernet4 | routed | - | unnumbered loopback0 | default | 1500 | False | - | - |
-| Ethernet3 | P2P_LINK_TO_B-LEAF3_Ethernet4 | routed | - | unnumbered loopback0 | default | 1500 | False | - | - |
-| Ethernet4 | P2P_LINK_TO_B-LEAF4_Ethernet4 | routed | - | unnumbered loopback0 | default | 1500 | False | - | - |
-| Ethernet5 | P2P_LINK_TO_B-LEAF5_Ethernet4 | routed | - | unnumbered loopback0 | default | 1500 | False | - | - |
-| Ethernet6 | P2P_LINK_TO_B-LEAF6_Ethernet4 | routed | - | unnumbered loopback0 | default | 1500 | False | - | - |
-| Ethernet7 | P2P_LINK_TO_B-LEAF7_Ethernet4 | routed | - | unnumbered loopback0 | default | 1500 | False | - | - |
-| Ethernet8 | P2P_LINK_TO_B-LEAF8_Ethernet4 | routed | - | unnumbered loopback0 | default | 1500 | False | - | - |
-
-##### ISIS
-
-| Interface | Channel Group | ISIS Instance | ISIS Metric | Mode | ISIS Circuit Type | Hello Padding | Authentication Mode |
-| --------- | ------------- | ------------- | ----------- | ---- | ----------------- | ------------- | ------------------- |
-| Ethernet1 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet2 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet3 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet4 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet5 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet6 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet7 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet8 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
+| Ethernet1 | P2P_LINK_TO_B-LEAF1_Ethernet4 | routed | - | 9.9.9.6/31 | default | 1500 | False | - | - |
+| Ethernet2 | P2P_LINK_TO_B-LEAF2_Ethernet4 | routed | - | 9.9.9.14/31 | default | 1500 | False | - | - |
+| Ethernet3 | P2P_LINK_TO_B-LEAF3_Ethernet4 | routed | - | 9.9.9.22/31 | default | 1500 | False | - | - |
+| Ethernet4 | P2P_LINK_TO_B-LEAF4_Ethernet4 | routed | - | 9.9.9.30/31 | default | 1500 | False | - | - |
+| Ethernet5 | P2P_LINK_TO_B-LEAF5_Ethernet4 | routed | - | 9.9.9.38/31 | default | 1500 | False | - | - |
+| Ethernet6 | P2P_LINK_TO_B-LEAF6_Ethernet4 | routed | - | 9.9.9.46/31 | default | 1500 | False | - | - |
+| Ethernet7 | P2P_LINK_TO_B-LEAF7_Ethernet4 | routed | - | 9.9.9.54/31 | default | 1500 | False | - | - |
+| Ethernet8 | P2P_LINK_TO_B-LEAF8_Ethernet4 | routed | - | 9.9.9.62/31 | default | 1500 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -285,88 +274,56 @@ interface Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
-   isis circuit-type level-2
-   isis metric 50
-   isis network point-to-point
+   ip address 9.9.9.6/31
 !
 interface Ethernet2
    description P2P_LINK_TO_B-LEAF2_Ethernet4
    no shutdown
    mtu 1500
    no switchport
-   ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
-   isis circuit-type level-2
-   isis metric 50
-   isis network point-to-point
+   ip address 9.9.9.14/31
 !
 interface Ethernet3
    description P2P_LINK_TO_B-LEAF3_Ethernet4
    no shutdown
    mtu 1500
    no switchport
-   ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
-   isis circuit-type level-2
-   isis metric 50
-   isis network point-to-point
+   ip address 9.9.9.22/31
 !
 interface Ethernet4
    description P2P_LINK_TO_B-LEAF4_Ethernet4
    no shutdown
    mtu 1500
    no switchport
-   ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
-   isis circuit-type level-2
-   isis metric 50
-   isis network point-to-point
+   ip address 9.9.9.30/31
 !
 interface Ethernet5
    description P2P_LINK_TO_B-LEAF5_Ethernet4
    no shutdown
    mtu 1500
    no switchport
-   ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
-   isis circuit-type level-2
-   isis metric 50
-   isis network point-to-point
+   ip address 9.9.9.38/31
 !
 interface Ethernet6
    description P2P_LINK_TO_B-LEAF6_Ethernet4
    no shutdown
    mtu 1500
    no switchport
-   ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
-   isis circuit-type level-2
-   isis metric 50
-   isis network point-to-point
+   ip address 9.9.9.46/31
 !
 interface Ethernet7
    description P2P_LINK_TO_B-LEAF7_Ethernet4
    no shutdown
    mtu 1500
    no switchport
-   ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
-   isis circuit-type level-2
-   isis metric 50
-   isis network point-to-point
+   ip address 9.9.9.54/31
 !
 interface Ethernet8
    description P2P_LINK_TO_B-LEAF8_Ethernet4
    no shutdown
    mtu 1500
    no switchport
-   ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
-   isis circuit-type level-2
-   isis metric 50
-   isis network point-to-point
+   ip address 9.9.9.62/31
 ```
 
 ### Loopback Interfaces
@@ -385,11 +342,6 @@ interface Ethernet8
 | --------- | ----------- | --- | ------------ |
 | Loopback0 | EVPN_Overlay_Peering | default | - |
 
-##### ISIS
-
-| Interface | ISIS instance | ISIS metric | Interface mode |
-| --------- | ------------- | ----------- | -------------- |
-| Loopback0 | EVPN_UNDERLAY | - | passive |
 
 #### Loopback Interfaces Device Configuration
 
@@ -399,8 +351,6 @@ interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
    ip address 10.0.0.124/32
-   isis enable EVPN_UNDERLAY
-   isis passive
 ```
 
 ## Routing
@@ -420,13 +370,13 @@ service routing protocols model multi-agent
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | True (ipv6 interfaces) |
+| default | True |
 
 #### IP Routing Device Configuration
 
 ```eos
 !
-ip routing ipv6 interfaces
+ip routing
 ```
 
 ### IPv6 Routing
@@ -435,63 +385,8 @@ ip routing ipv6 interfaces
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | True |
+| default | False |
 | default | false |
-
-#### IPv6 Routing Device Configuration
-
-```eos
-!
-ipv6 unicast-routing
-```
-
-### Router ISIS
-
-#### Router ISIS Summary
-
-| Settings | Value |
-| -------- | ----- |
-| Instance | EVPN_UNDERLAY |
-| Net-ID | 49.1111.0000.0000.0004.00 |
-| Type | level-2 |
-| Router-ID | 10.0.0.124 |
-| Log Adjacency Changes | True |
-
-#### ISIS Interfaces Summary
-
-| Interface | ISIS Instance | ISIS Metric | Interface Mode |
-| --------- | ------------- | ----------- | -------------- |
-| Ethernet1 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet2 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet3 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet4 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet5 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet6 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet7 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet8 | EVPN_UNDERLAY | 50 | point-to-point |
-| Loopback0 | EVPN_UNDERLAY | - | passive |
-
-#### ISIS IPv4 Address Family Summary
-
-| Settings | Value |
-| -------- | ----- |
-| IPv4 Address-family Enabled | True |
-| Maximum-paths | 4 |
-
-#### Router ISIS Device Configuration
-
-```eos
-!
-router isis EVPN_UNDERLAY
-   net 49.1111.0000.0000.0004.00
-   is-type level-2
-   router-id ipv4 10.0.0.124
-   log-adjacency-changes
-   !
-   address-family ipv4 unicast
-      maximum-paths 4
-   !
-```
 
 ### Router BGP
 
@@ -523,10 +418,26 @@ router isis EVPN_UNDERLAY
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
+##### IPv4-UNDERLAY-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| Send community | all |
+| Maximum routes | 12000 |
+
 #### BGP Neighbors
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- |
+| 9.9.9.7 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
+| 9.9.9.15 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
+| 9.9.9.23 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
+| 9.9.9.31 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
+| 9.9.9.39 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
+| 9.9.9.47 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
+| 9.9.9.55 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
+| 9.9.9.63 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
 | 10.0.0.21 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
 | 10.0.0.22 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
 | 10.0.0.23 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
@@ -562,6 +473,33 @@ router bgp 65200
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor IPv4-UNDERLAY-PEERS peer group
+   neighbor IPv4-UNDERLAY-PEERS send-community
+   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor 9.9.9.7 peer group IPv4-UNDERLAY-PEERS
+   neighbor 9.9.9.7 remote-as 65200
+   neighbor 9.9.9.7 description B-LEAF1_Ethernet4
+   neighbor 9.9.9.15 peer group IPv4-UNDERLAY-PEERS
+   neighbor 9.9.9.15 remote-as 65200
+   neighbor 9.9.9.15 description B-LEAF2_Ethernet4
+   neighbor 9.9.9.23 peer group IPv4-UNDERLAY-PEERS
+   neighbor 9.9.9.23 remote-as 65200
+   neighbor 9.9.9.23 description B-LEAF3_Ethernet4
+   neighbor 9.9.9.31 peer group IPv4-UNDERLAY-PEERS
+   neighbor 9.9.9.31 remote-as 65200
+   neighbor 9.9.9.31 description B-LEAF4_Ethernet4
+   neighbor 9.9.9.39 peer group IPv4-UNDERLAY-PEERS
+   neighbor 9.9.9.39 remote-as 65200
+   neighbor 9.9.9.39 description B-LEAF5_Ethernet4
+   neighbor 9.9.9.47 peer group IPv4-UNDERLAY-PEERS
+   neighbor 9.9.9.47 remote-as 65200
+   neighbor 9.9.9.47 description B-LEAF6_Ethernet4
+   neighbor 9.9.9.55 peer group IPv4-UNDERLAY-PEERS
+   neighbor 9.9.9.55 remote-as 65200
+   neighbor 9.9.9.55 description B-LEAF7_Ethernet4
+   neighbor 9.9.9.63 peer group IPv4-UNDERLAY-PEERS
+   neighbor 9.9.9.63 remote-as 65200
+   neighbor 9.9.9.63 description B-LEAF8_Ethernet4
    neighbor 10.0.0.21 peer group EVPN-OVERLAY-PEERS
    neighbor 10.0.0.21 remote-as 65200
    neighbor 10.0.0.21 description B-LEAF1
@@ -586,12 +524,14 @@ router bgp 65200
    neighbor 10.0.0.28 peer group EVPN-OVERLAY-PEERS
    neighbor 10.0.0.28 remote-as 65200
    neighbor 10.0.0.28 description B-LEAF8
+   redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS activate
 ```
 
 ## BFD
@@ -610,6 +550,44 @@ router bgp 65200
 !
 router bfd
    multihop interval 1200 min-rx 1200 multiplier 3
+```
+
+## Filters
+
+### Prefix-lists
+
+#### Prefix-lists Summary
+
+##### PL-LOOPBACKS-EVPN-OVERLAY
+
+| Sequence | Action |
+| -------- | ------ |
+| 10 | permit 10.0.0.0/24 eq 32 |
+
+#### Prefix-lists Device Configuration
+
+```eos
+!
+ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+   seq 10 permit 10.0.0.0/24 eq 32
+```
+
+### Route-maps
+
+#### Route-maps Summary
+
+##### RM-CONN-2-BGP
+
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 10 | permit | ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY | - | - | - |
+
+#### Route-maps Device Configuration
+
+```eos
+!
+route-map RM-CONN-2-BGP permit 10
+   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 ```
 
 ## VRF Instances

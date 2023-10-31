@@ -16,6 +16,10 @@ router_bgp:
     enabled: true
     restart_time: 300
   peer_groups:
+  - name: IPv4-UNDERLAY-PEERS
+    type: ipv4
+    maximum_routes: 12000
+    send_community: all
   - name: EVPN-OVERLAY-PEERS
     type: evpn
     update_source: Loopback0
@@ -26,13 +30,46 @@ router_bgp:
     next_hop_unchanged: true
   address_family_ipv4:
     peer_groups:
+    - name: IPv4-UNDERLAY-PEERS
+      activate: true
     - name: EVPN-OVERLAY-PEERS
       activate: false
-  address_family_evpn:
-    peer_groups:
-    - name: EVPN-OVERLAY-PEERS
-      activate: true
+  redistribute_routes:
+  - source_protocol: connected
+    route_map: RM-CONN-2-BGP
   neighbors:
+  - ip_address: 9.9.9.1
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-LEAF1_Ethernet1
+  - ip_address: 9.9.9.9
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-LEAF2_Ethernet1
+  - ip_address: 9.9.9.17
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-LEAF3_Ethernet1
+  - ip_address: 9.9.9.25
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-LEAF4_Ethernet1
+  - ip_address: 9.9.9.33
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-LEAF5_Ethernet1
+  - ip_address: 9.9.9.41
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-LEAF6_Ethernet1
+  - ip_address: 9.9.9.49
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-LEAF7_Ethernet1
+  - ip_address: 9.9.9.57
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    description: B-LEAF8_Ethernet1
   - ip_address: 10.0.0.21
     peer_group: EVPN-OVERLAY-PEERS
     description: B-LEAF1
@@ -65,9 +102,12 @@ router_bgp:
     peer_group: EVPN-OVERLAY-PEERS
     description: B-LEAF8
     remote_as: '65200'
+  address_family_evpn:
+    peer_groups:
+    - name: EVPN-OVERLAY-PEERS
+      activate: true
 service_routing_protocols_model: multi-agent
-ipv6_unicast_routing: true
-ip_routing_ipv6_interfaces: true
+ip_routing: true
 vlan_internal_order:
   allocation: ascending
   range:
@@ -104,12 +144,7 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.0/31
 - name: Ethernet2
   peer: B-LEAF2
   peer_interface: Ethernet1
@@ -118,12 +153,7 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.8/31
 - name: Ethernet3
   peer: B-LEAF3
   peer_interface: Ethernet1
@@ -132,12 +162,7 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.16/31
 - name: Ethernet4
   peer: B-LEAF4
   peer_interface: Ethernet1
@@ -146,12 +171,7 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.24/31
 - name: Ethernet5
   peer: B-LEAF5
   peer_interface: Ethernet1
@@ -160,12 +180,7 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.32/31
 - name: Ethernet6
   peer: B-LEAF6
   peer_interface: Ethernet1
@@ -174,12 +189,7 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.40/31
 - name: Ethernet7
   peer: B-LEAF7
   peer_interface: Ethernet1
@@ -188,12 +198,7 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.48/31
 - name: Ethernet8
   peer: B-LEAF8
   peer_interface: Ethernet1
@@ -202,28 +207,24 @@ ethernet_interfaces:
   shutdown: false
   mtu: 1500
   type: routed
-  ipv6_enable: false
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
-  isis_network_point_to_point: true
-  isis_circuit_type: level-2
-  ip_address: unnumbered loopback0
+  ip_address: 9.9.9.56/31
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering
   shutdown: false
   ip_address: 10.0.0.121/32
-  isis_enable: EVPN_UNDERLAY
-  isis_passive: true
-router_isis:
-  instance: EVPN_UNDERLAY
-  log_adjacency_changes: true
-  net: 49.1111.0000.0000.0001.00
-  router_id: 10.0.0.121
-  is_type: level-2
-  address_family_ipv4:
-    enabled: true
-    maximum_paths: 4
+prefix_lists:
+- name: PL-LOOPBACKS-EVPN-OVERLAY
+  sequence_numbers:
+  - sequence: 10
+    action: permit 10.0.0.0/24 eq 32
+route_maps:
+- name: RM-CONN-2-BGP
+  sequence_numbers:
+  - sequence: 10
+    type: permit
+    match:
+    - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 router_bfd:
   multihop:
     interval: 1200

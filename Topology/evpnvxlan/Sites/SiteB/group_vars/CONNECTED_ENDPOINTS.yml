@@ -2,42 +2,42 @@
 # Endpoint connectivity
 # Using network ports model
 network_ports:
-  - description: HostG
-    switches:
-      - B-LEAF1
-      - B-LEAF2
-    switch_ports:
-      - Ethernet7
-      - Ethernet7
-    mode: access
-    vlans: 20
-    spanning_tree_portfast: edge
-    ethernet_segment:
-      short_esi: 0021:0022:0007
-    port_channel:
-      mode: active
-      enabled: true
-    link_tracking:
-      enabled: true
-      name: ES-LINKS
-  - description: HostH
-    switches:
-      - B-LEAF1
-      - B-LEAF2
-    switch_ports:
-      - Ethernet8
-      - Ethernet8
-    mode: access
-    vlans: 40
-    spanning_tree_portfast: edge
-    ethernet_segment:
-      short_esi: 0021:0022:0008
-    port_channel:
-      mode: active
-      enabled: true
-    link_tracking:
-      enabled: true
-      name: ES-LINKS
+  #- description: HostG
+  #  switches:
+  #    - B-LEAF1
+  #    - B-LEAF2
+  #  switch_ports:
+  #    - Ethernet7
+  #    - Ethernet7
+  #  mode: access
+  #  vlans: 20
+  #  spanning_tree_portfast: edge
+  #  ethernet_segment:
+  #    short_esi: 0021:0022:0007
+  #  port_channel:
+  #    mode: active
+  #    enabled: true
+  #  link_tracking:
+  #    enabled: true
+  #    name: ES-LINKS
+  #- description: HostH
+  #  switches:
+  #    - B-LEAF1
+  #    - B-LEAF2
+  #  switch_ports:
+  #    - Ethernet8
+  #    - Ethernet8
+  #  mode: access
+  #  vlans: 40
+  #  spanning_tree_portfast: edge
+  #  ethernet_segment:
+  #    short_esi: 0021:0022:0008
+  #  port_channel:
+  #    mode: active
+  #    enabled: true
+  #  link_tracking:
+  #    enabled: true
+  #    name: ES-LINKS
   - description: HostI
     switches:
       - B-LEAF3
@@ -46,24 +46,24 @@ network_ports:
     mode: access
     vlans: 60
     spanning_tree_portfast: edge
-  - description: HostJ
-    switches:
-      - B-LEAF3
-      - B-LEAF4
-    switch_ports:
-      - Ethernet8
-      - Ethernet8
-    mode: access
-    vlans: 10
-    spanning_tree_portfast: edge
-    ethernet_segment:
-      short_esi: 0023:0024:0008
-    port_channel:
-      mode: active
-      enabled: true
-    link_tracking:
-      enabled: true
-      name: ES-LINKS
+  # - description: HostJ
+  #   switches:
+  #     - B-LEAF3
+  #     - B-LEAF4
+  #   switch_ports:
+  #     - Ethernet8
+  #     - Ethernet8
+  #   mode: access
+  #   vlans: 10
+  #   spanning_tree_portfast: edge
+  #   ethernet_segment:
+  #     short_esi: 0023:0024:0008
+  #   port_channel:
+  #     mode: active
+  #     enabled: true
+  #   link_tracking:
+  #     enabled: true
+  #     name: ES-LINKS
   - description: HostK
     switches:
       - B-LEAF4
