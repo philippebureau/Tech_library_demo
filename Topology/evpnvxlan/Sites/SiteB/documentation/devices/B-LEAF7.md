@@ -37,8 +37,6 @@
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
-  - [Router Multicast](#router-multicast)
-  - [PIM Sparse Mode](#pim-sparse-mode)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -328,7 +326,6 @@ interface Ethernet1
    mtu 1500
    no switchport
    ip address unnumbered loopback0
-   pim ipv4 sparse-mode
    isis enable EVPN_UNDERLAY
    isis circuit-type level-2
    isis metric 50
@@ -341,7 +338,6 @@ interface Ethernet2
    mtu 1500
    no switchport
    ip address unnumbered loopback0
-   pim ipv4 sparse-mode
    isis enable EVPN_UNDERLAY
    isis circuit-type level-2
    isis metric 50
@@ -354,7 +350,6 @@ interface Ethernet3
    mtu 1500
    no switchport
    ip address unnumbered loopback0
-   pim ipv4 sparse-mode
    isis enable EVPN_UNDERLAY
    isis circuit-type level-2
    isis metric 50
@@ -367,7 +362,6 @@ interface Ethernet4
    mtu 1500
    no switchport
    ip address unnumbered loopback0
-   pim ipv4 sparse-mode
    isis enable EVPN_UNDERLAY
    isis circuit-type level-2
    isis metric 50
@@ -858,35 +852,6 @@ router bfd
 
 ```eos
 ```
-
-### Router Multicast
-
-#### IP Router Multicast Summary
-
-- Routing for IPv4 multicast is enabled.
-- Software forwarding by the Software Forwarding Engine (SFE)
-
-#### Router Multicast Device Configuration
-
-```eos
-!
-router multicast
-   ipv4
-      routing
-      software-forwarding sfe
-```
-
-
-### PIM Sparse Mode
-
-#### PIM Sparse Mode enabled interfaces
-
-| Interface Name | VRF Name | IP Version | DR Priority | Local Interface |
-| -------------- | -------- | ---------- | ----------- | --------------- |
-| Ethernet1 | - | IPv4 | - | - |
-| Ethernet2 | - | IPv4 | - | - |
-| Ethernet3 | - | IPv4 | - | - |
-| Ethernet4 | - | IPv4 | - | - |
 
 ## VRF Instances
 

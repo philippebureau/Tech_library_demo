@@ -105,10 +105,6 @@ router_bgp:
 service_routing_protocols_model: multi-agent
 ipv6_unicast_routing: true
 ip_routing_ipv6_interfaces: true
-router_multicast:
-  ipv4:
-    routing: true
-    software_forwarding: sfe
 vlan_internal_order:
   allocation: ascending
   range:
@@ -160,9 +156,6 @@ ethernet_interfaces:
   isis_metric: 50
   isis_network_point_to_point: true
   isis_circuit_type: level-2
-  pim:
-    ipv4:
-      sparse_mode: true
   ip_address: unnumbered loopback0
 - name: Ethernet2
   peer: B-SPINE2
@@ -180,9 +173,6 @@ ethernet_interfaces:
   isis_metric: 50
   isis_network_point_to_point: true
   isis_circuit_type: level-2
-  pim:
-    ipv4:
-      sparse_mode: true
   ip_address: unnumbered loopback0
 - name: Ethernet3
   peer: B-SPINE3
@@ -200,9 +190,6 @@ ethernet_interfaces:
   isis_metric: 50
   isis_network_point_to_point: true
   isis_circuit_type: level-2
-  pim:
-    ipv4:
-      sparse_mode: true
   ip_address: unnumbered loopback0
 - name: Ethernet4
   peer: B-SPINE4
@@ -220,9 +207,6 @@ ethernet_interfaces:
   isis_metric: 50
   isis_network_point_to_point: true
   isis_circuit_type: level-2
-  pim:
-    ipv4:
-      sparse_mode: true
   ip_address: unnumbered loopback0
 - name: Ethernet7
   peer: HostI

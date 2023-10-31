@@ -9,7 +9,7 @@ underlay_rfc5549: true
 isis_area_id: "49.1111"
 
 # Enable multicast
-underlay_multicast: true
-custom_structured_configuration_router_multicast:
-  ipv4:
-    software_forwarding: sfe
+# underlay_multicast: true
+# custom_structured_configuration_router_multicast:
+#   ipv4:
+#     software_forwarding: sfe
