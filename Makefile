@@ -125,3 +125,7 @@ validate-site-C_remote: ## Run ansible playbook to validate the Fabric.
 .PHONY: deploy-hosts
 deploy-hosts: ## Run ansible playbook to config hosts for Sites A, B and C
 	ansible-playbook Topology/evpnvxlan/playbooks/deploy-hosts.yml -i Topology/evpnvxlan/Sites/SiteA/inventory.yml -i Topology/evpnvxlan/Sites/SiteB/inventory.yml -i Topology/evpnvxlan/Sites/SiteC/inventory.yml
+
+.PHONY: deploy-hosts_remote
+deploy-hosts_remote: ## Run ansible playbook to config hosts for Sites A, B and C
+	ansible-playbook Topology/evpnvxlan/playbooks/deploy-hosts.yml -i Topology/evpnvxlan/Sites/SiteA/inventory_remote.yml -i Topology/evpnvxlan/Sites/SiteB/inventory_remote.yml -i Topology/evpnvxlan/Sites/SiteC/inventory_remote.yml
