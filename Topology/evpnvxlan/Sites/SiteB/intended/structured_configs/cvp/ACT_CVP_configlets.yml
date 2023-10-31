@@ -329,29 +329,30 @@ cvp_configlets:
     timezone EST\n!\nvlan 40\n   name Purple\n!\nvlan 80\n   name Black\n!\nvrf instance
     DEV\n!\nvrf instance PROD\n!\nlink tracking group ES-LINKS\n   recovery delay
     300\n!\ninterface Port-Channel7\n   description B-SW1_Po1\n   no shutdown\n   switchport\n
-    \  switchport trunk allowed vlan 40,80\n   switchport mode trunk\n!\ninterface
-    Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet5\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet5\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet3\n   description P2P_LINK_TO_B-SPINE3_Ethernet5\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet4\n   description P2P_LINK_TO_B-SPINE4_Ethernet5\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet7\n   description B-SW1_Ethernet1\n   no shutdown\n   channel-group 7
-    mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n   no
-    shutdown\n   ip address 10.0.0.25/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface
-    Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address
-    10.2.2.25/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n
-    \  description oob_management\n   no shutdown\n   ip address 172.100.100.122/24\n!\ninterface
+    \  switchport trunk allowed vlan 40,80\n   switchport mode trunk\n   evpn ethernet-segment\n
+    \     identifier 0000:0000:0025:0026:0007\n      route-target import 00:25:00:26:00:07\n
+    \  lacp system-id 0025.0026.0007\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
+    \  pim ipv4 sparse-mode\n   isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n
+    \  isis metric 50\n   isis network point-to-point\n   link tracking group ES-LINKS
+    upstream\n!\ninterface Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
+    \  pim ipv4 sparse-mode\n   isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n
+    \  isis metric 50\n   isis network point-to-point\n   link tracking group ES-LINKS
+    upstream\n!\ninterface Ethernet3\n   description P2P_LINK_TO_B-SPINE3_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
+    \  pim ipv4 sparse-mode\n   isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n
+    \  isis metric 50\n   isis network point-to-point\n   link tracking group ES-LINKS
+    upstream\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-SPINE4_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
+    \  pim ipv4 sparse-mode\n   isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n
+    \  isis metric 50\n   isis network point-to-point\n   link tracking group ES-LINKS
+    upstream\n!\ninterface Ethernet7\n   description B-SW1_Ethernet1\n   no shutdown\n
+    \  channel-group 7 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
+    \  no shutdown\n   ip address 10.0.0.25/32\n   isis enable EVPN_UNDERLAY\n   isis
+    passive\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no
+    shutdown\n   ip address 10.2.2.25/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.122/24\n!\ninterface
     Vlan40\n   description Purple\n   no shutdown\n   vrf PROD\n   ip address virtual
     10.40.40.1/24\n!\ninterface Vlan80\n   description Black\n   no shutdown\n   vrf
     DEV\n   ip address virtual 10.80.80.1/24\n!\ninterface Vxlan1\n   description
@@ -402,29 +403,30 @@ cvp_configlets:
     timezone EST\n!\nvlan 40\n   name Purple\n!\nvlan 80\n   name Black\n!\nvrf instance
     DEV\n!\nvrf instance PROD\n!\nlink tracking group ES-LINKS\n   recovery delay
     300\n!\ninterface Port-Channel7\n   description B-SW1_Po1\n   no shutdown\n   switchport\n
-    \  switchport trunk allowed vlan 40,80\n   switchport mode trunk\n!\ninterface
-    Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet6\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet6\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet3\n   description P2P_LINK_TO_B-SPINE3_Ethernet6\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet4\n   description P2P_LINK_TO_B-SPINE4_Ethernet6\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet7\n   description B-SW1_Ethernet2\n   no shutdown\n   channel-group 7
-    mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n   no
-    shutdown\n   ip address 10.0.0.26/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface
-    Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address
-    10.2.2.26/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n
-    \  description oob_management\n   no shutdown\n   ip address 172.100.100.123/24\n!\ninterface
+    \  switchport trunk allowed vlan 40,80\n   switchport mode trunk\n   evpn ethernet-segment\n
+    \     identifier 0000:0000:0025:0026:0007\n      route-target import 00:25:00:26:00:07\n
+    \  lacp system-id 0025.0026.0007\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet6\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
+    \  pim ipv4 sparse-mode\n   isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n
+    \  isis metric 50\n   isis network point-to-point\n   link tracking group ES-LINKS
+    upstream\n!\ninterface Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet6\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
+    \  pim ipv4 sparse-mode\n   isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n
+    \  isis metric 50\n   isis network point-to-point\n   link tracking group ES-LINKS
+    upstream\n!\ninterface Ethernet3\n   description P2P_LINK_TO_B-SPINE3_Ethernet6\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
+    \  pim ipv4 sparse-mode\n   isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n
+    \  isis metric 50\n   isis network point-to-point\n   link tracking group ES-LINKS
+    upstream\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-SPINE4_Ethernet6\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
+    \  pim ipv4 sparse-mode\n   isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n
+    \  isis metric 50\n   isis network point-to-point\n   link tracking group ES-LINKS
+    upstream\n!\ninterface Ethernet7\n   description B-SW1_Ethernet2\n   no shutdown\n
+    \  channel-group 7 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
+    \  no shutdown\n   ip address 10.0.0.26/32\n   isis enable EVPN_UNDERLAY\n   isis
+    passive\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no
+    shutdown\n   ip address 10.2.2.26/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.123/24\n!\ninterface
     Vlan40\n   description Purple\n   no shutdown\n   vrf PROD\n   ip address virtual
     10.40.40.1/24\n!\ninterface Vlan80\n   description Black\n   no shutdown\n   vrf
     DEV\n   ip address virtual 10.80.80.1/24\n!\ninterface Vxlan1\n   description
