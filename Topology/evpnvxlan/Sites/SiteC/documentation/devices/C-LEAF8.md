@@ -288,7 +288,7 @@ vlan internal order ascending range 1006 1199
 | ------- | ---- | ------------ |
 | 10 | Blue | - |
 | 50 | Yellow | - |
-| 70 | Brown | - |
+| 60 | Red | - |
 | 3001 | MLAG_iBGP_PROD | LEAF_PEER_L3 |
 | 3002 | MLAG_iBGP_DEV | LEAF_PEER_L3 |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
@@ -304,8 +304,8 @@ vlan 10
 vlan 50
    name Yellow
 !
-vlan 70
-   name Brown
+vlan 60
+   name Red
 !
 vlan 3001
    name MLAG_iBGP_PROD
@@ -462,7 +462,7 @@ interface Loopback1
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan10 | Blue | PROD | - | False |
 | Vlan50 | Yellow | DEV | - | False |
-| Vlan70 | Brown | DEV | - | False |
+| Vlan60 | Red | DEV | - | False |
 | Vlan3001 | MLAG_PEER_L3_iBGP: vrf PROD | PROD | 1500 | False |
 | Vlan3002 | MLAG_PEER_L3_iBGP: vrf DEV | DEV | 1500 | False |
 | Vlan4093 | MLAG_PEER_L3_PEERING | default | 1500 | False |
@@ -474,7 +474,7 @@ interface Loopback1
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan10 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
 | Vlan50 |  DEV  |  -  |  10.50.50.1/24  |  -  |  -  |  -  |  -  |
-| Vlan70 |  DEV  |  -  |  10.70.70.1/24  |  -  |  -  |  -  |  -  |
+| Vlan60 |  DEV  |  -  |  10.60.60.1/24  |  -  |  -  |  -  |  -  |
 | Vlan3001 |  PROD  |  192.0.0.1/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan3002 |  DEV  |  192.0.0.1/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  192.0.0.1/31  |  -  |  -  |  -  |  -  |  -  |
@@ -496,11 +496,11 @@ interface Vlan50
    vrf DEV
    ip address virtual 10.50.50.1/24
 !
-interface Vlan70
-   description Brown
+interface Vlan60
+   description Red
    no shutdown
    vrf DEV
-   ip address virtual 10.70.70.1/24
+   ip address virtual 10.60.60.1/24
 !
 interface Vlan3001
    description MLAG_PEER_L3_iBGP: vrf PROD
@@ -548,7 +548,7 @@ interface Vlan4094
 | ---- | --- | ---------- | --------------- |
 | 10 | 10010 | - | - |
 | 50 | 10050 | - | - |
-| 70 | 10070 | - | - |
+| 60 | 10060 | - | - |
 
 ##### VRF to VNI and Multicast Group Mappings
 
@@ -568,7 +568,7 @@ interface Vxlan1
    vxlan udp-port 4789
    vxlan vlan 10 vni 10010
    vxlan vlan 50 vni 10050
-   vxlan vlan 70 vni 10070
+   vxlan vlan 60 vni 10060
    vxlan vrf DEV vni 50002
    vxlan vrf PROD vni 50001
 ```
@@ -751,7 +751,7 @@ router ospf 100
 | ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
 | 10 | 10.0.0.38:10010 | 10010:10010<br>remote 10010:10010 | - | - | learned |
 | 50 | 10.0.0.38:10050 | 10050:10050<br>remote 10050:10050 | - | - | learned |
-| 70 | 10.0.0.38:10070 | 10070:10070<br>remote 10070:10070 | - | - | learned |
+| 60 | 10.0.0.38:10060 | 10060:10060<br>remote 10060:10060 | - | - | learned |
 
 #### Router BGP VRFs
 
@@ -822,11 +822,11 @@ router bgp 65378
       route-target import export evpn domain remote 10050:10050
       redistribute learned
    !
-   vlan 70
-      rd 10.0.0.38:10070
-      rd evpn domain remote 10.0.0.38:10070
-      route-target both 10070:10070
-      route-target import export evpn domain remote 10070:10070
+   vlan 60
+      rd 10.0.0.38:10060
+      rd evpn domain remote 10.0.0.38:10060
+      route-target both 10060:10060
+      route-target import export evpn domain remote 10060:10060
       redistribute learned
    !
    address-family evpn

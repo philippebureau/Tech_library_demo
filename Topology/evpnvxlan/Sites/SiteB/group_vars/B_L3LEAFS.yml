@@ -53,7 +53,7 @@ l3leaf:
             - Ethernet2
     - group: B-LEAF34
       filter:
-        tags: [ blue, red, brown]
+        tags: [ blue, red, brown ]
       nodes:
         - name: B-LEAF3
           id: 3

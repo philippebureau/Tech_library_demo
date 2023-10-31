@@ -22,7 +22,7 @@ DEV:
             name: Red
             tags: [red]
             enabled: true
-            ip_address_virtual: 10.50.50.1/24
+            ip_address_virtual: 10.60.60.1/24
           - id: 70
             name: Brown
             tags: [brown]

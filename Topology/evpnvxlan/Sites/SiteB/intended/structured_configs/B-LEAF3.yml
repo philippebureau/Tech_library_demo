@@ -289,7 +289,7 @@ vlan_interfaces:
   - red
   description: Red
   shutdown: false
-  ip_address_virtual: 10.50.50.1/24
+  ip_address_virtual: 10.60.60.1/24
   vrf: DEV
 - name: Vlan70
   tenant: DEV_TENANT

@@ -286,9 +286,9 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 10 | Blue | - |
-| 30 | Orange | - |
+| 20 | Green | - |
 | 50 | Yellow | - |
+| 60 | Red | - |
 | 3001 | MLAG_iBGP_PROD | LEAF_PEER_L3 |
 | 3002 | MLAG_iBGP_DEV | LEAF_PEER_L3 |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
@@ -298,14 +298,14 @@ vlan internal order ascending range 1006 1199
 
 ```eos
 !
-vlan 10
-   name Blue
-!
-vlan 30
-   name Orange
+vlan 20
+   name Green
 !
 vlan 50
    name Yellow
+!
+vlan 60
+   name Red
 !
 vlan 3001
    name MLAG_iBGP_PROD
@@ -468,9 +468,9 @@ interface Loopback1
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
-| Vlan10 | Blue | PROD | - | False |
-| Vlan30 | Orange | PROD | - | False |
+| Vlan20 | Green | PROD | - | False |
 | Vlan50 | Yellow | DEV | - | False |
+| Vlan60 | Red | DEV | - | False |
 | Vlan3001 | MLAG_PEER_L3_iBGP: vrf PROD | PROD | 1500 | False |
 | Vlan3002 | MLAG_PEER_L3_iBGP: vrf DEV | DEV | 1500 | False |
 | Vlan4093 | MLAG_PEER_L3_PEERING | default | 1500 | False |
@@ -480,9 +480,9 @@ interface Loopback1
 
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
-| Vlan10 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
-| Vlan30 |  PROD  |  -  |  10.30.30.1/24  |  -  |  -  |  -  |  -  |
+| Vlan20 |  PROD  |  -  |  10.20.20.1/24  |  -  |  -  |  -  |  -  |
 | Vlan50 |  DEV  |  -  |  10.50.50.1/24  |  -  |  -  |  -  |  -  |
+| Vlan60 |  DEV  |  -  |  10.60.60.1/24  |  -  |  -  |  -  |  -  |
 | Vlan3001 |  PROD  |  192.0.0.0/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan3002 |  DEV  |  192.0.0.0/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  192.0.0.0/31  |  -  |  -  |  -  |  -  |  -  |
@@ -492,23 +492,23 @@ interface Loopback1
 
 ```eos
 !
-interface Vlan10
-   description Blue
+interface Vlan20
+   description Green
    no shutdown
    vrf PROD
-   ip address virtual 10.10.10.1/24
-!
-interface Vlan30
-   description Orange
-   no shutdown
-   vrf PROD
-   ip address virtual 10.30.30.1/24
+   ip address virtual 10.20.20.1/24
 !
 interface Vlan50
    description Yellow
    no shutdown
    vrf DEV
    ip address virtual 10.50.50.1/24
+!
+interface Vlan60
+   description Red
+   no shutdown
+   vrf DEV
+   ip address virtual 10.60.60.1/24
 !
 interface Vlan3001
    description MLAG_PEER_L3_iBGP: vrf PROD
@@ -554,9 +554,9 @@ interface Vlan4094
 
 | VLAN | VNI | Flood List | Multicast Group |
 | ---- | --- | ---------- | --------------- |
-| 10 | 10010 | - | - |
-| 30 | 10030 | - | - |
+| 20 | 10020 | - | - |
 | 50 | 10050 | - | - |
+| 60 | 10060 | - | - |
 
 ##### VRF to VNI and Multicast Group Mappings
 
@@ -574,9 +574,9 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
-   vxlan vlan 10 vni 10010
-   vxlan vlan 30 vni 10030
+   vxlan vlan 20 vni 10020
    vxlan vlan 50 vni 10050
+   vxlan vlan 60 vni 10060
    vxlan vrf DEV vni 50002
    vxlan vrf PROD vni 50001
 ```
@@ -726,9 +726,9 @@ router ospf 100
 
 | VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
 | ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
-| 10 | 10.0.0.33:10010 | 10010:10010 | - | - | learned |
-| 30 | 10.0.0.33:10030 | 10030:10030 | - | - | learned |
+| 20 | 10.0.0.33:10020 | 10020:10020 | - | - | learned |
 | 50 | 10.0.0.33:10050 | 10050:10050 | - | - | learned |
+| 60 | 10.0.0.33:10060 | 10060:10060 | - | - | learned |
 
 #### Router BGP VRFs
 
@@ -768,19 +768,19 @@ router bgp 65334
    neighbor 10.0.0.132 remote-as 65300
    neighbor 10.0.0.132 description C-SPINE2
    !
-   vlan 10
-      rd 10.0.0.33:10010
-      route-target both 10010:10010
-      redistribute learned
-   !
-   vlan 30
-      rd 10.0.0.33:10030
-      route-target both 10030:10030
+   vlan 20
+      rd 10.0.0.33:10020
+      route-target both 10020:10020
       redistribute learned
    !
    vlan 50
       rd 10.0.0.33:10050
       route-target both 10050:10050
+      redistribute learned
+   !
+   vlan 60
+      rd 10.0.0.33:10060
+      route-target both 10060:10060
       redistribute learned
    !
    address-family evpn

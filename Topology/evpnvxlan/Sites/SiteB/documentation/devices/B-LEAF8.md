@@ -450,7 +450,7 @@ interface Loopback1
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan10 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
 | Vlan20 |  PROD  |  -  |  10.20.20.1/24  |  -  |  -  |  -  |  -  |
-| Vlan60 |  DEV  |  -  |  10.50.50.1/24  |  -  |  -  |  -  |  -  |
+| Vlan60 |  DEV  |  -  |  10.60.60.1/24  |  -  |  -  |  -  |  -  |
 | Vlan70 |  DEV  |  -  |  10.70.70.1/24  |  -  |  -  |  -  |  -  |
 
 #### VLAN Interfaces Device Configuration
@@ -473,7 +473,7 @@ interface Vlan60
    description Red
    no shutdown
    vrf DEV
-   ip address virtual 10.50.50.1/24
+   ip address virtual 10.60.60.1/24
 !
 interface Vlan70
    description Brown
