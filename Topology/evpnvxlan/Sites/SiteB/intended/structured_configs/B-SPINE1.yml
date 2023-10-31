@@ -40,27 +40,27 @@ router_bgp:
   neighbors:
   - ip_address: 9.9.9.1
     peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65200'
+    remote_as: '65201'
     description: B-LEAF1_Ethernet1
   - ip_address: 9.9.9.9
     peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65200'
+    remote_as: '65202'
     description: B-LEAF2_Ethernet1
   - ip_address: 9.9.9.17
     peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65200'
+    remote_as: '65203'
     description: B-LEAF3_Ethernet1
   - ip_address: 9.9.9.25
     peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65200'
+    remote_as: '65204'
     description: B-LEAF4_Ethernet1
   - ip_address: 9.9.9.33
     peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65200'
+    remote_as: '65205'
     description: B-LEAF5_Ethernet1
   - ip_address: 9.9.9.41
     peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65200'
+    remote_as: '65206'
     description: B-LEAF6_Ethernet1
   - ip_address: 9.9.9.49
     peer_group: IPv4-UNDERLAY-PEERS
@@ -73,27 +73,27 @@ router_bgp:
   - ip_address: 10.0.0.21
     peer_group: EVPN-OVERLAY-PEERS
     description: B-LEAF1
-    remote_as: '65200'
+    remote_as: '65201'
   - ip_address: 10.0.0.22
     peer_group: EVPN-OVERLAY-PEERS
     description: B-LEAF2
-    remote_as: '65200'
+    remote_as: '65202'
   - ip_address: 10.0.0.23
     peer_group: EVPN-OVERLAY-PEERS
     description: B-LEAF3
-    remote_as: '65200'
+    remote_as: '65203'
   - ip_address: 10.0.0.24
     peer_group: EVPN-OVERLAY-PEERS
     description: B-LEAF4
-    remote_as: '65200'
+    remote_as: '65204'
   - ip_address: 10.0.0.25
     peer_group: EVPN-OVERLAY-PEERS
     description: B-LEAF5
-    remote_as: '65200'
+    remote_as: '65205'
   - ip_address: 10.0.0.26
     peer_group: EVPN-OVERLAY-PEERS
     description: B-LEAF6
-    remote_as: '65200'
+    remote_as: '65206'
   - ip_address: 10.0.0.27
     peer_group: EVPN-OVERLAY-PEERS
     description: B-LEAF7

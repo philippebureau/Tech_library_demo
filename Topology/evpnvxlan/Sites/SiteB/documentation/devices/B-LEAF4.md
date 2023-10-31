@@ -523,7 +523,7 @@ ip routing vrf PROD
 
 | BGP AS | Router ID |
 | ------ | --------- |
-| 65200 | 10.0.0.24 |
+| 65204 | 10.0.0.24 |
 
 | BGP Tuning |
 | ---------- |
@@ -594,7 +594,7 @@ ip routing vrf PROD
 
 ```eos
 !
-router bgp 65200
+router bgp 65204
    router-id 10.0.0.24
    distance bgp 20 200 200
    graceful-restart restart-time 300

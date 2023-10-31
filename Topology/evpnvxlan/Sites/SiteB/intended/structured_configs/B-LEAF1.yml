@@ -1,6 +1,6 @@
 hostname: B-LEAF1
 router_bgp:
-  as: '65200'
+  as: '65201'
   router_id: 10.0.0.21
   distance:
     external_routes: 20
