@@ -451,7 +451,7 @@ interface Loopback1
 
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
-| Vlan40 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
+| Vlan40 |  PROD  |  -  |  10.40.40.1/24  |  -  |  -  |  -  |  -  |
 | Vlan80 |  DEV  |  -  |  10.80.80.1/24  |  -  |  -  |  -  |  -  |
 
 #### VLAN Interfaces Device Configuration
@@ -462,7 +462,7 @@ interface Vlan40
    description Purple
    no shutdown
    vrf PROD
-   ip address virtual 10.10.10.1/24
+   ip address virtual 10.40.40.1/24
 !
 interface Vlan80
    description Black

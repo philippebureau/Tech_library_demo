@@ -46,7 +46,7 @@ cvp_configlets:
     Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.118/24\n!\ninterface
     Vlan20\n   description Green\n   no shutdown\n   vrf PROD\n   ip address virtual
     10.20.20.1/24\n!\ninterface Vlan40\n   description Purple\n   no shutdown\n   vrf
-    PROD\n   ip address virtual 10.10.10.1/24\n!\ninterface Vxlan1\n   description
+    PROD\n   ip address virtual 10.40.40.1/24\n!\ninterface Vxlan1\n   description
     B-LEAF1_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
     vlan 20 vni 10020\n   vxlan vlan 40 vni 10040\n   vxlan vrf PROD vni 50001\n!\nip
     virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
@@ -123,7 +123,7 @@ cvp_configlets:
     Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.119/24\n!\ninterface
     Vlan20\n   description Green\n   no shutdown\n   vrf PROD\n   ip address virtual
     10.20.20.1/24\n!\ninterface Vlan40\n   description Purple\n   no shutdown\n   vrf
-    PROD\n   ip address virtual 10.10.10.1/24\n!\ninterface Vxlan1\n   description
+    PROD\n   ip address virtual 10.40.40.1/24\n!\ninterface Vxlan1\n   description
     B-LEAF2_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
     vlan 20 vni 10020\n   vxlan vlan 40 vni 10040\n   vxlan vrf PROD vni 50001\n!\nip
     virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
@@ -353,7 +353,7 @@ cvp_configlets:
     10.2.2.25/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n
     \  description oob_management\n   no shutdown\n   ip address 172.100.100.122/24\n!\ninterface
     Vlan40\n   description Purple\n   no shutdown\n   vrf PROD\n   ip address virtual
-    10.10.10.1/24\n!\ninterface Vlan80\n   description Black\n   no shutdown\n   vrf
+    10.40.40.1/24\n!\ninterface Vlan80\n   description Black\n   no shutdown\n   vrf
     DEV\n   ip address virtual 10.80.80.1/24\n!\ninterface Vxlan1\n   description
     B-LEAF5_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
     vlan 40 vni 10040\n   vxlan vlan 80 vni 10080\n   vxlan vrf DEV vni 50002\n   vxlan
@@ -426,7 +426,7 @@ cvp_configlets:
     10.2.2.26/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n
     \  description oob_management\n   no shutdown\n   ip address 172.100.100.123/24\n!\ninterface
     Vlan40\n   description Purple\n   no shutdown\n   vrf PROD\n   ip address virtual
-    10.10.10.1/24\n!\ninterface Vlan80\n   description Black\n   no shutdown\n   vrf
+    10.40.40.1/24\n!\ninterface Vlan80\n   description Black\n   no shutdown\n   vrf
     DEV\n   ip address virtual 10.80.80.1/24\n!\ninterface Vxlan1\n   description
     B-LEAF6_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
     vlan 40 vni 10040\n   vxlan vlan 80 vni 10080\n   vxlan vrf DEV vni 50002\n   vxlan

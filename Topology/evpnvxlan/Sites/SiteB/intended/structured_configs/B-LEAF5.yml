@@ -285,7 +285,7 @@ vlan_interfaces:
   - purple
   description: Purple
   shutdown: false
-  ip_address_virtual: 10.10.10.1/24
+  ip_address_virtual: 10.40.40.1/24
   vrf: PROD
 vxlan_interface:
   Vxlan1:
