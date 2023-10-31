@@ -734,9 +734,9 @@ ip routing vrf PROD
 
 | VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
 | ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
-| 10 | 10.0.0.17:10010 | 10010:10010 | - | - | learned |
-| 50 | 10.0.0.17:10050 | 10050:10050 | - | - | learned |
-| 70 | 10.0.0.17:10070 | 10070:10070 | - | - | learned |
+| 10 | 10.0.0.17:10010 | 10010:10010<br>remote 10010:10010 | - | - | learned |
+| 50 | 10.0.0.17:10050 | 10050:10050<br>remote 10050:10050 | - | - | learned |
+| 70 | 10.0.0.17:10070 | 10070:10070<br>remote 10070:10070 | - | - | learned |
 
 #### Router BGP VRFs
 
@@ -820,17 +820,23 @@ router bgp 65178
    !
    vlan 10
       rd 10.0.0.17:10010
+      rd evpn domain remote 10.0.0.17:10010
       route-target both 10010:10010
+      route-target import export evpn domain remote 10010:10010
       redistribute learned
    !
    vlan 50
       rd 10.0.0.17:10050
+      rd evpn domain remote 10.0.0.17:10050
       route-target both 10050:10050
+      route-target import export evpn domain remote 10050:10050
       redistribute learned
    !
    vlan 70
       rd 10.0.0.17:10070
+      rd evpn domain remote 10.0.0.17:10070
       route-target both 10070:10070
+      route-target import export evpn domain remote 10070:10070
       redistribute learned
    !
    address-family evpn

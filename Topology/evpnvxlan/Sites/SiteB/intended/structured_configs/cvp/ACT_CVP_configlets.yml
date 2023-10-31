@@ -531,27 +531,32 @@ cvp_configlets:
     \  neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE\n   neighbor 172.16.0.2 remote-as
     65000\n   neighbor 172.16.0.2 description BB2\n   neighbor 172.16.2.0 peer group
     REMOTE-IPV4-PEERS\n   neighbor 172.16.2.4 peer group REMOTE-IPV4-PEERS\n   !\n
-    \  vlan 10\n      rd 10.0.0.27:10010\n      route-target both 10010:10010\n      redistribute
-    learned\n   !\n   vlan 20\n      rd 10.0.0.27:10020\n      route-target both 10020:10020\n
-    \     redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.27:10060\n      route-target
-    both 10060:10060\n      redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.27:10070\n
-    \     route-target both 10070:10070\n      redistribute learned\n   !\n   address-family
-    evpn\n      neighbor EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE
-    domain remote\n      neighbor EVPN-OVERLAY-PEERS activate\n      neighbor default
-    next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n   !\n   address-family
-    ipv4\n      no neighbor EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS
-    activate\n      neighbor REMOTE-IPV4-PEERS activate\n      network 10.0.0.27/32\n
-    \     network 10.0.0.28/32\n      network 10.2.2.27/32\n   !\n   vrf DEV\n      rd
-    10.0.0.27:50002\n      route-target import evpn 50002:50002\n      route-target
-    export evpn 50002:50002\n      router-id 10.0.0.27\n      redistribute connected\n
-    \  !\n   vrf PROD\n      rd 10.0.0.27:50001\n      route-target import evpn 50001:50001\n
-    \     route-target export evpn 50001:50001\n      router-id 10.0.0.27\n      redistribute
-    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
-    sfe\n!\nrouter isis EVPN_UNDERLAY\n   net 49.1111.0000.0001.0007.00\n   is-type
-    level-2\n   router-id ipv4 10.0.0.27\n   log-adjacency-changes\n   !\n   address-family
-    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
-    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
-    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \  vlan 10\n      rd 10.0.0.27:10010\n      rd evpn domain remote 10.0.0.27:10010\n
+    \     route-target both 10010:10010\n      route-target import export evpn domain
+    remote 10010:10010\n      redistribute learned\n   !\n   vlan 20\n      rd 10.0.0.27:10020\n
+    \     rd evpn domain remote 10.0.0.27:10020\n      route-target both 10020:10020\n
+    \     route-target import export evpn domain remote 10020:10020\n      redistribute
+    learned\n   !\n   vlan 60\n      rd 10.0.0.27:10060\n      rd evpn domain remote
+    10.0.0.27:10060\n      route-target both 10060:10060\n      route-target import
+    export evpn domain remote 10060:10060\n      redistribute learned\n   !\n   vlan
+    70\n      rd 10.0.0.27:10070\n      rd evpn domain remote 10.0.0.27:10070\n      route-target
+    both 10070:10070\n      route-target import export evpn domain remote 10070:10070\n
+    \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-CORE
+    activate\n      neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor EVPN-OVERLAY-PEERS
+    activate\n      neighbor default next-hop-self received-evpn-routes route-type
+    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE
+    activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor REMOTE-IPV4-PEERS
+    activate\n      network 10.0.0.27/32\n      network 10.0.0.28/32\n      network
+    10.2.2.27/32\n   !\n   vrf DEV\n      rd 10.0.0.27:50002\n      route-target import
+    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
+    10.0.0.27\n      redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.27:50001\n
+    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
+    \     router-id 10.0.0.27\n      redistribute connected\n!\nrouter multicast\n
+    \  ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis EVPN_UNDERLAY\n
+    \  net 49.1111.0000.0001.0007.00\n   is-type level-2\n   router-id ipv4 10.0.0.27\n
+    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
+    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF8: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -624,27 +629,32 @@ cvp_configlets:
     \  neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE\n   neighbor 172.16.0.2 remote-as
     65000\n   neighbor 172.16.0.2 description BB2\n   neighbor 172.16.2.2 peer group
     REMOTE-IPV4-PEERS\n   neighbor 172.16.2.6 peer group REMOTE-IPV4-PEERS\n   !\n
-    \  vlan 10\n      rd 10.0.0.28:10010\n      route-target both 10010:10010\n      redistribute
-    learned\n   !\n   vlan 20\n      rd 10.0.0.28:10020\n      route-target both 10020:10020\n
-    \     redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.28:10060\n      route-target
-    both 10060:10060\n      redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.28:10070\n
-    \     route-target both 10070:10070\n      redistribute learned\n   !\n   address-family
-    evpn\n      neighbor EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE
-    domain remote\n      neighbor EVPN-OVERLAY-PEERS activate\n      neighbor default
-    next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n   !\n   address-family
-    ipv4\n      no neighbor EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS
-    activate\n      neighbor REMOTE-IPV4-PEERS activate\n      network 10.0.0.27/32\n
-    \     network 10.0.0.28/32\n      network 10.2.2.28/32\n   !\n   vrf DEV\n      rd
-    10.0.0.28:50002\n      route-target import evpn 50002:50002\n      route-target
-    export evpn 50002:50002\n      router-id 10.0.0.28\n      redistribute connected\n
-    \  !\n   vrf PROD\n      rd 10.0.0.28:50001\n      route-target import evpn 50001:50001\n
-    \     route-target export evpn 50001:50001\n      router-id 10.0.0.28\n      redistribute
-    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
-    sfe\n!\nrouter isis EVPN_UNDERLAY\n   net 49.1111.0000.0001.0008.00\n   is-type
-    level-2\n   router-id ipv4 10.0.0.28\n   log-adjacency-changes\n   !\n   address-family
-    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
-    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
-    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \  vlan 10\n      rd 10.0.0.28:10010\n      rd evpn domain remote 10.0.0.28:10010\n
+    \     route-target both 10010:10010\n      route-target import export evpn domain
+    remote 10010:10010\n      redistribute learned\n   !\n   vlan 20\n      rd 10.0.0.28:10020\n
+    \     rd evpn domain remote 10.0.0.28:10020\n      route-target both 10020:10020\n
+    \     route-target import export evpn domain remote 10020:10020\n      redistribute
+    learned\n   !\n   vlan 60\n      rd 10.0.0.28:10060\n      rd evpn domain remote
+    10.0.0.28:10060\n      route-target both 10060:10060\n      route-target import
+    export evpn domain remote 10060:10060\n      redistribute learned\n   !\n   vlan
+    70\n      rd 10.0.0.28:10070\n      rd evpn domain remote 10.0.0.28:10070\n      route-target
+    both 10070:10070\n      route-target import export evpn domain remote 10070:10070\n
+    \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-CORE
+    activate\n      neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor EVPN-OVERLAY-PEERS
+    activate\n      neighbor default next-hop-self received-evpn-routes route-type
+    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE
+    activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor REMOTE-IPV4-PEERS
+    activate\n      network 10.0.0.27/32\n      network 10.0.0.28/32\n      network
+    10.2.2.28/32\n   !\n   vrf DEV\n      rd 10.0.0.28:50002\n      route-target import
+    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
+    10.0.0.28\n      redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.28:50001\n
+    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
+    \     router-id 10.0.0.28\n      redistribute connected\n!\nrouter multicast\n
+    \  ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis EVPN_UNDERLAY\n
+    \  net 49.1111.0000.0001.0008.00\n   is-type level-2\n   router-id ipv4 10.0.0.28\n
+    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
+    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-SPINE1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan

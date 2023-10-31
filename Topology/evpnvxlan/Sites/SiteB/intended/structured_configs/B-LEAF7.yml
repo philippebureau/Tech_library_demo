@@ -121,32 +121,56 @@ router_bgp:
     route_targets:
       both:
       - 10060:10060
+      import_export_evpn_domains:
+      - domain: remote
+        route_target: 10060:10060
     redistribute_routes:
     - learned
+    rd_evpn_domain:
+      domain: remote
+      rd: 10.0.0.27:10060
   - id: 70
     tenant: DEV_TENANT
     rd: 10.0.0.27:10070
     route_targets:
       both:
       - 10070:10070
+      import_export_evpn_domains:
+      - domain: remote
+        route_target: 10070:10070
     redistribute_routes:
     - learned
+    rd_evpn_domain:
+      domain: remote
+      rd: 10.0.0.27:10070
   - id: 10
     tenant: PROD_TENANT
     rd: 10.0.0.27:10010
     route_targets:
       both:
       - 10010:10010
+      import_export_evpn_domains:
+      - domain: remote
+        route_target: 10010:10010
     redistribute_routes:
     - learned
+    rd_evpn_domain:
+      domain: remote
+      rd: 10.0.0.27:10010
   - id: 20
     tenant: PROD_TENANT
     rd: 10.0.0.27:10020
     route_targets:
       both:
       - 10020:10020
+      import_export_evpn_domains:
+      - domain: remote
+        route_target: 10020:10020
     redistribute_routes:
     - learned
+    rd_evpn_domain:
+      domain: remote
+      rd: 10.0.0.27:10020
 service_routing_protocols_model: multi-agent
 ipv6_unicast_routing: true
 ip_routing_ipv6_interfaces: true

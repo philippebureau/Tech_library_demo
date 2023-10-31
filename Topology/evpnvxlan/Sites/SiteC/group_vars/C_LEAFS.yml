@@ -86,6 +86,8 @@ l3leaf:
           - hostname: BB2
             ip_address: 172.16.0.2
             bgp_as: 65000
+        evpn_l2:
+          enabled: true
         evpn_l3:
           enabled: true
       structured_config:

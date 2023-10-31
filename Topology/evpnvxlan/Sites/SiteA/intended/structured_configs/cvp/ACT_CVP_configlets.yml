@@ -689,23 +689,27 @@ cvp_configlets:
     A-SPINE3_Ethernet7\n   neighbor 192.168.0.54 peer group IPv4-UNDERLAY-PEERS\n
     \  neighbor 192.168.0.54 remote-as 65100\n   neighbor 192.168.0.54 description
     A-SPINE4_Ethernet7\n   redistribute connected route-map RM-CONN-2-BGP\n   !\n
-    \  vlan 10\n      rd 10.0.0.17:10010\n      route-target both 10010:10010\n      redistribute
-    learned\n   !\n   vlan 50\n      rd 10.0.0.17:10050\n      route-target both 10050:10050\n
-    \     redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.17:10070\n      route-target
-    both 10070:10070\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
-    EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor
-    EVPN-OVERLAY-PEERS activate\n      neighbor default next-hop-self received-evpn-routes
-    route-type ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor
-    EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor
-    IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER activate\n
-    \  !\n   vrf DEV\n      rd 10.0.0.17:50002\n      route-target import evpn 50002:50002\n
-    \     route-target export evpn 50002:50002\n      router-id 10.0.0.17\n      neighbor
-    192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n   !\n
-    \  vrf PROD\n      rd 10.0.0.17:50001\n      route-target import evpn 50001:50001\n
-    \     route-target export evpn 50001:50001\n      router-id 10.0.0.17\n      neighbor
-    192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \  vlan 10\n      rd 10.0.0.17:10010\n      rd evpn domain remote 10.0.0.17:10010\n
+    \     route-target both 10010:10010\n      route-target import export evpn domain
+    remote 10010:10010\n      redistribute learned\n   !\n   vlan 50\n      rd 10.0.0.17:10050\n
+    \     rd evpn domain remote 10.0.0.17:10050\n      route-target both 10050:10050\n
+    \     route-target import export evpn domain remote 10050:10050\n      redistribute
+    learned\n   !\n   vlan 70\n      rd 10.0.0.17:10070\n      rd evpn domain remote
+    10.0.0.17:10070\n      route-target both 10070:10070\n      route-target import
+    export evpn domain remote 10070:10070\n      redistribute learned\n   !\n   address-family
+    evpn\n      neighbor EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE
+    domain remote\n      neighbor EVPN-OVERLAY-PEERS activate\n      neighbor default
+    next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS
+    activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER
+    activate\n   !\n   vrf DEV\n      rd 10.0.0.17:50002\n      route-target import
+    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
+    10.0.0.17\n      neighbor 192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
+    connected\n   !\n   vrf PROD\n      rd 10.0.0.17:50001\n      route-target import
+    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.17\n      neighbor 192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
+    connected\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-LEAF8: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -806,23 +810,27 @@ cvp_configlets:
     A-SPINE3_Ethernet8\n   neighbor 192.168.0.62 peer group IPv4-UNDERLAY-PEERS\n
     \  neighbor 192.168.0.62 remote-as 65100\n   neighbor 192.168.0.62 description
     A-SPINE4_Ethernet8\n   redistribute connected route-map RM-CONN-2-BGP\n   !\n
-    \  vlan 10\n      rd 10.0.0.18:10010\n      route-target both 10010:10010\n      redistribute
-    learned\n   !\n   vlan 50\n      rd 10.0.0.18:10050\n      route-target both 10050:10050\n
-    \     redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.18:10070\n      route-target
-    both 10070:10070\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
-    EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor
-    EVPN-OVERLAY-PEERS activate\n      neighbor default next-hop-self received-evpn-routes
-    route-type ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor
-    EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor
-    IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER activate\n
-    \  !\n   vrf DEV\n      rd 10.0.0.18:50002\n      route-target import evpn 50002:50002\n
-    \     route-target export evpn 50002:50002\n      router-id 10.0.0.18\n      neighbor
-    192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n   !\n
-    \  vrf PROD\n      rd 10.0.0.18:50001\n      route-target import evpn 50001:50001\n
-    \     route-target export evpn 50001:50001\n      router-id 10.0.0.18\n      neighbor
-    192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \  vlan 10\n      rd 10.0.0.18:10010\n      rd evpn domain remote 10.0.0.18:10010\n
+    \     route-target both 10010:10010\n      route-target import export evpn domain
+    remote 10010:10010\n      redistribute learned\n   !\n   vlan 50\n      rd 10.0.0.18:10050\n
+    \     rd evpn domain remote 10.0.0.18:10050\n      route-target both 10050:10050\n
+    \     route-target import export evpn domain remote 10050:10050\n      redistribute
+    learned\n   !\n   vlan 70\n      rd 10.0.0.18:10070\n      rd evpn domain remote
+    10.0.0.18:10070\n      route-target both 10070:10070\n      route-target import
+    export evpn domain remote 10070:10070\n      redistribute learned\n   !\n   address-family
+    evpn\n      neighbor EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE
+    domain remote\n      neighbor EVPN-OVERLAY-PEERS activate\n      neighbor default
+    next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS
+    activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER
+    activate\n   !\n   vrf DEV\n      rd 10.0.0.18:50002\n      route-target import
+    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
+    10.0.0.18\n      neighbor 192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
+    connected\n   !\n   vrf PROD\n      rd 10.0.0.18:50001\n      route-target import
+    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.18\n      neighbor 192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
+    connected\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-SPINE1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan

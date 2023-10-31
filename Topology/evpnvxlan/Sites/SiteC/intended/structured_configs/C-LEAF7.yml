@@ -129,24 +129,42 @@ router_bgp:
     route_targets:
       both:
       - 10050:10050
+      import_export_evpn_domains:
+      - domain: remote
+        route_target: 10050:10050
     redistribute_routes:
     - learned
+    rd_evpn_domain:
+      domain: remote
+      rd: 10.0.0.37:10050
   - id: 70
     tenant: DEV_TENANT
     rd: 10.0.0.37:10070
     route_targets:
       both:
       - 10070:10070
+      import_export_evpn_domains:
+      - domain: remote
+        route_target: 10070:10070
     redistribute_routes:
     - learned
+    rd_evpn_domain:
+      domain: remote
+      rd: 10.0.0.37:10070
   - id: 10
     tenant: PROD_TENANT
     rd: 10.0.0.37:10010
     route_targets:
       both:
       - 10010:10010
+      import_export_evpn_domains:
+      - domain: remote
+        route_target: 10010:10010
     redistribute_routes:
     - learned
+    rd_evpn_domain:
+      domain: remote
+      rd: 10.0.0.37:10010
 service_routing_protocols_model: multi-agent
 ip_routing: true
 vlan_internal_order:

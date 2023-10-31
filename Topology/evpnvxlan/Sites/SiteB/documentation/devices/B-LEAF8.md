@@ -710,10 +710,10 @@ router isis EVPN_UNDERLAY
 
 | VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
 | ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
-| 10 | 10.0.0.28:10010 | 10010:10010 | - | - | learned |
-| 20 | 10.0.0.28:10020 | 10020:10020 | - | - | learned |
-| 60 | 10.0.0.28:10060 | 10060:10060 | - | - | learned |
-| 70 | 10.0.0.28:10070 | 10070:10070 | - | - | learned |
+| 10 | 10.0.0.28:10010 | 10010:10010<br>remote 10010:10010 | - | - | learned |
+| 20 | 10.0.0.28:10020 | 10020:10020<br>remote 10020:10020 | - | - | learned |
+| 60 | 10.0.0.28:10060 | 10060:10060<br>remote 10060:10060 | - | - | learned |
+| 70 | 10.0.0.28:10070 | 10070:10070<br>remote 10070:10070 | - | - | learned |
 
 #### Router BGP VRFs
 
@@ -771,22 +771,30 @@ router bgp 65200
    !
    vlan 10
       rd 10.0.0.28:10010
+      rd evpn domain remote 10.0.0.28:10010
       route-target both 10010:10010
+      route-target import export evpn domain remote 10010:10010
       redistribute learned
    !
    vlan 20
       rd 10.0.0.28:10020
+      rd evpn domain remote 10.0.0.28:10020
       route-target both 10020:10020
+      route-target import export evpn domain remote 10020:10020
       redistribute learned
    !
    vlan 60
       rd 10.0.0.28:10060
+      rd evpn domain remote 10.0.0.28:10060
       route-target both 10060:10060
+      route-target import export evpn domain remote 10060:10060
       redistribute learned
    !
    vlan 70
       rd 10.0.0.28:10070
+      rd evpn domain remote 10.0.0.28:10070
       route-target both 10070:10070
+      route-target import export evpn domain remote 10070:10070
       redistribute learned
    !
    address-family evpn
