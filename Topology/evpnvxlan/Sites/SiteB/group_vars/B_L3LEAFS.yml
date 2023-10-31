@@ -74,6 +74,13 @@ l3leaf:
     - group: B-LEAF56
       filter:
         tags: [ purple, black ]
+      structured_config:
+        port_channel_interfaces:
+          - name: Port-Channel7
+            evpn_ethernet_segment:
+              identifier: 0000:0000:0025:0026:0007
+              route_target: 00:25:00:26:00:07
+            lacp_id: 0025.0026.0007
       nodes:
         - name: B-LEAF5
           id: 5

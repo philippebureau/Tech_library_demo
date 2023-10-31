@@ -233,6 +233,10 @@ port_channel_interfaces:
   shutdown: false
   mode: trunk
   vlans: 40,80
+  evpn_ethernet_segment:
+    identifier: 0000:0000:0025:0026:0007
+    route_target: 00:25:00:26:00:07
+  lacp_id: 0025.0026.0007
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering

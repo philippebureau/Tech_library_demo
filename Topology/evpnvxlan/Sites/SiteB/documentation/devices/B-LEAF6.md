@@ -380,7 +380,15 @@ interface Ethernet7
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel7 | B-SW1_Po1 | switched | trunk | 40,80 | - | - | - | - | - | - |
+| Port-Channel7 | B-SW1_Po1 | switched | trunk | 40,80 | - | - | - | - | - | 0000:0000:0025:0026:0007 |
+
+##### EVPN Multihoming
+
+####### EVPN Multihoming Summary
+
+| Interface | Ethernet Segment Identifier | Multihoming Redundancy Mode | Route Target |
+| --------- | --------------------------- | --------------------------- | ------------ |
+| Port-Channel7 | 0000:0000:0025:0026:0007 | all-active | 00:25:00:26:00:07 |
 
 #### Port-Channel Interfaces Device Configuration
 
@@ -392,6 +400,10 @@ interface Port-Channel7
    switchport
    switchport trunk allowed vlan 40,80
    switchport mode trunk
+   evpn ethernet-segment
+      identifier 0000:0000:0025:0026:0007
+      route-target import 00:25:00:26:00:07
+   lacp system-id 0025.0026.0007
 ```
 
 ### Loopback Interfaces
