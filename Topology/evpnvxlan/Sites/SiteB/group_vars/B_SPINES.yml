@@ -12,6 +12,12 @@ spine:
     uplink_structured_config:
       ip_address: 'unnumbered loopback0'
       ipv6_enable: false
+    structured_config:
+      router_bgp:
+        peer_groups:
+          - name: EVPN-OVERLAY-PEERS
+            route_reflector_client: true
+            next_hop_unchanged: false
   nodes:
     - name: B-SPINE1
       id: 1

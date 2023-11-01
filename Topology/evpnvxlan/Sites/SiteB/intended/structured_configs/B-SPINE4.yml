@@ -23,7 +23,8 @@ router_bgp:
     send_community: all
     maximum_routes: 0
     ebgp_multihop: 3
-    next_hop_unchanged: true
+    next_hop_unchanged: false
+    route_reflector_client: true
   address_family_ipv4:
     peer_groups:
     - name: EVPN-OVERLAY-PEERS
