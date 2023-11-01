@@ -685,6 +685,8 @@ router isis EVPN_UNDERLAY
 
 #### Router BGP EVPN Address Family
 
+- VPN import pruning is __enabled__
+
 ##### EVPN Peer Groups
 
 | Peer Group | Activate | Encapsulation |
@@ -796,6 +798,7 @@ router bgp 65200
       neighbor EVPN-OVERLAY-CORE domain remote
       neighbor EVPN-OVERLAY-PEERS activate
       neighbor default next-hop-self received-evpn-routes route-type ip-prefix inter-domain
+      route import match-failure action discard
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-CORE activate

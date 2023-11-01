@@ -101,7 +101,7 @@ test_id,node,test_category,test_description,test,result,failure_reason
 100,B-LEAF3,Interface State,Port-Channel Interface & Line Protocol == "up",Port-Channel8 - HostJ,PASS,
 101,B-LEAF4,Interface State,Port-Channel Interface & Line Protocol == "up",Port-Channel8 - HostJ,PASS,
 102,B-LEAF5,Interface State,Port-Channel Interface & Line Protocol == "up",Port-Channel7 - B-SW1_Po1,PASS,
-103,B-LEAF6,Interface State,Port-Channel Interface & Line Protocol == "up",Port-Channel7 - B-SW1_Po1,FAIL,Interface shutdown: False - interface status: down - line protocol status: lowerLayerDown
+103,B-LEAF6,Interface State,Port-Channel Interface & Line Protocol == "up",Port-Channel7 - B-SW1_Po1,PASS,
 104,B-SW1,Interface State,Port-Channel Interface & Line Protocol == "up",Port-Channel1 - B-LEAF5_Po7,PASS,
 105,B-LEAF1,Interface State,Vlan Interface & Line Protocol == "up",Vlan20 - Green,PASS,
 106,B-LEAF1,Interface State,Vlan Interface & Line Protocol == "up",Vlan40 - Purple,PASS,

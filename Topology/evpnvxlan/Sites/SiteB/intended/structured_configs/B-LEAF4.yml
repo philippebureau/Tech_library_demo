@@ -31,6 +31,8 @@ router_bgp:
     peer_groups:
     - name: EVPN-OVERLAY-PEERS
       activate: true
+    route:
+      import_match_failure_action: discard
   neighbors:
   - ip_address: 10.0.0.121
     peer_group: EVPN-OVERLAY-PEERS

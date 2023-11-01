@@ -66,14 +66,14 @@ cvp_configlets:
     \     route-target both 10020:10020\n      redistribute learned\n   !\n   vlan
     40\n      rd 10.0.0.21:10040\n      route-target both 10040:10040\n      redistribute
     learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n
-    \  !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n
-    \  !\n   vrf PROD\n      rd 10.0.0.21:50001\n      route-target import evpn 50001:50001\n
-    \     route-target export evpn 50001:50001\n      router-id 10.0.0.21\n      redistribute
-    connected\n!\nrouter isis EVPN_UNDERLAY\n   net 49.1111.0000.0001.0001.00\n   is-type
-    level-2\n   router-id ipv4 10.0.0.21\n   log-adjacency-changes\n   !\n   address-family
-    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
-    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
-    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \     route import match-failure action discard\n   !\n   address-family ipv4\n
+    \     no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf PROD\n      rd 10.0.0.21:50001\n
+    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
+    \     router-id 10.0.0.21\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n
+    \  net 49.1111.0000.0001.0001.00\n   is-type level-2\n   router-id ipv4 10.0.0.21\n
+    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
+    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -141,14 +141,14 @@ cvp_configlets:
     \     route-target both 10020:10020\n      redistribute learned\n   !\n   vlan
     40\n      rd 10.0.0.22:10040\n      route-target both 10040:10040\n      redistribute
     learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n
-    \  !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n
-    \  !\n   vrf PROD\n      rd 10.0.0.22:50001\n      route-target import evpn 50001:50001\n
-    \     route-target export evpn 50001:50001\n      router-id 10.0.0.22\n      redistribute
-    connected\n!\nrouter isis EVPN_UNDERLAY\n   net 49.1111.0000.0001.0002.00\n   is-type
-    level-2\n   router-id ipv4 10.0.0.22\n   log-adjacency-changes\n   !\n   address-family
-    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
-    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
-    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \     route import match-failure action discard\n   !\n   address-family ipv4\n
+    \     no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf PROD\n      rd 10.0.0.22:50001\n
+    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
+    \     router-id 10.0.0.22\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n
+    \  net 49.1111.0000.0001.0002.00\n   is-type level-2\n   router-id ipv4 10.0.0.22\n
+    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
+    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF3: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -217,16 +217,17 @@ cvp_configlets:
     learned\n   !\n   vlan 60\n      rd 10.0.0.23:10060\n      route-target both 10060:10060\n
     \     redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.23:10070\n      route-target
     both 10070:10070\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
-    EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS
-    activate\n   !\n   vrf DEV\n      rd 10.0.0.23:50002\n      route-target import
-    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.23\n      redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.23:50001\n
-    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
-    \     router-id 10.0.0.23\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n
-    \  net 49.1111.0000.0001.0003.00\n   is-type level-2\n   router-id ipv4 10.0.0.23\n
-    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
-    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    EVPN-OVERLAY-PEERS activate\n      route import match-failure action discard\n
+    \  !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n
+    \  !\n   vrf DEV\n      rd 10.0.0.23:50002\n      route-target import evpn 50002:50002\n
+    \     route-target export evpn 50002:50002\n      router-id 10.0.0.23\n      redistribute
+    connected\n   !\n   vrf PROD\n      rd 10.0.0.23:50001\n      route-target import
+    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.23\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n   net
+    49.1111.0000.0001.0003.00\n   is-type level-2\n   router-id ipv4 10.0.0.23\n   log-adjacency-changes\n
+    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF4: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -295,16 +296,17 @@ cvp_configlets:
     learned\n   !\n   vlan 60\n      rd 10.0.0.24:10060\n      route-target both 10060:10060\n
     \     redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.24:10070\n      route-target
     both 10070:10070\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
-    EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS
-    activate\n   !\n   vrf DEV\n      rd 10.0.0.24:50002\n      route-target import
-    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.24\n      redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.24:50001\n
-    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
-    \     router-id 10.0.0.24\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n
-    \  net 49.1111.0000.0001.0004.00\n   is-type level-2\n   router-id ipv4 10.0.0.24\n
-    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
-    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    EVPN-OVERLAY-PEERS activate\n      route import match-failure action discard\n
+    \  !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n
+    \  !\n   vrf DEV\n      rd 10.0.0.24:50002\n      route-target import evpn 50002:50002\n
+    \     route-target export evpn 50002:50002\n      router-id 10.0.0.24\n      redistribute
+    connected\n   !\n   vrf PROD\n      rd 10.0.0.24:50001\n      route-target import
+    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.24\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n   net
+    49.1111.0000.0001.0004.00\n   is-type level-2\n   router-id ipv4 10.0.0.24\n   log-adjacency-changes\n
+    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF5: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -367,16 +369,17 @@ cvp_configlets:
     \  vlan 40\n      rd 10.0.0.25:10040\n      route-target both 10040:10040\n      redistribute
     learned\n   !\n   vlan 80\n      rd 10.0.0.25:10080\n      route-target both 10080:10080\n
     \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS
-    activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n
-    \  !\n   vrf DEV\n      rd 10.0.0.25:50002\n      route-target import evpn 50002:50002\n
-    \     route-target export evpn 50002:50002\n      router-id 10.0.0.25\n      redistribute
-    connected\n   !\n   vrf PROD\n      rd 10.0.0.25:50001\n      route-target import
-    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.25\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n   net
-    49.1111.0000.0001.0005.00\n   is-type level-2\n   router-id ipv4 10.0.0.25\n   log-adjacency-changes\n
-    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    activate\n      route import match-failure action discard\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf DEV\n      rd
+    10.0.0.25:50002\n      route-target import evpn 50002:50002\n      route-target
+    export evpn 50002:50002\n      router-id 10.0.0.25\n      redistribute connected\n
+    \  !\n   vrf PROD\n      rd 10.0.0.25:50001\n      route-target import evpn 50001:50001\n
+    \     route-target export evpn 50001:50001\n      router-id 10.0.0.25\n      redistribute
+    connected\n!\nrouter isis EVPN_UNDERLAY\n   net 49.1111.0000.0001.0005.00\n   is-type
+    level-2\n   router-id ipv4 10.0.0.25\n   log-adjacency-changes\n   !\n   address-family
+    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
+    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
+    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF6: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -439,16 +442,17 @@ cvp_configlets:
     \  vlan 40\n      rd 10.0.0.26:10040\n      route-target both 10040:10040\n      redistribute
     learned\n   !\n   vlan 80\n      rd 10.0.0.26:10080\n      route-target both 10080:10080\n
     \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS
-    activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n
-    \  !\n   vrf DEV\n      rd 10.0.0.26:50002\n      route-target import evpn 50002:50002\n
-    \     route-target export evpn 50002:50002\n      router-id 10.0.0.26\n      redistribute
-    connected\n   !\n   vrf PROD\n      rd 10.0.0.26:50001\n      route-target import
-    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.26\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n   net
-    49.1111.0000.0001.0006.00\n   is-type level-2\n   router-id ipv4 10.0.0.26\n   log-adjacency-changes\n
-    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    activate\n      route import match-failure action discard\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf DEV\n      rd
+    10.0.0.26:50002\n      route-target import evpn 50002:50002\n      route-target
+    export evpn 50002:50002\n      router-id 10.0.0.26\n      redistribute connected\n
+    \  !\n   vrf PROD\n      rd 10.0.0.26:50001\n      route-target import evpn 50001:50001\n
+    \     route-target export evpn 50001:50001\n      router-id 10.0.0.26\n      redistribute
+    connected\n!\nrouter isis EVPN_UNDERLAY\n   net 49.1111.0000.0001.0006.00\n   is-type
+    level-2\n   router-id ipv4 10.0.0.26\n   log-adjacency-changes\n   !\n   address-family
+    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
+    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
+    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF7: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -533,18 +537,19 @@ cvp_configlets:
     \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-CORE
     activate\n      neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor EVPN-OVERLAY-PEERS
     activate\n      neighbor default next-hop-self received-evpn-routes route-type
-    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE
-    activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor REMOTE-IPV4-PEERS
-    activate\n      network 10.0.0.27/32\n      network 10.0.0.28/32\n      network
-    10.2.2.27/32\n   !\n   vrf DEV\n      rd 10.0.0.27:50002\n      route-target import
-    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.27\n      redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.27:50001\n
-    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
-    \     router-id 10.0.0.27\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n
-    \  net 49.1111.0000.0001.0007.00\n   is-type level-2\n   router-id ipv4 10.0.0.27\n
-    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
-    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    ip-prefix inter-domain\n      route import match-failure action discard\n   !\n
+    \  address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE activate\n      no
+    neighbor EVPN-OVERLAY-PEERS activate\n      neighbor REMOTE-IPV4-PEERS activate\n
+    \     network 10.0.0.27/32\n      network 10.0.0.28/32\n      network 10.2.2.27/32\n
+    \  !\n   vrf DEV\n      rd 10.0.0.27:50002\n      route-target import evpn 50002:50002\n
+    \     route-target export evpn 50002:50002\n      router-id 10.0.0.27\n      redistribute
+    connected\n   !\n   vrf PROD\n      rd 10.0.0.27:50001\n      route-target import
+    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.27\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n   net
+    49.1111.0000.0001.0007.00\n   is-type level-2\n   router-id ipv4 10.0.0.27\n   log-adjacency-changes\n
+    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF8: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -629,18 +634,19 @@ cvp_configlets:
     \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-CORE
     activate\n      neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor EVPN-OVERLAY-PEERS
     activate\n      neighbor default next-hop-self received-evpn-routes route-type
-    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE
-    activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor REMOTE-IPV4-PEERS
-    activate\n      network 10.0.0.27/32\n      network 10.0.0.28/32\n      network
-    10.2.2.28/32\n   !\n   vrf DEV\n      rd 10.0.0.28:50002\n      route-target import
-    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.28\n      redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.28:50001\n
-    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
-    \     router-id 10.0.0.28\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n
-    \  net 49.1111.0000.0001.0008.00\n   is-type level-2\n   router-id ipv4 10.0.0.28\n
-    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
-    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    ip-prefix inter-domain\n      route import match-failure action discard\n   !\n
+    \  address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE activate\n      no
+    neighbor EVPN-OVERLAY-PEERS activate\n      neighbor REMOTE-IPV4-PEERS activate\n
+    \     network 10.0.0.27/32\n      network 10.0.0.28/32\n      network 10.2.2.28/32\n
+    \  !\n   vrf DEV\n      rd 10.0.0.28:50002\n      route-target import evpn 50002:50002\n
+    \     route-target export evpn 50002:50002\n      router-id 10.0.0.28\n      redistribute
+    connected\n   !\n   vrf PROD\n      rd 10.0.0.28:50001\n      route-target import
+    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.28\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n   net
+    49.1111.0000.0001.0008.00\n   is-type level-2\n   router-id ipv4 10.0.0.28\n   log-adjacency-changes\n
+    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-SPINE1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan

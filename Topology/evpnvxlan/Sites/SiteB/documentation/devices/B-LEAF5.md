@@ -660,6 +660,8 @@ router isis EVPN_UNDERLAY
 
 #### Router BGP EVPN Address Family
 
+- VPN import pruning is __enabled__
+
 ##### EVPN Peer Groups
 
 | Peer Group | Activate | Encapsulation |
@@ -722,6 +724,7 @@ router bgp 65200
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
+      route import match-failure action discard
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate

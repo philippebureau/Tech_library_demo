@@ -13,7 +13,7 @@
 
 | Total Tests | Total Tests Passed | Total Tests Failed |
 | ----------- | ------------------ | ------------------ |
-| 546 | 545 | 1 |
+| 546 | 546 | 0 |
 
 ### Summary Totals Devices Under Tests
 
@@ -24,7 +24,7 @@
 | B-LEAF3 |  55 | 55 | 0 | - |
 | B-LEAF4 |  55 | 55 | 0 | - |
 | B-LEAF5 |  54 | 54 | 0 | - |
-| B-LEAF6 |  54 | 53 | 1 | Interface State |
+| B-LEAF6 |  54 | 54 | 0 | - |
 | B-LEAF7 |  51 | 51 | 0 | - |
 | B-LEAF8 |  51 | 51 | 0 | - |
 | B-SPINE1 |  27 | 27 | 0 | - |
@@ -38,7 +38,7 @@
 | Test Category | Total Tests | Tests Passed | Tests Failed |
 | ------------- | ----------- | ------------ | ------------ |
 | NTP |  13 | 13 | 0 |
-| Interface State |  141 | 140 | 1 |
+| Interface State |  141 | 141 | 0 |
 | LLDP Topology |  68 | 68 | 0 |
 | BGP |  68 | 68 | 0 |
 | Routing Table |  160 | 160 | 0 |
@@ -48,7 +48,6 @@
 
 | Test ID | Node | Test Category | Test Description | Test | Test Result | Failure Reason |
 | ------- | ---- | ------------- | ---------------- | ---- | ----------- | -------------- |
-| 103 | B-LEAF6 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel7 - B-SW1_Po1 | FAIL | Interface shutdown: False - interface status: down - line protocol status: lowerLayerDown |
 
 ## All Test Results
 
@@ -156,7 +155,7 @@
 | 100 | B-LEAF3 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel8 - HostJ | PASS | - |
 | 101 | B-LEAF4 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel8 - HostJ | PASS | - |
 | 102 | B-LEAF5 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel7 - B-SW1_Po1 | PASS | - |
-| 103 | B-LEAF6 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel7 - B-SW1_Po1 | FAIL | Interface shutdown: False - interface status: down - line protocol status: lowerLayerDown |
+| 103 | B-LEAF6 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel7 - B-SW1_Po1 | PASS | - |
 | 104 | B-SW1 | Interface State | Port-Channel Interface & Line Protocol == "up" | Port-Channel1 - B-LEAF5_Po7 | PASS | - |
 | 105 | B-LEAF1 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan20 - Green | PASS | - |
 | 106 | B-LEAF1 | Interface State | Vlan Interface & Line Protocol == "up" | Vlan40 - Purple | PASS | - |
