@@ -107,6 +107,10 @@ router_bgp:
 service_routing_protocols_model: multi-agent
 ipv6_unicast_routing: true
 ip_routing_ipv6_interfaces: true
+router_multicast:
+  ipv4:
+    routing: true
+    software_forwarding: sfe
 vlan_internal_order:
   allocation: ascending
   range:
@@ -154,10 +158,13 @@ ethernet_interfaces:
   link_tracking_groups:
   - name: ES-LINKS
     direction: upstream
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
+  isis_enable: '100'
+  isis_metric: 10
   isis_network_point_to_point: true
   isis_circuit_type: level-2
+  pim:
+    ipv4:
+      sparse_mode: true
   ip_address: unnumbered loopback0
 - name: Ethernet2
   peer: B-SPINE2
@@ -171,10 +178,13 @@ ethernet_interfaces:
   link_tracking_groups:
   - name: ES-LINKS
     direction: upstream
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
+  isis_enable: '100'
+  isis_metric: 10
   isis_network_point_to_point: true
   isis_circuit_type: level-2
+  pim:
+    ipv4:
+      sparse_mode: true
   ip_address: unnumbered loopback0
 - name: Ethernet3
   peer: B-SPINE3
@@ -188,10 +198,13 @@ ethernet_interfaces:
   link_tracking_groups:
   - name: ES-LINKS
     direction: upstream
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
+  isis_enable: '100'
+  isis_metric: 10
   isis_network_point_to_point: true
   isis_circuit_type: level-2
+  pim:
+    ipv4:
+      sparse_mode: true
   ip_address: unnumbered loopback0
 - name: Ethernet4
   peer: B-SPINE4
@@ -205,10 +218,13 @@ ethernet_interfaces:
   link_tracking_groups:
   - name: ES-LINKS
     direction: upstream
-  isis_enable: EVPN_UNDERLAY
-  isis_metric: 50
+  isis_enable: '100'
+  isis_metric: 10
   isis_network_point_to_point: true
   isis_circuit_type: level-2
+  pim:
+    ipv4:
+      sparse_mode: true
   ip_address: unnumbered loopback0
 - name: Ethernet8
   peer: HostJ
@@ -233,16 +249,16 @@ loopback_interfaces:
   description: EVPN_Overlay_Peering
   shutdown: false
   ip_address: 10.0.0.24/32
-  isis_enable: EVPN_UNDERLAY
+  isis_enable: '100'
   isis_passive: true
 - name: Loopback1
   description: VTEP_VXLAN_Tunnel_Source
   shutdown: false
   ip_address: 10.2.2.24/32
-  isis_enable: EVPN_UNDERLAY
+  isis_enable: '100'
   isis_passive: true
 router_isis:
-  instance: EVPN_UNDERLAY
+  instance: '100'
   log_adjacency_changes: true
   net: 49.1111.0000.0001.0004.00
   router_id: 10.0.0.24

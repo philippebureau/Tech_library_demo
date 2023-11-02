@@ -37,6 +37,8 @@
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
+  - [Router Multicast](#router-multicast)
+  - [PIM Sparse Mode](#pim-sparse-mode)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -311,10 +313,10 @@ vlan 70
 
 | Interface | Channel Group | ISIS Instance | ISIS Metric | Mode | ISIS Circuit Type | Hello Padding | Authentication Mode |
 | --------- | ------------- | ------------- | ----------- | ---- | ----------------- | ------------- | ------------------- |
-| Ethernet1 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet2 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet3 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
-| Ethernet4 | - | EVPN_UNDERLAY | 50 | point-to-point | level-2 | - | - |
+| Ethernet1 | - | 100 | 10 | point-to-point | level-2 | - | - |
+| Ethernet2 | - | 100 | 10 | point-to-point | level-2 | - | - |
+| Ethernet3 | - | 100 | 10 | point-to-point | level-2 | - | - |
+| Ethernet4 | - | 100 | 10 | point-to-point | level-2 | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -326,9 +328,10 @@ interface Ethernet1
    mtu 1500
    no switchport
    ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
+   pim ipv4 sparse-mode
+   isis enable 100
    isis circuit-type level-2
-   isis metric 50
+   isis metric 10
    isis network point-to-point
    link tracking group ES-LINKS upstream
 !
@@ -338,9 +341,10 @@ interface Ethernet2
    mtu 1500
    no switchport
    ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
+   pim ipv4 sparse-mode
+   isis enable 100
    isis circuit-type level-2
-   isis metric 50
+   isis metric 10
    isis network point-to-point
    link tracking group ES-LINKS upstream
 !
@@ -350,9 +354,10 @@ interface Ethernet3
    mtu 1500
    no switchport
    ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
+   pim ipv4 sparse-mode
+   isis enable 100
    isis circuit-type level-2
-   isis metric 50
+   isis metric 10
    isis network point-to-point
    link tracking group ES-LINKS upstream
 !
@@ -362,9 +367,10 @@ interface Ethernet4
    mtu 1500
    no switchport
    ip address unnumbered loopback0
-   isis enable EVPN_UNDERLAY
+   pim ipv4 sparse-mode
+   isis enable 100
    isis circuit-type level-2
-   isis metric 50
+   isis metric 10
    isis network point-to-point
    link tracking group ES-LINKS upstream
 !
@@ -405,8 +411,8 @@ interface Ethernet8
 
 | Interface | ISIS instance | ISIS metric | Interface mode |
 | --------- | ------------- | ----------- | -------------- |
-| Loopback0 | EVPN_UNDERLAY | - | passive |
-| Loopback1 | EVPN_UNDERLAY | - | passive |
+| Loopback0 | 100 | - | passive |
+| Loopback1 | 100 | - | passive |
 
 #### Loopback Interfaces Device Configuration
 
@@ -416,14 +422,14 @@ interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
    ip address 10.0.0.27/32
-   isis enable EVPN_UNDERLAY
+   isis enable 100
    isis passive
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    no shutdown
    ip address 10.2.2.27/32
-   isis enable EVPN_UNDERLAY
+   isis enable 100
    isis passive
 ```
 
@@ -584,7 +590,7 @@ ipv6 unicast-routing
 
 | Settings | Value |
 | -------- | ----- |
-| Instance | EVPN_UNDERLAY |
+| Instance | 100 |
 | Net-ID | 49.1111.0000.0001.0007.00 |
 | Type | level-2 |
 | Router-ID | 10.0.0.27 |
@@ -594,12 +600,12 @@ ipv6 unicast-routing
 
 | Interface | ISIS Instance | ISIS Metric | Interface Mode |
 | --------- | ------------- | ----------- | -------------- |
-| Ethernet1 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet2 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet3 | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet4 | EVPN_UNDERLAY | 50 | point-to-point |
-| Loopback0 | EVPN_UNDERLAY | - | passive |
-| Loopback1 | EVPN_UNDERLAY | - | passive |
+| Ethernet1 | 100 | 10 | point-to-point |
+| Ethernet2 | 100 | 10 | point-to-point |
+| Ethernet3 | 100 | 10 | point-to-point |
+| Ethernet4 | 100 | 10 | point-to-point |
+| Loopback0 | 100 | - | passive |
+| Loopback1 | 100 | - | passive |
 
 #### ISIS IPv4 Address Family Summary
 
@@ -612,7 +618,7 @@ ipv6 unicast-routing
 
 ```eos
 !
-router isis EVPN_UNDERLAY
+router isis 100
    net 49.1111.0000.0001.0007.00
    is-type level-2
    router-id ipv4 10.0.0.27
@@ -855,6 +861,35 @@ router bfd
 
 ```eos
 ```
+
+### Router Multicast
+
+#### IP Router Multicast Summary
+
+- Routing for IPv4 multicast is enabled.
+- Software forwarding by the Software Forwarding Engine (SFE)
+
+#### Router Multicast Device Configuration
+
+```eos
+!
+router multicast
+   ipv4
+      routing
+      software-forwarding sfe
+```
+
+
+### PIM Sparse Mode
+
+#### PIM Sparse Mode enabled interfaces
+
+| Interface Name | VRF Name | IP Version | DR Priority | Local Interface |
+| -------------- | -------- | ---------- | ----------- | --------------- |
+| Ethernet1 | - | IPv4 | - | - |
+| Ethernet2 | - | IPv4 | - | - |
+| Ethernet3 | - | IPv4 | - | - |
+| Ethernet4 | - | IPv4 | - | - |
 
 ## VRF Instances
 

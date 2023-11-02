@@ -29,6 +29,7 @@
   - [IPv6 Routing](#ipv6-routing)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
+  - [Router Multicast](#router-multicast)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -359,6 +360,22 @@ service routing protocols model multi-agent
 
 ```eos
 ```
+
+### Router Multicast
+
+#### IP Router Multicast Summary
+
+- Software forwarding by the Software Forwarding Engine (SFE)
+
+#### Router Multicast Device Configuration
+
+```eos
+!
+router multicast
+   ipv4
+      software-forwarding sfe
+```
+
 
 ## VRF Instances
 

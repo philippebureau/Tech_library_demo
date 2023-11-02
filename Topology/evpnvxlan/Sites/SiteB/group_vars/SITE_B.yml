@@ -5,11 +5,14 @@ fabric_name: SITE_B
 
 # ISIS Underlay variables
 underlay_routing_protocol: isis
+underlay_isis_instance_name: "100"
+isis_default_metric: 10
 underlay_rfc5549: true
+underlay_ipv6: false
 isis_area_id: "49.1111"
 
 # Enable multicast
-# underlay_multicast: true
-# custom_structured_configuration_router_multicast:
-#   ipv4:
-#     software_forwarding: sfe
+underlay_multicast: true
+custom_structured_configuration_router_multicast:
+  ipv4:
+    software_forwarding: sfe
