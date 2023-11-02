@@ -3,6 +3,9 @@
 PROD:
   - name: PROD_TENANT
     mac_vrf_vni_base: 10000
+    # evpn_l3_multicast:
+    #   enabled: true
+    #   evpn_underlay_l3_multicast_group_ipv4_pool: 232.1.0.0/16
     vrfs:
       - name: PROD
         vrf_vni: 50001

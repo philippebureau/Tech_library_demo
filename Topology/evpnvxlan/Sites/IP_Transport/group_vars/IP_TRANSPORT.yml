@@ -15,6 +15,9 @@ overlay_controller:
           peer_groups:
             - name: IP-TRANSPORT-CLIENTS
               bfd: true
+              route_reflector_client: true
+            - name: EVPN-OVERLAY-PEERS
+              route_reflector_client: true
           address_family_ipv4:
             peer_groups:
               - name: IP-TRANSPORT-CLIENTS

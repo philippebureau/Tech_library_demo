@@ -403,6 +403,7 @@ ip routing
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
+| Route Reflector Client | Yes |
 | Next-hop unchanged | True |
 | Source | Loopback0 |
 | BFD | True |
@@ -414,6 +415,7 @@ ip routing
 
 | Settings | Value |
 | -------- | ----- |
+| Route Reflector Client | Yes |
 | BFD | True |
 
 ##### IPv4-UNDERLAY-PEERS
@@ -455,11 +457,13 @@ router bgp 65000
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
+   neighbor EVPN-OVERLAY-PEERS route-reflector-client
    neighbor EVPN-OVERLAY-PEERS bfd
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 5
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IP-TRANSPORT-CLIENTS peer group
+   neighbor IP-TRANSPORT-CLIENTS route-reflector-client
    neighbor IP-TRANSPORT-CLIENTS bfd
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS send-community
