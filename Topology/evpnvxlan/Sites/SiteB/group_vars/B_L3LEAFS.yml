@@ -118,11 +118,7 @@ l3leaf:
           enabled: true
         evpn_l3:
           enabled: true
-      underlay_multicast: false
       structured_config:
-        # router_multicast:
-        #   ipv4:
-        #     software_forwarding: sfe
         router_bgp:
           peer_groups:
             - name: REMOTE-IPV4-PEERS
