@@ -15,6 +15,9 @@
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
   - [Link Tracking](#link-tracking)
+- [Spanning Tree](#spanning-tree)
+  - [Spanning Tree Summary](#spanning-tree-summary)
+  - [Spanning Tree Device Configuration](#spanning-tree-device-configuration)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
@@ -235,6 +238,31 @@ daemon TerminAttr
 !
 link tracking group ES-LINKS
    recovery delay 300
+```
+
+## Spanning Tree
+
+### Spanning Tree Summary
+
+STP mode: **mstp**
+
+#### MSTP Instance and Priority
+
+| Instance(s) | Priority |
+| -------- | -------- |
+| 0 | 0 |
+
+#### Global Spanning-Tree Settings
+
+- Global BPDU Guard for Edge ports is enabled.
+
+### Spanning Tree Device Configuration
+
+```eos
+!
+spanning-tree mode mstp
+spanning-tree edge-port bpduguard default
+spanning-tree mst 0 priority 0
 ```
 
 ## Internal VLAN Allocation Policy

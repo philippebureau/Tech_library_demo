@@ -258,15 +258,25 @@ mlag configuration
 
 STP mode: **mstp**
 
+#### MSTP Instance and Priority
+
+| Instance(s) | Priority |
+| -------- | -------- |
+| 0 | 0 |
+
 #### Global Spanning-Tree Settings
 
 - Spanning Tree disabled for VLANs: **4093-4094**
+- Global BPDU Guard for Edge ports is enabled.
 
 ### Spanning Tree Device Configuration
 
 ```eos
 !
+spanning-tree mode mstp
 no spanning-tree vlan-id 4093-4094
+spanning-tree edge-port bpduguard default
+spanning-tree mst 0 priority 0
 ```
 
 ## Internal VLAN Allocation Policy

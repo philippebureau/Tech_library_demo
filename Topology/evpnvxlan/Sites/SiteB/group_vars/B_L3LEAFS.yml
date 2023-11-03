@@ -30,7 +30,12 @@ l3leaf:
       groups:
         - name: ES-LINKS
           recovery_delay: 300
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 0
     structured_config:
+      spanning_tree:
+        edge_port:
+          bpduguard_default: true
       router_bgp:
         address_family_evpn:
           route:

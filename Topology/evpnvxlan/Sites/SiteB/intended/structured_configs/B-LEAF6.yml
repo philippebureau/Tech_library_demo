@@ -113,6 +113,13 @@ ip_name_servers:
   vrf: default
 - ip_address: 8.8.4.4
   vrf: default
+spanning_tree:
+  mode: mstp
+  mst_instances:
+  - id: '0'
+    priority: 0
+  edge_port:
+    bpduguard_default: true
 vrfs:
 - name: default
   ip_routing: false

@@ -158,6 +158,14 @@ ip_name_servers:
   vrf: default
 - ip_address: 8.8.4.4
   vrf: default
+spanning_tree:
+  mode: mstp
+  mst_instances:
+  - id: '0'
+    priority: 0
+  no_spanning_tree_vlan: 4093-4094
+  edge_port:
+    bpduguard_default: true
 vrfs:
 - name: default
   ip_routing: false
@@ -181,8 +189,6 @@ management_api_http:
   enable_vrfs:
   - name: default
   enable_https: true
-spanning_tree:
-  no_spanning_tree_vlan: 4093-4094
 vlans:
 - id: 4093
   tenant: system
