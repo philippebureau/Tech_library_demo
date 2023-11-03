@@ -21,6 +21,9 @@
 - [VLANs](#vlans)
   - [VLANs Summary](#vlans-summary)
   - [VLANs Device Configuration](#vlans-device-configuration)
+- [MAC Address Table](#mac-address-table)
+  - [MAC Address Table Summary](#mac-address-table-summary)
+  - [MAC Address Table Device Configuration](#mac-address-table-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
@@ -31,6 +34,7 @@
   - [Virtual Router MAC Address](#virtual-router-mac-address)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
+  - [ARP](#arp)
   - [Router ISIS](#router-isis)
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
@@ -274,6 +278,19 @@ vlan 60
 !
 vlan 70
    name Brown
+```
+
+## MAC Address Table
+
+### MAC Address Table Summary
+
+- MAC address table entry maximum age: 1800 seconds
+
+### MAC Address Table Device Configuration
+
+```eos
+!
+mac address-table aging-time 1800
 ```
 
 ## Interfaces
@@ -583,6 +600,10 @@ ip routing vrf PROD
 !
 ipv6 unicast-routing
 ```
+
+### ARP
+
+Global ARP timeout: 1500
 
 ### Router ISIS
 

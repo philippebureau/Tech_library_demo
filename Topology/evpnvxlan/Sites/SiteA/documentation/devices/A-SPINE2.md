@@ -20,6 +20,9 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
+- [MAC Address Table](#mac-address-table)
+  - [MAC Address Table Summary](#mac-address-table-summary)
+  - [MAC Address Table Device Configuration](#mac-address-table-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
@@ -27,6 +30,7 @@
   - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
+  - [ARP](#arp)
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
@@ -239,6 +243,19 @@ spanning-tree mode none
 vlan internal order ascending range 1006 1199
 ```
 
+## MAC Address Table
+
+### MAC Address Table Summary
+
+- MAC address table entry maximum age: 1800 seconds
+
+### MAC Address Table Device Configuration
+
+```eos
+!
+mac address-table aging-time 1800
+```
+
 ## Interfaces
 
 ### Ethernet Interfaces
@@ -387,6 +404,10 @@ ip routing
 | --- | --------------- |
 | default | False |
 | default | false |
+
+### ARP
+
+Global ARP timeout: 1500
 
 ### Router BGP
 

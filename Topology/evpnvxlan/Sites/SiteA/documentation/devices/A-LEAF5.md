@@ -26,6 +26,9 @@
 - [VLANs](#vlans)
   - [VLANs Summary](#vlans-summary)
   - [VLANs Device Configuration](#vlans-device-configuration)
+- [MAC Address Table](#mac-address-table)
+  - [MAC Address Table Summary](#mac-address-table-summary)
+  - [MAC Address Table Device Configuration](#mac-address-table-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -37,6 +40,7 @@
   - [Virtual Router MAC Address](#virtual-router-mac-address)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
+  - [ARP](#arp)
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
@@ -309,6 +313,19 @@ vlan 4093
 vlan 4094
    name MLAG_PEER
    trunk group MLAG
+```
+
+## MAC Address Table
+
+### MAC Address Table Summary
+
+- MAC address table entry maximum age: 1800 seconds
+
+### MAC Address Table Device Configuration
+
+```eos
+!
+mac address-table aging-time 1800
 ```
 
 ## Interfaces
@@ -586,6 +603,10 @@ ip routing vrf DEV
 | default | False |
 | default | false |
 | DEV | false |
+
+### ARP
+
+Global ARP timeout: 1500
 
 ### Router BGP
 

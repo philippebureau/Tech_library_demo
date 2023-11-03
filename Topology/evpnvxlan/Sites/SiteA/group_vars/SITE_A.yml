@@ -6,3 +6,10 @@ fabric_name: SITE_A
 fabric_ip_addressing:
   mlag:
     algorithm: same_subnet
+
+arp:
+  aging:
+    timeout_default: 1500
+
+mac_address_table:
+  aging_time: 1800

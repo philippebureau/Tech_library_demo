@@ -17,3 +17,10 @@ evpn_multicast: true
 custom_structured_configuration_router_multicast:
   ipv4:
     software_forwarding: sfe
+
+arp:
+  aging:
+    timeout_default: 1500
+
+mac_address_table:
+  aging_time: 1800

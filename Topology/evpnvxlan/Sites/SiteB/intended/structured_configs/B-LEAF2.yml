@@ -113,6 +113,8 @@ management_interfaces:
   ip_address: 172.100.100.119/24
   gateway: null
   type: oob
+mac_address_table:
+  aging_time: 1800
 management_api_http:
   enable_vrfs:
   - name: default
