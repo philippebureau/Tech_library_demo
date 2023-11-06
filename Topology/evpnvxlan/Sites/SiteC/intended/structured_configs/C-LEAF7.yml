@@ -165,6 +165,20 @@ router_bgp:
     rd_evpn_domain:
       domain: remote
       rd: 10.0.0.37:10010
+  - id: 20
+    tenant: PROD_TENANT
+    rd: 10.0.0.37:10020
+    route_targets:
+      both:
+      - 10020:10020
+      import_export_evpn_domains:
+      - domain: remote
+        route_target: 10020:10020
+    redistribute_routes:
+    - learned
+    rd_evpn_domain:
+      domain: remote
+      rd: 10.0.0.37:10020
 service_routing_protocols_model: multi-agent
 ip_routing: true
 vlan_internal_order:
@@ -233,6 +247,9 @@ vlans:
 - id: 10
   name: Blue
   tenant: PROD_TENANT
+- id: 20
+  name: Green
+  tenant: PROD_TENANT
 - id: 3001
   name: MLAG_iBGP_PROD
   trunk_groups:
@@ -283,6 +300,14 @@ vlan_interfaces:
   description: Blue
   shutdown: false
   ip_address_virtual: 10.10.10.1/24
+  vrf: PROD
+- name: Vlan20
+  tenant: PROD_TENANT
+  tags:
+  - green
+  description: Green
+  shutdown: false
+  ip_address_virtual: 10.20.20.1/24
   vrf: PROD
 - name: Vlan3001
   tenant: PROD_TENANT
@@ -425,6 +450,8 @@ vxlan_interface:
         vni: 10060
       - id: 10
         vni: 10010
+      - id: 20
+        vni: 10020
       vrfs:
       - name: DEV
         vni: 50002

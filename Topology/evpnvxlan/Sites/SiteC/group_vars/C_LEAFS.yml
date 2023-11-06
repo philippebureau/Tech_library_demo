@@ -83,7 +83,7 @@ l3leaf:
     - group: C-LEAF78
       bgp_as: 65378
       filter:
-        tags: [ blue, freen, yellow, red ]
+        tags: [ blue, green, yellow, red ]
       evpn_gateway:
         remote_peers:
           - hostname: BB1

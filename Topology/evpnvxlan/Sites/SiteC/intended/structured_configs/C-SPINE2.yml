@@ -65,6 +65,10 @@ router_bgp:
     peer_group: EVPN-OVERLAY-PEERS
     description: C-LEAF8
     remote_as: '65378'
+  listen_ranges:
+  - prefix: 10.0.0.0/24
+    peer_group: EVPN-OVERLAY-PEERS
+    peer_filter: LEAF-AS-RANGE
 service_routing_protocols_model: multi-agent
 ip_routing: true
 vlan_internal_order:
@@ -247,3 +251,8 @@ local_users:
 - name: service
   shell: /bin/bash
   sha512_password: $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1
+peer_filters:
+- name: LEAF-AS-RANGE
+  sequence_numbers:
+  - sequence: 10
+    match: as-range 65301-65399 result accept

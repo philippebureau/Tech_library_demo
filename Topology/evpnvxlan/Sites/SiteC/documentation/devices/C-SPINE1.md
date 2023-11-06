@@ -35,6 +35,8 @@
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
+- [Filters](#filters)
+  - [Peer Filters](#peer-filters)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -480,6 +482,12 @@ router ospf 100
 | distance bgp 20 200 200 |
 | maximum-paths 4 ecmp 4 |
 
+#### Router BGP Listen Ranges
+
+| Prefix | Peer-ID Include Router ID | Peer Group | Peer-Filter | Remote-AS | VRF |
+| ------ | ------------------------- | ---------- | ----------- | --------- | --- |
+| 10.0.0.0/24 | - | EVPN-OVERLAY-PEERS | LEAF-AS-RANGE | - | default |
+
 #### Router BGP Peer Groups
 
 ##### EVPN-OVERLAY-PEERS
@@ -526,6 +534,7 @@ router bgp 65300
    graceful-restart
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
+   bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS peer-filter LEAF-AS-RANGE
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -581,6 +590,26 @@ router bgp 65300
 !
 router bfd
    multihop interval 1200 min-rx 1200 multiplier 3
+```
+
+## Filters
+
+### Peer Filters
+
+#### Peer Filters Summary
+
+##### LEAF-AS-RANGE
+
+| Sequence | Match |
+| -------- | ----- |
+| 10 | as-range 65301-65399 result accept |
+
+#### Peer Filters Device Configuration
+
+```eos
+!
+peer-filter LEAF-AS-RANGE
+   10 match as-range 65301-65399 result accept
 ```
 
 ## VRF Instances

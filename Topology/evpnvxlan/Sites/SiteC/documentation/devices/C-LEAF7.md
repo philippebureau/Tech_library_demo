@@ -301,6 +301,7 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 10 | Blue | - |
+| 20 | Green | - |
 | 50 | Yellow | - |
 | 60 | Red | - |
 | 3001 | MLAG_iBGP_PROD | LEAF_PEER_L3 |
@@ -314,6 +315,9 @@ vlan internal order ascending range 1006 1199
 !
 vlan 10
    name Blue
+!
+vlan 20
+   name Green
 !
 vlan 50
    name Yellow
@@ -488,6 +492,7 @@ interface Loopback1
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan10 | Blue | PROD | - | False |
+| Vlan20 | Green | PROD | - | False |
 | Vlan50 | Yellow | DEV | - | False |
 | Vlan60 | Red | DEV | - | False |
 | Vlan3001 | MLAG_PEER_L3_iBGP: vrf PROD | PROD | 1500 | False |
@@ -500,6 +505,7 @@ interface Loopback1
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan10 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
+| Vlan20 |  PROD  |  -  |  10.20.20.1/24  |  -  |  -  |  -  |  -  |
 | Vlan50 |  DEV  |  -  |  10.50.50.1/24  |  -  |  -  |  -  |  -  |
 | Vlan60 |  DEV  |  -  |  10.60.60.1/24  |  -  |  -  |  -  |  -  |
 | Vlan3001 |  PROD  |  192.0.0.0/31  |  -  |  -  |  -  |  -  |  -  |
@@ -516,6 +522,12 @@ interface Vlan10
    no shutdown
    vrf PROD
    ip address virtual 10.10.10.1/24
+!
+interface Vlan20
+   description Green
+   no shutdown
+   vrf PROD
+   ip address virtual 10.20.20.1/24
 !
 interface Vlan50
    description Yellow
@@ -574,6 +586,7 @@ interface Vlan4094
 | VLAN | VNI | Flood List | Multicast Group |
 | ---- | --- | ---------- | --------------- |
 | 10 | 10010 | - | - |
+| 20 | 10020 | - | - |
 | 50 | 10050 | - | - |
 | 60 | 10060 | - | - |
 
@@ -594,6 +607,7 @@ interface Vxlan1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
    vxlan vlan 10 vni 10010
+   vxlan vlan 20 vni 10020
    vxlan vlan 50 vni 10050
    vxlan vlan 60 vni 10060
    vxlan vrf DEV vni 50002
@@ -781,6 +795,7 @@ router ospf 100
 | VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
 | ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
 | 10 | 10.0.0.37:10010 | 10010:10010<br>remote 10010:10010 | - | - | learned |
+| 20 | 10.0.0.37:10020 | 10020:10020<br>remote 10020:10020 | - | - | learned |
 | 50 | 10.0.0.37:10050 | 10050:10050<br>remote 10050:10050 | - | - | learned |
 | 60 | 10.0.0.37:10060 | 10060:10060<br>remote 10060:10060 | - | - | learned |
 
@@ -844,6 +859,13 @@ router bgp 65378
       rd evpn domain remote 10.0.0.37:10010
       route-target both 10010:10010
       route-target import export evpn domain remote 10010:10010
+      redistribute learned
+   !
+   vlan 20
+      rd 10.0.0.37:10020
+      rd evpn domain remote 10.0.0.37:10020
+      route-target both 10020:10020
+      route-target import export evpn domain remote 10020:10020
       redistribute learned
    !
    vlan 50

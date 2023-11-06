@@ -5,8 +5,9 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF1\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nno
-    spanning-tree vlan-id 4093-4094\n!\naaa authorization exec default local\n!\nno
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree edge-port bpduguard
+    default\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default local\n!\nno
     enable password\nno aaa root\n!\nusername arista privilege 15 role network-admin
     secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
@@ -43,11 +44,12 @@ cvp_configlets:
     address 169.254.0.0/31\n!\ninterface Vxlan1\n   description C-LEAF1_VTEP\n   vxlan
     source-interface Loopback1\n   vxlan virtual-router encapsulation mac-address
     mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vrf
-    PROD vni 50001\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip
-    routing vrf PROD\n!\nmlag configuration\n   domain-id C-LEAF12\n   local-interface
-    Vlan4094\n   peer-address 169.254.0.1\n   peer-address heartbeat 172.100.100.130\n
-    \  peer-link Port-Channel1000\n   dual-primary detection delay 5 action errdisable
-    all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nroute-map
+    PROD vni 50001\n!\nmac address-table aging-time 1800\n!\nip virtual-router mac-address
+    00:1c:73:00:00:01\n!\nip routing\nip routing vrf PROD\n!\nmlag configuration\n
+    \  domain-id C-LEAF12\n   local-interface Vlan4094\n   peer-address 169.254.0.1\n
+    \  peer-address heartbeat 172.100.100.130\n   peer-link Port-Channel1000\n   dual-primary
+    detection delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n
+    \  reload-delay non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map
     RM-MLAG-PEER-IN permit 10\n   description Make routes learned over MLAG Peer-link
     less preferred on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter
     bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65312\n
@@ -81,8 +83,9 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF2\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nno
-    spanning-tree vlan-id 4093-4094\n!\naaa authorization exec default local\n!\nno
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree edge-port bpduguard
+    default\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default local\n!\nno
     enable password\nno aaa root\n!\nusername arista privilege 15 role network-admin
     secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
@@ -119,11 +122,12 @@ cvp_configlets:
     address 169.254.0.1/31\n!\ninterface Vxlan1\n   description C-LEAF2_VTEP\n   vxlan
     source-interface Loopback1\n   vxlan virtual-router encapsulation mac-address
     mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vrf
-    PROD vni 50001\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip
-    routing vrf PROD\n!\nmlag configuration\n   domain-id C-LEAF12\n   local-interface
-    Vlan4094\n   peer-address 169.254.0.0\n   peer-address heartbeat 172.100.100.129\n
-    \  peer-link Port-Channel1000\n   dual-primary detection delay 5 action errdisable
-    all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nroute-map
+    PROD vni 50001\n!\nmac address-table aging-time 1800\n!\nip virtual-router mac-address
+    00:1c:73:00:00:01\n!\nip routing\nip routing vrf PROD\n!\nmlag configuration\n
+    \  domain-id C-LEAF12\n   local-interface Vlan4094\n   peer-address 169.254.0.0\n
+    \  peer-address heartbeat 172.100.100.129\n   peer-link Port-Channel1000\n   dual-primary
+    detection delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n
+    \  reload-delay non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map
     RM-MLAG-PEER-IN permit 10\n   description Make routes learned over MLAG Peer-link
     less preferred on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter
     bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65312\n
@@ -157,8 +161,9 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF3\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nno
-    spanning-tree vlan-id 4093-4094\n!\naaa authorization exec default local\n!\nno
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree edge-port bpduguard
+    default\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default local\n!\nno
     enable password\nno aaa root\n!\nusername arista privilege 15 role network-admin
     secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
@@ -203,12 +208,13 @@ cvp_configlets:
     Vxlan1\n   description C-LEAF3_VTEP\n   vxlan source-interface Loopback1\n   vxlan
     virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n
     \  vxlan vlan 20 vni 10020\n   vxlan vlan 50 vni 10050\n   vxlan vlan 60 vni 10060\n
-    \  vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip virtual-router
-    mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing vrf DEV\nip routing vrf
-    PROD\n!\nmlag configuration\n   domain-id A-LEAF34\n   local-interface Vlan4094\n
-    \  peer-address 169.254.0.1\n   peer-address heartbeat 172.100.100.132\n   peer-link
-    Port-Channel1000\n   dual-primary detection delay 5 action errdisable all-interfaces\n
-    \  reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nroute-map RM-MLAG-PEER-IN
+    \  vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac address-table
+    aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip
+    routing vrf DEV\nip routing vrf PROD\n!\nmlag configuration\n   domain-id A-LEAF34\n
+    \  local-interface Vlan4094\n   peer-address 169.254.0.1\n   peer-address heartbeat
+    172.100.100.132\n   peer-link Port-Channel1000\n   dual-primary detection delay
+    5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay
+    non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map RM-MLAG-PEER-IN
     permit 10\n   description Make routes learned over MLAG Peer-link less preferred
     on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n
     \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65334\n   router-id
@@ -248,8 +254,9 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF4\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nno
-    spanning-tree vlan-id 4093-4094\n!\naaa authorization exec default local\n!\nno
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree edge-port bpduguard
+    default\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default local\n!\nno
     enable password\nno aaa root\n!\nusername arista privilege 15 role network-admin
     secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
@@ -294,12 +301,13 @@ cvp_configlets:
     Vxlan1\n   description C-LEAF4_VTEP\n   vxlan source-interface Loopback1\n   vxlan
     virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n
     \  vxlan vlan 20 vni 10020\n   vxlan vlan 50 vni 10050\n   vxlan vlan 60 vni 10060\n
-    \  vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip virtual-router
-    mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing vrf DEV\nip routing vrf
-    PROD\n!\nmlag configuration\n   domain-id A-LEAF34\n   local-interface Vlan4094\n
-    \  peer-address 169.254.0.0\n   peer-address heartbeat 172.100.100.131\n   peer-link
-    Port-Channel1000\n   dual-primary detection delay 5 action errdisable all-interfaces\n
-    \  reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nroute-map RM-MLAG-PEER-IN
+    \  vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac address-table
+    aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip
+    routing vrf DEV\nip routing vrf PROD\n!\nmlag configuration\n   domain-id A-LEAF34\n
+    \  local-interface Vlan4094\n   peer-address 169.254.0.0\n   peer-address heartbeat
+    172.100.100.131\n   peer-link Port-Channel1000\n   dual-primary detection delay
+    5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay
+    non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map RM-MLAG-PEER-IN
     permit 10\n   description Make routes learned over MLAG Peer-link less preferred
     on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n
     \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65334\n   router-id
@@ -339,8 +347,9 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF5\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nno
-    spanning-tree vlan-id 4093-4094\n!\naaa authorization exec default local\n!\nno
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree edge-port bpduguard
+    default\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default local\n!\nno
     enable password\nno aaa root\n!\nusername arista privilege 15 role network-admin
     secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
@@ -384,12 +393,13 @@ cvp_configlets:
     address 169.254.0.0/31\n!\ninterface Vxlan1\n   description C-LEAF5_VTEP\n   vxlan
     source-interface Loopback1\n   vxlan virtual-router encapsulation mac-address
     mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 20 vni 10020\n   vxlan vlan
-    60 vni 10060\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip virtual-router
-    mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing vrf DEV\nip routing vrf
-    PROD\n!\nmlag configuration\n   domain-id C-LEAF56\n   local-interface Vlan4094\n
-    \  peer-address 169.254.0.1\n   peer-address heartbeat 172.100.100.134\n   peer-link
-    Port-Channel1000\n   dual-primary detection delay 5 action errdisable all-interfaces\n
-    \  reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nroute-map RM-MLAG-PEER-IN
+    60 vni 10060\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac
+    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
+    routing\nip routing vrf DEV\nip routing vrf PROD\n!\nmlag configuration\n   domain-id
+    C-LEAF56\n   local-interface Vlan4094\n   peer-address 169.254.0.1\n   peer-address
+    heartbeat 172.100.100.134\n   peer-link Port-Channel1000\n   dual-primary detection
+    delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay
+    non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map RM-MLAG-PEER-IN
     permit 10\n   description Make routes learned over MLAG Peer-link less preferred
     on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n
     \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65356\n   router-id
@@ -427,8 +437,9 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF6\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nno
-    spanning-tree vlan-id 4093-4094\n!\naaa authorization exec default local\n!\nno
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree edge-port bpduguard
+    default\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default local\n!\nno
     enable password\nno aaa root\n!\nusername arista privilege 15 role network-admin
     secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
@@ -472,12 +483,13 @@ cvp_configlets:
     address 169.254.0.1/31\n!\ninterface Vxlan1\n   description C-LEAF6_VTEP\n   vxlan
     source-interface Loopback1\n   vxlan virtual-router encapsulation mac-address
     mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 20 vni 10020\n   vxlan vlan
-    60 vni 10060\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip virtual-router
-    mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing vrf DEV\nip routing vrf
-    PROD\n!\nmlag configuration\n   domain-id C-LEAF56\n   local-interface Vlan4094\n
-    \  peer-address 169.254.0.0\n   peer-address heartbeat 172.100.100.133\n   peer-link
-    Port-Channel1000\n   dual-primary detection delay 5 action errdisable all-interfaces\n
-    \  reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nroute-map RM-MLAG-PEER-IN
+    60 vni 10060\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac
+    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
+    routing\nip routing vrf DEV\nip routing vrf PROD\n!\nmlag configuration\n   domain-id
+    C-LEAF56\n   local-interface Vlan4094\n   peer-address 169.254.0.0\n   peer-address
+    heartbeat 172.100.100.133\n   peer-link Port-Channel1000\n   dual-primary detection
+    delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay
+    non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map RM-MLAG-PEER-IN
     permit 10\n   description Make routes learned over MLAG Peer-link less preferred
     on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n
     \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65356\n   router-id
@@ -515,71 +527,75 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF7\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nno
-    spanning-tree vlan-id 4093-4094\n!\naaa authorization exec default local\n!\nno
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree edge-port bpduguard
+    default\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default local\n!\nno
     enable password\nno aaa root\n!\nusername arista privilege 15 role network-admin
     secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
-    timezone EST\n!\nvlan 10\n   name Blue\n!\nvlan 50\n   name Yellow\n!\nvlan 60\n
-    \  name Red\n!\nvlan 3001\n   name MLAG_iBGP_PROD\n   trunk group LEAF_PEER_L3\n!\nvlan
-    3002\n   name MLAG_iBGP_DEV\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name
-    LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk
-    group MLAG\n!\nvrf instance DEV\n!\nvrf instance PROD\n!\ninterface Port-Channel1000\n
-    \  description MLAG_PEER_C-LEAF8_Po1000\n   no shutdown\n   switchport\n   switchport
-    mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group
-    MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_C-SPINE1_Ethernet7\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.25/31\n
-    \  ip ospf network point-to-point\n   ip ospf area 0.0.0.0\n!\ninterface Ethernet2\n
-    \  description P2P_LINK_TO_C-SPINE2_Ethernet7\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.27/31\n   ip ospf network point-to-point\n
-    \  ip ospf area 0.0.0.0\n!\ninterface Ethernet5\n   description MLAG_PEER_C-LEAF8_Ethernet5\n
-    \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet6\n   description
-    MLAG_PEER_C-LEAF8_Ethernet6\n   no shutdown\n   channel-group 1000 mode active\n!\ninterface
-    Ethernet7\n   description P2P_LINK_TO_BB1_Ethernet5\n   no shutdown\n   mtu 1500\n
-    \  no switchport\n   ip address 172.16.3.1/31\n!\ninterface Ethernet8\n   description
-    P2P_LINK_TO_BB2_Ethernet5\n   no shutdown\n   mtu 1500\n   no switchport\n   ip
-    address 172.16.3.5/31\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
-    \  no shutdown\n   ip address 10.0.0.37/32\n   ip ospf area 0.0.0.0\n!\ninterface
-    Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address
-    10.3.3.37/32\n   ip ospf area 0.0.0.0\n!\ninterface Management1\n   description
-    oob_management\n   no shutdown\n   ip address 172.100.100.135/24\n!\ninterface
-    Vlan10\n   description Blue\n   no shutdown\n   vrf PROD\n   ip address virtual
-    10.10.10.1/24\n!\ninterface Vlan50\n   description Yellow\n   no shutdown\n   vrf
-    DEV\n   ip address virtual 10.50.50.1/24\n!\ninterface Vlan60\n   description
-    Red\n   no shutdown\n   vrf DEV\n   ip address virtual 10.60.60.1/24\n!\ninterface
-    Vlan3001\n   description MLAG_PEER_L3_iBGP: vrf PROD\n   no shutdown\n   mtu 1500\n
-    \  vrf PROD\n   ip address 192.0.0.0/31\n!\ninterface Vlan3002\n   description
-    MLAG_PEER_L3_iBGP: vrf DEV\n   no shutdown\n   mtu 1500\n   vrf DEV\n   ip address
-    192.0.0.0/31\n!\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no
-    shutdown\n   mtu 1500\n   ip address 192.0.0.0/31\n   ip ospf network point-to-point\n
-    \  ip ospf area 0.0.0.0\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no
-    shutdown\n   mtu 1500\n   no autostate\n   ip address 169.254.0.0/31\n!\ninterface
-    Vxlan1\n   description C-LEAF7_VTEP\n   vxlan source-interface Loopback1\n   vxlan
-    virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n
-    \  vxlan vlan 10 vni 10010\n   vxlan vlan 50 vni 10050\n   vxlan vlan 60 vni 10060\n
-    \  vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip virtual-router
-    mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing vrf DEV\nip routing vrf
-    PROD\n!\nmlag configuration\n   domain-id C-LEAF78\n   local-interface Vlan4094\n
-    \  peer-address 169.254.0.1\n   peer-address heartbeat 172.100.100.136\n   peer-link
-    Port-Channel1000\n   dual-primary detection delay 5 action errdisable all-interfaces\n
-    \  reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nroute-map RM-MLAG-PEER-IN
-    permit 10\n   description Make routes learned over MLAG Peer-link less preferred
-    on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n
-    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65378\n   router-id
-    10.0.0.37\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
-    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor EVPN-OVERLAY-CORE peer group\n   neighbor EVPN-OVERLAY-CORE update-source
-    Loopback0\n   neighbor EVPN-OVERLAY-CORE bfd\n   neighbor EVPN-OVERLAY-CORE ebgp-multihop
-    15\n   neighbor EVPN-OVERLAY-CORE send-community\n   neighbor EVPN-OVERLAY-CORE
-    maximum-routes 0\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS
-    update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
-    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
-    maximum-routes 0\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor
-    MLAG-IPv4-UNDERLAY-PEER remote-as 65378\n   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self\n
-    \  neighbor MLAG-IPv4-UNDERLAY-PEER description C-LEAF8\n   neighbor MLAG-IPv4-UNDERLAY-PEER
+    timezone EST\n!\nvlan 10\n   name Blue\n!\nvlan 20\n   name Green\n!\nvlan 50\n
+    \  name Yellow\n!\nvlan 60\n   name Red\n!\nvlan 3001\n   name MLAG_iBGP_PROD\n
+    \  trunk group LEAF_PEER_L3\n!\nvlan 3002\n   name MLAG_iBGP_DEV\n   trunk group
+    LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan
+    4094\n   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance DEV\n!\nvrf instance
+    PROD\n!\ninterface Port-Channel1000\n   description MLAG_PEER_C-LEAF8_Po1000\n
+    \  no shutdown\n   switchport\n   switchport mode trunk\n   switchport trunk group
+    LEAF_PEER_L3\n   switchport trunk group MLAG\n!\ninterface Ethernet1\n   description
+    P2P_LINK_TO_C-SPINE1_Ethernet7\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address 192.168.0.25/31\n   ip ospf network point-to-point\n   ip ospf area
+    0.0.0.0\n!\ninterface Ethernet2\n   description P2P_LINK_TO_C-SPINE2_Ethernet7\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.27/31\n
+    \  ip ospf network point-to-point\n   ip ospf area 0.0.0.0\n!\ninterface Ethernet5\n
+    \  description MLAG_PEER_C-LEAF8_Ethernet5\n   no shutdown\n   channel-group 1000
+    mode active\n!\ninterface Ethernet6\n   description MLAG_PEER_C-LEAF8_Ethernet6\n
+    \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet7\n   description
+    P2P_LINK_TO_BB1_Ethernet5\n   no shutdown\n   mtu 1500\n   no switchport\n   ip
+    address 172.16.3.1/31\n!\ninterface Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.3.5/31\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.37/32\n   ip ospf area 0.0.0.0\n!\ninterface Loopback1\n   description
+    VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.3.3.37/32\n   ip ospf
+    area 0.0.0.0\n!\ninterface Management1\n   description oob_management\n   no shutdown\n
+    \  ip address 172.100.100.135/24\n!\ninterface Vlan10\n   description Blue\n   no
+    shutdown\n   vrf PROD\n   ip address virtual 10.10.10.1/24\n!\ninterface Vlan20\n
+    \  description Green\n   no shutdown\n   vrf PROD\n   ip address virtual 10.20.20.1/24\n!\ninterface
+    Vlan50\n   description Yellow\n   no shutdown\n   vrf DEV\n   ip address virtual
+    10.50.50.1/24\n!\ninterface Vlan60\n   description Red\n   no shutdown\n   vrf
+    DEV\n   ip address virtual 10.60.60.1/24\n!\ninterface Vlan3001\n   description
+    MLAG_PEER_L3_iBGP: vrf PROD\n   no shutdown\n   mtu 1500\n   vrf PROD\n   ip address
+    192.0.0.0/31\n!\ninterface Vlan3002\n   description MLAG_PEER_L3_iBGP: vrf DEV\n
+    \  no shutdown\n   mtu 1500\n   vrf DEV\n   ip address 192.0.0.0/31\n!\ninterface
+    Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip
+    address 192.0.0.0/31\n   ip ospf network point-to-point\n   ip ospf area 0.0.0.0\n!\ninterface
+    Vlan4094\n   description MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n
+    \  ip address 169.254.0.0/31\n!\ninterface Vxlan1\n   description C-LEAF7_VTEP\n
+    \  vxlan source-interface Loopback1\n   vxlan virtual-router encapsulation mac-address
+    mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan
+    20 vni 10020\n   vxlan vlan 50 vni 10050\n   vxlan vlan 60 vni 10060\n   vxlan
+    vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac address-table aging-time
+    1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing
+    vrf DEV\nip routing vrf PROD\n!\nmlag configuration\n   domain-id C-LEAF78\n   local-interface
+    Vlan4094\n   peer-address 169.254.0.1\n   peer-address heartbeat 172.100.100.136\n
+    \  peer-link Port-Channel1000\n   dual-primary detection delay 5 action errdisable
+    all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\narp
+    aging timeout default 1500\n!\nroute-map RM-MLAG-PEER-IN permit 10\n   description
+    Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal
+    routing\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx
+    1200 multiplier 3\n!\nrouter bgp 65378\n   router-id 10.0.0.37\n   distance bgp
+    20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-CORE peer group\n
+    \  neighbor EVPN-OVERLAY-CORE update-source Loopback0\n   neighbor EVPN-OVERLAY-CORE
+    bfd\n   neighbor EVPN-OVERLAY-CORE ebgp-multihop 15\n   neighbor EVPN-OVERLAY-CORE
+    send-community\n   neighbor EVPN-OVERLAY-CORE maximum-routes 0\n   neighbor EVPN-OVERLAY-PEERS
+    peer group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor
+    EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor
+    EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes
+    0\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER
+    remote-as 65378\n   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor
+    MLAG-IPv4-UNDERLAY-PEER description C-LEAF8\n   neighbor MLAG-IPv4-UNDERLAY-PEER
     send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000\n   neighbor
     MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in\n   neighbor REMOTE-IPV4-PEERS
     peer group\n   neighbor REMOTE-IPV4-PEERS remote-as 65000\n   neighbor REMOTE-IPV4-PEERS
@@ -593,100 +609,106 @@ cvp_configlets:
     REMOTE-IPV4-PEERS\n   neighbor 172.16.3.4 peer group REMOTE-IPV4-PEERS\n   !\n
     \  vlan 10\n      rd 10.0.0.37:10010\n      rd evpn domain remote 10.0.0.37:10010\n
     \     route-target both 10010:10010\n      route-target import export evpn domain
-    remote 10010:10010\n      redistribute learned\n   !\n   vlan 50\n      rd 10.0.0.37:10050\n
-    \     rd evpn domain remote 10.0.0.37:10050\n      route-target both 10050:10050\n
-    \     route-target import export evpn domain remote 10050:10050\n      redistribute
-    learned\n   !\n   vlan 60\n      rd 10.0.0.37:10060\n      rd evpn domain remote
-    10.0.0.37:10060\n      route-target both 10060:10060\n      route-target import
-    export evpn domain remote 10060:10060\n      redistribute learned\n   !\n   address-family
-    evpn\n      neighbor EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE
-    domain remote\n      neighbor EVPN-OVERLAY-PEERS activate\n      neighbor default
-    next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n   !\n   address-family
-    ipv4\n      no neighbor EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS
-    activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER activate\n      neighbor REMOTE-IPV4-PEERS
-    activate\n      network 10.0.0.37/32\n      network 10.0.0.38/32\n      network
-    10.3.3.37/32\n   !\n   vrf DEV\n      rd 10.0.0.37:50002\n      route-target import
-    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.37\n      neighbor 192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
-    connected\n   !\n   vrf PROD\n      rd 10.0.0.37:50001\n      route-target import
-    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.37\n      neighbor 192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
-    connected\n!\nrouter ospf 100\n   router-id 10.0.0.37\n   passive-interface default\n
-    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
-    Vlan4093\n   max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    remote 10010:10010\n      redistribute learned\n   !\n   vlan 20\n      rd 10.0.0.37:10020\n
+    \     rd evpn domain remote 10.0.0.37:10020\n      route-target both 10020:10020\n
+    \     route-target import export evpn domain remote 10020:10020\n      redistribute
+    learned\n   !\n   vlan 50\n      rd 10.0.0.37:10050\n      rd evpn domain remote
+    10.0.0.37:10050\n      route-target both 10050:10050\n      route-target import
+    export evpn domain remote 10050:10050\n      redistribute learned\n   !\n   vlan
+    60\n      rd 10.0.0.37:10060\n      rd evpn domain remote 10.0.0.37:10060\n      route-target
+    both 10060:10060\n      route-target import export evpn domain remote 10060:10060\n
+    \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-CORE
+    activate\n      neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor EVPN-OVERLAY-PEERS
+    activate\n      neighbor default next-hop-self received-evpn-routes route-type
+    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE
+    activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER
+    activate\n      neighbor REMOTE-IPV4-PEERS activate\n      network 10.0.0.37/32\n
+    \     network 10.0.0.38/32\n      network 10.3.3.37/32\n   !\n   vrf DEV\n      rd
+    10.0.0.37:50002\n      route-target import evpn 50002:50002\n      route-target
+    export evpn 50002:50002\n      router-id 10.0.0.37\n      neighbor 192.0.0.1 peer
+    group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n   !\n   vrf PROD\n
+    \     rd 10.0.0.37:50001\n      route-target import evpn 50001:50001\n      route-target
+    export evpn 50001:50001\n      router-id 10.0.0.37\n      neighbor 192.0.0.1 peer
+    group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n!\nrouter ospf 100\n
+    \  router-id 10.0.0.37\n   passive-interface default\n   no passive-interface
+    Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface Vlan4093\n
+    \  max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-LEAF8: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF8\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nno
-    spanning-tree vlan-id 4093-4094\n!\naaa authorization exec default local\n!\nno
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree edge-port bpduguard
+    default\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default local\n!\nno
     enable password\nno aaa root\n!\nusername arista privilege 15 role network-admin
     secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
-    timezone EST\n!\nvlan 10\n   name Blue\n!\nvlan 50\n   name Yellow\n!\nvlan 60\n
-    \  name Red\n!\nvlan 3001\n   name MLAG_iBGP_PROD\n   trunk group LEAF_PEER_L3\n!\nvlan
-    3002\n   name MLAG_iBGP_DEV\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name
-    LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk
-    group MLAG\n!\nvrf instance DEV\n!\nvrf instance PROD\n!\ninterface Port-Channel1000\n
-    \  description MLAG_PEER_C-LEAF7_Po1000\n   no shutdown\n   switchport\n   switchport
-    mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group
-    MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_C-SPINE1_Ethernet8\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.29/31\n
-    \  ip ospf network point-to-point\n   ip ospf area 0.0.0.0\n!\ninterface Ethernet2\n
-    \  description P2P_LINK_TO_C-SPINE2_Ethernet8\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.31/31\n   ip ospf network point-to-point\n
-    \  ip ospf area 0.0.0.0\n!\ninterface Ethernet5\n   description MLAG_PEER_C-LEAF7_Ethernet5\n
-    \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet6\n   description
-    MLAG_PEER_C-LEAF7_Ethernet6\n   no shutdown\n   channel-group 1000 mode active\n!\ninterface
-    Ethernet7\n   description P2P_LINK_TO_BB1_Ethernet6\n   no shutdown\n   mtu 1500\n
-    \  no switchport\n   ip address 172.16.3.3/31\n!\ninterface Ethernet8\n   description
-    P2P_LINK_TO_BB2_Ethernet6\n   no shutdown\n   mtu 1500\n   no switchport\n   ip
-    address 172.16.3.7/31\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
-    \  no shutdown\n   ip address 10.0.0.38/32\n   ip ospf area 0.0.0.0\n!\ninterface
-    Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address
-    10.3.3.37/32\n   ip ospf area 0.0.0.0\n!\ninterface Management1\n   description
-    oob_management\n   no shutdown\n   ip address 172.100.100.136/24\n!\ninterface
-    Vlan10\n   description Blue\n   no shutdown\n   vrf PROD\n   ip address virtual
-    10.10.10.1/24\n!\ninterface Vlan50\n   description Yellow\n   no shutdown\n   vrf
-    DEV\n   ip address virtual 10.50.50.1/24\n!\ninterface Vlan60\n   description
-    Red\n   no shutdown\n   vrf DEV\n   ip address virtual 10.60.60.1/24\n!\ninterface
-    Vlan3001\n   description MLAG_PEER_L3_iBGP: vrf PROD\n   no shutdown\n   mtu 1500\n
-    \  vrf PROD\n   ip address 192.0.0.1/31\n!\ninterface Vlan3002\n   description
-    MLAG_PEER_L3_iBGP: vrf DEV\n   no shutdown\n   mtu 1500\n   vrf DEV\n   ip address
-    192.0.0.1/31\n!\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no
-    shutdown\n   mtu 1500\n   ip address 192.0.0.1/31\n   ip ospf network point-to-point\n
-    \  ip ospf area 0.0.0.0\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no
-    shutdown\n   mtu 1500\n   no autostate\n   ip address 169.254.0.1/31\n!\ninterface
-    Vxlan1\n   description C-LEAF8_VTEP\n   vxlan source-interface Loopback1\n   vxlan
-    virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n
-    \  vxlan vlan 10 vni 10010\n   vxlan vlan 50 vni 10050\n   vxlan vlan 60 vni 10060\n
-    \  vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip virtual-router
-    mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing vrf DEV\nip routing vrf
-    PROD\n!\nmlag configuration\n   domain-id C-LEAF78\n   local-interface Vlan4094\n
-    \  peer-address 169.254.0.0\n   peer-address heartbeat 172.100.100.135\n   peer-link
-    Port-Channel1000\n   dual-primary detection delay 5 action errdisable all-interfaces\n
-    \  reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nroute-map RM-MLAG-PEER-IN
-    permit 10\n   description Make routes learned over MLAG Peer-link less preferred
-    on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n
-    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65378\n   router-id
-    10.0.0.38\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
-    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor EVPN-OVERLAY-CORE peer group\n   neighbor EVPN-OVERLAY-CORE update-source
-    Loopback0\n   neighbor EVPN-OVERLAY-CORE bfd\n   neighbor EVPN-OVERLAY-CORE ebgp-multihop
-    15\n   neighbor EVPN-OVERLAY-CORE send-community\n   neighbor EVPN-OVERLAY-CORE
-    maximum-routes 0\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS
-    update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
-    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
-    maximum-routes 0\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor
-    MLAG-IPv4-UNDERLAY-PEER remote-as 65378\n   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self\n
-    \  neighbor MLAG-IPv4-UNDERLAY-PEER description C-LEAF7\n   neighbor MLAG-IPv4-UNDERLAY-PEER
+    timezone EST\n!\nvlan 10\n   name Blue\n!\nvlan 20\n   name Green\n!\nvlan 50\n
+    \  name Yellow\n!\nvlan 60\n   name Red\n!\nvlan 3001\n   name MLAG_iBGP_PROD\n
+    \  trunk group LEAF_PEER_L3\n!\nvlan 3002\n   name MLAG_iBGP_DEV\n   trunk group
+    LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan
+    4094\n   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance DEV\n!\nvrf instance
+    PROD\n!\ninterface Port-Channel1000\n   description MLAG_PEER_C-LEAF7_Po1000\n
+    \  no shutdown\n   switchport\n   switchport mode trunk\n   switchport trunk group
+    LEAF_PEER_L3\n   switchport trunk group MLAG\n!\ninterface Ethernet1\n   description
+    P2P_LINK_TO_C-SPINE1_Ethernet8\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address 192.168.0.29/31\n   ip ospf network point-to-point\n   ip ospf area
+    0.0.0.0\n!\ninterface Ethernet2\n   description P2P_LINK_TO_C-SPINE2_Ethernet8\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.31/31\n
+    \  ip ospf network point-to-point\n   ip ospf area 0.0.0.0\n!\ninterface Ethernet5\n
+    \  description MLAG_PEER_C-LEAF7_Ethernet5\n   no shutdown\n   channel-group 1000
+    mode active\n!\ninterface Ethernet6\n   description MLAG_PEER_C-LEAF7_Ethernet6\n
+    \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet7\n   description
+    P2P_LINK_TO_BB1_Ethernet6\n   no shutdown\n   mtu 1500\n   no switchport\n   ip
+    address 172.16.3.3/31\n!\ninterface Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet6\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.3.7/31\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.38/32\n   ip ospf area 0.0.0.0\n!\ninterface Loopback1\n   description
+    VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.3.3.37/32\n   ip ospf
+    area 0.0.0.0\n!\ninterface Management1\n   description oob_management\n   no shutdown\n
+    \  ip address 172.100.100.136/24\n!\ninterface Vlan10\n   description Blue\n   no
+    shutdown\n   vrf PROD\n   ip address virtual 10.10.10.1/24\n!\ninterface Vlan20\n
+    \  description Green\n   no shutdown\n   vrf PROD\n   ip address virtual 10.20.20.1/24\n!\ninterface
+    Vlan50\n   description Yellow\n   no shutdown\n   vrf DEV\n   ip address virtual
+    10.50.50.1/24\n!\ninterface Vlan60\n   description Red\n   no shutdown\n   vrf
+    DEV\n   ip address virtual 10.60.60.1/24\n!\ninterface Vlan3001\n   description
+    MLAG_PEER_L3_iBGP: vrf PROD\n   no shutdown\n   mtu 1500\n   vrf PROD\n   ip address
+    192.0.0.1/31\n!\ninterface Vlan3002\n   description MLAG_PEER_L3_iBGP: vrf DEV\n
+    \  no shutdown\n   mtu 1500\n   vrf DEV\n   ip address 192.0.0.1/31\n!\ninterface
+    Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip
+    address 192.0.0.1/31\n   ip ospf network point-to-point\n   ip ospf area 0.0.0.0\n!\ninterface
+    Vlan4094\n   description MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n
+    \  ip address 169.254.0.1/31\n!\ninterface Vxlan1\n   description C-LEAF8_VTEP\n
+    \  vxlan source-interface Loopback1\n   vxlan virtual-router encapsulation mac-address
+    mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan
+    20 vni 10020\n   vxlan vlan 50 vni 10050\n   vxlan vlan 60 vni 10060\n   vxlan
+    vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac address-table aging-time
+    1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing
+    vrf DEV\nip routing vrf PROD\n!\nmlag configuration\n   domain-id C-LEAF78\n   local-interface
+    Vlan4094\n   peer-address 169.254.0.0\n   peer-address heartbeat 172.100.100.135\n
+    \  peer-link Port-Channel1000\n   dual-primary detection delay 5 action errdisable
+    all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\narp
+    aging timeout default 1500\n!\nroute-map RM-MLAG-PEER-IN permit 10\n   description
+    Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal
+    routing\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx
+    1200 multiplier 3\n!\nrouter bgp 65378\n   router-id 10.0.0.38\n   distance bgp
+    20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-CORE peer group\n
+    \  neighbor EVPN-OVERLAY-CORE update-source Loopback0\n   neighbor EVPN-OVERLAY-CORE
+    bfd\n   neighbor EVPN-OVERLAY-CORE ebgp-multihop 15\n   neighbor EVPN-OVERLAY-CORE
+    send-community\n   neighbor EVPN-OVERLAY-CORE maximum-routes 0\n   neighbor EVPN-OVERLAY-PEERS
+    peer group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor
+    EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor
+    EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes
+    0\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER
+    remote-as 65378\n   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor
+    MLAG-IPv4-UNDERLAY-PEER description C-LEAF7\n   neighbor MLAG-IPv4-UNDERLAY-PEER
     send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000\n   neighbor
     MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in\n   neighbor REMOTE-IPV4-PEERS
     peer group\n   neighbor REMOTE-IPV4-PEERS remote-as 65000\n   neighbor REMOTE-IPV4-PEERS
@@ -700,29 +722,31 @@ cvp_configlets:
     REMOTE-IPV4-PEERS\n   neighbor 172.16.3.6 peer group REMOTE-IPV4-PEERS\n   !\n
     \  vlan 10\n      rd 10.0.0.38:10010\n      rd evpn domain remote 10.0.0.38:10010\n
     \     route-target both 10010:10010\n      route-target import export evpn domain
-    remote 10010:10010\n      redistribute learned\n   !\n   vlan 50\n      rd 10.0.0.38:10050\n
-    \     rd evpn domain remote 10.0.0.38:10050\n      route-target both 10050:10050\n
-    \     route-target import export evpn domain remote 10050:10050\n      redistribute
-    learned\n   !\n   vlan 60\n      rd 10.0.0.38:10060\n      rd evpn domain remote
-    10.0.0.38:10060\n      route-target both 10060:10060\n      route-target import
-    export evpn domain remote 10060:10060\n      redistribute learned\n   !\n   address-family
-    evpn\n      neighbor EVPN-OVERLAY-CORE activate\n      neighbor EVPN-OVERLAY-CORE
-    domain remote\n      neighbor EVPN-OVERLAY-PEERS activate\n      neighbor default
-    next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n   !\n   address-family
-    ipv4\n      no neighbor EVPN-OVERLAY-CORE activate\n      no neighbor EVPN-OVERLAY-PEERS
-    activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER activate\n      neighbor REMOTE-IPV4-PEERS
-    activate\n      network 10.0.0.37/32\n      network 10.0.0.38/32\n      network
-    10.3.3.38/32\n   !\n   vrf DEV\n      rd 10.0.0.38:50002\n      route-target import
-    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.38\n      neighbor 192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
-    connected\n   !\n   vrf PROD\n      rd 10.0.0.38:50001\n      route-target import
-    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.38\n      neighbor 192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute
-    connected\n!\nrouter ospf 100\n   router-id 10.0.0.38\n   passive-interface default\n
-    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
-    Vlan4093\n   max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    remote 10010:10010\n      redistribute learned\n   !\n   vlan 20\n      rd 10.0.0.38:10020\n
+    \     rd evpn domain remote 10.0.0.38:10020\n      route-target both 10020:10020\n
+    \     route-target import export evpn domain remote 10020:10020\n      redistribute
+    learned\n   !\n   vlan 50\n      rd 10.0.0.38:10050\n      rd evpn domain remote
+    10.0.0.38:10050\n      route-target both 10050:10050\n      route-target import
+    export evpn domain remote 10050:10050\n      redistribute learned\n   !\n   vlan
+    60\n      rd 10.0.0.38:10060\n      rd evpn domain remote 10.0.0.38:10060\n      route-target
+    both 10060:10060\n      route-target import export evpn domain remote 10060:10060\n
+    \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-CORE
+    activate\n      neighbor EVPN-OVERLAY-CORE domain remote\n      neighbor EVPN-OVERLAY-PEERS
+    activate\n      neighbor default next-hop-self received-evpn-routes route-type
+    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-CORE
+    activate\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER
+    activate\n      neighbor REMOTE-IPV4-PEERS activate\n      network 10.0.0.37/32\n
+    \     network 10.0.0.38/32\n      network 10.3.3.38/32\n   !\n   vrf DEV\n      rd
+    10.0.0.38:50002\n      route-target import evpn 50002:50002\n      route-target
+    export evpn 50002:50002\n      router-id 10.0.0.38\n      neighbor 192.0.0.0 peer
+    group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n   !\n   vrf PROD\n
+    \     rd 10.0.0.38:50001\n      route-target import evpn 50001:50001\n      route-target
+    export evpn 50001:50001\n      router-id 10.0.0.38\n      neighbor 192.0.0.0 peer
+    group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\n!\nrouter ospf 100\n
+    \  router-id 10.0.0.38\n   passive-interface default\n   no passive-interface
+    Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface Vlan4093\n
+    \  max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-SPINE1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -758,35 +782,38 @@ cvp_configlets:
     switchport\n   ip address 192.168.0.28/31\n   ip ospf network point-to-point\n
     \  ip ospf area 0.0.0.0\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
     \  no shutdown\n   ip address 10.0.0.131/32\n   ip ospf area 0.0.0.0\n!\ninterface
-    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.127/24\n!\nip
-    routing\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter
-    bgp 65300\n   router-id 10.0.0.131\n   distance bgp 20 200 200\n   graceful-restart
-    restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default
-    ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS
-    next-hop-unchanged\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor
-    EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor
-    EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes
-    0\n   neighbor 10.0.0.31 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.31
-    remote-as 65312\n   neighbor 10.0.0.31 description C-LEAF1\n   neighbor 10.0.0.32
-    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.32 remote-as 65312\n   neighbor
-    10.0.0.32 description C-LEAF2\n   neighbor 10.0.0.33 peer group EVPN-OVERLAY-PEERS\n
-    \  neighbor 10.0.0.33 remote-as 65334\n   neighbor 10.0.0.33 description C-LEAF3\n
-    \  neighbor 10.0.0.34 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.34 remote-as
-    65334\n   neighbor 10.0.0.34 description C-LEAF4\n   neighbor 10.0.0.35 peer group
-    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.35 remote-as 65356\n   neighbor 10.0.0.35
-    description C-LEAF5\n   neighbor 10.0.0.36 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.36 remote-as 65356\n   neighbor 10.0.0.36 description C-LEAF6\n   neighbor
-    10.0.0.37 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.37 remote-as 65378\n
-    \  neighbor 10.0.0.37 description C-LEAF7\n   neighbor 10.0.0.38 peer group EVPN-OVERLAY-PEERS\n
-    \  neighbor 10.0.0.38 remote-as 65378\n   neighbor 10.0.0.38 description C-LEAF8\n
-    \  !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n
-    \  address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n!\nrouter
-    ospf 100\n   router-id 10.0.0.131\n   passive-interface default\n   no passive-interface
-    Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface Ethernet3\n
-    \  no passive-interface Ethernet4\n   no passive-interface Ethernet5\n   no passive-interface
-    Ethernet6\n   no passive-interface Ethernet7\n   no passive-interface Ethernet8\n
-    \  max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.127/24\n!\nmac
+    address-table aging-time 1800\n!\nip routing\n!\narp aging timeout default 1500\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\npeer-filter LEAF-AS-RANGE\n
+    \  10 match as-range 65301-65399 result accept\n!\nrouter bgp 65300\n   router-id
+    10.0.0.131\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
+    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS peer-filter LEAF-AS-RANGE\n
+    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n
+    \  neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS
+    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 10.0.0.31
+    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.31 remote-as 65312\n   neighbor
+    10.0.0.31 description C-LEAF1\n   neighbor 10.0.0.32 peer group EVPN-OVERLAY-PEERS\n
+    \  neighbor 10.0.0.32 remote-as 65312\n   neighbor 10.0.0.32 description C-LEAF2\n
+    \  neighbor 10.0.0.33 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.33 remote-as
+    65334\n   neighbor 10.0.0.33 description C-LEAF3\n   neighbor 10.0.0.34 peer group
+    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.34 remote-as 65334\n   neighbor 10.0.0.34
+    description C-LEAF4\n   neighbor 10.0.0.35 peer group EVPN-OVERLAY-PEERS\n   neighbor
+    10.0.0.35 remote-as 65356\n   neighbor 10.0.0.35 description C-LEAF5\n   neighbor
+    10.0.0.36 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.36 remote-as 65356\n
+    \  neighbor 10.0.0.36 description C-LEAF6\n   neighbor 10.0.0.37 peer group EVPN-OVERLAY-PEERS\n
+    \  neighbor 10.0.0.37 remote-as 65378\n   neighbor 10.0.0.37 description C-LEAF7\n
+    \  neighbor 10.0.0.38 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.38 remote-as
+    65378\n   neighbor 10.0.0.38 description C-LEAF8\n   !\n   address-family evpn\n
+    \     neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no
+    neighbor EVPN-OVERLAY-PEERS activate\n!\nrouter ospf 100\n   router-id 10.0.0.131\n
+    \  passive-interface default\n   no passive-interface Ethernet1\n   no passive-interface
+    Ethernet2\n   no passive-interface Ethernet3\n   no passive-interface Ethernet4\n
+    \  no passive-interface Ethernet5\n   no passive-interface Ethernet6\n   no passive-interface
+    Ethernet7\n   no passive-interface Ethernet8\n   max-lsa 12000\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-SPINE2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -822,35 +849,38 @@ cvp_configlets:
     switchport\n   ip address 192.168.0.30/31\n   ip ospf network point-to-point\n
     \  ip ospf area 0.0.0.0\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
     \  no shutdown\n   ip address 10.0.0.132/32\n   ip ospf area 0.0.0.0\n!\ninterface
-    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.128/24\n!\nip
-    routing\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter
-    bgp 65300\n   router-id 10.0.0.132\n   distance bgp 20 200 200\n   graceful-restart
-    restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default
-    ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS
-    next-hop-unchanged\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor
-    EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor
-    EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes
-    0\n   neighbor 10.0.0.31 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.31
-    remote-as 65312\n   neighbor 10.0.0.31 description C-LEAF1\n   neighbor 10.0.0.32
-    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.32 remote-as 65312\n   neighbor
-    10.0.0.32 description C-LEAF2\n   neighbor 10.0.0.33 peer group EVPN-OVERLAY-PEERS\n
-    \  neighbor 10.0.0.33 remote-as 65334\n   neighbor 10.0.0.33 description C-LEAF3\n
-    \  neighbor 10.0.0.34 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.34 remote-as
-    65334\n   neighbor 10.0.0.34 description C-LEAF4\n   neighbor 10.0.0.35 peer group
-    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.35 remote-as 65356\n   neighbor 10.0.0.35
-    description C-LEAF5\n   neighbor 10.0.0.36 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.36 remote-as 65356\n   neighbor 10.0.0.36 description C-LEAF6\n   neighbor
-    10.0.0.37 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.37 remote-as 65378\n
-    \  neighbor 10.0.0.37 description C-LEAF7\n   neighbor 10.0.0.38 peer group EVPN-OVERLAY-PEERS\n
-    \  neighbor 10.0.0.38 remote-as 65378\n   neighbor 10.0.0.38 description C-LEAF8\n
-    \  !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n
-    \  address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n!\nrouter
-    ospf 100\n   router-id 10.0.0.132\n   passive-interface default\n   no passive-interface
-    Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface Ethernet3\n
-    \  no passive-interface Ethernet4\n   no passive-interface Ethernet5\n   no passive-interface
-    Ethernet6\n   no passive-interface Ethernet7\n   no passive-interface Ethernet8\n
-    \  max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.128/24\n!\nmac
+    address-table aging-time 1800\n!\nip routing\n!\narp aging timeout default 1500\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\npeer-filter LEAF-AS-RANGE\n
+    \  10 match as-range 65301-65399 result accept\n!\nrouter bgp 65300\n   router-id
+    10.0.0.132\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
+    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS peer-filter LEAF-AS-RANGE\n
+    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n
+    \  neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS
+    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 10.0.0.31
+    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.31 remote-as 65312\n   neighbor
+    10.0.0.31 description C-LEAF1\n   neighbor 10.0.0.32 peer group EVPN-OVERLAY-PEERS\n
+    \  neighbor 10.0.0.32 remote-as 65312\n   neighbor 10.0.0.32 description C-LEAF2\n
+    \  neighbor 10.0.0.33 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.33 remote-as
+    65334\n   neighbor 10.0.0.33 description C-LEAF3\n   neighbor 10.0.0.34 peer group
+    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.34 remote-as 65334\n   neighbor 10.0.0.34
+    description C-LEAF4\n   neighbor 10.0.0.35 peer group EVPN-OVERLAY-PEERS\n   neighbor
+    10.0.0.35 remote-as 65356\n   neighbor 10.0.0.35 description C-LEAF5\n   neighbor
+    10.0.0.36 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.36 remote-as 65356\n
+    \  neighbor 10.0.0.36 description C-LEAF6\n   neighbor 10.0.0.37 peer group EVPN-OVERLAY-PEERS\n
+    \  neighbor 10.0.0.37 remote-as 65378\n   neighbor 10.0.0.37 description C-LEAF7\n
+    \  neighbor 10.0.0.38 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.38 remote-as
+    65378\n   neighbor 10.0.0.38 description C-LEAF8\n   !\n   address-family evpn\n
+    \     neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no
+    neighbor EVPN-OVERLAY-PEERS activate\n!\nrouter ospf 100\n   router-id 10.0.0.132\n
+    \  passive-interface default\n   no passive-interface Ethernet1\n   no passive-interface
+    Ethernet2\n   no passive-interface Ethernet3\n   no passive-interface Ethernet4\n
+    \  no passive-interface Ethernet5\n   no passive-interface Ethernet6\n   no passive-interface
+    Ethernet7\n   no passive-interface Ethernet8\n   max-lsa 12000\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
 cvp_topology:
   C_LEAFS:
     devices:

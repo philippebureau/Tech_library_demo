@@ -5,8 +5,9 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname B-LEAF1\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nspanning-tree edge-port bpduguard default\nspanning-tree mst 0 priority
+    0\n!\naaa authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
     arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
@@ -23,54 +24,56 @@ cvp_configlets:
     \  lacp system-id 0021.0022.0008\n   spanning-tree portfast\n   link tracking
     group ES-LINKS downstream\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet1\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
     Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet1\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n
-    \  isis circuit-type level-2\n   isis metric 50\n   isis network point-to-point\n
-    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n   description
-    P2P_LINK_TO_B-SPINE3_Ethernet1\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis network point-to-point\n   link tracking group
-    ES-LINKS upstream\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-SPINE4_Ethernet1\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet7\n   description HostG\n   no shutdown\n   channel-group 7 mode active\n!\ninterface
-    Ethernet8\n   description HostH\n   no shutdown\n   channel-group 8 mode active\n!\ninterface
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n
+    \  description P2P_LINK_TO_B-SPINE3_Ethernet1\n   no shutdown\n   mtu 1500\n   no
+    switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis
+    enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet4\n   description
+    P2P_LINK_TO_B-SPINE4_Ethernet1\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
+    HostG\n   no shutdown\n   channel-group 7 mode active\n!\ninterface Ethernet8\n
+    \  description HostH\n   no shutdown\n   channel-group 8 mode active\n!\ninterface
     Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
-    10.0.0.21/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n
-    \  description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.21/32\n
-    \  isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n   description
-    oob_management\n   no shutdown\n   ip address 172.100.100.118/24\n!\ninterface
-    Vlan20\n   description Green\n   no shutdown\n   vrf PROD\n   ip address virtual
-    10.20.20.1/24\n!\ninterface Vlan40\n   description Purple\n   no shutdown\n   vrf
-    PROD\n   ip address virtual 10.40.40.1/24\n!\ninterface Vxlan1\n   description
-    B-LEAF1_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
-    vlan 20 vni 10020\n   vxlan vlan 40 vni 10040\n   vxlan vrf PROD vni 50001\n!\nip
+    10.0.0.21/32\n   isis enable 100\n   isis passive\n!\ninterface Loopback1\n   description
+    VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.21/32\n   isis
+    enable 100\n   isis passive\n!\ninterface Management1\n   description oob_management\n
+    \  no shutdown\n   ip address 172.100.100.118/24\n!\ninterface Vlan20\n   description
+    Green\n   no shutdown\n   vrf PROD\n   ip address virtual 10.20.20.1/24\n!\ninterface
+    Vlan40\n   description Purple\n   no shutdown\n   vrf PROD\n   ip address virtual
+    10.40.40.1/24\n!\ninterface Vxlan1\n   description B-LEAF1_VTEP\n   vxlan source-interface
+    Loopback1\n   vxlan udp-port 4789\n   vxlan vlan 20 vni 10020\n   vxlan vlan 40
+    vni 10040\n   vxlan vrf PROD vni 50001\n!\nmac address-table aging-time 1800\n!\nip
     virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
-    routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter bfd\n   multihop interval
-    1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.21\n   distance
-    bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer
-    group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
-    bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS
-    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 10.0.0.121
-    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
-    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group EVPN-OVERLAY-PEERS\n
-    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
-    \  neighbor 10.0.0.123 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as
-    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
-    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor
-    10.0.0.124 description B-SPINE4\n   !\n   vlan 20\n      rd 10.0.0.21:10020\n
-    \     route-target both 10020:10020\n      redistribute learned\n   !\n   vlan
-    40\n      rd 10.0.0.21:10040\n      route-target both 10040:10040\n      redistribute
-    learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n
-    \     route import match-failure action discard\n   !\n   address-family ipv4\n
-    \     no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf PROD\n      rd 10.0.0.21:50001\n
-    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
-    \     router-id 10.0.0.21\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n
-    \  net 49.1111.0000.0001.0001.00\n   is-type level-2\n   router-id ipv4 10.0.0.21\n
+    routing vrf PROD\n!\nipv6 unicast-routing\n!\narp aging timeout default 1500\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
+    \  router-id 10.0.0.21\n   distance bgp 20 200 200\n   graceful-restart restart-time
+    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS update-source
+    Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
+    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
+    maximum-routes 0\n   neighbor 10.0.0.121 peer group EVPN-OVERLAY-PEERS\n   neighbor
+    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
+    10.0.0.122 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
+    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
+    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
+    description B-SPINE3\n   neighbor 10.0.0.124 peer group EVPN-OVERLAY-PEERS\n   neighbor
+    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n
+    \  vlan 20\n      rd 10.0.0.21:10020\n      route-target both 10020:10020\n      redistribute
+    learned\n   !\n   vlan 40\n      rd 10.0.0.21:10040\n      route-target both 10040:10040\n
+    \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS
+    activate\n      route import match-failure action discard\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf PROD\n      rd
+    10.0.0.21:50001\n      route-target import evpn 50001:50001\n      route-target
+    export evpn 50001:50001\n      router-id 10.0.0.21\n      redistribute connected\n!\nrouter
+    multicast\n   ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis
+    100\n   net 49.1111.0000.0001.0001.00\n   is-type level-2\n   router-id ipv4 10.0.0.21\n
     \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
     4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
     \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
@@ -80,8 +83,9 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname B-LEAF2\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nspanning-tree edge-port bpduguard default\nspanning-tree mst 0 priority
+    0\n!\naaa authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
     arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
@@ -98,54 +102,56 @@ cvp_configlets:
     \  lacp system-id 0021.0022.0008\n   spanning-tree portfast\n   link tracking
     group ES-LINKS downstream\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet2\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
     Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet2\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n
-    \  isis circuit-type level-2\n   isis metric 50\n   isis network point-to-point\n
-    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n   description
-    P2P_LINK_TO_B-SPINE3_Ethernet2\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis network point-to-point\n   link tracking group
-    ES-LINKS upstream\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-SPINE4_Ethernet2\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet7\n   description HostG\n   no shutdown\n   channel-group 7 mode active\n!\ninterface
-    Ethernet8\n   description HostH\n   no shutdown\n   channel-group 8 mode active\n!\ninterface
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n
+    \  description P2P_LINK_TO_B-SPINE3_Ethernet2\n   no shutdown\n   mtu 1500\n   no
+    switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis
+    enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet4\n   description
+    P2P_LINK_TO_B-SPINE4_Ethernet2\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
+    HostG\n   no shutdown\n   channel-group 7 mode active\n!\ninterface Ethernet8\n
+    \  description HostH\n   no shutdown\n   channel-group 8 mode active\n!\ninterface
     Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
-    10.0.0.22/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n
-    \  description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.22/32\n
-    \  isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n   description
-    oob_management\n   no shutdown\n   ip address 172.100.100.119/24\n!\ninterface
-    Vlan20\n   description Green\n   no shutdown\n   vrf PROD\n   ip address virtual
-    10.20.20.1/24\n!\ninterface Vlan40\n   description Purple\n   no shutdown\n   vrf
-    PROD\n   ip address virtual 10.40.40.1/24\n!\ninterface Vxlan1\n   description
-    B-LEAF2_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
-    vlan 20 vni 10020\n   vxlan vlan 40 vni 10040\n   vxlan vrf PROD vni 50001\n!\nip
+    10.0.0.22/32\n   isis enable 100\n   isis passive\n!\ninterface Loopback1\n   description
+    VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.22/32\n   isis
+    enable 100\n   isis passive\n!\ninterface Management1\n   description oob_management\n
+    \  no shutdown\n   ip address 172.100.100.119/24\n!\ninterface Vlan20\n   description
+    Green\n   no shutdown\n   vrf PROD\n   ip address virtual 10.20.20.1/24\n!\ninterface
+    Vlan40\n   description Purple\n   no shutdown\n   vrf PROD\n   ip address virtual
+    10.40.40.1/24\n!\ninterface Vxlan1\n   description B-LEAF2_VTEP\n   vxlan source-interface
+    Loopback1\n   vxlan udp-port 4789\n   vxlan vlan 20 vni 10020\n   vxlan vlan 40
+    vni 10040\n   vxlan vrf PROD vni 50001\n!\nmac address-table aging-time 1800\n!\nip
     virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
-    routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter bfd\n   multihop interval
-    1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.22\n   distance
-    bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer
-    group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
-    bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS
-    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 10.0.0.121
-    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
-    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group EVPN-OVERLAY-PEERS\n
-    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
-    \  neighbor 10.0.0.123 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as
-    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
-    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor
-    10.0.0.124 description B-SPINE4\n   !\n   vlan 20\n      rd 10.0.0.22:10020\n
-    \     route-target both 10020:10020\n      redistribute learned\n   !\n   vlan
-    40\n      rd 10.0.0.22:10040\n      route-target both 10040:10040\n      redistribute
-    learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n
-    \     route import match-failure action discard\n   !\n   address-family ipv4\n
-    \     no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf PROD\n      rd 10.0.0.22:50001\n
-    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
-    \     router-id 10.0.0.22\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n
-    \  net 49.1111.0000.0001.0002.00\n   is-type level-2\n   router-id ipv4 10.0.0.22\n
+    routing vrf PROD\n!\nipv6 unicast-routing\n!\narp aging timeout default 1500\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
+    \  router-id 10.0.0.22\n   distance bgp 20 200 200\n   graceful-restart restart-time
+    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS update-source
+    Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
+    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
+    maximum-routes 0\n   neighbor 10.0.0.121 peer group EVPN-OVERLAY-PEERS\n   neighbor
+    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
+    10.0.0.122 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
+    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
+    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
+    description B-SPINE3\n   neighbor 10.0.0.124 peer group EVPN-OVERLAY-PEERS\n   neighbor
+    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n
+    \  vlan 20\n      rd 10.0.0.22:10020\n      route-target both 10020:10020\n      redistribute
+    learned\n   !\n   vlan 40\n      rd 10.0.0.22:10040\n      route-target both 10040:10040\n
+    \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS
+    activate\n      route import match-failure action discard\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf PROD\n      rd
+    10.0.0.22:50001\n      route-target import evpn 50001:50001\n      route-target
+    export evpn 50001:50001\n      router-id 10.0.0.22\n      redistribute connected\n!\nrouter
+    multicast\n   ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis
+    100\n   net 49.1111.0000.0001.0002.00\n   is-type level-2\n   router-id ipv4 10.0.0.22\n
     \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
     4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
     \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
@@ -155,8 +161,9 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname B-LEAF3\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nspanning-tree edge-port bpduguard default\nspanning-tree mst 0 priority
+    0\n!\naaa authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
     arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
@@ -170,72 +177,75 @@ cvp_configlets:
     \  lacp system-id 0023.0024.0008\n   spanning-tree portfast\n   link tracking
     group ES-LINKS downstream\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet3\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
     Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet3\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n
-    \  isis circuit-type level-2\n   isis metric 50\n   isis network point-to-point\n
-    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n   description
-    P2P_LINK_TO_B-SPINE3_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis network point-to-point\n   link tracking group
-    ES-LINKS upstream\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-SPINE4_Ethernet3\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet7\n   description HostI\n   no shutdown\n   switchport access vlan 60\n
-    \  switchport mode access\n   switchport\n   spanning-tree portfast\n!\ninterface
-    Ethernet8\n   description HostJ\n   no shutdown\n   channel-group 8 mode active\n!\ninterface
-    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
-    10.0.0.23/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n
-    \  description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.23/32\n
-    \  isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n   description
-    oob_management\n   no shutdown\n   ip address 172.100.100.120/24\n!\ninterface
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n
+    \  description P2P_LINK_TO_B-SPINE3_Ethernet3\n   no shutdown\n   mtu 1500\n   no
+    switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis
+    enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet4\n   description
+    P2P_LINK_TO_B-SPINE4_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
+    HostI\n   no shutdown\n   switchport access vlan 60\n   switchport mode access\n
+    \  switchport\n   spanning-tree portfast\n!\ninterface Ethernet8\n   description
+    HostJ\n   no shutdown\n   channel-group 8 mode active\n!\ninterface Loopback0\n
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.23/32\n
+    \  isis enable 100\n   isis passive\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n
+    \  no shutdown\n   ip address 10.2.2.23/32\n   isis enable 100\n   isis passive\n!\ninterface
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.120/24\n!\ninterface
     Vlan10\n   description Blue\n   no shutdown\n   vrf PROD\n   ip address virtual
     10.10.10.1/24\n!\ninterface Vlan60\n   description Red\n   no shutdown\n   vrf
     DEV\n   ip address virtual 10.60.60.1/24\n!\ninterface Vlan70\n   description
     Brown\n   no shutdown\n   vrf DEV\n   ip address virtual 10.70.70.1/24\n!\ninterface
     Vxlan1\n   description B-LEAF3_VTEP\n   vxlan source-interface Loopback1\n   vxlan
     udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 60 vni 10060\n   vxlan
-    vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip
-    virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
-    routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter bfd\n
-    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
-    10.0.0.23\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
-    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS update-source
-    Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
-    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
-    maximum-routes 0\n   neighbor 10.0.0.121 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
-    10.0.0.122 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
-    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
-    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
-    description B-SPINE3\n   neighbor 10.0.0.124 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n
-    \  vlan 10\n      rd 10.0.0.23:10010\n      route-target both 10010:10010\n      redistribute
-    learned\n   !\n   vlan 60\n      rd 10.0.0.23:10060\n      route-target both 10060:10060\n
-    \     redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.23:10070\n      route-target
-    both 10070:10070\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
-    EVPN-OVERLAY-PEERS activate\n      route import match-failure action discard\n
-    \  !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n
-    \  !\n   vrf DEV\n      rd 10.0.0.23:50002\n      route-target import evpn 50002:50002\n
-    \     route-target export evpn 50002:50002\n      router-id 10.0.0.23\n      redistribute
-    connected\n   !\n   vrf PROD\n      rd 10.0.0.23:50001\n      route-target import
-    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.23\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n   net
-    49.1111.0000.0001.0003.00\n   is-type level-2\n   router-id ipv4 10.0.0.23\n   log-adjacency-changes\n
-    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac
+    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
+    routing ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\narp
+    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
+    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.23\n   distance bgp 20
+    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer
+    group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS
+    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 10.0.0.121
+    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
+    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group EVPN-OVERLAY-PEERS\n
+    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
+    \  neighbor 10.0.0.123 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as
+    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
+    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor
+    10.0.0.124 description B-SPINE4\n   !\n   vlan 10\n      rd 10.0.0.23:10010\n
+    \     route-target both 10010:10010\n      redistribute learned\n   !\n   vlan
+    60\n      rd 10.0.0.23:10060\n      route-target both 10060:10060\n      redistribute
+    learned\n   !\n   vlan 70\n      rd 10.0.0.23:10070\n      route-target both 10070:10070\n
+    \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS
+    activate\n      route import match-failure action discard\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf DEV\n      rd
+    10.0.0.23:50002\n      route-target import evpn 50002:50002\n      route-target
+    export evpn 50002:50002\n      router-id 10.0.0.23\n      redistribute connected\n
+    \  !\n   vrf PROD\n      rd 10.0.0.23:50001\n      route-target import evpn 50001:50001\n
+    \     route-target export evpn 50001:50001\n      router-id 10.0.0.23\n      redistribute
+    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nrouter isis 100\n   net 49.1111.0000.0001.0003.00\n   is-type level-2\n
+    \  router-id ipv4 10.0.0.23\n   log-adjacency-changes\n   !\n   address-family
+    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
+    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
+    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF4: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname B-LEAF4\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nspanning-tree edge-port bpduguard default\nspanning-tree mst 0 priority
+    0\n!\naaa authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
     arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
@@ -249,72 +259,75 @@ cvp_configlets:
     \  lacp system-id 0023.0024.0008\n   spanning-tree portfast\n   link tracking
     group ES-LINKS downstream\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet4\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
     Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet4\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n
-    \  isis circuit-type level-2\n   isis metric 50\n   isis network point-to-point\n
-    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n   description
-    P2P_LINK_TO_B-SPINE3_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis network point-to-point\n   link tracking group
-    ES-LINKS upstream\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-SPINE4_Ethernet4\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet7\n   description HostK\n   no shutdown\n   switchport access vlan 70\n
-    \  switchport mode access\n   switchport\n   spanning-tree portfast\n!\ninterface
-    Ethernet8\n   description HostJ\n   no shutdown\n   channel-group 8 mode active\n!\ninterface
-    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
-    10.0.0.24/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n
-    \  description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.24/32\n
-    \  isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n   description
-    oob_management\n   no shutdown\n   ip address 172.100.100.121/24\n!\ninterface
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n
+    \  description P2P_LINK_TO_B-SPINE3_Ethernet4\n   no shutdown\n   mtu 1500\n   no
+    switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis
+    enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet4\n   description
+    P2P_LINK_TO_B-SPINE4_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
+    HostK\n   no shutdown\n   switchport access vlan 70\n   switchport mode access\n
+    \  switchport\n   spanning-tree portfast\n!\ninterface Ethernet8\n   description
+    HostJ\n   no shutdown\n   channel-group 8 mode active\n!\ninterface Loopback0\n
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.24/32\n
+    \  isis enable 100\n   isis passive\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n
+    \  no shutdown\n   ip address 10.2.2.24/32\n   isis enable 100\n   isis passive\n!\ninterface
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.121/24\n!\ninterface
     Vlan10\n   description Blue\n   no shutdown\n   vrf PROD\n   ip address virtual
     10.10.10.1/24\n!\ninterface Vlan60\n   description Red\n   no shutdown\n   vrf
     DEV\n   ip address virtual 10.60.60.1/24\n!\ninterface Vlan70\n   description
     Brown\n   no shutdown\n   vrf DEV\n   ip address virtual 10.70.70.1/24\n!\ninterface
     Vxlan1\n   description B-LEAF4_VTEP\n   vxlan source-interface Loopback1\n   vxlan
     udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 60 vni 10060\n   vxlan
-    vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip
-    virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
-    routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter bfd\n
-    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
-    10.0.0.24\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
-    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS update-source
-    Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
-    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
-    maximum-routes 0\n   neighbor 10.0.0.121 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
-    10.0.0.122 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
-    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
-    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
-    description B-SPINE3\n   neighbor 10.0.0.124 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n
-    \  vlan 10\n      rd 10.0.0.24:10010\n      route-target both 10010:10010\n      redistribute
-    learned\n   !\n   vlan 60\n      rd 10.0.0.24:10060\n      route-target both 10060:10060\n
-    \     redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.24:10070\n      route-target
-    both 10070:10070\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
-    EVPN-OVERLAY-PEERS activate\n      route import match-failure action discard\n
-    \  !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n
-    \  !\n   vrf DEV\n      rd 10.0.0.24:50002\n      route-target import evpn 50002:50002\n
-    \     route-target export evpn 50002:50002\n      router-id 10.0.0.24\n      redistribute
-    connected\n   !\n   vrf PROD\n      rd 10.0.0.24:50001\n      route-target import
-    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.24\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n   net
-    49.1111.0000.0001.0004.00\n   is-type level-2\n   router-id ipv4 10.0.0.24\n   log-adjacency-changes\n
-    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac
+    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
+    routing ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\narp
+    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
+    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.24\n   distance bgp 20
+    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer
+    group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS
+    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 10.0.0.121
+    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
+    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group EVPN-OVERLAY-PEERS\n
+    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
+    \  neighbor 10.0.0.123 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as
+    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
+    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor
+    10.0.0.124 description B-SPINE4\n   !\n   vlan 10\n      rd 10.0.0.24:10010\n
+    \     route-target both 10010:10010\n      redistribute learned\n   !\n   vlan
+    60\n      rd 10.0.0.24:10060\n      route-target both 10060:10060\n      redistribute
+    learned\n   !\n   vlan 70\n      rd 10.0.0.24:10070\n      route-target both 10070:10070\n
+    \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS
+    activate\n      route import match-failure action discard\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf DEV\n      rd
+    10.0.0.24:50002\n      route-target import evpn 50002:50002\n      route-target
+    export evpn 50002:50002\n      router-id 10.0.0.24\n      redistribute connected\n
+    \  !\n   vrf PROD\n      rd 10.0.0.24:50001\n      route-target import evpn 50001:50001\n
+    \     route-target export evpn 50001:50001\n      router-id 10.0.0.24\n      redistribute
+    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nrouter isis 100\n   net 49.1111.0000.0001.0004.00\n   is-type level-2\n
+    \  router-id ipv4 10.0.0.24\n   log-adjacency-changes\n   !\n   address-family
+    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
+    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
+    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF5: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname B-LEAF5\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nspanning-tree edge-port bpduguard default\nspanning-tree mst 0 priority
+    0\n!\naaa authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
     arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
@@ -327,67 +340,70 @@ cvp_configlets:
     \     identifier 0000:0000:0025:0026:0007\n      route-target import 00:25:00:26:00:07\n
     \  lacp system-id 0025.0026.0007\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet5\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
     Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet5\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n
-    \  isis circuit-type level-2\n   isis metric 50\n   isis network point-to-point\n
-    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n   description
-    P2P_LINK_TO_B-SPINE3_Ethernet5\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis network point-to-point\n   link tracking group
-    ES-LINKS upstream\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-SPINE4_Ethernet5\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet7\n   description B-SW1_Ethernet1\n   no shutdown\n   channel-group 7
-    mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n   no
-    shutdown\n   ip address 10.0.0.25/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface
-    Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address
-    10.2.2.25/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n
-    \  description oob_management\n   no shutdown\n   ip address 172.100.100.122/24\n!\ninterface
-    Vlan40\n   description Purple\n   no shutdown\n   vrf PROD\n   ip address virtual
-    10.40.40.1/24\n!\ninterface Vlan80\n   description Black\n   no shutdown\n   vrf
-    DEV\n   ip address virtual 10.80.80.1/24\n!\ninterface Vxlan1\n   description
-    B-LEAF5_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
-    vlan 40 vni 10040\n   vxlan vlan 80 vni 10080\n   vxlan vrf DEV vni 50002\n   vxlan
-    vrf PROD vni 50001\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
-    routing ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter
-    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
-    \  router-id 10.0.0.25\n   distance bgp 20 200 200\n   graceful-restart restart-time
-    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS update-source
-    Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
-    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
-    maximum-routes 0\n   neighbor 10.0.0.121 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
-    10.0.0.122 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
-    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
-    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
-    description B-SPINE3\n   neighbor 10.0.0.124 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n
-    \  vlan 40\n      rd 10.0.0.25:10040\n      route-target both 10040:10040\n      redistribute
-    learned\n   !\n   vlan 80\n      rd 10.0.0.25:10080\n      route-target both 10080:10080\n
-    \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS
-    activate\n      route import match-failure action discard\n   !\n   address-family
-    ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf DEV\n      rd
-    10.0.0.25:50002\n      route-target import evpn 50002:50002\n      route-target
-    export evpn 50002:50002\n      router-id 10.0.0.25\n      redistribute connected\n
-    \  !\n   vrf PROD\n      rd 10.0.0.25:50001\n      route-target import evpn 50001:50001\n
-    \     route-target export evpn 50001:50001\n      router-id 10.0.0.25\n      redistribute
-    connected\n!\nrouter isis EVPN_UNDERLAY\n   net 49.1111.0000.0001.0005.00\n   is-type
-    level-2\n   router-id ipv4 10.0.0.25\n   log-adjacency-changes\n   !\n   address-family
-    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
-    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
-    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n
+    \  description P2P_LINK_TO_B-SPINE3_Ethernet5\n   no shutdown\n   mtu 1500\n   no
+    switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis
+    enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet4\n   description
+    P2P_LINK_TO_B-SPINE4_Ethernet5\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
+    B-SW1_Ethernet1\n   no shutdown\n   channel-group 7 mode active\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.25/32\n   isis enable 100\n   isis passive\n!\ninterface Loopback1\n   description
+    VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.25/32\n   isis
+    enable 100\n   isis passive\n!\ninterface Management1\n   description oob_management\n
+    \  no shutdown\n   ip address 172.100.100.122/24\n!\ninterface Vlan40\n   description
+    Purple\n   no shutdown\n   vrf PROD\n   ip address virtual 10.40.40.1/24\n!\ninterface
+    Vlan80\n   description Black\n   no shutdown\n   vrf DEV\n   ip address virtual
+    10.80.80.1/24\n!\ninterface Vxlan1\n   description B-LEAF5_VTEP\n   vxlan source-interface
+    Loopback1\n   vxlan udp-port 4789\n   vxlan vlan 40 vni 10040\n   vxlan vlan 80
+    vni 10080\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac address-table
+    aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing
+    ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\narp
+    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
+    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.25\n   distance bgp 20
+    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer
+    group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS
+    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 10.0.0.121
+    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
+    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group EVPN-OVERLAY-PEERS\n
+    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
+    \  neighbor 10.0.0.123 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as
+    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
+    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor
+    10.0.0.124 description B-SPINE4\n   !\n   vlan 40\n      rd 10.0.0.25:10040\n
+    \     route-target both 10040:10040\n      redistribute learned\n   !\n   vlan
+    80\n      rd 10.0.0.25:10080\n      route-target both 10080:10080\n      redistribute
+    learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n
+    \     route import match-failure action discard\n   !\n   address-family ipv4\n
+    \     no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf DEV\n      rd 10.0.0.25:50002\n
+    \     route-target import evpn 50002:50002\n      route-target export evpn 50002:50002\n
+    \     router-id 10.0.0.25\n      redistribute connected\n   !\n   vrf PROD\n      rd
+    10.0.0.25:50001\n      route-target import evpn 50001:50001\n      route-target
+    export evpn 50001:50001\n      router-id 10.0.0.25\n      redistribute connected\n!\nrouter
+    multicast\n   ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis
+    100\n   net 49.1111.0000.0001.0005.00\n   is-type level-2\n   router-id ipv4 10.0.0.25\n
+    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
+    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF6: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname B-LEAF6\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nspanning-tree edge-port bpduguard default\nspanning-tree mst 0 priority
+    0\n!\naaa authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
     arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
@@ -400,67 +416,70 @@ cvp_configlets:
     \     identifier 0000:0000:0025:0026:0007\n      route-target import 00:25:00:26:00:07\n
     \  lacp system-id 0025.0026.0007\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet6\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
     Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet6\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n
-    \  isis circuit-type level-2\n   isis metric 50\n   isis network point-to-point\n
-    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n   description
-    P2P_LINK_TO_B-SPINE3_Ethernet6\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis network point-to-point\n   link tracking group
-    ES-LINKS upstream\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-SPINE4_Ethernet6\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet7\n   description B-SW1_Ethernet2\n   no shutdown\n   channel-group 7
-    mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n   no
-    shutdown\n   ip address 10.0.0.26/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface
-    Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address
-    10.2.2.26/32\n   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n
-    \  description oob_management\n   no shutdown\n   ip address 172.100.100.123/24\n!\ninterface
-    Vlan40\n   description Purple\n   no shutdown\n   vrf PROD\n   ip address virtual
-    10.40.40.1/24\n!\ninterface Vlan80\n   description Black\n   no shutdown\n   vrf
-    DEV\n   ip address virtual 10.80.80.1/24\n!\ninterface Vxlan1\n   description
-    B-LEAF6_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
-    vlan 40 vni 10040\n   vxlan vlan 80 vni 10080\n   vxlan vrf DEV vni 50002\n   vxlan
-    vrf PROD vni 50001\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
-    routing ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter
-    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
-    \  router-id 10.0.0.26\n   distance bgp 20 200 200\n   graceful-restart restart-time
-    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS update-source
-    Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
-    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
-    maximum-routes 0\n   neighbor 10.0.0.121 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
-    10.0.0.122 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
-    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
-    EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
-    description B-SPINE3\n   neighbor 10.0.0.124 peer group EVPN-OVERLAY-PEERS\n   neighbor
-    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n
-    \  vlan 40\n      rd 10.0.0.26:10040\n      route-target both 10040:10040\n      redistribute
-    learned\n   !\n   vlan 80\n      rd 10.0.0.26:10080\n      route-target both 10080:10080\n
-    \     redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS
-    activate\n      route import match-failure action discard\n   !\n   address-family
-    ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf DEV\n      rd
-    10.0.0.26:50002\n      route-target import evpn 50002:50002\n      route-target
-    export evpn 50002:50002\n      router-id 10.0.0.26\n      redistribute connected\n
-    \  !\n   vrf PROD\n      rd 10.0.0.26:50001\n      route-target import evpn 50001:50001\n
-    \     route-target export evpn 50001:50001\n      router-id 10.0.0.26\n      redistribute
-    connected\n!\nrouter isis EVPN_UNDERLAY\n   net 49.1111.0000.0001.0006.00\n   is-type
-    level-2\n   router-id ipv4 10.0.0.26\n   log-adjacency-changes\n   !\n   address-family
-    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
-    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
-    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n
+    \  description P2P_LINK_TO_B-SPINE3_Ethernet6\n   no shutdown\n   mtu 1500\n   no
+    switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis
+    enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet4\n   description
+    P2P_LINK_TO_B-SPINE4_Ethernet6\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
+    B-SW1_Ethernet2\n   no shutdown\n   channel-group 7 mode active\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.26/32\n   isis enable 100\n   isis passive\n!\ninterface Loopback1\n   description
+    VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.26/32\n   isis
+    enable 100\n   isis passive\n!\ninterface Management1\n   description oob_management\n
+    \  no shutdown\n   ip address 172.100.100.123/24\n!\ninterface Vlan40\n   description
+    Purple\n   no shutdown\n   vrf PROD\n   ip address virtual 10.40.40.1/24\n!\ninterface
+    Vlan80\n   description Black\n   no shutdown\n   vrf DEV\n   ip address virtual
+    10.80.80.1/24\n!\ninterface Vxlan1\n   description B-LEAF6_VTEP\n   vxlan source-interface
+    Loopback1\n   vxlan udp-port 4789\n   vxlan vlan 40 vni 10040\n   vxlan vlan 80
+    vni 10080\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac address-table
+    aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing
+    ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\narp
+    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
+    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.26\n   distance bgp 20
+    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer
+    group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS
+    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 10.0.0.121
+    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
+    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group EVPN-OVERLAY-PEERS\n
+    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
+    \  neighbor 10.0.0.123 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.123 remote-as
+    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
+    group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor
+    10.0.0.124 description B-SPINE4\n   !\n   vlan 40\n      rd 10.0.0.26:10040\n
+    \     route-target both 10040:10040\n      redistribute learned\n   !\n   vlan
+    80\n      rd 10.0.0.26:10080\n      route-target both 10080:10080\n      redistribute
+    learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n
+    \     route import match-failure action discard\n   !\n   address-family ipv4\n
+    \     no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf DEV\n      rd 10.0.0.26:50002\n
+    \     route-target import evpn 50002:50002\n      route-target export evpn 50002:50002\n
+    \     router-id 10.0.0.26\n      redistribute connected\n   !\n   vrf PROD\n      rd
+    10.0.0.26:50001\n      route-target import evpn 50001:50001\n      route-target
+    export evpn 50001:50001\n      router-id 10.0.0.26\n      redistribute connected\n!\nrouter
+    multicast\n   ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis
+    100\n   net 49.1111.0000.0001.0006.00\n   is-type level-2\n   router-id ipv4 10.0.0.26\n
+    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
+    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF7: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname B-LEAF7\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nspanning-tree edge-port bpduguard default\nspanning-tree mst 0 priority
+    0\n!\naaa authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
     arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
@@ -470,41 +489,43 @@ cvp_configlets:
     \  name Red\n!\nvlan 70\n   name Brown\n!\nvrf instance DEV\n!\nvrf instance PROD\n!\nlink
     tracking group ES-LINKS\n   recovery delay 300\n!\ninterface Ethernet1\n   description
     P2P_LINK_TO_B-SPINE1_Ethernet7\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis network point-to-point\n   link tracking group
-    ES-LINKS upstream\n!\ninterface Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet7\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet3\n   description P2P_LINK_TO_B-SPINE3_Ethernet7\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n
-    \  isis circuit-type level-2\n   isis metric 50\n   isis network point-to-point\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet2\n   description
+    P2P_LINK_TO_B-SPINE2_Ethernet7\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n   description
+    P2P_LINK_TO_B-SPINE3_Ethernet7\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
     \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet4\n   description
     P2P_LINK_TO_B-SPINE4_Ethernet7\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis network point-to-point\n   link tracking group
-    ES-LINKS upstream\n!\ninterface Ethernet7\n   description P2P_LINK_TO_BB1_Ethernet3\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.2.1/31\n!\ninterface
-    Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet3\n   no shutdown\n   mtu 1500\n
-    \  no switchport\n   ip address 172.16.2.5/31\n!\ninterface Loopback0\n   description
-    EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.27/32\n   isis enable
-    EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n
-    \  no shutdown\n   ip address 10.2.2.27/32\n   isis enable EVPN_UNDERLAY\n   isis
-    passive\n!\ninterface Management1\n   description oob_management\n   no shutdown\n
-    \  ip address 172.100.100.124/24\n!\ninterface Vlan10\n   description Blue\n   no
-    shutdown\n   vrf PROD\n   ip address virtual 10.10.10.1/24\n!\ninterface Vlan20\n
-    \  description Green\n   no shutdown\n   vrf PROD\n   ip address virtual 10.20.20.1/24\n!\ninterface
-    Vlan60\n   description Red\n   no shutdown\n   vrf DEV\n   ip address virtual
-    10.60.60.1/24\n!\ninterface Vlan70\n   description Brown\n   no shutdown\n   vrf
-    DEV\n   ip address virtual 10.70.70.1/24\n!\ninterface Vxlan1\n   description
-    B-LEAF7_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
-    vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan vlan 60 vni 10060\n   vxlan
-    vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip
-    virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
-    routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter bfd\n
-    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
-    10.0.0.27\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
-    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
+    P2P_LINK_TO_BB1_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n   ip
+    address 172.16.2.1/31\n!\ninterface Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet3\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.2.5/31\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.27/32\n   isis enable 100\n   isis passive\n!\ninterface Loopback1\n   description
+    VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.27/32\n   isis
+    enable 100\n   isis passive\n!\ninterface Management1\n   description oob_management\n
+    \  no shutdown\n   ip address 172.100.100.124/24\n!\ninterface Vlan10\n   description
+    Blue\n   no shutdown\n   vrf PROD\n   ip address virtual 10.10.10.1/24\n!\ninterface
+    Vlan20\n   description Green\n   no shutdown\n   vrf PROD\n   ip address virtual
+    10.20.20.1/24\n!\ninterface Vlan60\n   description Red\n   no shutdown\n   vrf
+    DEV\n   ip address virtual 10.60.60.1/24\n!\ninterface Vlan70\n   description
+    Brown\n   no shutdown\n   vrf DEV\n   ip address virtual 10.70.70.1/24\n!\ninterface
+    Vxlan1\n   description B-LEAF7_VTEP\n   vxlan source-interface Loopback1\n   vxlan
+    udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan
+    vlan 60 vni 10060\n   vxlan vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan
+    vrf PROD vni 50001\n!\nmac address-table aging-time 1800\n!\nip virtual-router
+    mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip routing vrf DEV\nip
+    routing vrf PROD\n!\nipv6 unicast-routing\n!\narp aging timeout default 1500\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
+    \  router-id 10.0.0.27\n   distance bgp 20 200 200\n   graceful-restart restart-time
+    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
     \  neighbor EVPN-OVERLAY-CORE peer group\n   neighbor EVPN-OVERLAY-CORE update-source
     Loopback0\n   neighbor EVPN-OVERLAY-CORE bfd\n   neighbor EVPN-OVERLAY-CORE ebgp-multihop
     15\n   neighbor EVPN-OVERLAY-CORE send-community\n   neighbor EVPN-OVERLAY-CORE
@@ -545,10 +566,11 @@ cvp_configlets:
     \     route-target export evpn 50002:50002\n      router-id 10.0.0.27\n      redistribute
     connected\n   !\n   vrf PROD\n      rd 10.0.0.27:50001\n      route-target import
     evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.27\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n   net
-    49.1111.0000.0001.0007.00\n   is-type level-2\n   router-id ipv4 10.0.0.27\n   log-adjacency-changes\n
-    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    10.0.0.27\n      redistribute connected\n!\nrouter multicast\n   ipv4\n      routing\n
+    \     software-forwarding sfe\n!\nrouter isis 100\n   net 49.1111.0000.0001.0007.00\n
+    \  is-type level-2\n   router-id ipv4 10.0.0.27\n   log-adjacency-changes\n   !\n
+    \  address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api
+    http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
     shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF8: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
@@ -556,8 +578,9 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname B-LEAF8\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
+    mode mstp\nspanning-tree edge-port bpduguard default\nspanning-tree mst 0 priority
+    0\n!\naaa authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
     arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
@@ -567,41 +590,43 @@ cvp_configlets:
     \  name Red\n!\nvlan 70\n   name Brown\n!\nvrf instance DEV\n!\nvrf instance PROD\n!\nlink
     tracking group ES-LINKS\n   recovery delay 300\n!\ninterface Ethernet1\n   description
     P2P_LINK_TO_B-SPINE1_Ethernet8\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis network point-to-point\n   link tracking group
-    ES-LINKS upstream\n!\ninterface Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet8\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
-    Ethernet3\n   description P2P_LINK_TO_B-SPINE3_Ethernet8\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n
-    \  isis circuit-type level-2\n   isis metric 50\n   isis network point-to-point\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet2\n   description
+    P2P_LINK_TO_B-SPINE2_Ethernet8\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet3\n   description
+    P2P_LINK_TO_B-SPINE3_Ethernet8\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
     \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet4\n   description
     P2P_LINK_TO_B-SPINE4_Ethernet8\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address unnumbered loopback0\n   isis enable EVPN_UNDERLAY\n   isis circuit-type
-    level-2\n   isis metric 50\n   isis network point-to-point\n   link tracking group
-    ES-LINKS upstream\n!\ninterface Ethernet7\n   description P2P_LINK_TO_BB1_Ethernet4\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.2.3/31\n!\ninterface
-    Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet4\n   no shutdown\n   mtu 1500\n
-    \  no switchport\n   ip address 172.16.2.7/31\n!\ninterface Loopback0\n   description
-    EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.28/32\n   isis enable
-    EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n
-    \  no shutdown\n   ip address 10.2.2.28/32\n   isis enable EVPN_UNDERLAY\n   isis
-    passive\n!\ninterface Management1\n   description oob_management\n   no shutdown\n
-    \  ip address 172.100.100.125/24\n!\ninterface Vlan10\n   description Blue\n   no
-    shutdown\n   vrf PROD\n   ip address virtual 10.10.10.1/24\n!\ninterface Vlan20\n
-    \  description Green\n   no shutdown\n   vrf PROD\n   ip address virtual 10.20.20.1/24\n!\ninterface
-    Vlan60\n   description Red\n   no shutdown\n   vrf DEV\n   ip address virtual
-    10.60.60.1/24\n!\ninterface Vlan70\n   description Brown\n   no shutdown\n   vrf
-    DEV\n   ip address virtual 10.70.70.1/24\n!\ninterface Vxlan1\n   description
-    B-LEAF8_VTEP\n   vxlan source-interface Loopback1\n   vxlan udp-port 4789\n   vxlan
-    vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan vlan 60 vni 10060\n   vxlan
-    vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nip
-    virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
-    routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\nrouter bfd\n
-    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
-    10.0.0.28\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
-    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
+    \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
+    P2P_LINK_TO_BB1_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n   ip
+    address 172.16.2.3/31\n!\ninterface Ethernet8\n   description P2P_LINK_TO_BB2_Ethernet4\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 172.16.2.7/31\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.28/32\n   isis enable 100\n   isis passive\n!\ninterface Loopback1\n   description
+    VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.28/32\n   isis
+    enable 100\n   isis passive\n!\ninterface Management1\n   description oob_management\n
+    \  no shutdown\n   ip address 172.100.100.125/24\n!\ninterface Vlan10\n   description
+    Blue\n   no shutdown\n   vrf PROD\n   ip address virtual 10.10.10.1/24\n!\ninterface
+    Vlan20\n   description Green\n   no shutdown\n   vrf PROD\n   ip address virtual
+    10.20.20.1/24\n!\ninterface Vlan60\n   description Red\n   no shutdown\n   vrf
+    DEV\n   ip address virtual 10.60.60.1/24\n!\ninterface Vlan70\n   description
+    Brown\n   no shutdown\n   vrf DEV\n   ip address virtual 10.70.70.1/24\n!\ninterface
+    Vxlan1\n   description B-LEAF8_VTEP\n   vxlan source-interface Loopback1\n   vxlan
+    udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan
+    vlan 60 vni 10060\n   vxlan vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan
+    vrf PROD vni 50001\n!\nmac address-table aging-time 1800\n!\nip virtual-router
+    mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip routing vrf DEV\nip
+    routing vrf PROD\n!\nipv6 unicast-routing\n!\narp aging timeout default 1500\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
+    \  router-id 10.0.0.28\n   distance bgp 20 200 200\n   graceful-restart restart-time
+    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
     \  neighbor EVPN-OVERLAY-CORE peer group\n   neighbor EVPN-OVERLAY-CORE update-source
     Loopback0\n   neighbor EVPN-OVERLAY-CORE bfd\n   neighbor EVPN-OVERLAY-CORE ebgp-multihop
     15\n   neighbor EVPN-OVERLAY-CORE send-community\n   neighbor EVPN-OVERLAY-CORE
@@ -642,10 +667,11 @@ cvp_configlets:
     \     route-target export evpn 50002:50002\n      router-id 10.0.0.28\n      redistribute
     connected\n   !\n   vrf PROD\n      rd 10.0.0.28:50001\n      route-target import
     evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.28\n      redistribute connected\n!\nrouter isis EVPN_UNDERLAY\n   net
-    49.1111.0000.0001.0008.00\n   is-type level-2\n   router-id ipv4 10.0.0.28\n   log-adjacency-changes\n
-    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    10.0.0.28\n      redistribute connected\n!\nrouter multicast\n   ipv4\n      routing\n
+    \     software-forwarding sfe\n!\nrouter isis 100\n   net 49.1111.0000.0001.0008.00\n
+    \  is-type level-2\n   router-id ipv4 10.0.0.28\n   log-adjacency-changes\n   !\n
+    \  address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api
+    http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
     shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-SPINE1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
@@ -662,43 +688,46 @@ cvp_configlets:
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-LEAF1_Ethernet1\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet2\n   description P2P_LINK_TO_B-LEAF2_Ethernet1\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet2\n   description
+    P2P_LINK_TO_B-LEAF2_Ethernet1\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Ethernet3\n   description P2P_LINK_TO_B-LEAF3_Ethernet1\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-LEAF4_Ethernet1\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet3\n   description P2P_LINK_TO_B-LEAF3_Ethernet1\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet5\n   description
+    P2P_LINK_TO_B-LEAF5_Ethernet1\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Ethernet6\n   description P2P_LINK_TO_B-LEAF6_Ethernet1\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n!\ninterface Ethernet7\n   description P2P_LINK_TO_B-LEAF7_Ethernet1\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-LEAF4_Ethernet1\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet5\n   description P2P_LINK_TO_B-LEAF5_Ethernet1\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet6\n   description P2P_LINK_TO_B-LEAF6_Ethernet1\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet7\n   description P2P_LINK_TO_B-LEAF7_Ethernet1\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet8\n   description P2P_LINK_TO_B-LEAF8_Ethernet1\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
-    \  no shutdown\n   ip address 10.0.0.121/32\n   isis enable EVPN_UNDERLAY\n   isis
-    passive\n!\ninterface Management1\n   description oob_management\n   no shutdown\n
-    \  ip address 172.100.100.114/24\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\nrouter
-    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
-    \  router-id 10.0.0.121\n   distance bgp 20 200 200\n   graceful-restart restart-time
-    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS update-source
-    Loopback0\n   neighbor EVPN-OVERLAY-PEERS route-reflector-client\n   neighbor
-    EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor
-    EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes
-    0\n   neighbor 10.0.0.21 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.21
-    remote-as 65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22
-    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n   neighbor
-    10.0.0.22 description B-LEAF2\n   neighbor 10.0.0.23 peer group EVPN-OVERLAY-PEERS\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet8\n   description
+    P2P_LINK_TO_B-LEAF8_Ethernet1\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.121/32\n   isis enable 100\n   isis passive\n!\ninterface Management1\n
+    \  description oob_management\n   no shutdown\n   ip address 172.100.100.114/24\n!\nmac
+    address-table aging-time 1800\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\narp
+    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
+    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.121\n   distance bgp 20
+    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer
+    group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    route-reflector-client\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
+    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
+    maximum-routes 0\n   neighbor 10.0.0.21 peer group EVPN-OVERLAY-PEERS\n   neighbor
+    10.0.0.21 remote-as 65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor
+    10.0.0.22 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n
+    \  neighbor 10.0.0.22 description B-LEAF2\n   neighbor 10.0.0.23 peer group EVPN-OVERLAY-PEERS\n
     \  neighbor 10.0.0.23 remote-as 65200\n   neighbor 10.0.0.23 description B-LEAF3\n
     \  neighbor 10.0.0.24 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.24 remote-as
     65200\n   neighbor 10.0.0.24 description B-LEAF4\n   neighbor 10.0.0.25 peer group
@@ -710,11 +739,11 @@ cvp_configlets:
     \  neighbor 10.0.0.28 remote-as 65200\n   neighbor 10.0.0.28 description B-LEAF8\n
     \  !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n
     \  address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n!\nrouter
-    isis EVPN_UNDERLAY\n   net 49.1111.0000.0000.0001.00\n   is-type level-2\n   router-id
-    ipv4 10.0.0.121\n   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n
-    \     maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    multicast\n   ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis
+    100\n   net 49.1111.0000.0000.0001.00\n   is-type level-2\n   router-id ipv4 10.0.0.121\n
+    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
+    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-SPINE2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -730,43 +759,46 @@ cvp_configlets:
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-LEAF1_Ethernet2\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet2\n   description P2P_LINK_TO_B-LEAF2_Ethernet2\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet2\n   description
+    P2P_LINK_TO_B-LEAF2_Ethernet2\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Ethernet3\n   description P2P_LINK_TO_B-LEAF3_Ethernet2\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-LEAF4_Ethernet2\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet3\n   description P2P_LINK_TO_B-LEAF3_Ethernet2\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet5\n   description
+    P2P_LINK_TO_B-LEAF5_Ethernet2\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Ethernet6\n   description P2P_LINK_TO_B-LEAF6_Ethernet2\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n!\ninterface Ethernet7\n   description P2P_LINK_TO_B-LEAF7_Ethernet2\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-LEAF4_Ethernet2\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet5\n   description P2P_LINK_TO_B-LEAF5_Ethernet2\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet6\n   description P2P_LINK_TO_B-LEAF6_Ethernet2\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet7\n   description P2P_LINK_TO_B-LEAF7_Ethernet2\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet8\n   description P2P_LINK_TO_B-LEAF8_Ethernet2\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
-    \  no shutdown\n   ip address 10.0.0.122/32\n   isis enable EVPN_UNDERLAY\n   isis
-    passive\n!\ninterface Management1\n   description oob_management\n   no shutdown\n
-    \  ip address 172.100.100.115/24\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\nrouter
-    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
-    \  router-id 10.0.0.122\n   distance bgp 20 200 200\n   graceful-restart restart-time
-    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS update-source
-    Loopback0\n   neighbor EVPN-OVERLAY-PEERS route-reflector-client\n   neighbor
-    EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor
-    EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes
-    0\n   neighbor 10.0.0.21 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.21
-    remote-as 65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22
-    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n   neighbor
-    10.0.0.22 description B-LEAF2\n   neighbor 10.0.0.23 peer group EVPN-OVERLAY-PEERS\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet8\n   description
+    P2P_LINK_TO_B-LEAF8_Ethernet2\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.122/32\n   isis enable 100\n   isis passive\n!\ninterface Management1\n
+    \  description oob_management\n   no shutdown\n   ip address 172.100.100.115/24\n!\nmac
+    address-table aging-time 1800\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\narp
+    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
+    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.122\n   distance bgp 20
+    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer
+    group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    route-reflector-client\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
+    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
+    maximum-routes 0\n   neighbor 10.0.0.21 peer group EVPN-OVERLAY-PEERS\n   neighbor
+    10.0.0.21 remote-as 65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor
+    10.0.0.22 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n
+    \  neighbor 10.0.0.22 description B-LEAF2\n   neighbor 10.0.0.23 peer group EVPN-OVERLAY-PEERS\n
     \  neighbor 10.0.0.23 remote-as 65200\n   neighbor 10.0.0.23 description B-LEAF3\n
     \  neighbor 10.0.0.24 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.24 remote-as
     65200\n   neighbor 10.0.0.24 description B-LEAF4\n   neighbor 10.0.0.25 peer group
@@ -778,11 +810,11 @@ cvp_configlets:
     \  neighbor 10.0.0.28 remote-as 65200\n   neighbor 10.0.0.28 description B-LEAF8\n
     \  !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n
     \  address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n!\nrouter
-    isis EVPN_UNDERLAY\n   net 49.1111.0000.0000.0002.00\n   is-type level-2\n   router-id
-    ipv4 10.0.0.122\n   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n
-    \     maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    multicast\n   ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis
+    100\n   net 49.1111.0000.0000.0002.00\n   is-type level-2\n   router-id ipv4 10.0.0.122\n
+    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
+    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-SPINE3: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -798,43 +830,46 @@ cvp_configlets:
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-LEAF1_Ethernet3\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet2\n   description P2P_LINK_TO_B-LEAF2_Ethernet3\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet2\n   description
+    P2P_LINK_TO_B-LEAF2_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Ethernet3\n   description P2P_LINK_TO_B-LEAF3_Ethernet3\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-LEAF4_Ethernet3\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet3\n   description P2P_LINK_TO_B-LEAF3_Ethernet3\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet5\n   description
+    P2P_LINK_TO_B-LEAF5_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Ethernet6\n   description P2P_LINK_TO_B-LEAF6_Ethernet3\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n!\ninterface Ethernet7\n   description P2P_LINK_TO_B-LEAF7_Ethernet3\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-LEAF4_Ethernet3\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet5\n   description P2P_LINK_TO_B-LEAF5_Ethernet3\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet6\n   description P2P_LINK_TO_B-LEAF6_Ethernet3\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet7\n   description P2P_LINK_TO_B-LEAF7_Ethernet3\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet8\n   description P2P_LINK_TO_B-LEAF8_Ethernet3\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
-    \  no shutdown\n   ip address 10.0.0.123/32\n   isis enable EVPN_UNDERLAY\n   isis
-    passive\n!\ninterface Management1\n   description oob_management\n   no shutdown\n
-    \  ip address 172.100.100.116/24\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\nrouter
-    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
-    \  router-id 10.0.0.123\n   distance bgp 20 200 200\n   graceful-restart restart-time
-    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS update-source
-    Loopback0\n   neighbor EVPN-OVERLAY-PEERS route-reflector-client\n   neighbor
-    EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor
-    EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes
-    0\n   neighbor 10.0.0.21 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.21
-    remote-as 65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22
-    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n   neighbor
-    10.0.0.22 description B-LEAF2\n   neighbor 10.0.0.23 peer group EVPN-OVERLAY-PEERS\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet8\n   description
+    P2P_LINK_TO_B-LEAF8_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.123/32\n   isis enable 100\n   isis passive\n!\ninterface Management1\n
+    \  description oob_management\n   no shutdown\n   ip address 172.100.100.116/24\n!\nmac
+    address-table aging-time 1800\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\narp
+    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
+    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.123\n   distance bgp 20
+    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer
+    group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    route-reflector-client\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
+    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
+    maximum-routes 0\n   neighbor 10.0.0.21 peer group EVPN-OVERLAY-PEERS\n   neighbor
+    10.0.0.21 remote-as 65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor
+    10.0.0.22 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n
+    \  neighbor 10.0.0.22 description B-LEAF2\n   neighbor 10.0.0.23 peer group EVPN-OVERLAY-PEERS\n
     \  neighbor 10.0.0.23 remote-as 65200\n   neighbor 10.0.0.23 description B-LEAF3\n
     \  neighbor 10.0.0.24 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.24 remote-as
     65200\n   neighbor 10.0.0.24 description B-LEAF4\n   neighbor 10.0.0.25 peer group
@@ -846,11 +881,11 @@ cvp_configlets:
     \  neighbor 10.0.0.28 remote-as 65200\n   neighbor 10.0.0.28 description B-LEAF8\n
     \  !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n
     \  address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n!\nrouter
-    isis EVPN_UNDERLAY\n   net 49.1111.0000.0000.0003.00\n   is-type level-2\n   router-id
-    ipv4 10.0.0.123\n   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n
-    \     maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    multicast\n   ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis
+    100\n   net 49.1111.0000.0000.0003.00\n   is-type level-2\n   router-id ipv4 10.0.0.123\n
+    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
+    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-SPINE4: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -866,43 +901,46 @@ cvp_configlets:
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-LEAF1_Ethernet4\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet2\n   description P2P_LINK_TO_B-LEAF2_Ethernet4\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet2\n   description
+    P2P_LINK_TO_B-LEAF2_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Ethernet3\n   description P2P_LINK_TO_B-LEAF3_Ethernet4\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-LEAF4_Ethernet4\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet3\n   description P2P_LINK_TO_B-LEAF3_Ethernet4\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet5\n   description
+    P2P_LINK_TO_B-LEAF5_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Ethernet6\n   description P2P_LINK_TO_B-LEAF6_Ethernet4\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n
+    \  isis enable 100\n   isis circuit-type level-2\n   isis metric 10\n   isis network
+    point-to-point\n!\ninterface Ethernet7\n   description P2P_LINK_TO_B-LEAF7_Ethernet4\n
     \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet4\n   description P2P_LINK_TO_B-LEAF4_Ethernet4\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet5\n   description P2P_LINK_TO_B-LEAF5_Ethernet4\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet6\n   description P2P_LINK_TO_B-LEAF6_Ethernet4\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet7\n   description P2P_LINK_TO_B-LEAF7_Ethernet4\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Ethernet8\n   description P2P_LINK_TO_B-LEAF8_Ethernet4\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
-    \  isis enable EVPN_UNDERLAY\n   isis circuit-type level-2\n   isis metric 50\n
-    \  isis network point-to-point\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
-    \  no shutdown\n   ip address 10.0.0.124/32\n   isis enable EVPN_UNDERLAY\n   isis
-    passive\n!\ninterface Management1\n   description oob_management\n   no shutdown\n
-    \  ip address 172.100.100.117/24\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\nrouter
-    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
-    \  router-id 10.0.0.124\n   distance bgp 20 200 200\n   graceful-restart restart-time
-    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS update-source
-    Loopback0\n   neighbor EVPN-OVERLAY-PEERS route-reflector-client\n   neighbor
-    EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor
-    EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes
-    0\n   neighbor 10.0.0.21 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.21
-    remote-as 65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22
-    peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n   neighbor
-    10.0.0.22 description B-LEAF2\n   neighbor 10.0.0.23 peer group EVPN-OVERLAY-PEERS\n
+    \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
+    metric 10\n   isis network point-to-point\n!\ninterface Ethernet8\n   description
+    P2P_LINK_TO_B-LEAF8_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n
+    \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
+    \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n!\ninterface
+    Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
+    10.0.0.124/32\n   isis enable 100\n   isis passive\n!\ninterface Management1\n
+    \  description oob_management\n   no shutdown\n   ip address 172.100.100.117/24\n!\nmac
+    address-table aging-time 1800\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\narp
+    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
+    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.124\n   distance bgp 20
+    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor EVPN-OVERLAY-PEERS peer
+    group\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS
+    route-reflector-client\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS
+    ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS
+    maximum-routes 0\n   neighbor 10.0.0.21 peer group EVPN-OVERLAY-PEERS\n   neighbor
+    10.0.0.21 remote-as 65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor
+    10.0.0.22 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n
+    \  neighbor 10.0.0.22 description B-LEAF2\n   neighbor 10.0.0.23 peer group EVPN-OVERLAY-PEERS\n
     \  neighbor 10.0.0.23 remote-as 65200\n   neighbor 10.0.0.23 description B-LEAF3\n
     \  neighbor 10.0.0.24 peer group EVPN-OVERLAY-PEERS\n   neighbor 10.0.0.24 remote-as
     65200\n   neighbor 10.0.0.24 description B-LEAF4\n   neighbor 10.0.0.25 peer group
@@ -914,11 +952,11 @@ cvp_configlets:
     \  neighbor 10.0.0.28 remote-as 65200\n   neighbor 10.0.0.28 description B-LEAF8\n
     \  !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n
     \  address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n!\nrouter
-    isis EVPN_UNDERLAY\n   net 49.1111.0000.0000.0004.00\n   is-type level-2\n   router-id
-    ipv4 10.0.0.124\n   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n
-    \     maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    multicast\n   ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis
+    100\n   net 49.1111.0000.0000.0004.00\n   is-type level-2\n   router-id ipv4 10.0.0.124\n
+    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
+    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
+    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-SW1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -941,9 +979,11 @@ cvp_configlets:
     \  switchport access vlan 40\n   switchport mode access\n   switchport\n   spanning-tree
     portfast\n!\ninterface Ethernet4\n   description HostM\n   no shutdown\n   switchport
     access vlan 80\n   switchport mode access\n   switchport\n   spanning-tree portfast\n!\ninterface
-    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.139/24\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.139/24\n!\nmac
+    address-table aging-time 1800\n!\narp aging timeout default 1500\n!\nrouter multicast\n
+    \  ipv4\n      software-forwarding sfe\n!\nmanagement api http-commands\n   protocol
+    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
+    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
 cvp_topology:
   B_L2LEAFS:
     devices:
