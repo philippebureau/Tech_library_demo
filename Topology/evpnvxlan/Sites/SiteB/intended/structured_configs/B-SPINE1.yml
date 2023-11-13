@@ -16,54 +16,56 @@ router_bgp:
     enabled: true
     restart_time: 300
   peer_groups:
-  - name: EVPN-OVERLAY-PEERS
+  - name: LOCAL-EVPN-PEERS
     type: evpn
     update_source: Loopback0
     bfd: true
     send_community: all
     maximum_routes: 0
     ebgp_multihop: 3
-    next_hop_unchanged: false
+    next_hop_unchanged: true
+  - name: EVPN-OVERLAY-PEERS
     route_reflector_client: true
+    next_hop_unchanged: false
   address_family_ipv4:
     peer_groups:
-    - name: EVPN-OVERLAY-PEERS
+    - name: LOCAL-EVPN-PEERS
       activate: false
   address_family_evpn:
     peer_groups:
-    - name: EVPN-OVERLAY-PEERS
+    - name: LOCAL-EVPN-PEERS
       activate: true
   neighbors:
   - ip_address: 10.0.0.21
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-LEAF1
     remote_as: '65200'
   - ip_address: 10.0.0.22
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-LEAF2
     remote_as: '65200'
   - ip_address: 10.0.0.23
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-LEAF3
     remote_as: '65200'
   - ip_address: 10.0.0.24
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-LEAF4
     remote_as: '65200'
   - ip_address: 10.0.0.25
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-LEAF5
     remote_as: '65200'
   - ip_address: 10.0.0.26
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-LEAF6
     remote_as: '65200'
   - ip_address: 10.0.0.27
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-LEAF7
     remote_as: '65200'
   - ip_address: 10.0.0.28
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-LEAF8
     remote_as: '65200'
 service_routing_protocols_model: multi-agent

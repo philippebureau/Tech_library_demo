@@ -16,10 +16,10 @@ core_interfaces:
       interfaces:
         - Ethernet1
         - Ethernet7
-      as:
-        - 65000
-        - 65178
-      include_in_underlay_protocol: true
+      # as:
+      #   - 65000
+      #   - 65178
+      include_in_underlay_protocol: false
     - id: 2
       nodes:
         - BB1
@@ -28,10 +28,10 @@ core_interfaces:
       interfaces:
         - Ethernet2
         - Ethernet7
-      as:
-        - 65000
-        - 65178
-      include_in_underlay_protocol: true
+      # as:
+      #   - 65000
+      #   - 65178
+      include_in_underlay_protocol: false
     - id: 3
       nodes:
         - BB2
@@ -40,10 +40,10 @@ core_interfaces:
       interfaces:
         - Ethernet1
         - Ethernet8
-      as:
-        - 65000
-        - 65178
-      include_in_underlay_protocol: true
+      # as:
+      #   - 65000
+      #   - 65178
+      include_in_underlay_protocol: false
     - id: 4
       nodes:
         - BB2
@@ -52,10 +52,10 @@ core_interfaces:
       interfaces:
         - Ethernet2
         - Ethernet8
-      as:
-        - 65000
-        - 65178
-      include_in_underlay_protocol: true
+      # as:
+      #   - 65000
+      #   - 65178
+      include_in_underlay_protocol: false
     - id: 1
       nodes:
         - BB1
@@ -100,9 +100,9 @@ core_interfaces:
       interfaces:
         - Ethernet5
         - Ethernet7
-      as:
-        - 65000
-        - 65378
+      # as:
+      #   - 65000
+      #   - 65378
       include_in_underlay_protocol: false
     - id: 2
       nodes:
@@ -112,9 +112,9 @@ core_interfaces:
       interfaces:
         - Ethernet6
         - Ethernet7
-      as:
-        - 65000
-        - 65378
+      # as:
+      #   - 65000
+      #   - 65378
       include_in_underlay_protocol: false
     - id: 3
       nodes:
@@ -124,9 +124,9 @@ core_interfaces:
       interfaces:
         - Ethernet5
         - Ethernet8
-      as:
-        - 65000
-        - 65378
+      # as:
+      #   - 65000
+      #   - 65378
       include_in_underlay_protocol: false
     - id: 4
       nodes:
@@ -136,7 +136,7 @@ core_interfaces:
       interfaces:
         - Ethernet6
         - Ethernet8
-      as:
-        - 65000
-        - 65378
+      # as:
+      #   - 65000
+      #   - 65378
       include_in_underlay_protocol: false

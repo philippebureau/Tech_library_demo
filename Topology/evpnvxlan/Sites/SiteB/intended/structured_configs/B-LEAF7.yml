@@ -16,28 +16,28 @@ router_bgp:
     enabled: true
     restart_time: 300
   peer_groups:
-  - name: EVPN-OVERLAY-PEERS
+  - name: LOCAL-EVPN-PEERS
     type: evpn
     update_source: Loopback0
     bfd: true
     send_community: all
     maximum_routes: 0
     ebgp_multihop: 3
-  - name: EVPN-OVERLAY-CORE
+  - name: REMOTE-EVPN-PEERS
     type: evpn
     update_source: Loopback0
-    bfd: true
+    bfd: false
     send_community: all
     maximum_routes: 0
     ebgp_multihop: 15
+    local_as: '65000'
   - name: REMOTE-IPV4-PEERS
     remote_as: '65000'
-    bfd: true
   address_family_ipv4:
     peer_groups:
-    - name: EVPN-OVERLAY-PEERS
+    - name: LOCAL-EVPN-PEERS
       activate: false
-    - name: EVPN-OVERLAY-CORE
+    - name: REMOTE-EVPN-PEERS
       activate: false
     - name: REMOTE-IPV4-PEERS
       activate: true
@@ -51,36 +51,36 @@ router_bgp:
         enable: true
         inter_domain: true
     peer_groups:
-    - name: EVPN-OVERLAY-PEERS
+    - name: LOCAL-EVPN-PEERS
       activate: true
-    - name: EVPN-OVERLAY-CORE
+    - name: REMOTE-EVPN-PEERS
       domain_remote: true
       activate: true
     route:
       import_match_failure_action: discard
   neighbors:
   - ip_address: 10.0.0.121
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-SPINE1
     remote_as: '65200'
   - ip_address: 10.0.0.122
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-SPINE2
     remote_as: '65200'
   - ip_address: 10.0.0.123
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-SPINE3
     remote_as: '65200'
   - ip_address: 10.0.0.124
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: B-SPINE4
     remote_as: '65200'
   - ip_address: 172.16.0.1
-    peer_group: EVPN-OVERLAY-CORE
+    peer_group: REMOTE-EVPN-PEERS
     description: BB1
     remote_as: '65000'
   - ip_address: 172.16.0.2
-    peer_group: EVPN-OVERLAY-CORE
+    peer_group: REMOTE-EVPN-PEERS
     description: BB2
     remote_as: '65000'
   - ip_address: 172.16.2.0

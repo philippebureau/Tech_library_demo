@@ -696,18 +696,7 @@ router isis 100
 
 #### Router BGP Peer Groups
 
-##### EVPN-OVERLAY-CORE
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | evpn |
-| Source | Loopback0 |
-| BFD | True |
-| Ebgp multihop | 15 |
-| Send community | all |
-| Maximum routes | 0 (no limit) |
-
-##### EVPN-OVERLAY-PEERS
+##### LOCAL-EVPN-PEERS
 
 | Settings | Value |
 | -------- | ----- |
@@ -718,25 +707,35 @@ router isis 100
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
+##### REMOTE-EVPN-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | evpn |
+| Local AS | 65000 |
+| Source | Loopback0 |
+| Ebgp multihop | 15 |
+| Send community | all |
+| Maximum routes | 0 (no limit) |
+
 ##### REMOTE-IPV4-PEERS
 
 | Settings | Value |
 | -------- | ----- |
 | Remote AS | 65000 |
-| BFD | True |
 
 #### BGP Neighbors
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- |
-| 10.0.0.121 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.122 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.123 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.124 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 172.16.0.1 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - |
-| 172.16.0.2 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - |
-| 172.16.2.0 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | Inherited from peer group REMOTE-IPV4-PEERS | - | - | - |
-| 172.16.2.4 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | Inherited from peer group REMOTE-IPV4-PEERS | - | - | - |
+| 10.0.0.121 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.122 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.123 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.124 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 172.16.0.1 | 65000 | default | - | Inherited from peer group REMOTE-EVPN-PEERS | Inherited from peer group REMOTE-EVPN-PEERS | - | - | - | - | - |
+| 172.16.0.2 | 65000 | default | - | Inherited from peer group REMOTE-EVPN-PEERS | Inherited from peer group REMOTE-EVPN-PEERS | - | - | - | - | - |
+| 172.16.2.0 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | - | - | - | - |
+| 172.16.2.4 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -746,14 +745,14 @@ router isis 100
 
 | Peer Group | Activate | Encapsulation |
 | ---------- | -------- | ------------- |
-| EVPN-OVERLAY-CORE | True | default |
-| EVPN-OVERLAY-PEERS | True | default |
+| LOCAL-EVPN-PEERS | True | default |
+| REMOTE-EVPN-PEERS | True | default |
 
 ##### EVPN DCI Gateway Summary
 
 | Settings | Value |
 | -------- | ----- |
-| Remote Domain Peer Groups | EVPN-OVERLAY-CORE |
+| Remote Domain Peer Groups | REMOTE-EVPN-PEERS |
 | L3 Gateway Configured | True |
 | L3 Gateway Inter-domain | True |
 
@@ -784,37 +783,36 @@ router bgp 65200
    graceful-restart
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
-   neighbor EVPN-OVERLAY-CORE peer group
-   neighbor EVPN-OVERLAY-CORE update-source Loopback0
-   neighbor EVPN-OVERLAY-CORE bfd
-   neighbor EVPN-OVERLAY-CORE ebgp-multihop 15
-   neighbor EVPN-OVERLAY-CORE send-community
-   neighbor EVPN-OVERLAY-CORE maximum-routes 0
-   neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS update-source Loopback0
-   neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
-   neighbor EVPN-OVERLAY-PEERS send-community
-   neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor LOCAL-EVPN-PEERS peer group
+   neighbor LOCAL-EVPN-PEERS update-source Loopback0
+   neighbor LOCAL-EVPN-PEERS bfd
+   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3
+   neighbor LOCAL-EVPN-PEERS send-community
+   neighbor LOCAL-EVPN-PEERS maximum-routes 0
+   neighbor REMOTE-EVPN-PEERS peer group
+   neighbor REMOTE-EVPN-PEERS local-as 65000 no-prepend replace-as
+   neighbor REMOTE-EVPN-PEERS update-source Loopback0
+   neighbor REMOTE-EVPN-PEERS ebgp-multihop 15
+   neighbor REMOTE-EVPN-PEERS send-community
+   neighbor REMOTE-EVPN-PEERS maximum-routes 0
    neighbor REMOTE-IPV4-PEERS peer group
    neighbor REMOTE-IPV4-PEERS remote-as 65000
-   neighbor REMOTE-IPV4-PEERS bfd
-   neighbor 10.0.0.121 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.121 remote-as 65200
    neighbor 10.0.0.121 description B-SPINE1
-   neighbor 10.0.0.122 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.122 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.122 remote-as 65200
    neighbor 10.0.0.122 description B-SPINE2
-   neighbor 10.0.0.123 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.123 remote-as 65200
    neighbor 10.0.0.123 description B-SPINE3
-   neighbor 10.0.0.124 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.124 remote-as 65200
    neighbor 10.0.0.124 description B-SPINE4
-   neighbor 172.16.0.1 peer group EVPN-OVERLAY-CORE
+   neighbor 172.16.0.1 peer group REMOTE-EVPN-PEERS
    neighbor 172.16.0.1 remote-as 65000
    neighbor 172.16.0.1 description BB1
-   neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE
+   neighbor 172.16.0.2 peer group REMOTE-EVPN-PEERS
    neighbor 172.16.0.2 remote-as 65000
    neighbor 172.16.0.2 description BB2
    neighbor 172.16.2.0 peer group REMOTE-IPV4-PEERS
@@ -849,15 +847,15 @@ router bgp 65200
       redistribute learned
    !
    address-family evpn
-      neighbor EVPN-OVERLAY-CORE activate
-      neighbor EVPN-OVERLAY-CORE domain remote
-      neighbor EVPN-OVERLAY-PEERS activate
+      neighbor LOCAL-EVPN-PEERS activate
+      neighbor REMOTE-EVPN-PEERS activate
+      neighbor REMOTE-EVPN-PEERS domain remote
       neighbor default next-hop-self received-evpn-routes route-type ip-prefix inter-domain
       route import match-failure action discard
    !
    address-family ipv4
-      no neighbor EVPN-OVERLAY-CORE activate
-      no neighbor EVPN-OVERLAY-PEERS activate
+      no neighbor LOCAL-EVPN-PEERS activate
+      no neighbor REMOTE-EVPN-PEERS activate
       neighbor REMOTE-IPV4-PEERS activate
       network 10.0.0.27/32
       network 10.0.0.28/32

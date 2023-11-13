@@ -31,25 +31,20 @@ cvp_configlets:
     \  10 match as-range 65100-65499 result accept\n!\nrouter bgp 65000\n   router-id
     172.16.0.1\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
     \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS peer-filter DC-ASN-RANGE\n
-    \  bgp listen range 172.16.0.0/16 peer-group IP-TRANSPORT-CLIENTS peer-filter
-    DC-ASN-RANGE\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS
-    next-hop-unchanged\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor
-    EVPN-OVERLAY-PEERS route-reflector-client\n   neighbor EVPN-OVERLAY-PEERS bfd\n
-    \  neighbor EVPN-OVERLAY-PEERS ebgp-multihop 5\n   neighbor EVPN-OVERLAY-PEERS
-    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IP-TRANSPORT-CLIENTS
-    peer group\n   neighbor IP-TRANSPORT-CLIENTS route-reflector-client\n   neighbor
-    IP-TRANSPORT-CLIENTS bfd\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor
-    IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS maximum-routes
-    12000\n   neighbor 172.16.1.1 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.1.1
-    remote-as 65178\n   neighbor 172.16.1.1 description A-LEAF7\n   neighbor 172.16.1.3
-    peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.1.3 remote-as 65178\n   neighbor
-    172.16.1.3 description A-LEAF8\n   redistribute connected route-map RM-CONN-2-BGP\n
-    \  !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n
-    \  address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor
-    IP-TRANSPORT-CLIENTS activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      network
-    172.16.0.1/32\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \  bgp listen range 10.0.0.0/24 peer-group EVPN-GW-PEERS remote-as 65000\n   bgp
+    listen range 172.16.0.0/16 peer-group IP-TRANSPORT-CLIENTS peer-filter DC-ASN-RANGE\n
+    \  neighbor EVPN-GW-PEERS peer group\n   neighbor EVPN-GW-PEERS next-hop-unchanged\n
+    \  neighbor EVPN-GW-PEERS update-source Loopback0\n   neighbor EVPN-GW-PEERS route-reflector-client\n
+    \  neighbor EVPN-GW-PEERS ebgp-multihop 5\n   neighbor EVPN-GW-PEERS send-community\n
+    \  neighbor EVPN-GW-PEERS maximum-routes 0\n   neighbor IP-TRANSPORT-CLIENTS peer
+    group\n   neighbor IP-TRANSPORT-CLIENTS route-reflector-client\n   neighbor IPv4-UNDERLAY-PEERS
+    peer group\n   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS
+    maximum-routes 12000\n   redistribute connected route-map RM-CONN-2-BGP\n   !\n
+    \  address-family evpn\n      neighbor EVPN-GW-PEERS activate\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-GW-PEERS activate\n      neighbor IP-TRANSPORT-CLIENTS
+    activate\n      no neighbor IPv4-UNDERLAY-PEERS activate\n      network 172.16.0.1/32\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_BB2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -82,25 +77,20 @@ cvp_configlets:
     \  10 match as-range 65100-65499 result accept\n!\nrouter bgp 65000\n   router-id
     172.16.0.2\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
     \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS peer-filter DC-ASN-RANGE\n
-    \  bgp listen range 172.16.0.0/16 peer-group IP-TRANSPORT-CLIENTS peer-filter
-    DC-ASN-RANGE\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS
-    next-hop-unchanged\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor
-    EVPN-OVERLAY-PEERS route-reflector-client\n   neighbor EVPN-OVERLAY-PEERS bfd\n
-    \  neighbor EVPN-OVERLAY-PEERS ebgp-multihop 5\n   neighbor EVPN-OVERLAY-PEERS
-    send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IP-TRANSPORT-CLIENTS
-    peer group\n   neighbor IP-TRANSPORT-CLIENTS route-reflector-client\n   neighbor
-    IP-TRANSPORT-CLIENTS bfd\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor
-    IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS maximum-routes
-    12000\n   neighbor 172.16.1.5 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.1.5
-    remote-as 65178\n   neighbor 172.16.1.5 description A-LEAF7\n   neighbor 172.16.1.7
-    peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.16.1.7 remote-as 65178\n   neighbor
-    172.16.1.7 description A-LEAF8\n   redistribute connected route-map RM-CONN-2-BGP\n
-    \  !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n
-    \  address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor
-    IP-TRANSPORT-CLIENTS activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      network
-    172.16.0.2/32\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \  bgp listen range 10.0.0.0/24 peer-group EVPN-GW-PEERS remote-as 65000\n   bgp
+    listen range 172.16.0.0/16 peer-group IP-TRANSPORT-CLIENTS peer-filter DC-ASN-RANGE\n
+    \  neighbor EVPN-GW-PEERS peer group\n   neighbor EVPN-GW-PEERS next-hop-unchanged\n
+    \  neighbor EVPN-GW-PEERS update-source Loopback0\n   neighbor EVPN-GW-PEERS route-reflector-client\n
+    \  neighbor EVPN-GW-PEERS ebgp-multihop 5\n   neighbor EVPN-GW-PEERS send-community\n
+    \  neighbor EVPN-GW-PEERS maximum-routes 0\n   neighbor IP-TRANSPORT-CLIENTS peer
+    group\n   neighbor IP-TRANSPORT-CLIENTS route-reflector-client\n   neighbor IPv4-UNDERLAY-PEERS
+    peer group\n   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS
+    maximum-routes 12000\n   redistribute connected route-map RM-CONN-2-BGP\n   !\n
+    \  address-family evpn\n      neighbor EVPN-GW-PEERS activate\n   !\n   address-family
+    ipv4\n      no neighbor EVPN-GW-PEERS activate\n      neighbor IP-TRANSPORT-CLIENTS
+    activate\n      no neighbor IPv4-UNDERLAY-PEERS activate\n      network 172.16.0.2/32\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
 cvp_topology:
   EVPN_VXLAN:
     devices: []

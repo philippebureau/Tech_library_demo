@@ -721,18 +721,7 @@ router ospf 100
 
 #### Router BGP Peer Groups
 
-##### EVPN-OVERLAY-CORE
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | evpn |
-| Source | Loopback0 |
-| BFD | True |
-| Ebgp multihop | 15 |
-| Send community | all |
-| Maximum routes | 0 (no limit) |
-
-##### EVPN-OVERLAY-PEERS
+##### LOCAL-EVPN-PEERS
 
 | Settings | Value |
 | -------- | ----- |
@@ -743,7 +732,7 @@ router ospf 100
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
-##### MLAG-IPv4-UNDERLAY-PEER
+##### MLAG-IPV4-PEER
 
 | Settings | Value |
 | -------- | ----- |
@@ -753,25 +742,35 @@ router ospf 100
 | Send community | all |
 | Maximum routes | 12000 |
 
+##### REMOTE-EVPN-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | evpn |
+| Local AS | 65000 |
+| Source | Loopback0 |
+| Ebgp multihop | 15 |
+| Send community | all |
+| Maximum routes | 0 (no limit) |
+
 ##### REMOTE-IPV4-PEERS
 
 | Settings | Value |
 | -------- | ----- |
 | Remote AS | 65000 |
-| BFD | True |
 
 #### BGP Neighbors
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- |
-| 10.0.0.131 | 65300 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.132 | 65300 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 172.16.0.1 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - |
-| 172.16.0.2 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - |
-| 172.16.3.2 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | Inherited from peer group REMOTE-IPV4-PEERS | - | - | - |
-| 172.16.3.6 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | Inherited from peer group REMOTE-IPV4-PEERS | - | - | - |
-| 192.0.0.0 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | DEV | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - |
-| 192.0.0.0 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | PROD | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - |
+| 10.0.0.131 | 65300 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.132 | 65300 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 172.16.0.1 | 65000 | default | - | Inherited from peer group REMOTE-EVPN-PEERS | Inherited from peer group REMOTE-EVPN-PEERS | - | - | - | - | - |
+| 172.16.0.2 | 65000 | default | - | Inherited from peer group REMOTE-EVPN-PEERS | Inherited from peer group REMOTE-EVPN-PEERS | - | - | - | - | - |
+| 172.16.3.2 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | - | - | - | - |
+| 172.16.3.6 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | - | - | - | - |
+| 192.0.0.0 | Inherited from peer group MLAG-IPV4-PEER | DEV | - | Inherited from peer group MLAG-IPV4-PEER | Inherited from peer group MLAG-IPV4-PEER | - | - | - | - | - |
+| 192.0.0.0 | Inherited from peer group MLAG-IPV4-PEER | PROD | - | Inherited from peer group MLAG-IPV4-PEER | Inherited from peer group MLAG-IPV4-PEER | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -779,14 +778,14 @@ router ospf 100
 
 | Peer Group | Activate | Encapsulation |
 | ---------- | -------- | ------------- |
-| EVPN-OVERLAY-CORE | True | default |
-| EVPN-OVERLAY-PEERS | True | default |
+| LOCAL-EVPN-PEERS | True | default |
+| REMOTE-EVPN-PEERS | True | default |
 
 ##### EVPN DCI Gateway Summary
 
 | Settings | Value |
 | -------- | ----- |
-| Remote Domain Peer Groups | EVPN-OVERLAY-CORE |
+| Remote Domain Peer Groups | REMOTE-EVPN-PEERS |
 | L3 Gateway Configured | True |
 | L3 Gateway Inter-domain | True |
 
@@ -817,38 +816,37 @@ router bgp 65378
    graceful-restart
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
-   neighbor EVPN-OVERLAY-CORE peer group
-   neighbor EVPN-OVERLAY-CORE update-source Loopback0
-   neighbor EVPN-OVERLAY-CORE bfd
-   neighbor EVPN-OVERLAY-CORE ebgp-multihop 15
-   neighbor EVPN-OVERLAY-CORE send-community
-   neighbor EVPN-OVERLAY-CORE maximum-routes 0
-   neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS update-source Loopback0
-   neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
-   neighbor EVPN-OVERLAY-PEERS send-community
-   neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor MLAG-IPv4-UNDERLAY-PEER peer group
-   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65378
-   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
-   neighbor MLAG-IPv4-UNDERLAY-PEER description C-LEAF7
-   neighbor MLAG-IPv4-UNDERLAY-PEER send-community
-   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
-   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
+   neighbor LOCAL-EVPN-PEERS peer group
+   neighbor LOCAL-EVPN-PEERS update-source Loopback0
+   neighbor LOCAL-EVPN-PEERS bfd
+   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3
+   neighbor LOCAL-EVPN-PEERS send-community
+   neighbor LOCAL-EVPN-PEERS maximum-routes 0
+   neighbor MLAG-IPV4-PEER peer group
+   neighbor MLAG-IPV4-PEER remote-as 65378
+   neighbor MLAG-IPV4-PEER next-hop-self
+   neighbor MLAG-IPV4-PEER description C-LEAF7
+   neighbor MLAG-IPV4-PEER send-community
+   neighbor MLAG-IPV4-PEER maximum-routes 12000
+   neighbor MLAG-IPV4-PEER route-map RM-MLAG-PEER-IN in
+   neighbor REMOTE-EVPN-PEERS peer group
+   neighbor REMOTE-EVPN-PEERS local-as 65000 no-prepend replace-as
+   neighbor REMOTE-EVPN-PEERS update-source Loopback0
+   neighbor REMOTE-EVPN-PEERS ebgp-multihop 15
+   neighbor REMOTE-EVPN-PEERS send-community
+   neighbor REMOTE-EVPN-PEERS maximum-routes 0
    neighbor REMOTE-IPV4-PEERS peer group
    neighbor REMOTE-IPV4-PEERS remote-as 65000
-   neighbor REMOTE-IPV4-PEERS bfd
-   neighbor 10.0.0.131 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.131 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.131 remote-as 65300
    neighbor 10.0.0.131 description C-SPINE1
-   neighbor 10.0.0.132 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.132 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.132 remote-as 65300
    neighbor 10.0.0.132 description C-SPINE2
-   neighbor 172.16.0.1 peer group EVPN-OVERLAY-CORE
+   neighbor 172.16.0.1 peer group REMOTE-EVPN-PEERS
    neighbor 172.16.0.1 remote-as 65000
    neighbor 172.16.0.1 description BB1
-   neighbor 172.16.0.2 peer group EVPN-OVERLAY-CORE
+   neighbor 172.16.0.2 peer group REMOTE-EVPN-PEERS
    neighbor 172.16.0.2 remote-as 65000
    neighbor 172.16.0.2 description BB2
    neighbor 172.16.3.2 peer group REMOTE-IPV4-PEERS
@@ -883,15 +881,15 @@ router bgp 65378
       redistribute learned
    !
    address-family evpn
-      neighbor EVPN-OVERLAY-CORE activate
-      neighbor EVPN-OVERLAY-CORE domain remote
-      neighbor EVPN-OVERLAY-PEERS activate
+      neighbor LOCAL-EVPN-PEERS activate
+      neighbor REMOTE-EVPN-PEERS activate
+      neighbor REMOTE-EVPN-PEERS domain remote
       neighbor default next-hop-self received-evpn-routes route-type ip-prefix inter-domain
    !
    address-family ipv4
-      no neighbor EVPN-OVERLAY-CORE activate
-      no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor MLAG-IPv4-UNDERLAY-PEER activate
+      no neighbor LOCAL-EVPN-PEERS activate
+      neighbor MLAG-IPV4-PEER activate
+      no neighbor REMOTE-EVPN-PEERS activate
       neighbor REMOTE-IPV4-PEERS activate
       network 10.0.0.37/32
       network 10.0.0.38/32
@@ -902,7 +900,7 @@ router bgp 65378
       route-target import evpn 50002:50002
       route-target export evpn 50002:50002
       router-id 10.0.0.38
-      neighbor 192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER
+      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER
       redistribute connected
    !
    vrf PROD
@@ -910,7 +908,7 @@ router bgp 65378
       route-target import evpn 50001:50001
       route-target export evpn 50001:50001
       router-id 10.0.0.38
-      neighbor 192.0.0.0 peer group MLAG-IPv4-UNDERLAY-PEER
+      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER
       redistribute connected
 ```
 

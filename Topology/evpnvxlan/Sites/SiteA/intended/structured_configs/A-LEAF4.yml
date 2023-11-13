@@ -16,7 +16,7 @@ router_bgp:
     enabled: true
     restart_time: 300
   peer_groups:
-  - name: MLAG-IPv4-UNDERLAY-PEER
+  - name: MLAG-IPV4-PEER
     type: ipv4
     remote_as: '65134'
     next_hop_self: true
@@ -24,11 +24,11 @@ router_bgp:
     maximum_routes: 12000
     send_community: all
     route_map_in: RM-MLAG-PEER-IN
-  - name: IPv4-UNDERLAY-PEERS
+  - name: LOCAL-IPV4-PEERS
     type: ipv4
     maximum_routes: 12000
     send_community: all
-  - name: EVPN-OVERLAY-PEERS
+  - name: LOCAL-EVPN-PEERS
     type: evpn
     update_source: Loopback0
     bfd: true
@@ -37,46 +37,46 @@ router_bgp:
     ebgp_multihop: 3
   address_family_ipv4:
     peer_groups:
-    - name: MLAG-IPv4-UNDERLAY-PEER
+    - name: MLAG-IPV4-PEER
       activate: true
-    - name: IPv4-UNDERLAY-PEERS
+    - name: LOCAL-IPV4-PEERS
       activate: true
-    - name: EVPN-OVERLAY-PEERS
+    - name: LOCAL-EVPN-PEERS
       activate: false
   neighbors:
   - ip_address: 192.0.0.0
-    peer_group: MLAG-IPv4-UNDERLAY-PEER
+    peer_group: MLAG-IPV4-PEER
     description: A-LEAF3
   - ip_address: 192.168.0.24
-    peer_group: IPv4-UNDERLAY-PEERS
+    peer_group: LOCAL-IPV4-PEERS
     remote_as: '65100'
     description: A-SPINE1_Ethernet4
   - ip_address: 192.168.0.26
-    peer_group: IPv4-UNDERLAY-PEERS
+    peer_group: LOCAL-IPV4-PEERS
     remote_as: '65100'
     description: A-SPINE2_Ethernet4
   - ip_address: 192.168.0.28
-    peer_group: IPv4-UNDERLAY-PEERS
+    peer_group: LOCAL-IPV4-PEERS
     remote_as: '65100'
     description: A-SPINE3_Ethernet4
   - ip_address: 192.168.0.30
-    peer_group: IPv4-UNDERLAY-PEERS
+    peer_group: LOCAL-IPV4-PEERS
     remote_as: '65100'
     description: A-SPINE4_Ethernet4
   - ip_address: 10.0.0.111
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: A-SPINE1
     remote_as: '65100'
   - ip_address: 10.0.0.112
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: A-SPINE2
     remote_as: '65100'
   - ip_address: 10.0.0.113
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: A-SPINE3
     remote_as: '65100'
   - ip_address: 10.0.0.114
-    peer_group: EVPN-OVERLAY-PEERS
+    peer_group: LOCAL-EVPN-PEERS
     description: A-SPINE4
     remote_as: '65100'
   redistribute_routes:
@@ -84,7 +84,7 @@ router_bgp:
     route_map: RM-CONN-2-BGP
   address_family_evpn:
     peer_groups:
-    - name: EVPN-OVERLAY-PEERS
+    - name: LOCAL-EVPN-PEERS
       activate: true
   vrfs:
   - name: DEV
@@ -103,7 +103,7 @@ router_bgp:
     - source_protocol: connected
     neighbors:
     - ip_address: 192.0.0.0
-      peer_group: MLAG-IPv4-UNDERLAY-PEER
+      peer_group: MLAG-IPV4-PEER
   - name: PROD
     router_id: 10.0.0.14
     rd: 10.0.0.14:50001
@@ -120,7 +120,7 @@ router_bgp:
     - source_protocol: connected
     neighbors:
     - ip_address: 192.0.0.0
-      peer_group: MLAG-IPv4-UNDERLAY-PEER
+      peer_group: MLAG-IPV4-PEER
   vlans:
   - id: 50
     tenant: DEV_TENANT

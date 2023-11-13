@@ -20,23 +20,22 @@ router_bgp:
     type: ipv4
     maximum_routes: 12000
     send_community: all
-  - name: EVPN-OVERLAY-PEERS
+  - name: EVPN-GW-PEERS
     type: evpn
     update_source: Loopback0
-    bfd: true
+    bfd: false
     send_community: all
     maximum_routes: 0
     ebgp_multihop: 5
     next_hop_unchanged: true
     route_reflector_client: true
   - name: IP-TRANSPORT-CLIENTS
-    bfd: true
     route_reflector_client: true
   address_family_ipv4:
     peer_groups:
     - name: IPv4-UNDERLAY-PEERS
-      activate: true
-    - name: EVPN-OVERLAY-PEERS
+      activate: false
+    - name: EVPN-GW-PEERS
       activate: false
     - name: IP-TRANSPORT-CLIENTS
       activate: true
@@ -47,21 +46,12 @@ router_bgp:
     route_map: RM-CONN-2-BGP
   address_family_evpn:
     peer_groups:
-    - name: EVPN-OVERLAY-PEERS
+    - name: EVPN-GW-PEERS
       activate: true
-  neighbors:
-  - ip_address: 172.16.1.5
-    remote_as: '65178'
-    description: A-LEAF7
-    peer_group: IPv4-UNDERLAY-PEERS
-  - ip_address: 172.16.1.7
-    remote_as: '65178'
-    description: A-LEAF8
-    peer_group: IPv4-UNDERLAY-PEERS
   listen_ranges:
   - prefix: 10.0.0.0/24
-    peer_group: EVPN-OVERLAY-PEERS
-    peer_filter: DC-ASN-RANGE
+    peer_group: EVPN-GW-PEERS
+    remote_as: '65000'
   - prefix: 172.16.0.0/16
     peer_group: IP-TRANSPORT-CLIENTS
     peer_filter: DC-ASN-RANGE

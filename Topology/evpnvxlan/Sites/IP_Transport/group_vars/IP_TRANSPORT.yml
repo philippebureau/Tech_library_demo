@@ -11,17 +11,19 @@ overlay_controller:
     bgp_as: 65000
     loopback_ipv4_pool: 172.16.0.0/26
     structured_config:
-        router_bgp:
+      router_bgp:
+        peer_groups:
+          - name: IP-TRANSPORT-CLIENTS
+            route_reflector_client: true
+          - name: EVPN-GW-PEERS
+            bfd: false
+            route_reflector_client: true
+        address_family_ipv4:
           peer_groups:
             - name: IP-TRANSPORT-CLIENTS
-              bfd: true
-              route_reflector_client: true
-            - name: EVPN-OVERLAY-PEERS
-              route_reflector_client: true
-          address_family_ipv4:
-            peer_groups:
-              - name: IP-TRANSPORT-CLIENTS
-                activate: true
+              activate: true
+            - name: IPv4-UNDERLAY-PEERS
+              activate: false
   nodes:
     - name: BB1
       id: 1
@@ -44,14 +46,15 @@ overlay_controller:
 # BGP custom variables
 bgp_peer_groups:
   evpn_overlay_peers:
+    name: EVPN-GW-PEERS
     structured_config:
       ebgp_multihop: 5
 
 custom_structured_configuration_router_bgp:
   listen_ranges:
     - prefix: 10.0.0.0/24
-      peer_group: EVPN-OVERLAY-PEERS
-      peer_filter: DC-ASN-RANGE
+      peer_group: EVPN-GW-PEERS
+      remote_as: 65000
     - prefix: 172.16.0.0/16
       peer_group: IP-TRANSPORT-CLIENTS
       peer_filter: DC-ASN-RANGE

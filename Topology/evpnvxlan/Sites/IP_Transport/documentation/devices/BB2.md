@@ -393,12 +393,12 @@ ip routing
 
 | Prefix | Peer-ID Include Router ID | Peer Group | Peer-Filter | Remote-AS | VRF |
 | ------ | ------------------------- | ---------- | ----------- | --------- | --- |
-| 10.0.0.0/24 | - | EVPN-OVERLAY-PEERS | DC-ASN-RANGE | - | default |
+| 10.0.0.0/24 | - | EVPN-GW-PEERS | - | 65000 | default |
 | 172.16.0.0/16 | - | IP-TRANSPORT-CLIENTS | DC-ASN-RANGE | - | default |
 
 #### Router BGP Peer Groups
 
-##### EVPN-OVERLAY-PEERS
+##### EVPN-GW-PEERS
 
 | Settings | Value |
 | -------- | ----- |
@@ -406,7 +406,6 @@ ip routing
 | Route Reflector Client | Yes |
 | Next-hop unchanged | True |
 | Source | Loopback0 |
-| BFD | True |
 | Ebgp multihop | 5 |
 | Send community | all |
 | Maximum routes | 0 (no limit) |
@@ -416,7 +415,6 @@ ip routing
 | Settings | Value |
 | -------- | ----- |
 | Route Reflector Client | Yes |
-| BFD | True |
 
 ##### IPv4-UNDERLAY-PEERS
 
@@ -426,20 +424,13 @@ ip routing
 | Send community | all |
 | Maximum routes | 12000 |
 
-#### BGP Neighbors
-
-| Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive |
-| -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- |
-| 172.16.1.5 | 65178 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 172.16.1.7 | 65178 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-
 #### Router BGP EVPN Address Family
 
 ##### EVPN Peer Groups
 
 | Peer Group | Activate | Encapsulation |
 | ---------- | -------- | ------------- |
-| EVPN-OVERLAY-PEERS | True | default |
+| EVPN-GW-PEERS | True | default |
 
 #### Router BGP Device Configuration
 
@@ -452,37 +443,29 @@ router bgp 65000
    graceful-restart
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
-   bgp listen range 10.0.0.0/24 peer-group EVPN-OVERLAY-PEERS peer-filter DC-ASN-RANGE
+   bgp listen range 10.0.0.0/24 peer-group EVPN-GW-PEERS remote-as 65000
    bgp listen range 172.16.0.0/16 peer-group IP-TRANSPORT-CLIENTS peer-filter DC-ASN-RANGE
-   neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
-   neighbor EVPN-OVERLAY-PEERS update-source Loopback0
-   neighbor EVPN-OVERLAY-PEERS route-reflector-client
-   neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 5
-   neighbor EVPN-OVERLAY-PEERS send-community
-   neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor EVPN-GW-PEERS peer group
+   neighbor EVPN-GW-PEERS next-hop-unchanged
+   neighbor EVPN-GW-PEERS update-source Loopback0
+   neighbor EVPN-GW-PEERS route-reflector-client
+   neighbor EVPN-GW-PEERS ebgp-multihop 5
+   neighbor EVPN-GW-PEERS send-community
+   neighbor EVPN-GW-PEERS maximum-routes 0
    neighbor IP-TRANSPORT-CLIENTS peer group
    neighbor IP-TRANSPORT-CLIENTS route-reflector-client
-   neighbor IP-TRANSPORT-CLIENTS bfd
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.16.1.5 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.16.1.5 remote-as 65178
-   neighbor 172.16.1.5 description A-LEAF7
-   neighbor 172.16.1.7 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.16.1.7 remote-as 65178
-   neighbor 172.16.1.7 description A-LEAF8
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
-      neighbor EVPN-OVERLAY-PEERS activate
+      neighbor EVPN-GW-PEERS activate
    !
    address-family ipv4
-      no neighbor EVPN-OVERLAY-PEERS activate
+      no neighbor EVPN-GW-PEERS activate
       neighbor IP-TRANSPORT-CLIENTS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
+      no neighbor IPv4-UNDERLAY-PEERS activate
       network 172.16.0.2/32
 ```
 

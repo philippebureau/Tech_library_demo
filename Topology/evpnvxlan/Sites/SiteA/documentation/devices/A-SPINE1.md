@@ -427,7 +427,7 @@ Global ARP timeout: 1500
 
 #### Router BGP Peer Groups
 
-##### EVPN-OVERLAY-PEERS
+##### LOCAL-EVPN-PEERS
 
 | Settings | Value |
 | -------- | ----- |
@@ -439,7 +439,7 @@ Global ARP timeout: 1500
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
-##### IPv4-UNDERLAY-PEERS
+##### LOCAL-IPV4-PEERS
 
 | Settings | Value |
 | -------- | ----- |
@@ -451,22 +451,22 @@ Global ARP timeout: 1500
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- |
-| 10.0.0.11 | 65112 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.12 | 65112 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.13 | 65134 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.14 | 65134 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.15 | 65156 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.16 | 65156 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.17 | 65178 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 10.0.0.18 | 65178 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - |
-| 192.168.0.1 | 65112 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 192.168.0.9 | 65112 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 192.168.0.17 | 65134 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 192.168.0.25 | 65134 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 192.168.0.33 | 65156 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 192.168.0.41 | 65156 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 192.168.0.49 | 65178 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
-| 192.168.0.57 | 65178 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - |
+| 10.0.0.11 | 65112 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.12 | 65112 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.13 | 65134 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.14 | 65134 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.15 | 65156 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.16 | 65156 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.17 | 65178 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.18 | 65178 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 192.168.0.1 | 65112 | default | - | Inherited from peer group LOCAL-IPV4-PEERS | Inherited from peer group LOCAL-IPV4-PEERS | - | - | - | - | - |
+| 192.168.0.9 | 65112 | default | - | Inherited from peer group LOCAL-IPV4-PEERS | Inherited from peer group LOCAL-IPV4-PEERS | - | - | - | - | - |
+| 192.168.0.17 | 65134 | default | - | Inherited from peer group LOCAL-IPV4-PEERS | Inherited from peer group LOCAL-IPV4-PEERS | - | - | - | - | - |
+| 192.168.0.25 | 65134 | default | - | Inherited from peer group LOCAL-IPV4-PEERS | Inherited from peer group LOCAL-IPV4-PEERS | - | - | - | - | - |
+| 192.168.0.33 | 65156 | default | - | Inherited from peer group LOCAL-IPV4-PEERS | Inherited from peer group LOCAL-IPV4-PEERS | - | - | - | - | - |
+| 192.168.0.41 | 65156 | default | - | Inherited from peer group LOCAL-IPV4-PEERS | Inherited from peer group LOCAL-IPV4-PEERS | - | - | - | - | - |
+| 192.168.0.49 | 65178 | default | - | Inherited from peer group LOCAL-IPV4-PEERS | Inherited from peer group LOCAL-IPV4-PEERS | - | - | - | - | - |
+| 192.168.0.57 | 65178 | default | - | Inherited from peer group LOCAL-IPV4-PEERS | Inherited from peer group LOCAL-IPV4-PEERS | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -474,7 +474,7 @@ Global ARP timeout: 1500
 
 | Peer Group | Activate | Encapsulation |
 | ---------- | -------- | ------------- |
-| EVPN-OVERLAY-PEERS | True | default |
+| LOCAL-EVPN-PEERS | True | default |
 
 #### Router BGP Device Configuration
 
@@ -487,72 +487,72 @@ router bgp 65100
    graceful-restart
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
-   neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
-   neighbor EVPN-OVERLAY-PEERS update-source Loopback0
-   neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
-   neighbor EVPN-OVERLAY-PEERS send-community
-   neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 10.0.0.11 peer group EVPN-OVERLAY-PEERS
+   neighbor LOCAL-EVPN-PEERS peer group
+   neighbor LOCAL-EVPN-PEERS next-hop-unchanged
+   neighbor LOCAL-EVPN-PEERS update-source Loopback0
+   neighbor LOCAL-EVPN-PEERS bfd
+   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3
+   neighbor LOCAL-EVPN-PEERS send-community
+   neighbor LOCAL-EVPN-PEERS maximum-routes 0
+   neighbor LOCAL-IPV4-PEERS peer group
+   neighbor LOCAL-IPV4-PEERS send-community
+   neighbor LOCAL-IPV4-PEERS maximum-routes 12000
+   neighbor 10.0.0.11 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.11 remote-as 65112
    neighbor 10.0.0.11 description A-LEAF1
-   neighbor 10.0.0.12 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.12 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.12 remote-as 65112
    neighbor 10.0.0.12 description A-LEAF2
-   neighbor 10.0.0.13 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.13 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.13 remote-as 65134
    neighbor 10.0.0.13 description A-LEAF3
-   neighbor 10.0.0.14 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.14 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.14 remote-as 65134
    neighbor 10.0.0.14 description A-LEAF4
-   neighbor 10.0.0.15 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.15 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.15 remote-as 65156
    neighbor 10.0.0.15 description A-LEAF5
-   neighbor 10.0.0.16 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.16 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.16 remote-as 65156
    neighbor 10.0.0.16 description A-LEAF6
-   neighbor 10.0.0.17 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.17 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.17 remote-as 65178
    neighbor 10.0.0.17 description A-LEAF7
-   neighbor 10.0.0.18 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.0.0.18 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.18 remote-as 65178
    neighbor 10.0.0.18 description A-LEAF8
-   neighbor 192.168.0.1 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.0.1 peer group LOCAL-IPV4-PEERS
    neighbor 192.168.0.1 remote-as 65112
    neighbor 192.168.0.1 description A-LEAF1_Ethernet1
-   neighbor 192.168.0.9 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.0.9 peer group LOCAL-IPV4-PEERS
    neighbor 192.168.0.9 remote-as 65112
    neighbor 192.168.0.9 description A-LEAF2_Ethernet1
-   neighbor 192.168.0.17 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.0.17 peer group LOCAL-IPV4-PEERS
    neighbor 192.168.0.17 remote-as 65134
    neighbor 192.168.0.17 description A-LEAF3_Ethernet1
-   neighbor 192.168.0.25 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.0.25 peer group LOCAL-IPV4-PEERS
    neighbor 192.168.0.25 remote-as 65134
    neighbor 192.168.0.25 description A-LEAF4_Ethernet1
-   neighbor 192.168.0.33 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.0.33 peer group LOCAL-IPV4-PEERS
    neighbor 192.168.0.33 remote-as 65156
    neighbor 192.168.0.33 description A-LEAF5_Ethernet1
-   neighbor 192.168.0.41 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.0.41 peer group LOCAL-IPV4-PEERS
    neighbor 192.168.0.41 remote-as 65156
    neighbor 192.168.0.41 description A-LEAF6_Ethernet1
-   neighbor 192.168.0.49 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.0.49 peer group LOCAL-IPV4-PEERS
    neighbor 192.168.0.49 remote-as 65178
    neighbor 192.168.0.49 description A-LEAF7_Ethernet1
-   neighbor 192.168.0.57 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.0.57 peer group LOCAL-IPV4-PEERS
    neighbor 192.168.0.57 remote-as 65178
    neighbor 192.168.0.57 description A-LEAF8_Ethernet1
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
-      neighbor EVPN-OVERLAY-PEERS activate
+      neighbor LOCAL-EVPN-PEERS activate
    !
    address-family ipv4
-      no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
+      no neighbor LOCAL-EVPN-PEERS activate
+      neighbor LOCAL-IPV4-PEERS activate
 ```
 
 ## BFD

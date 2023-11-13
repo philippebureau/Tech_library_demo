@@ -101,7 +101,9 @@ l3leaf:
           peer_groups:
             - name: REMOTE-IPV4-PEERS
               remote_as: 65000
-              bfd: true
+            - name: REMOTE-EVPN-PEERS
+              local_as: 65000
+              bfd: false
           address_family_ipv4:
             peer_groups:
               - name: REMOTE-IPV4-PEERS

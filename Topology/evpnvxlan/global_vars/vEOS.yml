@@ -19,3 +19,13 @@ bfd_multihop:
   interval: 1200
   min_rx: 1200
   multiplier: 3
+
+bgp_peer_groups:
+  ipv4_underlay_peers:
+    name: LOCAL-IPV4-PEERS
+  mlag_ipv4_underlay_peer:
+    name: MLAG-IPV4-PEER
+  evpn_overlay_peers:
+    name: LOCAL-EVPN-PEERS
+  evpn_overlay_core:
+    name: REMOTE-EVPN-PEERS
