@@ -105,8 +105,8 @@ router_bgp:
     redistribute_routes:
     - learned
 service_routing_protocols_model: multi-agent
-ipv6_unicast_routing: true
-ip_routing_ipv6_interfaces: true
+ipv6_unicast_routing: false
+ip_routing_ipv6_interfaces: false
 router_multicast:
   ipv4:
     routing: true

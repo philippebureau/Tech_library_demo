@@ -448,13 +448,11 @@ service routing protocols model multi-agent
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | True (ipv6 interfaces) |
+| default | False |
 
 #### IP Routing Device Configuration
 
 ```eos
-!
-ip routing ipv6 interfaces
 ```
 
 ### IPv6 Routing
@@ -463,15 +461,8 @@ ip routing ipv6 interfaces
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | True |
+| default | False |
 | default | false |
-
-#### IPv6 Routing Device Configuration
-
-```eos
-!
-ipv6 unicast-routing
-```
 
 ### ARP
 

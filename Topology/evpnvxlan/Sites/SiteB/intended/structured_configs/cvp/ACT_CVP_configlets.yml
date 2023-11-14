@@ -50,23 +50,22 @@ cvp_configlets:
     10.40.40.1/24\n!\ninterface Vxlan1\n   description B-LEAF1_VTEP\n   vxlan source-interface
     Loopback1\n   vxlan udp-port 4789\n   vxlan vlan 20 vni 10020\n   vxlan vlan 40
     vni 10040\n   vxlan vrf PROD vni 50001\n!\nmac address-table aging-time 1800\n!\nip
-    virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
-    routing vrf PROD\n!\nipv6 unicast-routing\n!\narp aging timeout default 1500\n!\nrouter
-    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
-    \  router-id 10.0.0.21\n   distance bgp 20 200 200\n   graceful-restart restart-time
-    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source
-    Loopback0\n   neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop
-    3\n   neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
-    0\n   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121
-    remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n   neighbor
-    10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123 description B-SPINE3\n
-    \  neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as
-    65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n   vlan 20\n      rd
-    10.0.0.21:10020\n      route-target both 10020:10020\n      redistribute learned\n
-    \  !\n   vlan 40\n      rd 10.0.0.21:10040\n      route-target both 10040:10040\n
+    virtual-router mac-address 00:1c:73:00:00:01\nip routing vrf PROD\n!\narp aging
+    timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier
+    3\n!\nrouter bgp 65200\n   router-id 10.0.0.21\n   distance bgp 20 200 200\n   graceful-restart
+    restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default
+    ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS
+    update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS
+    ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS
+    maximum-routes 0\n   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
+    10.0.0.122 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
+    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
+    description B-SPINE3\n   neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n
+    \  vlan 20\n      rd 10.0.0.21:10020\n      route-target both 10020:10020\n      redistribute
+    learned\n   !\n   vlan 40\n      rd 10.0.0.21:10040\n      route-target both 10040:10040\n
     \     redistribute learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS
     activate\n      route import match-failure action discard\n   !\n   address-family
     ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n   !\n   vrf PROD\n      rd
@@ -128,23 +127,22 @@ cvp_configlets:
     10.40.40.1/24\n!\ninterface Vxlan1\n   description B-LEAF2_VTEP\n   vxlan source-interface
     Loopback1\n   vxlan udp-port 4789\n   vxlan vlan 20 vni 10020\n   vxlan vlan 40
     vni 10040\n   vxlan vrf PROD vni 50001\n!\nmac address-table aging-time 1800\n!\nip
-    virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip
-    routing vrf PROD\n!\nipv6 unicast-routing\n!\narp aging timeout default 1500\n!\nrouter
-    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
-    \  router-id 10.0.0.22\n   distance bgp 20 200 200\n   graceful-restart restart-time
-    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source
-    Loopback0\n   neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop
-    3\n   neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
-    0\n   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121
-    remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n   neighbor
-    10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123 description B-SPINE3\n
-    \  neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as
-    65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n   vlan 20\n      rd
-    10.0.0.22:10020\n      route-target both 10020:10020\n      redistribute learned\n
-    \  !\n   vlan 40\n      rd 10.0.0.22:10040\n      route-target both 10040:10040\n
+    virtual-router mac-address 00:1c:73:00:00:01\nip routing vrf PROD\n!\narp aging
+    timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier
+    3\n!\nrouter bgp 65200\n   router-id 10.0.0.22\n   distance bgp 20 200 200\n   graceful-restart
+    restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default
+    ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS
+    update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS
+    ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS
+    maximum-routes 0\n   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
+    10.0.0.122 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
+    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
+    description B-SPINE3\n   neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n
+    \  vlan 20\n      rd 10.0.0.22:10020\n      route-target both 10020:10020\n      redistribute
+    learned\n   !\n   vlan 40\n      rd 10.0.0.22:10040\n      route-target both 10040:10040\n
     \     redistribute learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS
     activate\n      route import match-failure action discard\n   !\n   address-family
     ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n   !\n   vrf PROD\n      rd
@@ -205,37 +203,37 @@ cvp_configlets:
     Vxlan1\n   description B-LEAF3_VTEP\n   vxlan source-interface Loopback1\n   vxlan
     udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 60 vni 10060\n   vxlan
     vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac
-    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
-    routing ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\narp
-    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
-    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.23\n   distance bgp 20
-    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
-    \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
-    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
-    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor 10.0.0.121
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
-    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
-    \  neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.123 remote-as
-    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
-    group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124
-    description B-SPINE4\n   !\n   vlan 10\n      rd 10.0.0.23:10010\n      route-target
-    both 10010:10010\n      redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.23:10060\n
-    \     route-target both 10060:10060\n      redistribute learned\n   !\n   vlan
-    70\n      rd 10.0.0.23:10070\n      route-target both 10070:10070\n      redistribute
-    learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n
-    \     route import match-failure action discard\n   !\n   address-family ipv4\n
-    \     no neighbor LOCAL-EVPN-PEERS activate\n   !\n   vrf DEV\n      rd 10.0.0.23:50002\n
-    \     route-target import evpn 50002:50002\n      route-target export evpn 50002:50002\n
-    \     router-id 10.0.0.23\n      redistribute connected\n   !\n   vrf PROD\n      rd
-    10.0.0.23:50001\n      route-target import evpn 50001:50001\n      route-target
-    export evpn 50001:50001\n      router-id 10.0.0.23\n      redistribute connected\n!\nrouter
-    multicast\n   ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis
-    100\n   net 49.1111.0000.0001.0003.00\n   is-type level-2\n   router-id ipv4 10.0.0.23\n
-    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
-    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\nip
+    routing vrf DEV\nip routing vrf PROD\n!\narp aging timeout default 1500\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
+    \  router-id 10.0.0.23\n   distance bgp 20 200 200\n   graceful-restart restart-time
+    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  neighbor LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source
+    Loopback0\n   neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop
+    3\n   neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
+    0\n   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121
+    remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122
+    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n   neighbor
+    10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n
+    \  neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123 description B-SPINE3\n
+    \  neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as
+    65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n   vlan 10\n      rd
+    10.0.0.23:10010\n      route-target both 10010:10010\n      redistribute learned\n
+    \  !\n   vlan 60\n      rd 10.0.0.23:10060\n      route-target both 10060:10060\n
+    \     redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.23:10070\n      route-target
+    both 10070:10070\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
+    LOCAL-EVPN-PEERS activate\n      route import match-failure action discard\n   !\n
+    \  address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n   !\n   vrf
+    DEV\n      rd 10.0.0.23:50002\n      route-target import evpn 50002:50002\n      route-target
+    export evpn 50002:50002\n      router-id 10.0.0.23\n      redistribute connected\n
+    \  !\n   vrf PROD\n      rd 10.0.0.23:50001\n      route-target import evpn 50001:50001\n
+    \     route-target export evpn 50001:50001\n      router-id 10.0.0.23\n      redistribute
+    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nrouter isis 100\n   net 49.1111.0000.0001.0003.00\n   is-type level-2\n
+    \  router-id ipv4 10.0.0.23\n   log-adjacency-changes\n   !\n   address-family
+    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
+    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
+    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF4: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -286,37 +284,37 @@ cvp_configlets:
     Vxlan1\n   description B-LEAF4_VTEP\n   vxlan source-interface Loopback1\n   vxlan
     udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 60 vni 10060\n   vxlan
     vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac
-    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
-    routing ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\narp
-    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
-    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.24\n   distance bgp 20
-    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
-    \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
-    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
-    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor 10.0.0.121
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
-    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
-    \  neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.123 remote-as
-    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
-    group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124
-    description B-SPINE4\n   !\n   vlan 10\n      rd 10.0.0.24:10010\n      route-target
-    both 10010:10010\n      redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.24:10060\n
-    \     route-target both 10060:10060\n      redistribute learned\n   !\n   vlan
-    70\n      rd 10.0.0.24:10070\n      route-target both 10070:10070\n      redistribute
-    learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n
-    \     route import match-failure action discard\n   !\n   address-family ipv4\n
-    \     no neighbor LOCAL-EVPN-PEERS activate\n   !\n   vrf DEV\n      rd 10.0.0.24:50002\n
-    \     route-target import evpn 50002:50002\n      route-target export evpn 50002:50002\n
-    \     router-id 10.0.0.24\n      redistribute connected\n   !\n   vrf PROD\n      rd
-    10.0.0.24:50001\n      route-target import evpn 50001:50001\n      route-target
-    export evpn 50001:50001\n      router-id 10.0.0.24\n      redistribute connected\n!\nrouter
-    multicast\n   ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis
-    100\n   net 49.1111.0000.0001.0004.00\n   is-type level-2\n   router-id ipv4 10.0.0.24\n
-    \  log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths
-    4\n   !\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\nip
+    routing vrf DEV\nip routing vrf PROD\n!\narp aging timeout default 1500\n!\nrouter
+    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
+    \  router-id 10.0.0.24\n   distance bgp 20 200 200\n   graceful-restart restart-time
+    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  neighbor LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source
+    Loopback0\n   neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop
+    3\n   neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
+    0\n   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121
+    remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122
+    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n   neighbor
+    10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n
+    \  neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123 description B-SPINE3\n
+    \  neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as
+    65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n   vlan 10\n      rd
+    10.0.0.24:10010\n      route-target both 10010:10010\n      redistribute learned\n
+    \  !\n   vlan 60\n      rd 10.0.0.24:10060\n      route-target both 10060:10060\n
+    \     redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.24:10070\n      route-target
+    both 10070:10070\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
+    LOCAL-EVPN-PEERS activate\n      route import match-failure action discard\n   !\n
+    \  address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n   !\n   vrf
+    DEV\n      rd 10.0.0.24:50002\n      route-target import evpn 50002:50002\n      route-target
+    export evpn 50002:50002\n      router-id 10.0.0.24\n      redistribute connected\n
+    \  !\n   vrf PROD\n      rd 10.0.0.24:50001\n      route-target import evpn 50001:50001\n
+    \     route-target export evpn 50001:50001\n      router-id 10.0.0.24\n      redistribute
+    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nrouter isis 100\n   net 49.1111.0000.0001.0004.00\n   is-type level-2\n
+    \  router-id ipv4 10.0.0.24\n   log-adjacency-changes\n   !\n   address-family
+    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
+    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
+    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF5: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -363,36 +361,36 @@ cvp_configlets:
     10.80.80.1/24\n!\ninterface Vxlan1\n   description B-LEAF5_VTEP\n   vxlan source-interface
     Loopback1\n   vxlan udp-port 4789\n   vxlan vlan 40 vni 10040\n   vxlan vlan 80
     vni 10080\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac address-table
-    aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing
-    ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\narp
-    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
-    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.25\n   distance bgp 20
-    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
-    \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
-    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
-    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor 10.0.0.121
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
-    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
-    \  neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.123 remote-as
-    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
-    group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124
-    description B-SPINE4\n   !\n   vlan 40\n      rd 10.0.0.25:10040\n      route-target
-    both 10040:10040\n      redistribute learned\n   !\n   vlan 80\n      rd 10.0.0.25:10080\n
-    \     route-target both 10080:10080\n      redistribute learned\n   !\n   address-family
-    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n      route import match-failure
-    action discard\n   !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS
-    activate\n   !\n   vrf DEV\n      rd 10.0.0.25:50002\n      route-target import
-    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.25\n      redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.25:50001\n
-    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
-    \     router-id 10.0.0.25\n      redistribute connected\n!\nrouter multicast\n
-    \  ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis 100\n   net
-    49.1111.0000.0001.0005.00\n   is-type level-2\n   router-id ipv4 10.0.0.25\n   log-adjacency-changes\n
-    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\nip routing
+    vrf DEV\nip routing vrf PROD\n!\narp aging timeout default 1500\n!\nrouter bfd\n
+    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
+    10.0.0.25\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
+    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  neighbor LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source
+    Loopback0\n   neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop
+    3\n   neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
+    0\n   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121
+    remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122
+    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n   neighbor
+    10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n
+    \  neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123 description B-SPINE3\n
+    \  neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as
+    65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n   vlan 40\n      rd
+    10.0.0.25:10040\n      route-target both 10040:10040\n      redistribute learned\n
+    \  !\n   vlan 80\n      rd 10.0.0.25:10080\n      route-target both 10080:10080\n
+    \     redistribute learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS
+    activate\n      route import match-failure action discard\n   !\n   address-family
+    ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n   !\n   vrf DEV\n      rd
+    10.0.0.25:50002\n      route-target import evpn 50002:50002\n      route-target
+    export evpn 50002:50002\n      router-id 10.0.0.25\n      redistribute connected\n
+    \  !\n   vrf PROD\n      rd 10.0.0.25:50001\n      route-target import evpn 50001:50001\n
+    \     route-target export evpn 50001:50001\n      router-id 10.0.0.25\n      redistribute
+    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nrouter isis 100\n   net 49.1111.0000.0001.0005.00\n   is-type level-2\n
+    \  router-id ipv4 10.0.0.25\n   log-adjacency-changes\n   !\n   address-family
+    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
+    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
+    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF6: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -439,36 +437,36 @@ cvp_configlets:
     10.80.80.1/24\n!\ninterface Vxlan1\n   description B-LEAF6_VTEP\n   vxlan source-interface
     Loopback1\n   vxlan udp-port 4789\n   vxlan vlan 40 vni 10040\n   vxlan vlan 80
     vni 10080\n   vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac address-table
-    aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing
-    ipv6 interfaces\nip routing vrf DEV\nip routing vrf PROD\n!\nipv6 unicast-routing\n!\narp
-    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
-    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.26\n   distance bgp 20
-    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
-    \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
-    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
-    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor 10.0.0.121
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
-    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
-    \  neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.123 remote-as
-    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
-    group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124
-    description B-SPINE4\n   !\n   vlan 40\n      rd 10.0.0.26:10040\n      route-target
-    both 10040:10040\n      redistribute learned\n   !\n   vlan 80\n      rd 10.0.0.26:10080\n
-    \     route-target both 10080:10080\n      redistribute learned\n   !\n   address-family
-    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n      route import match-failure
-    action discard\n   !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS
-    activate\n   !\n   vrf DEV\n      rd 10.0.0.26:50002\n      route-target import
-    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.26\n      redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.26:50001\n
-    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
-    \     router-id 10.0.0.26\n      redistribute connected\n!\nrouter multicast\n
-    \  ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis 100\n   net
-    49.1111.0000.0001.0006.00\n   is-type level-2\n   router-id ipv4 10.0.0.26\n   log-adjacency-changes\n
-    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\nip routing
+    vrf DEV\nip routing vrf PROD\n!\narp aging timeout default 1500\n!\nrouter bfd\n
+    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
+    10.0.0.26\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
+    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  neighbor LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source
+    Loopback0\n   neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop
+    3\n   neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
+    0\n   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121
+    remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122
+    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n   neighbor
+    10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n
+    \  neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123 description B-SPINE3\n
+    \  neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as
+    65200\n   neighbor 10.0.0.124 description B-SPINE4\n   !\n   vlan 40\n      rd
+    10.0.0.26:10040\n      route-target both 10040:10040\n      redistribute learned\n
+    \  !\n   vlan 80\n      rd 10.0.0.26:10080\n      route-target both 10080:10080\n
+    \     redistribute learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS
+    activate\n      route import match-failure action discard\n   !\n   address-family
+    ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n   !\n   vrf DEV\n      rd
+    10.0.0.26:50002\n      route-target import evpn 50002:50002\n      route-target
+    export evpn 50002:50002\n      router-id 10.0.0.26\n      redistribute connected\n
+    \  !\n   vrf PROD\n      rd 10.0.0.26:50001\n      route-target import evpn 50001:50001\n
+    \     route-target export evpn 50001:50001\n      router-id 10.0.0.26\n      redistribute
+    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nrouter isis 100\n   net 49.1111.0000.0001.0006.00\n   is-type level-2\n
+    \  router-id ipv4 10.0.0.26\n   log-adjacency-changes\n   !\n   address-family
+    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
+    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
+    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF7: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -519,57 +517,56 @@ cvp_configlets:
     udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan
     vlan 60 vni 10060\n   vxlan vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan
     vrf PROD vni 50001\n!\nmac address-table aging-time 1800\n!\nip virtual-router
-    mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip routing vrf DEV\nip
-    routing vrf PROD\n!\nipv6 unicast-routing\n!\narp aging timeout default 1500\n!\nrouter
-    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
-    \  router-id 10.0.0.27\n   distance bgp 20 200 200\n   graceful-restart restart-time
-    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source
-    Loopback0\n   neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop
-    3\n   neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
-    0\n   neighbor REMOTE-EVPN-PEERS peer group\n   neighbor REMOTE-EVPN-PEERS local-as
-    65000 no-prepend replace-as\n   neighbor REMOTE-EVPN-PEERS update-source Loopback0\n
-    \  neighbor REMOTE-EVPN-PEERS ebgp-multihop 15\n   neighbor REMOTE-EVPN-PEERS
-    send-community\n   neighbor REMOTE-EVPN-PEERS maximum-routes 0\n   neighbor REMOTE-IPV4-PEERS
-    peer group\n   neighbor REMOTE-IPV4-PEERS remote-as 65000\n   neighbor 10.0.0.121
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
-    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
-    \  neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.123 remote-as
-    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
-    group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124
-    description B-SPINE4\n   neighbor 172.16.0.1 peer group REMOTE-EVPN-PEERS\n   neighbor
-    172.16.0.1 remote-as 65000\n   neighbor 172.16.0.1 description BB1\n   neighbor
-    172.16.0.2 peer group REMOTE-EVPN-PEERS\n   neighbor 172.16.0.2 remote-as 65000\n
-    \  neighbor 172.16.0.2 description BB2\n   neighbor 172.16.2.0 peer group REMOTE-IPV4-PEERS\n
-    \  neighbor 172.16.2.4 peer group REMOTE-IPV4-PEERS\n   !\n   vlan 10\n      rd
-    10.0.0.27:10010\n      rd evpn domain remote 10.0.0.27:10010\n      route-target
-    both 10010:10010\n      route-target import export evpn domain remote 10010:10010\n
-    \     redistribute learned\n   !\n   vlan 20\n      rd 10.0.0.27:10020\n      rd
-    evpn domain remote 10.0.0.27:10020\n      route-target both 10020:10020\n      route-target
-    import export evpn domain remote 10020:10020\n      redistribute learned\n   !\n
-    \  vlan 60\n      rd 10.0.0.27:10060\n      rd evpn domain remote 10.0.0.27:10060\n
-    \     route-target both 10060:10060\n      route-target import export evpn domain
-    remote 10060:10060\n      redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.27:10070\n
-    \     rd evpn domain remote 10.0.0.27:10070\n      route-target both 10070:10070\n
-    \     route-target import export evpn domain remote 10070:10070\n      redistribute
-    learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n
-    \     neighbor REMOTE-EVPN-PEERS activate\n      neighbor REMOTE-EVPN-PEERS domain
-    remote\n      neighbor default next-hop-self received-evpn-routes route-type ip-prefix
-    inter-domain\n      route import match-failure action discard\n   !\n   address-family
-    ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n      no neighbor REMOTE-EVPN-PEERS
-    activate\n      neighbor REMOTE-IPV4-PEERS activate\n      network 10.0.0.27/32\n
-    \     network 10.0.0.28/32\n      network 10.2.2.27/32\n   !\n   vrf DEV\n      rd
-    10.0.0.27:50002\n      route-target import evpn 50002:50002\n      route-target
-    export evpn 50002:50002\n      router-id 10.0.0.27\n      redistribute connected\n
-    \  !\n   vrf PROD\n      rd 10.0.0.27:50001\n      route-target import evpn 50001:50001\n
-    \     route-target export evpn 50001:50001\n      router-id 10.0.0.27\n      redistribute
-    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
-    sfe\n!\nrouter isis 100\n   net 49.1111.0000.0001.0007.00\n   is-type level-2\n
-    \  router-id ipv4 10.0.0.27\n   log-adjacency-changes\n   !\n   address-family
-    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
-    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
-    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    mac-address 00:1c:73:00:00:01\nip routing vrf DEV\nip routing vrf PROD\n!\narp
+    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
+    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.27\n   distance bgp 20
+    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
+    \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
+    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
+    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor REMOTE-EVPN-PEERS
+    peer group\n   neighbor REMOTE-EVPN-PEERS local-as 65000 no-prepend replace-as\n
+    \  neighbor REMOTE-EVPN-PEERS update-source Loopback0\n   neighbor REMOTE-EVPN-PEERS
+    ebgp-multihop 15\n   neighbor REMOTE-EVPN-PEERS send-community\n   neighbor REMOTE-EVPN-PEERS
+    maximum-routes 0\n   neighbor REMOTE-IPV4-PEERS peer group\n   neighbor REMOTE-IPV4-PEERS
+    remote-as 65000\n   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
+    10.0.0.122 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
+    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
+    description B-SPINE3\n   neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   neighbor
+    172.16.0.1 peer group REMOTE-EVPN-PEERS\n   neighbor 172.16.0.1 remote-as 65000\n
+    \  neighbor 172.16.0.1 description BB1\n   neighbor 172.16.0.2 peer group REMOTE-EVPN-PEERS\n
+    \  neighbor 172.16.0.2 remote-as 65000\n   neighbor 172.16.0.2 description BB2\n
+    \  neighbor 172.16.2.0 peer group REMOTE-IPV4-PEERS\n   neighbor 172.16.2.4 peer
+    group REMOTE-IPV4-PEERS\n   !\n   vlan 10\n      rd 10.0.0.27:10010\n      rd
+    evpn domain remote 10.0.0.27:10010\n      route-target both 10010:10010\n      route-target
+    import export evpn domain remote 10010:10010\n      redistribute learned\n   !\n
+    \  vlan 20\n      rd 10.0.0.27:10020\n      rd evpn domain remote 10.0.0.27:10020\n
+    \     route-target both 10020:10020\n      route-target import export evpn domain
+    remote 10020:10020\n      redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.27:10060\n
+    \     rd evpn domain remote 10.0.0.27:10060\n      route-target both 10060:10060\n
+    \     route-target import export evpn domain remote 10060:10060\n      redistribute
+    learned\n   !\n   vlan 70\n      rd 10.0.0.27:10070\n      rd evpn domain remote
+    10.0.0.27:10070\n      route-target both 10070:10070\n      route-target import
+    export evpn domain remote 10070:10070\n      redistribute learned\n   !\n   address-family
+    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n      neighbor REMOTE-EVPN-PEERS
+    activate\n      neighbor REMOTE-EVPN-PEERS domain remote\n      neighbor default
+    next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n      route
+    import match-failure action discard\n   !\n   address-family ipv4\n      no neighbor
+    LOCAL-EVPN-PEERS activate\n      no neighbor REMOTE-EVPN-PEERS activate\n      neighbor
+    REMOTE-IPV4-PEERS activate\n      network 10.0.0.27/32\n      network 10.0.0.28/32\n
+    \     network 10.2.2.27/32\n   !\n   vrf DEV\n      rd 10.0.0.27:50002\n      route-target
+    import evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
+    10.0.0.27\n      redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.27:50001\n
+    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
+    \     router-id 10.0.0.27\n      redistribute connected\n!\nrouter multicast\n
+    \  ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis 100\n   net
+    49.1111.0000.0001.0007.00\n   is-type level-2\n   router-id ipv4 10.0.0.27\n   log-adjacency-changes\n
+    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-LEAF8: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -620,57 +617,56 @@ cvp_configlets:
     udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan
     vlan 60 vni 10060\n   vxlan vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan
     vrf PROD vni 50001\n!\nmac address-table aging-time 1800\n!\nip virtual-router
-    mac-address 00:1c:73:00:00:01\n!\nip routing ipv6 interfaces\nip routing vrf DEV\nip
-    routing vrf PROD\n!\nipv6 unicast-routing\n!\narp aging timeout default 1500\n!\nrouter
-    bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n
-    \  router-id 10.0.0.28\n   distance bgp 20 200 200\n   graceful-restart restart-time
-    300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
-    \  neighbor LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source
-    Loopback0\n   neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop
-    3\n   neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
-    0\n   neighbor REMOTE-EVPN-PEERS peer group\n   neighbor REMOTE-EVPN-PEERS local-as
-    65000 no-prepend replace-as\n   neighbor REMOTE-EVPN-PEERS update-source Loopback0\n
-    \  neighbor REMOTE-EVPN-PEERS ebgp-multihop 15\n   neighbor REMOTE-EVPN-PEERS
-    send-community\n   neighbor REMOTE-EVPN-PEERS maximum-routes 0\n   neighbor REMOTE-IPV4-PEERS
-    peer group\n   neighbor REMOTE-IPV4-PEERS remote-as 65000\n   neighbor 10.0.0.121
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.121 remote-as 65200\n   neighbor
-    10.0.0.121 description B-SPINE1\n   neighbor 10.0.0.122 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.122 remote-as 65200\n   neighbor 10.0.0.122 description B-SPINE2\n
-    \  neighbor 10.0.0.123 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.123 remote-as
-    65200\n   neighbor 10.0.0.123 description B-SPINE3\n   neighbor 10.0.0.124 peer
-    group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124
-    description B-SPINE4\n   neighbor 172.16.0.1 peer group REMOTE-EVPN-PEERS\n   neighbor
-    172.16.0.1 remote-as 65000\n   neighbor 172.16.0.1 description BB1\n   neighbor
-    172.16.0.2 peer group REMOTE-EVPN-PEERS\n   neighbor 172.16.0.2 remote-as 65000\n
-    \  neighbor 172.16.0.2 description BB2\n   neighbor 172.16.2.2 peer group REMOTE-IPV4-PEERS\n
-    \  neighbor 172.16.2.6 peer group REMOTE-IPV4-PEERS\n   !\n   vlan 10\n      rd
-    10.0.0.28:10010\n      rd evpn domain remote 10.0.0.28:10010\n      route-target
-    both 10010:10010\n      route-target import export evpn domain remote 10010:10010\n
-    \     redistribute learned\n   !\n   vlan 20\n      rd 10.0.0.28:10020\n      rd
-    evpn domain remote 10.0.0.28:10020\n      route-target both 10020:10020\n      route-target
-    import export evpn domain remote 10020:10020\n      redistribute learned\n   !\n
-    \  vlan 60\n      rd 10.0.0.28:10060\n      rd evpn domain remote 10.0.0.28:10060\n
-    \     route-target both 10060:10060\n      route-target import export evpn domain
-    remote 10060:10060\n      redistribute learned\n   !\n   vlan 70\n      rd 10.0.0.28:10070\n
-    \     rd evpn domain remote 10.0.0.28:10070\n      route-target both 10070:10070\n
-    \     route-target import export evpn domain remote 10070:10070\n      redistribute
-    learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n
-    \     neighbor REMOTE-EVPN-PEERS activate\n      neighbor REMOTE-EVPN-PEERS domain
-    remote\n      neighbor default next-hop-self received-evpn-routes route-type ip-prefix
-    inter-domain\n      route import match-failure action discard\n   !\n   address-family
-    ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n      no neighbor REMOTE-EVPN-PEERS
-    activate\n      neighbor REMOTE-IPV4-PEERS activate\n      network 10.0.0.27/32\n
-    \     network 10.0.0.28/32\n      network 10.2.2.28/32\n   !\n   vrf DEV\n      rd
-    10.0.0.28:50002\n      route-target import evpn 50002:50002\n      route-target
-    export evpn 50002:50002\n      router-id 10.0.0.28\n      redistribute connected\n
-    \  !\n   vrf PROD\n      rd 10.0.0.28:50001\n      route-target import evpn 50001:50001\n
-    \     route-target export evpn 50001:50001\n      router-id 10.0.0.28\n      redistribute
-    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
-    sfe\n!\nrouter isis 100\n   net 49.1111.0000.0001.0008.00\n   is-type level-2\n
-    \  router-id ipv4 10.0.0.28\n   log-adjacency-changes\n   !\n   address-family
-    ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api http-commands\n   protocol
-    https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib
-    environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    mac-address 00:1c:73:00:00:01\nip routing vrf DEV\nip routing vrf PROD\n!\narp
+    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
+    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.28\n   distance bgp 20
+    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
+    \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
+    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
+    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor REMOTE-EVPN-PEERS
+    peer group\n   neighbor REMOTE-EVPN-PEERS local-as 65000 no-prepend replace-as\n
+    \  neighbor REMOTE-EVPN-PEERS update-source Loopback0\n   neighbor REMOTE-EVPN-PEERS
+    ebgp-multihop 15\n   neighbor REMOTE-EVPN-PEERS send-community\n   neighbor REMOTE-EVPN-PEERS
+    maximum-routes 0\n   neighbor REMOTE-IPV4-PEERS peer group\n   neighbor REMOTE-IPV4-PEERS
+    remote-as 65000\n   neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.121 remote-as 65200\n   neighbor 10.0.0.121 description B-SPINE1\n   neighbor
+    10.0.0.122 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.122 remote-as 65200\n
+    \  neighbor 10.0.0.122 description B-SPINE2\n   neighbor 10.0.0.123 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.123 remote-as 65200\n   neighbor 10.0.0.123
+    description B-SPINE3\n   neighbor 10.0.0.124 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.124 remote-as 65200\n   neighbor 10.0.0.124 description B-SPINE4\n   neighbor
+    172.16.0.1 peer group REMOTE-EVPN-PEERS\n   neighbor 172.16.0.1 remote-as 65000\n
+    \  neighbor 172.16.0.1 description BB1\n   neighbor 172.16.0.2 peer group REMOTE-EVPN-PEERS\n
+    \  neighbor 172.16.0.2 remote-as 65000\n   neighbor 172.16.0.2 description BB2\n
+    \  neighbor 172.16.2.2 peer group REMOTE-IPV4-PEERS\n   neighbor 172.16.2.6 peer
+    group REMOTE-IPV4-PEERS\n   !\n   vlan 10\n      rd 10.0.0.28:10010\n      rd
+    evpn domain remote 10.0.0.28:10010\n      route-target both 10010:10010\n      route-target
+    import export evpn domain remote 10010:10010\n      redistribute learned\n   !\n
+    \  vlan 20\n      rd 10.0.0.28:10020\n      rd evpn domain remote 10.0.0.28:10020\n
+    \     route-target both 10020:10020\n      route-target import export evpn domain
+    remote 10020:10020\n      redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.28:10060\n
+    \     rd evpn domain remote 10.0.0.28:10060\n      route-target both 10060:10060\n
+    \     route-target import export evpn domain remote 10060:10060\n      redistribute
+    learned\n   !\n   vlan 70\n      rd 10.0.0.28:10070\n      rd evpn domain remote
+    10.0.0.28:10070\n      route-target both 10070:10070\n      route-target import
+    export evpn domain remote 10070:10070\n      redistribute learned\n   !\n   address-family
+    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n      neighbor REMOTE-EVPN-PEERS
+    activate\n      neighbor REMOTE-EVPN-PEERS domain remote\n      neighbor default
+    next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n      route
+    import match-failure action discard\n   !\n   address-family ipv4\n      no neighbor
+    LOCAL-EVPN-PEERS activate\n      no neighbor REMOTE-EVPN-PEERS activate\n      neighbor
+    REMOTE-IPV4-PEERS activate\n      network 10.0.0.27/32\n      network 10.0.0.28/32\n
+    \     network 10.2.2.28/32\n   !\n   vrf DEV\n      rd 10.0.0.28:50002\n      route-target
+    import evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
+    10.0.0.28\n      redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.28:50001\n
+    \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
+    \     router-id 10.0.0.28\n      redistribute connected\n!\nrouter multicast\n
+    \  ipv4\n      routing\n      software-forwarding sfe\n!\nrouter isis 100\n   net
+    49.1111.0000.0001.0008.00\n   is-type level-2\n   router-id ipv4 10.0.0.28\n   log-adjacency-changes\n
+    \  !\n   address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_B-SPINE1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -714,30 +710,29 @@ cvp_configlets:
     Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
     10.0.0.121/32\n   isis enable 100\n   isis passive\n!\ninterface Management1\n
     \  description oob_management\n   no shutdown\n   ip address 172.100.100.114/24\n!\nmac
-    address-table aging-time 1800\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\narp
-    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
-    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.121\n   distance bgp 20
-    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   bgp cluster-id 10.0.0.125\n   neighbor
-    LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source Loopback0\n
-    \  neighbor LOCAL-EVPN-PEERS route-reflector-client\n   neighbor LOCAL-EVPN-PEERS
-    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
-    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor 10.0.0.21
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.21 remote-as 65200\n   neighbor
-    10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.22 remote-as 65200\n   neighbor 10.0.0.22 description B-LEAF2\n
-    \  neighbor 10.0.0.23 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.23 remote-as
-    65200\n   neighbor 10.0.0.23 description B-LEAF3\n   neighbor 10.0.0.24 peer group
-    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.24 remote-as 65200\n   neighbor 10.0.0.24
-    description B-LEAF4\n   neighbor 10.0.0.25 peer group LOCAL-EVPN-PEERS\n   neighbor
-    10.0.0.25 remote-as 65200\n   neighbor 10.0.0.25 description B-LEAF5\n   neighbor
-    10.0.0.26 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.26 remote-as 65200\n
-    \  neighbor 10.0.0.26 description B-LEAF6\n   neighbor 10.0.0.27 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.27 remote-as 65200\n   neighbor 10.0.0.27 description B-LEAF7\n
-    \  neighbor 10.0.0.28 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.28 remote-as
-    65200\n   neighbor 10.0.0.28 description B-LEAF8\n   !\n   address-family evpn\n
-    \     neighbor LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n      no
-    neighbor LOCAL-EVPN-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n
+    address-table aging-time 1800\n!\narp aging timeout default 1500\n!\nrouter bfd\n
+    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
+    10.0.0.121\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
+    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  bgp cluster-id 10.0.0.125\n   neighbor LOCAL-EVPN-PEERS peer group\n   neighbor
+    LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS route-reflector-client\n
+    \  neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n
+    \  neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
+    0\n   neighbor 10.0.0.21 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.21 remote-as
+    65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n   neighbor 10.0.0.22
+    description B-LEAF2\n   neighbor 10.0.0.23 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.23 remote-as 65200\n   neighbor 10.0.0.23 description B-LEAF3\n   neighbor
+    10.0.0.24 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.24 remote-as 65200\n
+    \  neighbor 10.0.0.24 description B-LEAF4\n   neighbor 10.0.0.25 peer group LOCAL-EVPN-PEERS\n
+    \  neighbor 10.0.0.25 remote-as 65200\n   neighbor 10.0.0.25 description B-LEAF5\n
+    \  neighbor 10.0.0.26 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.26 remote-as
+    65200\n   neighbor 10.0.0.26 description B-LEAF6\n   neighbor 10.0.0.27 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.27 remote-as 65200\n   neighbor 10.0.0.27
+    description B-LEAF7\n   neighbor 10.0.0.28 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.28 remote-as 65200\n   neighbor 10.0.0.28 description B-LEAF8\n   !\n   address-family
+    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n
+    \     no neighbor LOCAL-EVPN-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n
     \     software-forwarding sfe\n!\nrouter isis 100\n   net 49.1111.0000.0000.0001.00\n
     \  is-type level-2\n   router-id ipv4 10.0.0.121\n   log-adjacency-changes\n   !\n
     \  address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api
@@ -786,30 +781,29 @@ cvp_configlets:
     Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
     10.0.0.122/32\n   isis enable 100\n   isis passive\n!\ninterface Management1\n
     \  description oob_management\n   no shutdown\n   ip address 172.100.100.115/24\n!\nmac
-    address-table aging-time 1800\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\narp
-    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
-    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.122\n   distance bgp 20
-    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   bgp cluster-id 10.0.0.125\n   neighbor
-    LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source Loopback0\n
-    \  neighbor LOCAL-EVPN-PEERS route-reflector-client\n   neighbor LOCAL-EVPN-PEERS
-    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
-    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor 10.0.0.21
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.21 remote-as 65200\n   neighbor
-    10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.22 remote-as 65200\n   neighbor 10.0.0.22 description B-LEAF2\n
-    \  neighbor 10.0.0.23 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.23 remote-as
-    65200\n   neighbor 10.0.0.23 description B-LEAF3\n   neighbor 10.0.0.24 peer group
-    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.24 remote-as 65200\n   neighbor 10.0.0.24
-    description B-LEAF4\n   neighbor 10.0.0.25 peer group LOCAL-EVPN-PEERS\n   neighbor
-    10.0.0.25 remote-as 65200\n   neighbor 10.0.0.25 description B-LEAF5\n   neighbor
-    10.0.0.26 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.26 remote-as 65200\n
-    \  neighbor 10.0.0.26 description B-LEAF6\n   neighbor 10.0.0.27 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.27 remote-as 65200\n   neighbor 10.0.0.27 description B-LEAF7\n
-    \  neighbor 10.0.0.28 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.28 remote-as
-    65200\n   neighbor 10.0.0.28 description B-LEAF8\n   !\n   address-family evpn\n
-    \     neighbor LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n      no
-    neighbor LOCAL-EVPN-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n
+    address-table aging-time 1800\n!\narp aging timeout default 1500\n!\nrouter bfd\n
+    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
+    10.0.0.122\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
+    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  bgp cluster-id 10.0.0.125\n   neighbor LOCAL-EVPN-PEERS peer group\n   neighbor
+    LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS route-reflector-client\n
+    \  neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n
+    \  neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
+    0\n   neighbor 10.0.0.21 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.21 remote-as
+    65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n   neighbor 10.0.0.22
+    description B-LEAF2\n   neighbor 10.0.0.23 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.23 remote-as 65200\n   neighbor 10.0.0.23 description B-LEAF3\n   neighbor
+    10.0.0.24 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.24 remote-as 65200\n
+    \  neighbor 10.0.0.24 description B-LEAF4\n   neighbor 10.0.0.25 peer group LOCAL-EVPN-PEERS\n
+    \  neighbor 10.0.0.25 remote-as 65200\n   neighbor 10.0.0.25 description B-LEAF5\n
+    \  neighbor 10.0.0.26 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.26 remote-as
+    65200\n   neighbor 10.0.0.26 description B-LEAF6\n   neighbor 10.0.0.27 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.27 remote-as 65200\n   neighbor 10.0.0.27
+    description B-LEAF7\n   neighbor 10.0.0.28 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.28 remote-as 65200\n   neighbor 10.0.0.28 description B-LEAF8\n   !\n   address-family
+    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n
+    \     no neighbor LOCAL-EVPN-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n
     \     software-forwarding sfe\n!\nrouter isis 100\n   net 49.1111.0000.0000.0002.00\n
     \  is-type level-2\n   router-id ipv4 10.0.0.122\n   log-adjacency-changes\n   !\n
     \  address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api
@@ -858,30 +852,29 @@ cvp_configlets:
     Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
     10.0.0.123/32\n   isis enable 100\n   isis passive\n!\ninterface Management1\n
     \  description oob_management\n   no shutdown\n   ip address 172.100.100.116/24\n!\nmac
-    address-table aging-time 1800\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\narp
-    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
-    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.123\n   distance bgp 20
-    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   bgp cluster-id 10.0.0.125\n   neighbor
-    LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source Loopback0\n
-    \  neighbor LOCAL-EVPN-PEERS route-reflector-client\n   neighbor LOCAL-EVPN-PEERS
-    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
-    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor 10.0.0.21
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.21 remote-as 65200\n   neighbor
-    10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.22 remote-as 65200\n   neighbor 10.0.0.22 description B-LEAF2\n
-    \  neighbor 10.0.0.23 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.23 remote-as
-    65200\n   neighbor 10.0.0.23 description B-LEAF3\n   neighbor 10.0.0.24 peer group
-    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.24 remote-as 65200\n   neighbor 10.0.0.24
-    description B-LEAF4\n   neighbor 10.0.0.25 peer group LOCAL-EVPN-PEERS\n   neighbor
-    10.0.0.25 remote-as 65200\n   neighbor 10.0.0.25 description B-LEAF5\n   neighbor
-    10.0.0.26 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.26 remote-as 65200\n
-    \  neighbor 10.0.0.26 description B-LEAF6\n   neighbor 10.0.0.27 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.27 remote-as 65200\n   neighbor 10.0.0.27 description B-LEAF7\n
-    \  neighbor 10.0.0.28 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.28 remote-as
-    65200\n   neighbor 10.0.0.28 description B-LEAF8\n   !\n   address-family evpn\n
-    \     neighbor LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n      no
-    neighbor LOCAL-EVPN-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n
+    address-table aging-time 1800\n!\narp aging timeout default 1500\n!\nrouter bfd\n
+    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
+    10.0.0.123\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
+    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  bgp cluster-id 10.0.0.125\n   neighbor LOCAL-EVPN-PEERS peer group\n   neighbor
+    LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS route-reflector-client\n
+    \  neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n
+    \  neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
+    0\n   neighbor 10.0.0.21 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.21 remote-as
+    65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n   neighbor 10.0.0.22
+    description B-LEAF2\n   neighbor 10.0.0.23 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.23 remote-as 65200\n   neighbor 10.0.0.23 description B-LEAF3\n   neighbor
+    10.0.0.24 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.24 remote-as 65200\n
+    \  neighbor 10.0.0.24 description B-LEAF4\n   neighbor 10.0.0.25 peer group LOCAL-EVPN-PEERS\n
+    \  neighbor 10.0.0.25 remote-as 65200\n   neighbor 10.0.0.25 description B-LEAF5\n
+    \  neighbor 10.0.0.26 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.26 remote-as
+    65200\n   neighbor 10.0.0.26 description B-LEAF6\n   neighbor 10.0.0.27 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.27 remote-as 65200\n   neighbor 10.0.0.27
+    description B-LEAF7\n   neighbor 10.0.0.28 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.28 remote-as 65200\n   neighbor 10.0.0.28 description B-LEAF8\n   !\n   address-family
+    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n
+    \     no neighbor LOCAL-EVPN-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n
     \     software-forwarding sfe\n!\nrouter isis 100\n   net 49.1111.0000.0000.0003.00\n
     \  is-type level-2\n   router-id ipv4 10.0.0.123\n   log-adjacency-changes\n   !\n
     \  address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api
@@ -930,30 +923,29 @@ cvp_configlets:
     Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
     10.0.0.124/32\n   isis enable 100\n   isis passive\n!\ninterface Management1\n
     \  description oob_management\n   no shutdown\n   ip address 172.100.100.117/24\n!\nmac
-    address-table aging-time 1800\n!\nip routing ipv6 interfaces\n!\nipv6 unicast-routing\n!\narp
-    aging timeout default 1500\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200
-    multiplier 3\n!\nrouter bgp 65200\n   router-id 10.0.0.124\n   distance bgp 20
-    200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   bgp cluster-id 10.0.0.125\n   neighbor
-    LOCAL-EVPN-PEERS peer group\n   neighbor LOCAL-EVPN-PEERS update-source Loopback0\n
-    \  neighbor LOCAL-EVPN-PEERS route-reflector-client\n   neighbor LOCAL-EVPN-PEERS
-    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
-    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor 10.0.0.21
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.21 remote-as 65200\n   neighbor
-    10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.22 remote-as 65200\n   neighbor 10.0.0.22 description B-LEAF2\n
-    \  neighbor 10.0.0.23 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.23 remote-as
-    65200\n   neighbor 10.0.0.23 description B-LEAF3\n   neighbor 10.0.0.24 peer group
-    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.24 remote-as 65200\n   neighbor 10.0.0.24
-    description B-LEAF4\n   neighbor 10.0.0.25 peer group LOCAL-EVPN-PEERS\n   neighbor
-    10.0.0.25 remote-as 65200\n   neighbor 10.0.0.25 description B-LEAF5\n   neighbor
-    10.0.0.26 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.26 remote-as 65200\n
-    \  neighbor 10.0.0.26 description B-LEAF6\n   neighbor 10.0.0.27 peer group LOCAL-EVPN-PEERS\n
-    \  neighbor 10.0.0.27 remote-as 65200\n   neighbor 10.0.0.27 description B-LEAF7\n
-    \  neighbor 10.0.0.28 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.28 remote-as
-    65200\n   neighbor 10.0.0.28 description B-LEAF8\n   !\n   address-family evpn\n
-    \     neighbor LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n      no
-    neighbor LOCAL-EVPN-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n
+    address-table aging-time 1800\n!\narp aging timeout default 1500\n!\nrouter bfd\n
+    \  multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id
+    10.0.0.124\n   distance bgp 20 200 200\n   graceful-restart restart-time 300\n
+    \  graceful-restart\n   maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n
+    \  bgp cluster-id 10.0.0.125\n   neighbor LOCAL-EVPN-PEERS peer group\n   neighbor
+    LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS route-reflector-client\n
+    \  neighbor LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n
+    \  neighbor LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes
+    0\n   neighbor 10.0.0.21 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.21 remote-as
+    65200\n   neighbor 10.0.0.21 description B-LEAF1\n   neighbor 10.0.0.22 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.22 remote-as 65200\n   neighbor 10.0.0.22
+    description B-LEAF2\n   neighbor 10.0.0.23 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.23 remote-as 65200\n   neighbor 10.0.0.23 description B-LEAF3\n   neighbor
+    10.0.0.24 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.24 remote-as 65200\n
+    \  neighbor 10.0.0.24 description B-LEAF4\n   neighbor 10.0.0.25 peer group LOCAL-EVPN-PEERS\n
+    \  neighbor 10.0.0.25 remote-as 65200\n   neighbor 10.0.0.25 description B-LEAF5\n
+    \  neighbor 10.0.0.26 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.26 remote-as
+    65200\n   neighbor 10.0.0.26 description B-LEAF6\n   neighbor 10.0.0.27 peer group
+    LOCAL-EVPN-PEERS\n   neighbor 10.0.0.27 remote-as 65200\n   neighbor 10.0.0.27
+    description B-LEAF7\n   neighbor 10.0.0.28 peer group LOCAL-EVPN-PEERS\n   neighbor
+    10.0.0.28 remote-as 65200\n   neighbor 10.0.0.28 description B-LEAF8\n   !\n   address-family
+    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n
+    \     no neighbor LOCAL-EVPN-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n
     \     software-forwarding sfe\n!\nrouter isis 100\n   net 49.1111.0000.0000.0004.00\n
     \  is-type level-2\n   router-id ipv4 10.0.0.124\n   log-adjacency-changes\n   !\n
     \  address-family ipv4 unicast\n      maximum-paths 4\n   !\n!\nmanagement api

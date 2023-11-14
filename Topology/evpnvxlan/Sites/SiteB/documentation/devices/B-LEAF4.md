@@ -620,15 +620,13 @@ ip virtual-router mac-address 00:1c:73:00:00:01
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | True (ipv6 interfaces) |
+| default | False |
 | DEV | True |
 | PROD | True |
 
 #### IP Routing Device Configuration
 
 ```eos
-!
-ip routing ipv6 interfaces
 ip routing vrf DEV
 ip routing vrf PROD
 ```
@@ -639,17 +637,10 @@ ip routing vrf PROD
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | True |
+| default | False |
 | default | false |
 | DEV | false |
 | PROD | false |
-
-#### IPv6 Routing Device Configuration
-
-```eos
-!
-ipv6 unicast-routing
-```
 
 ### ARP
 

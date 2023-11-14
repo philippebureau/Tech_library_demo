@@ -117,6 +117,8 @@ local_users:
 - name: service
   shell: /bin/bash
   sha512_password: $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1
+ip_routing_ipv6_interfaces: false
+ipv6_unicast_routing: false
 router_multicast:
   ipv4:
     software_forwarding: sfe
