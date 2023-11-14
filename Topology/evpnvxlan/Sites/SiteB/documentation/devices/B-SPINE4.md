@@ -533,6 +533,10 @@ router isis 100
 | ------ | --------- |
 | 65200 | 10.0.0.124 |
 
+| BGP AS | Cluster ID |
+| ------ | --------- |
+| 65200 | 10.0.0.125 |
+
 | BGP Tuning |
 | ---------- |
 | graceful-restart restart-time 300 |
@@ -543,18 +547,12 @@ router isis 100
 
 #### Router BGP Peer Groups
 
-##### EVPN-OVERLAY-PEERS
-
-| Settings | Value |
-| -------- | ----- |
-| Route Reflector Client | Yes |
-
 ##### LOCAL-EVPN-PEERS
 
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
-| Next-hop unchanged | True |
+| Route Reflector Client | Yes |
 | Source | Loopback0 |
 | BFD | True |
 | Ebgp multihop | 3 |
@@ -565,14 +563,14 @@ router isis 100
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- |
-| 10.0.0.21 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 10.0.0.22 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 10.0.0.23 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 10.0.0.24 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 10.0.0.25 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 10.0.0.26 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 10.0.0.27 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 10.0.0.28 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
+| 10.0.0.21 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 10.0.0.22 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 10.0.0.23 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 10.0.0.24 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 10.0.0.25 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 10.0.0.26 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 10.0.0.27 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 10.0.0.28 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
 
 #### Router BGP EVPN Address Family
 
@@ -593,11 +591,10 @@ router bgp 65200
    graceful-restart
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
-   neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS route-reflector-client
+   bgp cluster-id 10.0.0.125
    neighbor LOCAL-EVPN-PEERS peer group
-   neighbor LOCAL-EVPN-PEERS next-hop-unchanged
    neighbor LOCAL-EVPN-PEERS update-source Loopback0
+   neighbor LOCAL-EVPN-PEERS route-reflector-client
    neighbor LOCAL-EVPN-PEERS bfd
    neighbor LOCAL-EVPN-PEERS ebgp-multihop 3
    neighbor LOCAL-EVPN-PEERS send-community

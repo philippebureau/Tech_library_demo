@@ -23,10 +23,8 @@ router_bgp:
     send_community: all
     maximum_routes: 0
     ebgp_multihop: 3
-    next_hop_unchanged: true
-  - name: EVPN-OVERLAY-PEERS
-    route_reflector_client: true
     next_hop_unchanged: false
+    route_reflector_client: true
   address_family_ipv4:
     peer_groups:
     - name: LOCAL-EVPN-PEERS
@@ -68,6 +66,7 @@ router_bgp:
     peer_group: LOCAL-EVPN-PEERS
     description: B-LEAF8
     remote_as: '65200'
+  bgp_cluster_id: 10.0.0.125
 service_routing_protocols_model: multi-agent
 ipv6_unicast_routing: true
 ip_routing_ipv6_interfaces: true

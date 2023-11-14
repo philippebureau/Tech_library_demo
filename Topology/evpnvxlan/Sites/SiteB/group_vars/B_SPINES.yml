@@ -14,8 +14,9 @@ spine:
       ipv6_enable: false
     structured_config:
       router_bgp:
+        bgp_cluster_id: 10.0.0.125
         peer_groups:
-          - name: EVPN-OVERLAY-PEERS
+          - name: LOCAL-EVPN-PEERS
             route_reflector_client: true
             next_hop_unchanged: false
   nodes:
