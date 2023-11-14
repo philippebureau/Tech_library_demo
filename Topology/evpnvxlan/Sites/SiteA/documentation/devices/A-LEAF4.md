@@ -49,6 +49,7 @@
 - [Filters](#filters)
   - [Prefix-lists](#prefix-lists)
   - [Route-maps](#route-maps)
+  - [IP Extended Community RegExp Lists](#ip-extended-community-regexp-lists)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -579,7 +580,8 @@ interface Vlan4094
 
 | Setting | Value |
 | ------- | ----- |
-| Source Interface | Loopback1 |
+| Source Interface | Loopback0 |
+| MLAG Source Interface | Loopback1 |
 | UDP port | 4789 |
 | EVPN MLAG Shared Router MAC | mlag-system-id |
 
@@ -604,7 +606,7 @@ interface Vlan4094
 !
 interface Vxlan1
    description A-LEAF4_VTEP
-   vxlan source-interface Loopback1
+   vxlan source-interface Loopback0
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
    vxlan vlan 10 vni 10010
@@ -612,6 +614,7 @@ interface Vxlan1
    vxlan vlan 50 vni 10050
    vxlan vrf DEV vni 50002
    vxlan vrf PROD vni 50001
+   vxlan mlag source-interface Loopback1
 ```
 
 ## Routing
@@ -737,6 +740,8 @@ Global ARP timeout: 1500
 
 #### Router BGP EVPN Address Family
 
+- VPN import pruning is __enabled__
+
 ##### EVPN Peer Groups
 
 | Peer Group | Activate | Encapsulation |
@@ -784,7 +789,7 @@ router bgp 65134
    neighbor MLAG-IPV4-PEER description A-LEAF3
    neighbor MLAG-IPV4-PEER send-community
    neighbor MLAG-IPV4-PEER maximum-routes 12000
-   neighbor MLAG-IPV4-PEER route-map RM-MLAG-PEER-IN in
+   neighbor MLAG-IPV4-PEER route-map RM-MLAG-PEER-OUT out
    neighbor 10.0.0.111 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.111 remote-as 65100
    neighbor 10.0.0.111 description A-SPINE1
@@ -830,6 +835,7 @@ router bgp 65134
    !
    address-family evpn
       neighbor LOCAL-EVPN-PEERS activate
+      route import match-failure action discard
    !
    address-family ipv4
       no neighbor LOCAL-EVPN-PEERS activate
@@ -918,11 +924,12 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 | -------- | ---- | ----- | --- | ------------- | -------- |
 | 10 | permit | ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY | - | - | - |
 
-##### RM-MLAG-PEER-IN
+##### RM-MLAG-PEER-OUT
 
 | Sequence | Type | Match | Set | Sub-Route-Map | Continue |
 | -------- | ---- | ----- | --- | ------------- | -------- |
-| 10 | permit | - | origin incomplete | - | - |
+| 10 | deny | extcommunity evpn-imported | - | - | - |
+| 20 | permit | - | origin incomplete | - | - |
 
 #### Route-maps Device Configuration
 
@@ -931,9 +938,26 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 !
-route-map RM-MLAG-PEER-IN permit 10
-   description Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
+route-map RM-MLAG-PEER-OUT deny 10
+   match extcommunity evpn-imported
+!
+route-map RM-MLAG-PEER-OUT permit 20
    set origin incomplete
+```
+
+### IP Extended Community RegExp Lists
+
+#### IP Extended Community RegExp Lists Summary
+
+| List Name | Type | Regular Expression |
+| --------- | ---- | ------------------ |
+| evpn-imported | permit | RT.* |
+
+#### IP Extended Community RegExp Lists configuration
+
+```eos
+!
+ip extcommunity-list regexp evpn-imported permit RT.*
 ```
 
 ## VRF Instances

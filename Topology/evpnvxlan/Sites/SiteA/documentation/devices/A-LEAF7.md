@@ -49,6 +49,7 @@
 - [Filters](#filters)
   - [Prefix-lists](#prefix-lists)
   - [Route-maps](#route-maps)
+  - [IP Extended Community RegExp Lists](#ip-extended-community-regexp-lists)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -750,6 +751,8 @@ Global ARP timeout: 1500
 
 #### Router BGP EVPN Address Family
 
+- VPN import pruning is __enabled__
+
 ##### EVPN Peer Groups
 
 | Peer Group | Activate | Encapsulation |
@@ -806,7 +809,6 @@ router bgp 65178
    neighbor MLAG-IPV4-PEER description A-LEAF8
    neighbor MLAG-IPV4-PEER send-community
    neighbor MLAG-IPV4-PEER maximum-routes 12000
-   neighbor MLAG-IPV4-PEER route-map RM-MLAG-PEER-IN in
    neighbor REMOTE-EVPN-PEERS peer group
    neighbor REMOTE-EVPN-PEERS local-as 65000 no-prepend replace-as
    neighbor REMOTE-EVPN-PEERS update-source Loopback0
@@ -877,6 +879,7 @@ router bgp 65178
       neighbor REMOTE-EVPN-PEERS activate
       neighbor REMOTE-EVPN-PEERS domain remote
       neighbor default next-hop-self received-evpn-routes route-type ip-prefix inter-domain
+      route import match-failure action discard
    !
    address-family ipv4
       no neighbor LOCAL-EVPN-PEERS activate
@@ -967,11 +970,12 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 | -------- | ---- | ----- | --- | ------------- | -------- |
 | 10 | permit | ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY | - | - | - |
 
-##### RM-MLAG-PEER-IN
+##### RM-MLAG-PEER-OUT
 
 | Sequence | Type | Match | Set | Sub-Route-Map | Continue |
 | -------- | ---- | ----- | --- | ------------- | -------- |
-| 10 | permit | - | origin incomplete | - | - |
+| 10 | deny | extcommunity evpn-imported | - | - | - |
+| 20 | permit | - | origin incomplete | - | - |
 
 #### Route-maps Device Configuration
 
@@ -980,9 +984,26 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 !
-route-map RM-MLAG-PEER-IN permit 10
-   description Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
+route-map RM-MLAG-PEER-OUT deny 10
+   match extcommunity evpn-imported
+!
+route-map RM-MLAG-PEER-OUT permit 20
    set origin incomplete
+```
+
+### IP Extended Community RegExp Lists
+
+#### IP Extended Community RegExp Lists Summary
+
+| List Name | Type | Regular Expression |
+| --------- | ---- | ------------------ |
+| evpn-imported | permit | RT.* |
+
+#### IP Extended Community RegExp Lists configuration
+
+```eos
+!
+ip extcommunity-list regexp evpn-imported permit RT.*
 ```
 
 ## VRF Instances

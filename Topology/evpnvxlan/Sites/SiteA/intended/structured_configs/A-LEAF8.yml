@@ -23,7 +23,6 @@ router_bgp:
     description: A-LEAF7
     maximum_routes: 12000
     send_community: all
-    route_map_in: RM-MLAG-PEER-IN
   - name: LOCAL-IPV4-PEERS
     type: ipv4
     maximum_routes: 12000
@@ -119,6 +118,8 @@ router_bgp:
     - name: REMOTE-EVPN-PEERS
       domain_remote: true
       activate: true
+    route:
+      import_match_failure_action: discard
   vrfs:
   - name: DEV
     router_id: 10.0.0.18
@@ -415,20 +416,6 @@ mlag_configuration:
     peer_ip: 172.100.100.111
     vrf: default
   dual_primary_detection_delay: 5
-route_maps:
-- name: RM-MLAG-PEER-IN
-  sequence_numbers:
-  - sequence: 10
-    type: permit
-    set:
-    - origin incomplete
-    description: Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
-- name: RM-CONN-2-BGP
-  sequence_numbers:
-  - sequence: 10
-    type: permit
-    match:
-    - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering
@@ -445,6 +432,23 @@ prefix_lists:
     action: permit 10.0.0.0/24 eq 32
   - sequence: 20
     action: permit 10.1.1.0/24 eq 32
+route_maps:
+- name: RM-CONN-2-BGP
+  sequence_numbers:
+  - sequence: 10
+    type: permit
+    match:
+    - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+- name: RM-MLAG-PEER-OUT
+  sequence_numbers:
+  - sequence: 10
+    type: deny
+    match:
+    - extcommunity evpn-imported
+  - sequence: 20
+    type: permit
+    set:
+    - origin incomplete
 router_bfd:
   multihop:
     interval: 1200
@@ -472,6 +476,11 @@ vxlan_interface:
         vni: 50002
       - name: PROD
         vni: 50001
+ip_extcommunity_lists_regexp:
+- name: evpn-imported
+  entries:
+  - type: permit
+    regexp: RT.*
 daemon_terminattr:
   cvaddrs:
   - 172.100.100.5:9910

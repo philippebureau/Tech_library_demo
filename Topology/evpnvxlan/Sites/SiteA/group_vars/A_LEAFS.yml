@@ -25,14 +25,45 @@ l3leaf:
     mlag_peer_l3_ipv4_pool: 192.0.0.0/31
     mlag_peer_ipv4_pool: 169.254.0.0/31
     mlag_port_channel_id: 1000
+    mlag_ibgp_origin_incomplete: false
     virtual_router_mac_address: 00:1c:73:00:00:01
     spanning_tree_mode: mstp
     spanning_tree_priority: 0
+    structured_config:
+      ip_extcommunity_lists_regexp:
+        - name: evpn-imported
+          entries:
+            - type: permit
+              regexp: RT.*
+      route_maps:
+        - name: RM-MLAG-PEER-OUT
+          sequence_numbers:
+            - sequence: 10
+              type: deny
+              match:
+                - "extcommunity evpn-imported"
+            - sequence: 20
+              type: permit
+              set:
+                - "origin incomplete"
+      router_bgp:
+        peer_groups:
+          - name: MLAG-IPV4-PEER
+            route_map_out: RM-MLAG-PEER-OUT
+        address_family_evpn:
+          route:
+            import_match_failure_action: discard
   node_groups:
     - group: A-LEAF12
       bgp_as: 65112
       filter:
         tags: [ blue, orange ]
+      structured_config:
+        vxlan_interface:
+          Vxlan1:
+            vxlan:
+              source_interface: Loopback0
+              mlag_source_interface: Loopback1
       nodes:
         - name: A-LEAF1
           id: 1
@@ -54,6 +85,12 @@ l3leaf:
       bgp_as: 65134
       filter:
         tags: [ blue, orange, yellow ]
+      structured_config:
+        vxlan_interface:
+          Vxlan1:
+            vxlan:
+              source_interface: Loopback0
+              mlag_source_interface: Loopback1
       nodes:
         - name: A-LEAF3
           id: 3
@@ -75,6 +112,12 @@ l3leaf:
       bgp_as: 65156
       filter:
         tags: [ brown ]
+      structured_config:
+        vxlan_interface:
+          Vxlan1:
+            vxlan:
+              source_interface: Loopback0
+              mlag_source_interface: Loopback1
       nodes:
         - name: A-LEAF5
           id: 5
@@ -94,6 +137,7 @@ l3leaf:
             - Ethernet6
     - group: A-LEAF78
       bgp_as: 65178
+      # vtep_loopback: Loopback1
       filter:
         tags: [ blue, yellow, brown ]
       evpn_gateway:
