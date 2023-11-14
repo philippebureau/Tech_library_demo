@@ -267,7 +267,6 @@ STP mode: **mstp**
 #### Global Spanning-Tree Settings
 
 - Spanning Tree disabled for VLANs: **4093-4094**
-- Global BPDU Guard for Edge ports is enabled.
 
 ### Spanning Tree Device Configuration
 
@@ -275,7 +274,6 @@ STP mode: **mstp**
 !
 spanning-tree mode mstp
 no spanning-tree vlan-id 4093-4094
-spanning-tree edge-port bpduguard default
 spanning-tree mst 0 priority 0
 ```
 

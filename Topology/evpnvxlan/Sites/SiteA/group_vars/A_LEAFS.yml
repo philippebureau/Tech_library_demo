@@ -28,10 +28,6 @@ l3leaf:
     virtual_router_mac_address: 00:1c:73:00:00:01
     spanning_tree_mode: mstp
     spanning_tree_priority: 0
-    structured_config:
-      spanning_tree:
-        edge_port:
-          bpduguard_default: true
   node_groups:
     - group: A-LEAF12
       bgp_as: 65112
@@ -155,7 +151,3 @@ l3leaf:
                   peer_group: REMOTE-IPV4-PEERS
                 - ip_address: 172.16.1.6
                   peer_group: REMOTE-IPV4-PEERS
-
-spanning_tree:
-  edge_port:
-    bpduguard_default: true

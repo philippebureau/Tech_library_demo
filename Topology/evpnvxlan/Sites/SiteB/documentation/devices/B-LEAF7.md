@@ -252,16 +252,11 @@ STP mode: **mstp**
 | -------- | -------- |
 | 0 | 0 |
 
-#### Global Spanning-Tree Settings
-
-- Global BPDU Guard for Edge ports is enabled.
-
 ### Spanning Tree Device Configuration
 
 ```eos
 !
 spanning-tree mode mstp
-spanning-tree edge-port bpduguard default
 spanning-tree mst 0 priority 0
 ```
 
