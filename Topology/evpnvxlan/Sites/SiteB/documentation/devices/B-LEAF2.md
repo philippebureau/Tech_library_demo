@@ -616,12 +616,14 @@ ip virtual-router mac-address 00:1c:73:00:00:01
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | False |
+| default | True |
 | PROD | True |
 
 #### IP Routing Device Configuration
 
 ```eos
+!
+ip routing
 ip routing vrf PROD
 ```
 

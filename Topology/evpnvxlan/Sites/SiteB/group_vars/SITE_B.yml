@@ -8,8 +8,8 @@ underlay_routing_protocol: isis
 underlay_isis_instance_name: "100"
 isis_default_metric: 10
 isis_area_id: "49.1111"
-
 underlay_rfc5549: true
+ip_routing: true
 custom_structured_configuration_ip_routing_ipv6_interfaces: false
 custom_structured_configuration_ipv6_unicast_routing: false
 
