@@ -23,6 +23,9 @@ router_bgp:
     send_community: all
     maximum_routes: 0
     ebgp_multihop: 3
+    route_reflector_client: true
+    route_map_in: RM-AS65200-EVPN-IN
+    route_map_out: RM-AS65200-EVPN-OUT
   - name: REMOTE-EVPN-PEERS
     type: evpn
     update_source: Loopback0
@@ -31,8 +34,12 @@ router_bgp:
     maximum_routes: 0
     ebgp_multihop: 15
     local_as: '65000'
+    route_reflector_client: true
+    route_map_in: RM-AS65000-EVPN-IN
+    route_map_out: RM-AS65000-EVPN-OUT
   - name: REMOTE-IPV4-PEERS
     remote_as: '65000'
+    route_map_out: RM-AS65000-IPV4-OUT
   address_family_ipv4:
     peer_groups:
     - name: LOCAL-EVPN-PEERS
@@ -416,6 +423,67 @@ vxlan_interface:
         vni: 50002
       - name: PROD
         vni: 50001
+ip_community_lists:
+- name: CL-LOCAL-DOMAIN-ORIGINATED
+  entries:
+  - action: permit
+    communities:
+    - 65200:65200
+- name: CL-REMOTE-DOMAIN-ORIGINATED
+  entries:
+  - action: permit
+    communities:
+    - 65000:65000
+route_maps:
+- name: RM-AS65000-EVPN-IN
+  sequence_numbers:
+  - sequence: 10
+    type: permit
+    set:
+    - community 65000:65000 additive
+- name: RM-AS65000-EVPN-OUT
+  sequence_numbers:
+  - sequence: 5
+    type: deny
+    match:
+    - community CL-REMOTE-DOMAIN-ORIGINATED
+  - sequence: 10
+    type: permit
+- name: RM-AS65000-IPV4-OUT
+  sequence_numbers:
+  - sequence: 10
+    type: permit
+    match:
+    - ip address prefix-list PL-GATEWAY-LOOP
+- name: RM-AS65200-EVPN-IN
+  sequence_numbers:
+  - sequence: 10
+    type: permit
+    match:
+    - community CL-REMOTE-DOMAIN-ORIGINATED
+    set:
+    - local-preference 0
+  - sequence: 20
+    type: permit
+    set:
+    - community 65200:65200 additive
+- name: RM-AS65200-EVPN-OUT
+  sequence_numbers:
+  - sequence: 5
+    type: deny
+    match:
+    - community CL-LOCAL-DOMAIN-ORIGINATED
+  - sequence: 10
+    type: permit
+prefix_lists:
+- name: PL-GATEWAY-LOOP
+  sequence_numbers:
+  - sequence: 10
+    action: permit 10.2.2.28/32
+  - sequence: 20
+    action: permit 10.0.0.27/32
+  - sequence: 30
+    action: permit 10.0.0.28/32
 daemon_terminattr:
   cvaddrs:
   - 172.100.100.5:9910

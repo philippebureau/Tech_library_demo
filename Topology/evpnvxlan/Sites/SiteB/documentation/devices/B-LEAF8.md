@@ -46,6 +46,10 @@
   - [IP IGMP Snooping](#ip-igmp-snooping)
   - [Router Multicast](#router-multicast)
   - [PIM Sparse Mode](#pim-sparse-mode)
+- [Filters](#filters)
+  - [IP Community-lists](#ip-community-lists)
+  - [Prefix-lists](#prefix-lists)
+  - [Route-maps](#route-maps)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -689,6 +693,7 @@ router isis 100
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
+| Route Reflector Client | Yes |
 | Source | Loopback0 |
 | BFD | True |
 | Ebgp multihop | 3 |
@@ -701,6 +706,7 @@ router isis 100
 | -------- | ----- |
 | Address Family | evpn |
 | Local AS | 65000 |
+| Route Reflector Client | Yes |
 | Source | Loopback0 |
 | Ebgp multihop | 15 |
 | Send community | all |
@@ -716,12 +722,12 @@ router isis 100
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- |
-| 10.0.0.121 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 10.0.0.122 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 10.0.0.123 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 10.0.0.124 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 172.16.0.1 | 65000 | default | - | Inherited from peer group REMOTE-EVPN-PEERS | Inherited from peer group REMOTE-EVPN-PEERS | - | - | - | - | - |
-| 172.16.0.2 | 65000 | default | - | Inherited from peer group REMOTE-EVPN-PEERS | Inherited from peer group REMOTE-EVPN-PEERS | - | - | - | - | - |
+| 10.0.0.121 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 10.0.0.122 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 10.0.0.123 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 10.0.0.124 | 65200 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - |
+| 172.16.0.1 | 65000 | default | - | Inherited from peer group REMOTE-EVPN-PEERS | Inherited from peer group REMOTE-EVPN-PEERS | - | - | - | Inherited from peer group REMOTE-EVPN-PEERS | - |
+| 172.16.0.2 | 65000 | default | - | Inherited from peer group REMOTE-EVPN-PEERS | Inherited from peer group REMOTE-EVPN-PEERS | - | - | - | Inherited from peer group REMOTE-EVPN-PEERS | - |
 | 172.16.2.2 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | - | - | - | - |
 | 172.16.2.6 | Inherited from peer group REMOTE-IPV4-PEERS | default | - | - | - | - | - | - | - | - |
 
@@ -773,18 +779,25 @@ router bgp 65200
    no bgp default ipv4-unicast
    neighbor LOCAL-EVPN-PEERS peer group
    neighbor LOCAL-EVPN-PEERS update-source Loopback0
+   neighbor LOCAL-EVPN-PEERS route-reflector-client
    neighbor LOCAL-EVPN-PEERS bfd
    neighbor LOCAL-EVPN-PEERS ebgp-multihop 3
    neighbor LOCAL-EVPN-PEERS send-community
    neighbor LOCAL-EVPN-PEERS maximum-routes 0
+   neighbor LOCAL-EVPN-PEERS route-map RM-AS65200-EVPN-IN in
+   neighbor LOCAL-EVPN-PEERS route-map RM-AS65200-EVPN-OUT out
    neighbor REMOTE-EVPN-PEERS peer group
    neighbor REMOTE-EVPN-PEERS local-as 65000 no-prepend replace-as
    neighbor REMOTE-EVPN-PEERS update-source Loopback0
+   neighbor REMOTE-EVPN-PEERS route-reflector-client
    neighbor REMOTE-EVPN-PEERS ebgp-multihop 15
    neighbor REMOTE-EVPN-PEERS send-community
    neighbor REMOTE-EVPN-PEERS maximum-routes 0
+   neighbor REMOTE-EVPN-PEERS route-map RM-AS65000-EVPN-IN in
+   neighbor REMOTE-EVPN-PEERS route-map RM-AS65000-EVPN-OUT out
    neighbor REMOTE-IPV4-PEERS peer group
    neighbor REMOTE-IPV4-PEERS remote-as 65000
+   neighbor REMOTE-IPV4-PEERS route-map RM-AS65000-IPV4-OUT out
    neighbor 10.0.0.121 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.121 remote-as 65200
    neighbor 10.0.0.121 description B-SPINE1
@@ -925,6 +938,112 @@ router multicast
 | Ethernet2 | - | IPv4 | - | - |
 | Ethernet3 | - | IPv4 | - | - |
 | Ethernet4 | - | IPv4 | - | - |
+
+## Filters
+
+### IP Community-lists
+
+#### IP Community-lists Summary
+
+| Name | Action | Communities / Regexp |
+| ---- | ------ | -------------------- |
+| CL-LOCAL-DOMAIN-ORIGINATED | permit | 65200:65200 |
+| CL-REMOTE-DOMAIN-ORIGINATED | permit | 65000:65000 |
+
+#### IP Community-lists Device Configuration
+
+```eos
+!
+ip community-list CL-LOCAL-DOMAIN-ORIGINATED permit 65200:65200
+ip community-list CL-REMOTE-DOMAIN-ORIGINATED permit 65000:65000
+```
+
+### Prefix-lists
+
+#### Prefix-lists Summary
+
+##### PL-GATEWAY-LOOP
+
+| Sequence | Action |
+| -------- | ------ |
+| 10 | permit 10.2.2.28/32 |
+| 20 | permit 10.0.0.27/32 |
+| 30 | permit 10.0.0.28/32 |
+
+#### Prefix-lists Device Configuration
+
+```eos
+!
+ip prefix-list PL-GATEWAY-LOOP
+   seq 10 permit 10.2.2.28/32
+   seq 20 permit 10.0.0.27/32
+   seq 30 permit 10.0.0.28/32
+```
+
+### Route-maps
+
+#### Route-maps Summary
+
+##### RM-AS65000-EVPN-IN
+
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 10 | permit | - | community 65000:65000 additive | - | - |
+
+##### RM-AS65000-EVPN-OUT
+
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 5 | deny | community CL-REMOTE-DOMAIN-ORIGINATED | - | - | - |
+| 10 | permit | - | - | - | - |
+
+##### RM-AS65000-IPV4-OUT
+
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 10 | permit | ip address prefix-list PL-GATEWAY-LOOP | - | - | - |
+
+##### RM-AS65200-EVPN-IN
+
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 10 | permit | community CL-REMOTE-DOMAIN-ORIGINATED | local-preference 0 | - | - |
+| 20 | permit | - | community 65200:65200 additive | - | - |
+
+##### RM-AS65200-EVPN-OUT
+
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 5 | deny | community CL-LOCAL-DOMAIN-ORIGINATED | - | - | - |
+| 10 | permit | - | - | - | - |
+
+#### Route-maps Device Configuration
+
+```eos
+!
+route-map RM-AS65000-EVPN-IN permit 10
+   set community 65000:65000 additive
+!
+route-map RM-AS65000-EVPN-OUT deny 5
+   match community CL-REMOTE-DOMAIN-ORIGINATED
+!
+route-map RM-AS65000-EVPN-OUT permit 10
+!
+route-map RM-AS65000-IPV4-OUT permit 10
+   match ip address prefix-list PL-GATEWAY-LOOP
+!
+route-map RM-AS65200-EVPN-IN permit 10
+   match community CL-REMOTE-DOMAIN-ORIGINATED
+   set local-preference 0
+!
+route-map RM-AS65200-EVPN-IN permit 20
+   set community 65200:65200 additive
+!
+route-map RM-AS65200-EVPN-OUT deny 5
+   match community CL-LOCAL-DOMAIN-ORIGINATED
+!
+route-map RM-AS65200-EVPN-OUT permit 10
+```
 
 ## VRF Instances
 
