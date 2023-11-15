@@ -12,6 +12,9 @@
 - [Authentication](#authentication)
   - [Local Users](#local-users)
   - [AAA Authorization](#aaa-authorization)
+- [DHCP Relay](#dhcp-relay)
+  - [DHCP Relay Summary](#dhcp-relay-summary)
+  - [DHCP Relay Configuration](#dhcp-relay-configuration)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
 - [MLAG](#mlag)
@@ -49,6 +52,7 @@
   - [IP IGMP Snooping](#ip-igmp-snooping)
 - [Filters](#filters)
   - [Route-maps](#route-maps)
+  - [IP Extended Community RegExp Lists](#ip-extended-community-regexp-lists)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -206,6 +210,20 @@ Authorization for configuration commands is disabled.
 ```eos
 aaa authorization exec default local
 !
+```
+
+## DHCP Relay
+
+### DHCP Relay Summary
+
+- DHCP Relay is disabled for tunnelled requests
+
+### DHCP Relay Configuration
+
+```eos
+!
+dhcp relay
+   tunnel requests disabled
 ```
 
 ## Monitoring
@@ -772,6 +790,8 @@ router ospf 100
 
 #### Router BGP EVPN Address Family
 
+- VPN import pruning is __enabled__
+
 ##### EVPN Peer Groups
 
 | Peer Group | Activate | Encapsulation |
@@ -826,7 +846,7 @@ router bgp 65378
    neighbor MLAG-IPV4-PEER description C-LEAF8
    neighbor MLAG-IPV4-PEER send-community
    neighbor MLAG-IPV4-PEER maximum-routes 12000
-   neighbor MLAG-IPV4-PEER route-map RM-MLAG-PEER-IN in
+   neighbor MLAG-IPV4-PEER route-map RM-MLAG-PEER-OUT out
    neighbor REMOTE-EVPN-PEERS peer group
    neighbor REMOTE-EVPN-PEERS local-as 65000 no-prepend replace-as
    neighbor REMOTE-EVPN-PEERS update-source Loopback0
@@ -883,6 +903,7 @@ router bgp 65378
       neighbor REMOTE-EVPN-PEERS activate
       neighbor REMOTE-EVPN-PEERS domain remote
       neighbor default next-hop-self received-evpn-routes route-type ip-prefix inter-domain
+      route import match-failure action discard
    !
    address-family ipv4
       no neighbor LOCAL-EVPN-PEERS activate
@@ -949,19 +970,37 @@ router bfd
 
 #### Route-maps Summary
 
-##### RM-MLAG-PEER-IN
+##### RM-MLAG-PEER-OUT
 
 | Sequence | Type | Match | Set | Sub-Route-Map | Continue |
 | -------- | ---- | ----- | --- | ------------- | -------- |
-| 10 | permit | - | origin incomplete | - | - |
+| 10 | deny | extcommunity evpn-imported | - | - | - |
+| 20 | permit | - | origin incomplete | - | - |
 
 #### Route-maps Device Configuration
 
 ```eos
 !
-route-map RM-MLAG-PEER-IN permit 10
-   description Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
+route-map RM-MLAG-PEER-OUT deny 10
+   match extcommunity evpn-imported
+!
+route-map RM-MLAG-PEER-OUT permit 20
    set origin incomplete
+```
+
+### IP Extended Community RegExp Lists
+
+#### IP Extended Community RegExp Lists Summary
+
+| List Name | Type | Regular Expression |
+| --------- | ---- | ------------------ |
+| evpn-imported | permit | RT.* |
+
+#### IP Extended Community RegExp Lists configuration
+
+```eos
+!
+ip extcommunity-list regexp evpn-imported permit RT.*
 ```
 
 ## VRF Instances

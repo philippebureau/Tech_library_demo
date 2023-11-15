@@ -349,6 +349,8 @@ port_channel_interfaces:
     identifier: 0000:0000:0023:0024:0008
     route_target: 00:23:00:24:00:08
   lacp_id: 0023.0024.0008
+dhcp_relay:
+  tunnel_requests_disabled: true
 daemon_terminattr:
   cvaddrs:
   - 172.100.100.5:9910

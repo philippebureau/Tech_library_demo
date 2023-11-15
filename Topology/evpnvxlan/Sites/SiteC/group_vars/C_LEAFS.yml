@@ -24,11 +24,19 @@ l3leaf:
     virtual_router_mac_address: 00:1c:73:00:00:01
     spanning_tree_mode: mstp
     spanning_tree_priority: 0
+    structured_config:
+      router_bgp:
+        address_family_evpn:
+          route:
+            import_match_failure_action: discard
   node_groups:
     - group: C-LEAF12
       bgp_as: 65312
       filter:
         tags: [ blue ]
+      structured_config:
+        router_l2_vpn:
+          arp_learning_bridged: true
       nodes:
         - name: C-LEAF1
           id: 1
@@ -46,6 +54,9 @@ l3leaf:
       bgp_as: 65334
       filter:
         tags: [ green, yellow, red ]
+      structured_config:
+        router_l2_vpn:
+          arp_learning_bridged: true
       nodes:
         - name: C-LEAF3
           id: 3
@@ -63,6 +74,9 @@ l3leaf:
       bgp_as: 65356
       filter:
         tags: [ green, red ]
+      structured_config:
+        router_l2_vpn:
+          arp_learning_bridged: true
       nodes:
         - name: C-LEAF5
           id: 5
@@ -80,6 +94,7 @@ l3leaf:
       bgp_as: 65378
       filter:
         tags: [ blue, green, yellow, red ]
+      mlag_ibgp_origin_incomplete: false
       evpn_gateway:
         remote_peers:
           - hostname: BB1
@@ -93,13 +108,33 @@ l3leaf:
         evpn_l3:
           enabled: true
       structured_config:
+        dhcp_relay:
+          tunnel_requests_disabled: true
+        ip_extcommunity_lists_regexp:
+          - name: evpn-imported
+            entries:
+              - type: permit
+                regexp: RT.*
+        route_maps:
+          - name: RM-MLAG-PEER-OUT
+            sequence_numbers:
+              - sequence: 10
+                type: deny
+                match:
+                  - "extcommunity evpn-imported"
+              - sequence: 20
+                type: permit
+                set:
+                  - "origin incomplete"
         router_bgp:
           peer_groups:
-            - name: REMOTE-IPV4-PEERS
-              remote_as: 65000
+            - name: MLAG-IPV4-PEER
+              route_map_out: RM-MLAG-PEER-OUT
             - name: REMOTE-EVPN-PEERS
               local_as: 65000
               bfd: false
+            - name: REMOTE-IPV4-PEERS
+              remote_as: 65000
           address_family_ipv4:
             peer_groups:
               - name: REMOTE-IPV4-PEERS

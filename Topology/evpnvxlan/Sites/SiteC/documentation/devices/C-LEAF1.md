@@ -52,6 +52,9 @@
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
+- [Router L2 VPN](#router-l2-vpn)
+  - [Router L2 VPN Summary](#router-l2-vpn-summary)
+  - [Router L2 VPN Device Configuration](#router-l2-vpn-device-configuration)
 - [EOS CLI](#eos-cli)
 
 ## Management
@@ -688,6 +691,8 @@ router ospf 100
 
 #### Router BGP EVPN Address Family
 
+- VPN import pruning is __enabled__
+
 ##### EVPN Peer Groups
 
 | Peer Group | Activate | Encapsulation |
@@ -744,6 +749,7 @@ router bgp 65312
    !
    address-family evpn
       neighbor LOCAL-EVPN-PEERS activate
+      route import match-failure action discard
    !
    address-family ipv4
       no neighbor LOCAL-EVPN-PEERS activate
@@ -825,6 +831,20 @@ route-map RM-MLAG-PEER-IN permit 10
 ```eos
 !
 vrf instance PROD
+```
+
+## Router L2 VPN
+
+### Router L2 VPN Summary
+
+- ARP learning bridged is enabled.
+
+### Router L2 VPN Device Configuration
+
+```eos
+!
+router l2-vpn
+   arp learning bridged
 ```
 
 ## EOS CLI

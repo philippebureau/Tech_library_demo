@@ -476,6 +476,8 @@ vxlan_interface:
         vni: 50002
       - name: PROD
         vni: 50001
+dhcp_relay:
+  tunnel_requests_disabled: true
 ip_extcommunity_lists_regexp:
 - name: evpn-imported
   entries:

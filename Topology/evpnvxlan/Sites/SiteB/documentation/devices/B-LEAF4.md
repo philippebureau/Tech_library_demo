@@ -12,6 +12,9 @@
 - [Authentication](#authentication)
   - [Local Users](#local-users)
   - [AAA Authorization](#aaa-authorization)
+- [DHCP Relay](#dhcp-relay)
+  - [DHCP Relay Summary](#dhcp-relay-summary)
+  - [DHCP Relay Configuration](#dhcp-relay-configuration)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
   - [Link Tracking](#link-tracking)
@@ -204,6 +207,20 @@ Authorization for configuration commands is disabled.
 ```eos
 aaa authorization exec default local
 !
+```
+
+## DHCP Relay
+
+### DHCP Relay Summary
+
+- DHCP Relay is disabled for tunnelled requests
+
+### DHCP Relay Configuration
+
+```eos
+!
+dhcp relay
+   tunnel requests disabled
 ```
 
 ## Monitoring

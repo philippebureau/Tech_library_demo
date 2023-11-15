@@ -5,10 +5,11 @@ cvp_configlets:
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF1\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
-    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
-    arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nrouter
+    l2-vpn\n   arp learning bridged\n!\nspanning-tree mode mstp\nno spanning-tree
+    vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default
+    local\n!\nno enable password\nno aaa root\n!\nusername arista privilege 15 role
+    network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
@@ -66,25 +67,27 @@ cvp_configlets:
     group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.132 remote-as 65300\n   neighbor 10.0.0.132
     description C-SPINE2\n   !\n   vlan 10\n      rd 10.0.0.31:10010\n      route-target
     both 10010:10010\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
-    LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS
-    activate\n      neighbor MLAG-IPV4-PEER activate\n   !\n   vrf PROD\n      rd
-    10.0.0.31:50001\n      route-target import evpn 50001:50001\n      route-target
-    export evpn 50001:50001\n      router-id 10.0.0.31\n      neighbor 192.0.0.1 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter ospf 100\n   router-id
-    10.0.0.31\n   passive-interface default\n   no passive-interface Ethernet1\n   no
-    passive-interface Ethernet2\n   no passive-interface Vlan4093\n   max-lsa 12000\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    LOCAL-EVPN-PEERS activate\n      route import match-failure action discard\n   !\n
+    \  address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n      neighbor
+    MLAG-IPV4-PEER activate\n   !\n   vrf PROD\n      rd 10.0.0.31:50001\n      route-target
+    import evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.31\n      neighbor 192.0.0.1 peer group MLAG-IPV4-PEER\n      redistribute
+    connected\n!\nrouter ospf 100\n   router-id 10.0.0.31\n   passive-interface default\n
+    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
+    Vlan4093\n   max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n
+    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
+    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-LEAF2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF2\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
-    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
-    arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nrouter
+    l2-vpn\n   arp learning bridged\n!\nspanning-tree mode mstp\nno spanning-tree
+    vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default
+    local\n!\nno enable password\nno aaa root\n!\nusername arista privilege 15 role
+    network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
@@ -142,25 +145,27 @@ cvp_configlets:
     group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.132 remote-as 65300\n   neighbor 10.0.0.132
     description C-SPINE2\n   !\n   vlan 10\n      rd 10.0.0.32:10010\n      route-target
     both 10010:10010\n      redistribute learned\n   !\n   address-family evpn\n      neighbor
-    LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS
-    activate\n      neighbor MLAG-IPV4-PEER activate\n   !\n   vrf PROD\n      rd
-    10.0.0.32:50001\n      route-target import evpn 50001:50001\n      route-target
-    export evpn 50001:50001\n      router-id 10.0.0.32\n      neighbor 192.0.0.0 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter ospf 100\n   router-id
-    10.0.0.32\n   passive-interface default\n   no passive-interface Ethernet1\n   no
-    passive-interface Ethernet2\n   no passive-interface Vlan4093\n   max-lsa 12000\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    LOCAL-EVPN-PEERS activate\n      route import match-failure action discard\n   !\n
+    \  address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n      neighbor
+    MLAG-IPV4-PEER activate\n   !\n   vrf PROD\n      rd 10.0.0.32:50001\n      route-target
+    import evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.32\n      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER\n      redistribute
+    connected\n!\nrouter ospf 100\n   router-id 10.0.0.32\n   passive-interface default\n
+    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
+    Vlan4093\n   max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n
+    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
+    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-LEAF3: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF3\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
-    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
-    arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nrouter
+    l2-vpn\n   arp learning bridged\n!\nspanning-tree mode mstp\nno spanning-tree
+    vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default
+    local\n!\nno enable password\nno aaa root\n!\nusername arista privilege 15 role
+    network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
@@ -230,28 +235,29 @@ cvp_configlets:
     \     route-target both 10050:10050\n      redistribute learned\n   !\n   vlan
     60\n      rd 10.0.0.33:10060\n      route-target both 10060:10060\n      redistribute
     learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n
-    \  !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n      neighbor
-    MLAG-IPV4-PEER activate\n   !\n   vrf DEV\n      rd 10.0.0.33:50002\n      route-target
-    import evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.33\n      neighbor 192.0.0.1 peer group MLAG-IPV4-PEER\n      redistribute
-    connected\n   !\n   vrf PROD\n      rd 10.0.0.33:50001\n      route-target import
-    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.33\n      neighbor 192.0.0.1 peer group MLAG-IPV4-PEER\n      redistribute
-    connected\n!\nrouter ospf 100\n   router-id 10.0.0.33\n   passive-interface default\n
-    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
-    Vlan4093\n   max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \     route import match-failure action discard\n   !\n   address-family ipv4\n
+    \     no neighbor LOCAL-EVPN-PEERS activate\n      neighbor MLAG-IPV4-PEER activate\n
+    \  !\n   vrf DEV\n      rd 10.0.0.33:50002\n      route-target import evpn 50002:50002\n
+    \     route-target export evpn 50002:50002\n      router-id 10.0.0.33\n      neighbor
+    192.0.0.1 peer group MLAG-IPV4-PEER\n      redistribute connected\n   !\n   vrf
+    PROD\n      rd 10.0.0.33:50001\n      route-target import evpn 50001:50001\n      route-target
+    export evpn 50001:50001\n      router-id 10.0.0.33\n      neighbor 192.0.0.1 peer
+    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter ospf 100\n   router-id
+    10.0.0.33\n   passive-interface default\n   no passive-interface Ethernet1\n   no
+    passive-interface Ethernet2\n   no passive-interface Vlan4093\n   max-lsa 12000\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-LEAF4: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF4\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
-    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
-    arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nrouter
+    l2-vpn\n   arp learning bridged\n!\nspanning-tree mode mstp\nno spanning-tree
+    vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default
+    local\n!\nno enable password\nno aaa root\n!\nusername arista privilege 15 role
+    network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
@@ -321,28 +327,29 @@ cvp_configlets:
     \     route-target both 10050:10050\n      redistribute learned\n   !\n   vlan
     60\n      rd 10.0.0.34:10060\n      route-target both 10060:10060\n      redistribute
     learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n
-    \  !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n      neighbor
-    MLAG-IPV4-PEER activate\n   !\n   vrf DEV\n      rd 10.0.0.34:50002\n      route-target
-    import evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
-    10.0.0.34\n      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER\n      redistribute
-    connected\n   !\n   vrf PROD\n      rd 10.0.0.34:50001\n      route-target import
-    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
-    10.0.0.34\n      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER\n      redistribute
-    connected\n!\nrouter ospf 100\n   router-id 10.0.0.34\n   passive-interface default\n
-    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
-    Vlan4093\n   max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \     route import match-failure action discard\n   !\n   address-family ipv4\n
+    \     no neighbor LOCAL-EVPN-PEERS activate\n      neighbor MLAG-IPV4-PEER activate\n
+    \  !\n   vrf DEV\n      rd 10.0.0.34:50002\n      route-target import evpn 50002:50002\n
+    \     route-target export evpn 50002:50002\n      router-id 10.0.0.34\n      neighbor
+    192.0.0.0 peer group MLAG-IPV4-PEER\n      redistribute connected\n   !\n   vrf
+    PROD\n      rd 10.0.0.34:50001\n      route-target import evpn 50001:50001\n      route-target
+    export evpn 50001:50001\n      router-id 10.0.0.34\n      neighbor 192.0.0.0 peer
+    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter ospf 100\n   router-id
+    10.0.0.34\n   passive-interface default\n   no passive-interface Ethernet1\n   no
+    passive-interface Ethernet2\n   no passive-interface Vlan4093\n   max-lsa 12000\n!\nmanagement
+    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
+    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-LEAF5: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF5\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
-    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
-    arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nrouter
+    l2-vpn\n   arp learning bridged\n!\nspanning-tree mode mstp\nno spanning-tree
+    vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default
+    local\n!\nno enable password\nno aaa root\n!\nusername arista privilege 15 role
+    network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
@@ -409,28 +416,30 @@ cvp_configlets:
     description C-SPINE2\n   !\n   vlan 20\n      rd 10.0.0.35:10020\n      route-target
     both 10020:10020\n      redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.35:10060\n
     \     route-target both 10060:10060\n      redistribute learned\n   !\n   address-family
-    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n
-    \     no neighbor LOCAL-EVPN-PEERS activate\n      neighbor MLAG-IPV4-PEER activate\n
-    \  !\n   vrf DEV\n      rd 10.0.0.35:50002\n      route-target import evpn 50002:50002\n
-    \     route-target export evpn 50002:50002\n      router-id 10.0.0.35\n      neighbor
-    192.0.0.1 peer group MLAG-IPV4-PEER\n      redistribute connected\n   !\n   vrf
-    PROD\n      rd 10.0.0.35:50001\n      route-target import evpn 50001:50001\n      route-target
-    export evpn 50001:50001\n      router-id 10.0.0.35\n      neighbor 192.0.0.1 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter ospf 100\n   router-id
-    10.0.0.35\n   passive-interface default\n   no passive-interface Ethernet1\n   no
-    passive-interface Ethernet2\n   no passive-interface Vlan4093\n   max-lsa 12000\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n      route import match-failure
+    action discard\n   !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS
+    activate\n      neighbor MLAG-IPV4-PEER activate\n   !\n   vrf DEV\n      rd 10.0.0.35:50002\n
+    \     route-target import evpn 50002:50002\n      route-target export evpn 50002:50002\n
+    \     router-id 10.0.0.35\n      neighbor 192.0.0.1 peer group MLAG-IPV4-PEER\n
+    \     redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.35:50001\n      route-target
+    import evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.35\n      neighbor 192.0.0.1 peer group MLAG-IPV4-PEER\n      redistribute
+    connected\n!\nrouter ospf 100\n   router-id 10.0.0.35\n   passive-interface default\n
+    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
+    Vlan4093\n   max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n
+    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
+    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-LEAF6: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
     internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
     routing protocols model multi-agent\n!\nhostname C-LEAF6\nip name-server vrf default
     8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
-    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
-    arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
+    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nrouter
+    l2-vpn\n   arp learning bridged\n!\nspanning-tree mode mstp\nno spanning-tree
+    vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa authorization exec default
+    local\n!\nno enable password\nno aaa root\n!\nusername arista privilege 15 role
+    network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
@@ -497,28 +506,30 @@ cvp_configlets:
     description C-SPINE2\n   !\n   vlan 20\n      rd 10.0.0.36:10020\n      route-target
     both 10020:10020\n      redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.36:10060\n
     \     route-target both 10060:10060\n      redistribute learned\n   !\n   address-family
-    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n   !\n   address-family ipv4\n
-    \     no neighbor LOCAL-EVPN-PEERS activate\n      neighbor MLAG-IPV4-PEER activate\n
-    \  !\n   vrf DEV\n      rd 10.0.0.36:50002\n      route-target import evpn 50002:50002\n
-    \     route-target export evpn 50002:50002\n      router-id 10.0.0.36\n      neighbor
-    192.0.0.0 peer group MLAG-IPV4-PEER\n      redistribute connected\n   !\n   vrf
-    PROD\n      rd 10.0.0.36:50001\n      route-target import evpn 50001:50001\n      route-target
-    export evpn 50001:50001\n      router-id 10.0.0.36\n      neighbor 192.0.0.0 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter ospf 100\n   router-id
-    10.0.0.36\n   passive-interface default\n   no passive-interface Ethernet1\n   no
-    passive-interface Ethernet2\n   no passive-interface Vlan4093\n   max-lsa 12000\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    evpn\n      neighbor LOCAL-EVPN-PEERS activate\n      route import match-failure
+    action discard\n   !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS
+    activate\n      neighbor MLAG-IPV4-PEER activate\n   !\n   vrf DEV\n      rd 10.0.0.36:50002\n
+    \     route-target import evpn 50002:50002\n      route-target export evpn 50002:50002\n
+    \     router-id 10.0.0.36\n      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER\n
+    \     redistribute connected\n   !\n   vrf PROD\n      rd 10.0.0.36:50001\n      route-target
+    import evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.36\n      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER\n      redistribute
+    connected\n!\nrouter ospf 100\n   router-id 10.0.0.36\n   passive-interface default\n
+    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
+    Vlan4093\n   max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n
+    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
+    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-LEAF7: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
-    -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
-    internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
-    routing protocols model multi-agent\n!\nhostname C-LEAF7\nip name-server vrf default
-    8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
-    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
-    arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
+    -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\ndhcp
+    relay\n   tunnel requests disabled\n!\nvlan internal order ascending range 1006
+    1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model
+    multi-agent\n!\nhostname C-LEAF7\nip name-server vrf default 8.8.4.4\nip name-server
+    vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server 0.north-america.pool.ntp.org
+    prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree mode mstp\nno
+    spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa authorization
+    exec default local\n!\nno enable password\nno aaa root\n!\nusername arista privilege
+    15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
@@ -564,72 +575,75 @@ cvp_configlets:
     20 vni 10020\n   vxlan vlan 50 vni 10050\n   vxlan vlan 60 vni 10060\n   vxlan
     vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac address-table aging-time
     1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing
-    vrf DEV\nip routing vrf PROD\n!\nmlag configuration\n   domain-id C-LEAF78\n   local-interface
-    Vlan4094\n   peer-address 169.254.0.1\n   peer-address heartbeat 172.100.100.136\n
-    \  peer-link Port-Channel1000\n   dual-primary detection delay 5 action errdisable
-    all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\narp
-    aging timeout default 1500\n!\nroute-map RM-MLAG-PEER-IN permit 10\n   description
-    Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal
-    routing\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx
-    1200 multiplier 3\n!\nrouter bgp 65378\n   router-id 10.0.0.37\n   distance bgp
-    20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
-    \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
-    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
-    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor MLAG-IPV4-PEER
-    peer group\n   neighbor MLAG-IPV4-PEER remote-as 65378\n   neighbor MLAG-IPV4-PEER
-    next-hop-self\n   neighbor MLAG-IPV4-PEER description C-LEAF8\n   neighbor MLAG-IPV4-PEER
-    send-community\n   neighbor MLAG-IPV4-PEER maximum-routes 12000\n   neighbor MLAG-IPV4-PEER
-    route-map RM-MLAG-PEER-IN in\n   neighbor REMOTE-EVPN-PEERS peer group\n   neighbor
-    REMOTE-EVPN-PEERS local-as 65000 no-prepend replace-as\n   neighbor REMOTE-EVPN-PEERS
-    update-source Loopback0\n   neighbor REMOTE-EVPN-PEERS ebgp-multihop 15\n   neighbor
-    REMOTE-EVPN-PEERS send-community\n   neighbor REMOTE-EVPN-PEERS maximum-routes
-    0\n   neighbor REMOTE-IPV4-PEERS peer group\n   neighbor REMOTE-IPV4-PEERS remote-as
-    65000\n   neighbor 10.0.0.131 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.131
-    remote-as 65300\n   neighbor 10.0.0.131 description C-SPINE1\n   neighbor 10.0.0.132
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.132 remote-as 65300\n   neighbor
-    10.0.0.132 description C-SPINE2\n   neighbor 172.16.0.1 peer group REMOTE-EVPN-PEERS\n
-    \  neighbor 172.16.0.1 remote-as 65000\n   neighbor 172.16.0.1 description BB1\n
-    \  neighbor 172.16.0.2 peer group REMOTE-EVPN-PEERS\n   neighbor 172.16.0.2 remote-as
-    65000\n   neighbor 172.16.0.2 description BB2\n   neighbor 172.16.3.0 peer group
-    REMOTE-IPV4-PEERS\n   neighbor 172.16.3.4 peer group REMOTE-IPV4-PEERS\n   !\n
-    \  vlan 10\n      rd 10.0.0.37:10010\n      rd evpn domain remote 10.0.0.37:10010\n
-    \     route-target both 10010:10010\n      route-target import export evpn domain
-    remote 10010:10010\n      redistribute learned\n   !\n   vlan 20\n      rd 10.0.0.37:10020\n
-    \     rd evpn domain remote 10.0.0.37:10020\n      route-target both 10020:10020\n
-    \     route-target import export evpn domain remote 10020:10020\n      redistribute
-    learned\n   !\n   vlan 50\n      rd 10.0.0.37:10050\n      rd evpn domain remote
-    10.0.0.37:10050\n      route-target both 10050:10050\n      route-target import
-    export evpn domain remote 10050:10050\n      redistribute learned\n   !\n   vlan
-    60\n      rd 10.0.0.37:10060\n      rd evpn domain remote 10.0.0.37:10060\n      route-target
-    both 10060:10060\n      route-target import export evpn domain remote 10060:10060\n
-    \     redistribute learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS
-    activate\n      neighbor REMOTE-EVPN-PEERS activate\n      neighbor REMOTE-EVPN-PEERS
-    domain remote\n      neighbor default next-hop-self received-evpn-routes route-type
-    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS
-    activate\n      neighbor MLAG-IPV4-PEER activate\n      no neighbor REMOTE-EVPN-PEERS
-    activate\n      neighbor REMOTE-IPV4-PEERS activate\n      network 10.0.0.37/32\n
-    \     network 10.0.0.38/32\n      network 10.3.3.37/32\n   !\n   vrf DEV\n      rd
-    10.0.0.37:50002\n      route-target import evpn 50002:50002\n      route-target
-    export evpn 50002:50002\n      router-id 10.0.0.37\n      neighbor 192.0.0.1 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n   !\n   vrf PROD\n      rd
-    10.0.0.37:50001\n      route-target import evpn 50001:50001\n      route-target
-    export evpn 50001:50001\n      router-id 10.0.0.37\n      neighbor 192.0.0.1 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter ospf 100\n   router-id
-    10.0.0.37\n   passive-interface default\n   no passive-interface Ethernet1\n   no
-    passive-interface Ethernet2\n   no passive-interface Vlan4093\n   max-lsa 12000\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    vrf DEV\nip routing vrf PROD\n!\nip extcommunity-list regexp evpn-imported permit
+    RT.*\n!\nmlag configuration\n   domain-id C-LEAF78\n   local-interface Vlan4094\n
+    \  peer-address 169.254.0.1\n   peer-address heartbeat 172.100.100.136\n   peer-link
+    Port-Channel1000\n   dual-primary detection delay 5 action errdisable all-interfaces\n
+    \  reload-delay mlag 300\n   reload-delay non-mlag 330\n!\narp aging timeout default
+    1500\n!\nroute-map RM-MLAG-PEER-OUT deny 10\n   match extcommunity evpn-imported\n!\nroute-map
+    RM-MLAG-PEER-OUT permit 20\n   set origin incomplete\n!\nrouter bfd\n   multihop
+    interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65378\n   router-id 10.0.0.37\n
+    \  distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n
+    \  maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS
+    peer group\n   neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor
+    LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor
+    LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n
+    \  neighbor MLAG-IPV4-PEER peer group\n   neighbor MLAG-IPV4-PEER remote-as 65378\n
+    \  neighbor MLAG-IPV4-PEER next-hop-self\n   neighbor MLAG-IPV4-PEER description
+    C-LEAF8\n   neighbor MLAG-IPV4-PEER send-community\n   neighbor MLAG-IPV4-PEER
+    maximum-routes 12000\n   neighbor MLAG-IPV4-PEER route-map RM-MLAG-PEER-OUT out\n
+    \  neighbor REMOTE-EVPN-PEERS peer group\n   neighbor REMOTE-EVPN-PEERS local-as
+    65000 no-prepend replace-as\n   neighbor REMOTE-EVPN-PEERS update-source Loopback0\n
+    \  neighbor REMOTE-EVPN-PEERS ebgp-multihop 15\n   neighbor REMOTE-EVPN-PEERS
+    send-community\n   neighbor REMOTE-EVPN-PEERS maximum-routes 0\n   neighbor REMOTE-IPV4-PEERS
+    peer group\n   neighbor REMOTE-IPV4-PEERS remote-as 65000\n   neighbor 10.0.0.131
+    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.131 remote-as 65300\n   neighbor
+    10.0.0.131 description C-SPINE1\n   neighbor 10.0.0.132 peer group LOCAL-EVPN-PEERS\n
+    \  neighbor 10.0.0.132 remote-as 65300\n   neighbor 10.0.0.132 description C-SPINE2\n
+    \  neighbor 172.16.0.1 peer group REMOTE-EVPN-PEERS\n   neighbor 172.16.0.1 remote-as
+    65000\n   neighbor 172.16.0.1 description BB1\n   neighbor 172.16.0.2 peer group
+    REMOTE-EVPN-PEERS\n   neighbor 172.16.0.2 remote-as 65000\n   neighbor 172.16.0.2
+    description BB2\n   neighbor 172.16.3.0 peer group REMOTE-IPV4-PEERS\n   neighbor
+    172.16.3.4 peer group REMOTE-IPV4-PEERS\n   !\n   vlan 10\n      rd 10.0.0.37:10010\n
+    \     rd evpn domain remote 10.0.0.37:10010\n      route-target both 10010:10010\n
+    \     route-target import export evpn domain remote 10010:10010\n      redistribute
+    learned\n   !\n   vlan 20\n      rd 10.0.0.37:10020\n      rd evpn domain remote
+    10.0.0.37:10020\n      route-target both 10020:10020\n      route-target import
+    export evpn domain remote 10020:10020\n      redistribute learned\n   !\n   vlan
+    50\n      rd 10.0.0.37:10050\n      rd evpn domain remote 10.0.0.37:10050\n      route-target
+    both 10050:10050\n      route-target import export evpn domain remote 10050:10050\n
+    \     redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.37:10060\n      rd
+    evpn domain remote 10.0.0.37:10060\n      route-target both 10060:10060\n      route-target
+    import export evpn domain remote 10060:10060\n      redistribute learned\n   !\n
+    \  address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n      neighbor
+    REMOTE-EVPN-PEERS activate\n      neighbor REMOTE-EVPN-PEERS domain remote\n      neighbor
+    default next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n
+    \     route import match-failure action discard\n   !\n   address-family ipv4\n
+    \     no neighbor LOCAL-EVPN-PEERS activate\n      neighbor MLAG-IPV4-PEER activate\n
+    \     no neighbor REMOTE-EVPN-PEERS activate\n      neighbor REMOTE-IPV4-PEERS
+    activate\n      network 10.0.0.37/32\n      network 10.0.0.38/32\n      network
+    10.3.3.37/32\n   !\n   vrf DEV\n      rd 10.0.0.37:50002\n      route-target import
+    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
+    10.0.0.37\n      neighbor 192.0.0.1 peer group MLAG-IPV4-PEER\n      redistribute
+    connected\n   !\n   vrf PROD\n      rd 10.0.0.37:50001\n      route-target import
+    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.37\n      neighbor 192.0.0.1 peer group MLAG-IPV4-PEER\n      redistribute
+    connected\n!\nrouter ospf 100\n   router-id 10.0.0.37\n   passive-interface default\n
+    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
+    Vlan4093\n   max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n
+    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
+    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-LEAF8: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
-    -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
-    internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice
-    routing protocols model multi-agent\n!\nhostname C-LEAF8\nip name-server vrf default
-    8.8.4.4\nip name-server vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server
-    0.north-america.pool.ntp.org prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree
-    mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa
-    authorization exec default local\n!\nno enable password\nno aaa root\n!\nusername
-    arista privilege 15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
+    -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\ndhcp
+    relay\n   tunnel requests disabled\n!\nvlan internal order ascending range 1006
+    1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model
+    multi-agent\n!\nhostname C-LEAF8\nip name-server vrf default 8.8.4.4\nip name-server
+    vrf default 8.8.8.8\ndns domain lab.lab\n!\nntp server 0.north-america.pool.ntp.org
+    prefer\nntp server 1.north-america.pool.ntp.org\n!\nspanning-tree mode mstp\nno
+    spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 0\n!\naaa authorization
+    exec default local\n!\nno enable password\nno aaa root\n!\nusername arista privilege
+    15 role network-admin secret sha512 $6$ZGX/X07MoiWP9hvX$3UaAtOAiBGc54DYHdQt5dsr5P2HLydxjrda51Zw69tSsF4tahXPVj26PwOiZUy/xFRZL3CAkT7.lsOPqWfIbU0\nusername
     cvpadmin privilege 15 role network-admin secret sha512 $6$vQGQxmJp16IINuqk$makfRsxIS8Das8bugela5cdUd0iSUzA0/nPRXWXmonGeQ/vuqWi.vrr1OINH4MZLCOux0tniArjvyJNJHe9Zt.\nusername
     ec2-user shell /bin/bash nopassword\nusername ec2-user ssh-key ssh-rsa ssh-rsa
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
@@ -675,62 +689,64 @@ cvp_configlets:
     20 vni 10020\n   vxlan vlan 50 vni 10050\n   vxlan vlan 60 vni 10060\n   vxlan
     vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n!\nmac address-table aging-time
     1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing
-    vrf DEV\nip routing vrf PROD\n!\nmlag configuration\n   domain-id C-LEAF78\n   local-interface
-    Vlan4094\n   peer-address 169.254.0.0\n   peer-address heartbeat 172.100.100.135\n
-    \  peer-link Port-Channel1000\n   dual-primary detection delay 5 action errdisable
-    all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\narp
-    aging timeout default 1500\n!\nroute-map RM-MLAG-PEER-IN permit 10\n   description
-    Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal
-    routing\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx
-    1200 multiplier 3\n!\nrouter bgp 65378\n   router-id 10.0.0.38\n   distance bgp
-    20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
-    4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
-    \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
-    bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
-    send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n   neighbor MLAG-IPV4-PEER
-    peer group\n   neighbor MLAG-IPV4-PEER remote-as 65378\n   neighbor MLAG-IPV4-PEER
-    next-hop-self\n   neighbor MLAG-IPV4-PEER description C-LEAF7\n   neighbor MLAG-IPV4-PEER
-    send-community\n   neighbor MLAG-IPV4-PEER maximum-routes 12000\n   neighbor MLAG-IPV4-PEER
-    route-map RM-MLAG-PEER-IN in\n   neighbor REMOTE-EVPN-PEERS peer group\n   neighbor
-    REMOTE-EVPN-PEERS local-as 65000 no-prepend replace-as\n   neighbor REMOTE-EVPN-PEERS
-    update-source Loopback0\n   neighbor REMOTE-EVPN-PEERS ebgp-multihop 15\n   neighbor
-    REMOTE-EVPN-PEERS send-community\n   neighbor REMOTE-EVPN-PEERS maximum-routes
-    0\n   neighbor REMOTE-IPV4-PEERS peer group\n   neighbor REMOTE-IPV4-PEERS remote-as
-    65000\n   neighbor 10.0.0.131 peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.131
-    remote-as 65300\n   neighbor 10.0.0.131 description C-SPINE1\n   neighbor 10.0.0.132
-    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.132 remote-as 65300\n   neighbor
-    10.0.0.132 description C-SPINE2\n   neighbor 172.16.0.1 peer group REMOTE-EVPN-PEERS\n
-    \  neighbor 172.16.0.1 remote-as 65000\n   neighbor 172.16.0.1 description BB1\n
-    \  neighbor 172.16.0.2 peer group REMOTE-EVPN-PEERS\n   neighbor 172.16.0.2 remote-as
-    65000\n   neighbor 172.16.0.2 description BB2\n   neighbor 172.16.3.2 peer group
-    REMOTE-IPV4-PEERS\n   neighbor 172.16.3.6 peer group REMOTE-IPV4-PEERS\n   !\n
-    \  vlan 10\n      rd 10.0.0.38:10010\n      rd evpn domain remote 10.0.0.38:10010\n
-    \     route-target both 10010:10010\n      route-target import export evpn domain
-    remote 10010:10010\n      redistribute learned\n   !\n   vlan 20\n      rd 10.0.0.38:10020\n
-    \     rd evpn domain remote 10.0.0.38:10020\n      route-target both 10020:10020\n
-    \     route-target import export evpn domain remote 10020:10020\n      redistribute
-    learned\n   !\n   vlan 50\n      rd 10.0.0.38:10050\n      rd evpn domain remote
-    10.0.0.38:10050\n      route-target both 10050:10050\n      route-target import
-    export evpn domain remote 10050:10050\n      redistribute learned\n   !\n   vlan
-    60\n      rd 10.0.0.38:10060\n      rd evpn domain remote 10.0.0.38:10060\n      route-target
-    both 10060:10060\n      route-target import export evpn domain remote 10060:10060\n
-    \     redistribute learned\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS
-    activate\n      neighbor REMOTE-EVPN-PEERS activate\n      neighbor REMOTE-EVPN-PEERS
-    domain remote\n      neighbor default next-hop-self received-evpn-routes route-type
-    ip-prefix inter-domain\n   !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS
-    activate\n      neighbor MLAG-IPV4-PEER activate\n      no neighbor REMOTE-EVPN-PEERS
-    activate\n      neighbor REMOTE-IPV4-PEERS activate\n      network 10.0.0.37/32\n
-    \     network 10.0.0.38/32\n      network 10.3.3.38/32\n   !\n   vrf DEV\n      rd
-    10.0.0.38:50002\n      route-target import evpn 50002:50002\n      route-target
-    export evpn 50002:50002\n      router-id 10.0.0.38\n      neighbor 192.0.0.0 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n   !\n   vrf PROD\n      rd
-    10.0.0.38:50001\n      route-target import evpn 50001:50001\n      route-target
-    export evpn 50001:50001\n      router-id 10.0.0.38\n      neighbor 192.0.0.0 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter ospf 100\n   router-id
-    10.0.0.38\n   passive-interface default\n   no passive-interface Ethernet1\n   no
-    passive-interface Ethernet2\n   no passive-interface Vlan4093\n   max-lsa 12000\n!\nmanagement
-    api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no
-    shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    vrf DEV\nip routing vrf PROD\n!\nip extcommunity-list regexp evpn-imported permit
+    RT.*\n!\nmlag configuration\n   domain-id C-LEAF78\n   local-interface Vlan4094\n
+    \  peer-address 169.254.0.0\n   peer-address heartbeat 172.100.100.135\n   peer-link
+    Port-Channel1000\n   dual-primary detection delay 5 action errdisable all-interfaces\n
+    \  reload-delay mlag 300\n   reload-delay non-mlag 330\n!\narp aging timeout default
+    1500\n!\nroute-map RM-MLAG-PEER-OUT deny 10\n   match extcommunity evpn-imported\n!\nroute-map
+    RM-MLAG-PEER-OUT permit 20\n   set origin incomplete\n!\nrouter bfd\n   multihop
+    interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65378\n   router-id 10.0.0.38\n
+    \  distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n
+    \  maximum-paths 4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS
+    peer group\n   neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor
+    LOCAL-EVPN-PEERS bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor
+    LOCAL-EVPN-PEERS send-community\n   neighbor LOCAL-EVPN-PEERS maximum-routes 0\n
+    \  neighbor MLAG-IPV4-PEER peer group\n   neighbor MLAG-IPV4-PEER remote-as 65378\n
+    \  neighbor MLAG-IPV4-PEER next-hop-self\n   neighbor MLAG-IPV4-PEER description
+    C-LEAF7\n   neighbor MLAG-IPV4-PEER send-community\n   neighbor MLAG-IPV4-PEER
+    maximum-routes 12000\n   neighbor MLAG-IPV4-PEER route-map RM-MLAG-PEER-OUT out\n
+    \  neighbor REMOTE-EVPN-PEERS peer group\n   neighbor REMOTE-EVPN-PEERS local-as
+    65000 no-prepend replace-as\n   neighbor REMOTE-EVPN-PEERS update-source Loopback0\n
+    \  neighbor REMOTE-EVPN-PEERS ebgp-multihop 15\n   neighbor REMOTE-EVPN-PEERS
+    send-community\n   neighbor REMOTE-EVPN-PEERS maximum-routes 0\n   neighbor REMOTE-IPV4-PEERS
+    peer group\n   neighbor REMOTE-IPV4-PEERS remote-as 65000\n   neighbor 10.0.0.131
+    peer group LOCAL-EVPN-PEERS\n   neighbor 10.0.0.131 remote-as 65300\n   neighbor
+    10.0.0.131 description C-SPINE1\n   neighbor 10.0.0.132 peer group LOCAL-EVPN-PEERS\n
+    \  neighbor 10.0.0.132 remote-as 65300\n   neighbor 10.0.0.132 description C-SPINE2\n
+    \  neighbor 172.16.0.1 peer group REMOTE-EVPN-PEERS\n   neighbor 172.16.0.1 remote-as
+    65000\n   neighbor 172.16.0.1 description BB1\n   neighbor 172.16.0.2 peer group
+    REMOTE-EVPN-PEERS\n   neighbor 172.16.0.2 remote-as 65000\n   neighbor 172.16.0.2
+    description BB2\n   neighbor 172.16.3.2 peer group REMOTE-IPV4-PEERS\n   neighbor
+    172.16.3.6 peer group REMOTE-IPV4-PEERS\n   !\n   vlan 10\n      rd 10.0.0.38:10010\n
+    \     rd evpn domain remote 10.0.0.38:10010\n      route-target both 10010:10010\n
+    \     route-target import export evpn domain remote 10010:10010\n      redistribute
+    learned\n   !\n   vlan 20\n      rd 10.0.0.38:10020\n      rd evpn domain remote
+    10.0.0.38:10020\n      route-target both 10020:10020\n      route-target import
+    export evpn domain remote 10020:10020\n      redistribute learned\n   !\n   vlan
+    50\n      rd 10.0.0.38:10050\n      rd evpn domain remote 10.0.0.38:10050\n      route-target
+    both 10050:10050\n      route-target import export evpn domain remote 10050:10050\n
+    \     redistribute learned\n   !\n   vlan 60\n      rd 10.0.0.38:10060\n      rd
+    evpn domain remote 10.0.0.38:10060\n      route-target both 10060:10060\n      route-target
+    import export evpn domain remote 10060:10060\n      redistribute learned\n   !\n
+    \  address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n      neighbor
+    REMOTE-EVPN-PEERS activate\n      neighbor REMOTE-EVPN-PEERS domain remote\n      neighbor
+    default next-hop-self received-evpn-routes route-type ip-prefix inter-domain\n
+    \     route import match-failure action discard\n   !\n   address-family ipv4\n
+    \     no neighbor LOCAL-EVPN-PEERS activate\n      neighbor MLAG-IPV4-PEER activate\n
+    \     no neighbor REMOTE-EVPN-PEERS activate\n      neighbor REMOTE-IPV4-PEERS
+    activate\n      network 10.0.0.37/32\n      network 10.0.0.38/32\n      network
+    10.3.3.38/32\n   !\n   vrf DEV\n      rd 10.0.0.38:50002\n      route-target import
+    evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
+    10.0.0.38\n      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER\n      redistribute
+    connected\n   !\n   vrf PROD\n      rd 10.0.0.38:50001\n      route-target import
+    evpn 50001:50001\n      route-target export evpn 50001:50001\n      router-id
+    10.0.0.38\n      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER\n      redistribute
+    connected\n!\nrouter ospf 100\n   router-id 10.0.0.38\n   passive-interface default\n
+    \  no passive-interface Ethernet1\n   no passive-interface Ethernet2\n   no passive-interface
+    Vlan4093\n   max-lsa 12000\n!\nmanagement api http-commands\n   protocol https\n
+    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
+    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_C-SPINE1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan

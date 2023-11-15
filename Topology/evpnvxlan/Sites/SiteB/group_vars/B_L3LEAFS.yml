@@ -33,6 +33,8 @@ l3leaf:
     spanning_tree_mode: mstp
     spanning_tree_priority: 0
     structured_config:
+      dhcp_relay:
+        tunnel_requests_disabled: true
       router_bgp:
         address_family_evpn:
           route:

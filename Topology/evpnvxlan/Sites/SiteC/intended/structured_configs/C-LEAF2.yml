@@ -41,6 +41,8 @@ router_bgp:
     peer_groups:
     - name: LOCAL-EVPN-PEERS
       activate: true
+    route:
+      import_match_failure_action: discard
   neighbors:
   - ip_address: 10.0.0.131
     peer_group: LOCAL-EVPN-PEERS
@@ -296,6 +298,8 @@ vxlan_interface:
       vrfs:
       - name: PROD
         vni: 50001
+router_l2_vpn:
+  arp_learning_bridged: true
 daemon_terminattr:
   cvaddrs:
   - 172.100.100.5:9910
