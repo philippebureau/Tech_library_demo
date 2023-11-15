@@ -47,8 +47,6 @@
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
-- [Filters](#filters)
-  - [Route-maps](#route-maps)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -302,7 +300,6 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 10 | Blue | - |
-| 3001 | MLAG_iBGP_PROD | LEAF_PEER_L3 |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
 | 4094 | MLAG_PEER | MLAG |
 
@@ -312,10 +309,6 @@ vlan internal order ascending range 1006 1199
 !
 vlan 10
    name Blue
-!
-vlan 3001
-   name MLAG_iBGP_PROD
-   trunk group LEAF_PEER_L3
 !
 vlan 4093
    name LEAF_PEER_L3
@@ -474,8 +467,6 @@ interface Loopback1
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
-| Vlan10 | Blue | PROD | - | False |
-| Vlan3001 | MLAG_PEER_L3_iBGP: vrf PROD | PROD | 1500 | False |
 | Vlan4093 | MLAG_PEER_L3_PEERING | default | 1500 | False |
 | Vlan4094 | MLAG_PEER | default | 1500 | False |
 
@@ -483,27 +474,12 @@ interface Loopback1
 
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
-| Vlan10 |  PROD  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
-| Vlan3001 |  PROD  |  192.0.0.1/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  192.0.0.1/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  169.254.0.1/31  |  -  |  -  |  -  |  -  |  -  |
 
 #### VLAN Interfaces Device Configuration
 
 ```eos
-!
-interface Vlan10
-   description Blue
-   no shutdown
-   vrf PROD
-   ip address virtual 10.10.10.1/24
-!
-interface Vlan3001
-   description MLAG_PEER_L3_iBGP: vrf PROD
-   no shutdown
-   mtu 1500
-   vrf PROD
-   ip address 192.0.0.1/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
@@ -537,12 +513,6 @@ interface Vlan4094
 | ---- | --- | ---------- | --------------- |
 | 10 | 10010 | - | - |
 
-##### VRF to VNI and Multicast Group Mappings
-
-| VRF | VNI | Multicast Group |
-| ---- | --- | --------------- |
-| PROD | 50001 | - |
-
 #### VXLAN Interface Device Configuration
 
 ```eos
@@ -553,7 +523,6 @@ interface Vxlan1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
    vxlan vlan 10 vni 10010
-   vxlan vrf PROD vni 50001
 ```
 
 ## Routing
@@ -587,14 +556,12 @@ ip virtual-router mac-address 00:1c:73:00:00:01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True |
-| PROD | True |
 
 #### IP Routing Device Configuration
 
 ```eos
 !
 ip routing
-ip routing vrf PROD
 ```
 
 ### IPv6 Routing
@@ -605,7 +572,6 @@ ip routing vrf PROD
 | --- | --------------- |
 | default | False |
 | default | false |
-| PROD | false |
 
 ### ARP
 
@@ -671,23 +637,12 @@ router ospf 100
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
-##### MLAG-IPV4-PEER
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | ipv4 |
-| Remote AS | 65312 |
-| Next-hop self | True |
-| Send community | all |
-| Maximum routes | 12000 |
-
 #### BGP Neighbors
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- |
 | 10.0.0.131 | 65300 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
 | 10.0.0.132 | 65300 | default | - | Inherited from peer group LOCAL-EVPN-PEERS | Inherited from peer group LOCAL-EVPN-PEERS | - | Inherited from peer group LOCAL-EVPN-PEERS | - | - | - |
-| 192.0.0.0 | Inherited from peer group MLAG-IPV4-PEER | PROD | - | Inherited from peer group MLAG-IPV4-PEER | Inherited from peer group MLAG-IPV4-PEER | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -704,12 +659,6 @@ router ospf 100
 | VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
 | ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
 | 10 | 10.0.0.32:10010 | 10010:10010 | - | - | learned |
-
-#### Router BGP VRFs
-
-| VRF | Route-Distinguisher | Redistribute |
-| --- | ------------------- | ------------ |
-| PROD | 10.0.0.32:50001 | connected |
 
 #### Router BGP Device Configuration
 
@@ -728,13 +677,6 @@ router bgp 65312
    neighbor LOCAL-EVPN-PEERS ebgp-multihop 3
    neighbor LOCAL-EVPN-PEERS send-community
    neighbor LOCAL-EVPN-PEERS maximum-routes 0
-   neighbor MLAG-IPV4-PEER peer group
-   neighbor MLAG-IPV4-PEER remote-as 65312
-   neighbor MLAG-IPV4-PEER next-hop-self
-   neighbor MLAG-IPV4-PEER description C-LEAF1
-   neighbor MLAG-IPV4-PEER send-community
-   neighbor MLAG-IPV4-PEER maximum-routes 12000
-   neighbor MLAG-IPV4-PEER route-map RM-MLAG-PEER-IN in
    neighbor 10.0.0.131 peer group LOCAL-EVPN-PEERS
    neighbor 10.0.0.131 remote-as 65300
    neighbor 10.0.0.131 description C-SPINE1
@@ -753,15 +695,6 @@ router bgp 65312
    !
    address-family ipv4
       no neighbor LOCAL-EVPN-PEERS activate
-      neighbor MLAG-IPV4-PEER activate
-   !
-   vrf PROD
-      rd 10.0.0.32:50001
-      route-target import evpn 50001:50001
-      route-target export evpn 50001:50001
-      router-id 10.0.0.32
-      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER
-      redistribute connected
 ```
 
 ## BFD
@@ -797,40 +730,16 @@ router bfd
 ```eos
 ```
 
-## Filters
-
-### Route-maps
-
-#### Route-maps Summary
-
-##### RM-MLAG-PEER-IN
-
-| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
-| -------- | ---- | ----- | --- | ------------- | -------- |
-| 10 | permit | - | origin incomplete | - | - |
-
-#### Route-maps Device Configuration
-
-```eos
-!
-route-map RM-MLAG-PEER-IN permit 10
-   description Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
-   set origin incomplete
-```
-
 ## VRF Instances
 
 ### VRF Instances Summary
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
-| PROD | enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
-!
-vrf instance PROD
 ```
 
 ## Router L2 VPN

@@ -33,3 +33,16 @@ DEV:
             tags: [black]
             enabled: true
             ip_address_virtual: 10.80.80.1/24
+    l2vlans:
+      - id: 50
+        name: Yellow
+        tags: [yellow-c]
+      - id: 60
+        name: Red
+        tags: [red-c]
+      - id: 70
+        name: Brown
+        tags: [brown-c]
+      - id: 80
+        name: Black
+        tags: [black-c]

@@ -36,3 +36,16 @@ PROD:
             tags: [purple]
             enabled: true
             ip_address_virtual: 10.40.40.1/24
+    l2vlans:
+      - id: 10
+        name: Blue
+        tags: [blue-c]
+      - id: 20
+        name: Green
+        tags: [green-c]
+      - id: 30
+        name: Orange
+        tags: [orange-c]
+      - id: 40
+        name: Purple
+        tags: [purple-c]

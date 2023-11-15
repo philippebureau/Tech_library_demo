@@ -33,7 +33,7 @@ l3leaf:
     - group: C-LEAF12
       bgp_as: 65312
       filter:
-        tags: [ blue ]
+        tags: [ blue-c ]
       structured_config:
         router_l2_vpn:
           arp_learning_bridged: true
@@ -53,7 +53,7 @@ l3leaf:
     - group: A-LEAF34
       bgp_as: 65334
       filter:
-        tags: [ green, yellow, red ]
+        tags: [ green-c, yellow-c, red-c ]
       structured_config:
         router_l2_vpn:
           arp_learning_bridged: true
@@ -73,7 +73,7 @@ l3leaf:
     - group: C-LEAF56
       bgp_as: 65356
       filter:
-        tags: [ green, red ]
+        tags: [ green-c, red-c ]
       structured_config:
         router_l2_vpn:
           arp_learning_bridged: true
