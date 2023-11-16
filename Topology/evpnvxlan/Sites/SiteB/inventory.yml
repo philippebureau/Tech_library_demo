@@ -67,3 +67,14 @@ all:
           ansible_host: 172.100.100.212
         B-HOST-M:
           ansible_host: 172.100.100.213
+
+    MULTICAST_GROUP:
+      children:
+        B_SPINES:
+      hosts:
+        B-LEAF1:
+        B-LEAF2:
+        B-LEAF3:
+        B-LEAF4:
+        B-LEAF5:
+        B-LEAF6:

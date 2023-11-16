@@ -13,12 +13,12 @@ ip_routing: true
 custom_structured_configuration_ip_routing_ipv6_interfaces: false
 custom_structured_configuration_ipv6_unicast_routing: false
 
-# Enable multicast
-underlay_multicast: true
-evpn_multicast: true
-custom_structured_configuration_router_multicast:
-  ipv4:
-    software_forwarding: sfe
+# # Enable multicast
+# underlay_multicast: true
+# evpn_multicast: true
+# custom_structured_configuration_router_multicast:
+#   ipv4:
+#     software_forwarding: sfe
 
 arp:
   aging:

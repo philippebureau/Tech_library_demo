@@ -108,6 +108,10 @@ router_bgp:
       activate: true
 service_routing_protocols_model: multi-agent
 ip_routing: true
+router_multicast:
+  ipv4:
+    routing: true
+    software_forwarding: sfe
 vlan_internal_order:
   allocation: ascending
   range:
@@ -147,6 +151,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.2/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Ethernet2
   peer: A-LEAF2
   peer_interface: Ethernet2
@@ -156,6 +163,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.10/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Ethernet3
   peer: A-LEAF3
   peer_interface: Ethernet2
@@ -165,6 +175,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.18/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Ethernet4
   peer: A-LEAF4
   peer_interface: Ethernet2
@@ -174,6 +187,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.26/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Ethernet5
   peer: A-LEAF5
   peer_interface: Ethernet2
@@ -183,6 +199,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.34/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Ethernet6
   peer: A-LEAF6
   peer_interface: Ethernet2
@@ -192,6 +211,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.42/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Ethernet7
   peer: A-LEAF7
   peer_interface: Ethernet2

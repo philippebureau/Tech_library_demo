@@ -33,7 +33,6 @@
   - [ARP](#arp)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
-  - [Router Multicast](#router-multicast)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
@@ -383,22 +382,6 @@ Global ARP timeout: 1500
 
 ```eos
 ```
-
-### Router Multicast
-
-#### IP Router Multicast Summary
-
-- Software forwarding by the Software Forwarding Engine (SFE)
-
-#### Router Multicast Device Configuration
-
-```eos
-!
-router multicast
-   ipv4
-      software-forwarding sfe
-```
-
 
 ## VRF Instances
 

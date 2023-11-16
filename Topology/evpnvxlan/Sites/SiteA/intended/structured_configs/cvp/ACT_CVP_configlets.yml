@@ -24,13 +24,14 @@ cvp_configlets:
     \  description MLAG_PEER_A-LEAF2_Po1000\n   no shutdown\n   switchport\n   switchport
     mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group
     MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_A-SPINE1_Ethernet1\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.1/31\n!\ninterface
-    Ethernet2\n   description P2P_LINK_TO_A-SPINE2_Ethernet1\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.3/31\n!\ninterface Ethernet3\n
-    \  description P2P_LINK_TO_A-SPINE3_Ethernet1\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.5/31\n!\ninterface Ethernet4\n   description
-    P2P_LINK_TO_A-SPINE4_Ethernet1\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.7/31\n!\ninterface Ethernet5\n   description MLAG_PEER_A-LEAF2_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.1/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet2\n   description P2P_LINK_TO_A-SPINE2_Ethernet1\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.3/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet3\n   description P2P_LINK_TO_A-SPINE3_Ethernet1\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.5/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet4\n   description P2P_LINK_TO_A-SPINE4_Ethernet1\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.7/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet5\n   description MLAG_PEER_A-LEAF2_Ethernet5\n
     \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet6\n   description
     MLAG_PEER_A-LEAF2_Ethernet6\n   no shutdown\n   channel-group 1000 mode active\n!\ninterface
     Ethernet7\n   description HostA_NIC1\n   no shutdown\n   channel-group 7 mode
@@ -44,22 +45,22 @@ cvp_configlets:
     PROD\n   ip address virtual 10.30.30.1/24\n!\ninterface Vlan3001\n   description
     MLAG_PEER_L3_iBGP: vrf PROD\n   no shutdown\n   mtu 1500\n   vrf PROD\n   ip address
     192.0.0.0/31\n!\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no
-    shutdown\n   mtu 1500\n   ip address 192.0.0.0/31\n!\ninterface Vlan4094\n   description
-    MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 169.254.0.0/31\n!\ninterface
-    Vxlan1\n   description A-LEAF1_VTEP\n   vxlan source-interface Loopback0\n   vxlan
-    virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n
-    \  vxlan vlan 10 vni 10010\n   vxlan vlan 30 vni 10030\n   vxlan vrf PROD vni
-    50001\n   vxlan mlag source-interface Loopback1\n!\nmac address-table aging-time
-    1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing
-    vrf PROD\n!\nip extcommunity-list regexp evpn-imported permit RT.*\n!\nip prefix-list
-    PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 10.0.0.0/24 eq 32\n   seq 20 permit
-    10.1.1.0/24 eq 32\n!\nmlag configuration\n   domain-id A-LEAF12\n   local-interface
-    Vlan4094\n   peer-address 169.254.0.1\n   peer-address heartbeat 172.100.100.106\n
-    \  peer-link Port-Channel1000\n   dual-primary detection delay 5 action errdisable
-    all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\narp
-    aging timeout default 1500\n!\nroute-map RM-CONN-2-BGP permit 10\n   match ip
-    address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-OUT deny
-    10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT permit
+    shutdown\n   mtu 1500\n   ip address 192.0.0.0/31\n   pim ipv4 sparse-mode\n!\ninterface
+    Vlan4094\n   description MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n
+    \  ip address 169.254.0.0/31\n!\ninterface Vxlan1\n   description A-LEAF1_VTEP\n
+    \  vxlan source-interface Loopback0\n   vxlan virtual-router encapsulation mac-address
+    mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan
+    30 vni 10030\n   vxlan vrf PROD vni 50001\n   vxlan mlag source-interface Loopback1\n!\nmac
+    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
+    routing\nip routing vrf PROD\n!\nip extcommunity-list regexp evpn-imported permit
+    RT.*\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 10.0.0.0/24
+    eq 32\n   seq 20 permit 10.1.1.0/24 eq 32\n!\nmlag configuration\n   domain-id
+    A-LEAF12\n   local-interface Vlan4094\n   peer-address 169.254.0.1\n   peer-address
+    heartbeat 172.100.100.106\n   peer-link Port-Channel1000\n   dual-primary detection
+    delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay
+    non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map RM-CONN-2-BGP permit
+    10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-OUT
+    deny 10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT permit
     20\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx
     1200 multiplier 3\n!\nrouter bgp 65112\n   router-id 10.0.0.11\n   distance bgp
     20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
@@ -96,9 +97,9 @@ cvp_configlets:
     \     neighbor MLAG-IPV4-PEER activate\n   !\n   vrf PROD\n      rd 10.0.0.11:50001\n
     \     route-target import evpn 50001:50001\n      route-target export evpn 50001:50001\n
     \     router-id 10.0.0.11\n      neighbor 192.0.0.1 peer group MLAG-IPV4-PEER\n
-    \     redistribute connected\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    \     redistribute connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n   !\n
+    \  vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-LEAF2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\ndhcp
@@ -124,13 +125,14 @@ cvp_configlets:
     \  description MLAG_PEER_A-LEAF1_Po1000\n   no shutdown\n   switchport\n   switchport
     mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group
     MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_A-SPINE1_Ethernet2\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.9/31\n!\ninterface
-    Ethernet2\n   description P2P_LINK_TO_A-SPINE2_Ethernet2\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.11/31\n!\ninterface Ethernet3\n
-    \  description P2P_LINK_TO_A-SPINE3_Ethernet2\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.13/31\n!\ninterface Ethernet4\n   description
-    P2P_LINK_TO_A-SPINE4_Ethernet2\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.15/31\n!\ninterface Ethernet5\n   description MLAG_PEER_A-LEAF1_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.9/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet2\n   description P2P_LINK_TO_A-SPINE2_Ethernet2\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.11/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet3\n   description P2P_LINK_TO_A-SPINE3_Ethernet2\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.13/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet4\n   description P2P_LINK_TO_A-SPINE4_Ethernet2\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.15/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet5\n   description MLAG_PEER_A-LEAF1_Ethernet5\n
     \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet6\n   description
     MLAG_PEER_A-LEAF1_Ethernet6\n   no shutdown\n   channel-group 1000 mode active\n!\ninterface
     Ethernet7\n   description HostA_NIC2\n   no shutdown\n   channel-group 7 mode
@@ -144,22 +146,22 @@ cvp_configlets:
     PROD\n   ip address virtual 10.30.30.1/24\n!\ninterface Vlan3001\n   description
     MLAG_PEER_L3_iBGP: vrf PROD\n   no shutdown\n   mtu 1500\n   vrf PROD\n   ip address
     192.0.0.1/31\n!\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no
-    shutdown\n   mtu 1500\n   ip address 192.0.0.1/31\n!\ninterface Vlan4094\n   description
-    MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 169.254.0.1/31\n!\ninterface
-    Vxlan1\n   description A-LEAF2_VTEP\n   vxlan source-interface Loopback0\n   vxlan
-    virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n
-    \  vxlan vlan 10 vni 10010\n   vxlan vlan 30 vni 10030\n   vxlan vrf PROD vni
-    50001\n   vxlan mlag source-interface Loopback1\n!\nmac address-table aging-time
-    1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip routing
-    vrf PROD\n!\nip extcommunity-list regexp evpn-imported permit RT.*\n!\nip prefix-list
-    PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 10.0.0.0/24 eq 32\n   seq 20 permit
-    10.1.1.0/24 eq 32\n!\nmlag configuration\n   domain-id A-LEAF12\n   local-interface
-    Vlan4094\n   peer-address 169.254.0.0\n   peer-address heartbeat 172.100.100.105\n
-    \  peer-link Port-Channel1000\n   dual-primary detection delay 5 action errdisable
-    all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\narp
-    aging timeout default 1500\n!\nroute-map RM-CONN-2-BGP permit 10\n   match ip
-    address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-OUT deny
-    10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT permit
+    shutdown\n   mtu 1500\n   ip address 192.0.0.1/31\n   pim ipv4 sparse-mode\n!\ninterface
+    Vlan4094\n   description MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n
+    \  ip address 169.254.0.1/31\n!\ninterface Vxlan1\n   description A-LEAF2_VTEP\n
+    \  vxlan source-interface Loopback0\n   vxlan virtual-router encapsulation mac-address
+    mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan
+    30 vni 10030\n   vxlan vrf PROD vni 50001\n   vxlan mlag source-interface Loopback1\n!\nmac
+    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
+    routing\nip routing vrf PROD\n!\nip extcommunity-list regexp evpn-imported permit
+    RT.*\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 10.0.0.0/24
+    eq 32\n   seq 20 permit 10.1.1.0/24 eq 32\n!\nmlag configuration\n   domain-id
+    A-LEAF12\n   local-interface Vlan4094\n   peer-address 169.254.0.0\n   peer-address
+    heartbeat 172.100.100.105\n   peer-link Port-Channel1000\n   dual-primary detection
+    delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay
+    non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map RM-CONN-2-BGP permit
+    10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-OUT
+    deny 10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT permit
     20\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx
     1200 multiplier 3\n!\nrouter bgp 65112\n   router-id 10.0.0.12\n   distance bgp
     20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
@@ -196,7 +198,8 @@ cvp_configlets:
     activate\n      neighbor MLAG-IPV4-PEER activate\n   !\n   vrf PROD\n      rd
     10.0.0.12:50001\n      route-target import evpn 50001:50001\n      route-target
     export evpn 50001:50001\n      router-id 10.0.0.12\n      neighbor 192.0.0.0 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n!\nmanagement api http-commands\n
+    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter multicast\n   ipv4\n
+    \     routing\n      software-forwarding sfe\n!\nmanagement api http-commands\n
     \  protocol https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent
     KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-LEAF3: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
@@ -224,12 +227,13 @@ cvp_configlets:
     MLAG_PEER_A-LEAF4_Po1000\n   no shutdown\n   switchport\n   switchport mode trunk\n
     \  switchport trunk group LEAF_PEER_L3\n   switchport trunk group MLAG\n!\ninterface
     Ethernet1\n   description P2P_LINK_TO_A-SPINE1_Ethernet3\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.17/31\n!\ninterface Ethernet2\n
-    \  description P2P_LINK_TO_A-SPINE2_Ethernet3\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.19/31\n!\ninterface Ethernet3\n   description
-    P2P_LINK_TO_A-SPINE3_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.21/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_A-SPINE4_Ethernet3\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.23/31\n!\ninterface
+    1500\n   no switchport\n   ip address 192.168.0.17/31\n   pim ipv4 sparse-mode\n!\ninterface
+    Ethernet2\n   description P2P_LINK_TO_A-SPINE2_Ethernet3\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 192.168.0.19/31\n   pim ipv4 sparse-mode\n!\ninterface
+    Ethernet3\n   description P2P_LINK_TO_A-SPINE3_Ethernet3\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 192.168.0.21/31\n   pim ipv4 sparse-mode\n!\ninterface
+    Ethernet4\n   description P2P_LINK_TO_A-SPINE4_Ethernet3\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 192.168.0.23/31\n   pim ipv4 sparse-mode\n!\ninterface
     Ethernet5\n   description MLAG_PEER_A-LEAF4_Ethernet5\n   no shutdown\n   channel-group
     1000 mode active\n!\ninterface Ethernet6\n   description MLAG_PEER_A-LEAF4_Ethernet6\n
     \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet7\n   description
@@ -247,26 +251,26 @@ cvp_configlets:
     \  no shutdown\n   mtu 1500\n   vrf PROD\n   ip address 192.0.0.0/31\n!\ninterface
     Vlan3002\n   description MLAG_PEER_L3_iBGP: vrf DEV\n   no shutdown\n   mtu 1500\n
     \  vrf DEV\n   ip address 192.0.0.0/31\n!\ninterface Vlan4093\n   description
-    MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip address 192.0.0.0/31\n!\ninterface
-    Vlan4094\n   description MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n
-    \  ip address 169.254.0.0/31\n!\ninterface Vxlan1\n   description A-LEAF3_VTEP\n
-    \  vxlan source-interface Loopback0\n   vxlan virtual-router encapsulation mac-address
-    mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan
-    30 vni 10030\n   vxlan vlan 50 vni 10050\n   vxlan vrf DEV vni 50002\n   vxlan
-    vrf PROD vni 50001\n   vxlan mlag source-interface Loopback1\n!\nmac address-table
-    aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip
-    routing vrf DEV\nip routing vrf PROD\n!\nip extcommunity-list regexp evpn-imported
-    permit RT.*\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 10.0.0.0/24
-    eq 32\n   seq 20 permit 10.1.1.0/24 eq 32\n!\nmlag configuration\n   domain-id
-    A-LEAF34\n   local-interface Vlan4094\n   peer-address 169.254.0.1\n   peer-address
-    heartbeat 172.100.100.108\n   peer-link Port-Channel1000\n   dual-primary detection
-    delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay
-    non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map RM-CONN-2-BGP permit
-    10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-OUT
-    deny 10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT permit
-    20\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx
-    1200 multiplier 3\n!\nrouter bgp 65134\n   router-id 10.0.0.13\n   distance bgp
-    20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip address 192.0.0.0/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no
+    shutdown\n   mtu 1500\n   no autostate\n   ip address 169.254.0.0/31\n!\ninterface
+    Vxlan1\n   description A-LEAF3_VTEP\n   vxlan source-interface Loopback0\n   vxlan
+    virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n
+    \  vxlan vlan 10 vni 10010\n   vxlan vlan 30 vni 10030\n   vxlan vlan 50 vni 10050\n
+    \  vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n   vxlan mlag source-interface
+    Loopback1\n!\nmac address-table aging-time 1800\n!\nip virtual-router mac-address
+    00:1c:73:00:00:01\n!\nip routing\nip routing vrf DEV\nip routing vrf PROD\n!\nip
+    extcommunity-list regexp evpn-imported permit RT.*\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
+    \  seq 10 permit 10.0.0.0/24 eq 32\n   seq 20 permit 10.1.1.0/24 eq 32\n!\nmlag
+    configuration\n   domain-id A-LEAF34\n   local-interface Vlan4094\n   peer-address
+    169.254.0.1\n   peer-address heartbeat 172.100.100.108\n   peer-link Port-Channel1000\n
+    \  dual-primary detection delay 5 action errdisable all-interfaces\n   reload-delay
+    mlag 300\n   reload-delay non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map
+    RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map
+    RM-MLAG-PEER-OUT deny 10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT
+    permit 20\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200
+    min-rx 1200 multiplier 3\n!\nrouter bgp 65134\n   router-id 10.0.0.13\n   distance
+    bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
     4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
     \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
     bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
@@ -304,7 +308,8 @@ cvp_configlets:
     group MLAG-IPV4-PEER\n      redistribute connected\n   !\n   vrf PROD\n      rd
     10.0.0.13:50001\n      route-target import evpn 50001:50001\n      route-target
     export evpn 50001:50001\n      router-id 10.0.0.13\n      neighbor 192.0.0.1 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n!\nmanagement api http-commands\n
+    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter multicast\n   ipv4\n
+    \     routing\n      software-forwarding sfe\n!\nmanagement api http-commands\n
     \  protocol https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent
     KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-LEAF4: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
@@ -332,12 +337,13 @@ cvp_configlets:
     MLAG_PEER_A-LEAF3_Po1000\n   no shutdown\n   switchport\n   switchport mode trunk\n
     \  switchport trunk group LEAF_PEER_L3\n   switchport trunk group MLAG\n!\ninterface
     Ethernet1\n   description P2P_LINK_TO_A-SPINE1_Ethernet4\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.25/31\n!\ninterface Ethernet2\n
-    \  description P2P_LINK_TO_A-SPINE2_Ethernet4\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.27/31\n!\ninterface Ethernet3\n   description
-    P2P_LINK_TO_A-SPINE3_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.29/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_A-SPINE4_Ethernet4\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.31/31\n!\ninterface
+    1500\n   no switchport\n   ip address 192.168.0.25/31\n   pim ipv4 sparse-mode\n!\ninterface
+    Ethernet2\n   description P2P_LINK_TO_A-SPINE2_Ethernet4\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 192.168.0.27/31\n   pim ipv4 sparse-mode\n!\ninterface
+    Ethernet3\n   description P2P_LINK_TO_A-SPINE3_Ethernet4\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 192.168.0.29/31\n   pim ipv4 sparse-mode\n!\ninterface
+    Ethernet4\n   description P2P_LINK_TO_A-SPINE4_Ethernet4\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 192.168.0.31/31\n   pim ipv4 sparse-mode\n!\ninterface
     Ethernet5\n   description MLAG_PEER_A-LEAF3_Ethernet5\n   no shutdown\n   channel-group
     1000 mode active\n!\ninterface Ethernet6\n   description MLAG_PEER_A-LEAF3_Ethernet6\n
     \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet7\n   description
@@ -355,26 +361,26 @@ cvp_configlets:
     \  no shutdown\n   mtu 1500\n   vrf PROD\n   ip address 192.0.0.1/31\n!\ninterface
     Vlan3002\n   description MLAG_PEER_L3_iBGP: vrf DEV\n   no shutdown\n   mtu 1500\n
     \  vrf DEV\n   ip address 192.0.0.1/31\n!\ninterface Vlan4093\n   description
-    MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip address 192.0.0.1/31\n!\ninterface
-    Vlan4094\n   description MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n
-    \  ip address 169.254.0.1/31\n!\ninterface Vxlan1\n   description A-LEAF4_VTEP\n
-    \  vxlan source-interface Loopback0\n   vxlan virtual-router encapsulation mac-address
-    mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan
-    30 vni 10030\n   vxlan vlan 50 vni 10050\n   vxlan vrf DEV vni 50002\n   vxlan
-    vrf PROD vni 50001\n   vxlan mlag source-interface Loopback1\n!\nmac address-table
-    aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip routing\nip
-    routing vrf DEV\nip routing vrf PROD\n!\nip extcommunity-list regexp evpn-imported
-    permit RT.*\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 10.0.0.0/24
-    eq 32\n   seq 20 permit 10.1.1.0/24 eq 32\n!\nmlag configuration\n   domain-id
-    A-LEAF34\n   local-interface Vlan4094\n   peer-address 169.254.0.0\n   peer-address
-    heartbeat 172.100.100.107\n   peer-link Port-Channel1000\n   dual-primary detection
-    delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay
-    non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map RM-CONN-2-BGP permit
-    10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-OUT
-    deny 10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT permit
-    20\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx
-    1200 multiplier 3\n!\nrouter bgp 65134\n   router-id 10.0.0.14\n   distance bgp
-    20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip address 192.0.0.1/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no
+    shutdown\n   mtu 1500\n   no autostate\n   ip address 169.254.0.1/31\n!\ninterface
+    Vxlan1\n   description A-LEAF4_VTEP\n   vxlan source-interface Loopback0\n   vxlan
+    virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n
+    \  vxlan vlan 10 vni 10010\n   vxlan vlan 30 vni 10030\n   vxlan vlan 50 vni 10050\n
+    \  vxlan vrf DEV vni 50002\n   vxlan vrf PROD vni 50001\n   vxlan mlag source-interface
+    Loopback1\n!\nmac address-table aging-time 1800\n!\nip virtual-router mac-address
+    00:1c:73:00:00:01\n!\nip routing\nip routing vrf DEV\nip routing vrf PROD\n!\nip
+    extcommunity-list regexp evpn-imported permit RT.*\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
+    \  seq 10 permit 10.0.0.0/24 eq 32\n   seq 20 permit 10.1.1.0/24 eq 32\n!\nmlag
+    configuration\n   domain-id A-LEAF34\n   local-interface Vlan4094\n   peer-address
+    169.254.0.0\n   peer-address heartbeat 172.100.100.107\n   peer-link Port-Channel1000\n
+    \  dual-primary detection delay 5 action errdisable all-interfaces\n   reload-delay
+    mlag 300\n   reload-delay non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map
+    RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map
+    RM-MLAG-PEER-OUT deny 10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT
+    permit 20\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200
+    min-rx 1200 multiplier 3\n!\nrouter bgp 65134\n   router-id 10.0.0.14\n   distance
+    bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
     4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
     \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
     bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
@@ -412,7 +418,8 @@ cvp_configlets:
     group MLAG-IPV4-PEER\n      redistribute connected\n   !\n   vrf PROD\n      rd
     10.0.0.14:50001\n      route-target import evpn 50001:50001\n      route-target
     export evpn 50001:50001\n      router-id 10.0.0.14\n      neighbor 192.0.0.0 peer
-    group MLAG-IPV4-PEER\n      redistribute connected\n!\nmanagement api http-commands\n
+    group MLAG-IPV4-PEER\n      redistribute connected\n!\nrouter multicast\n   ipv4\n
+    \     routing\n      software-forwarding sfe\n!\nmanagement api http-commands\n
     \  protocol https\n   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent
     KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-LEAF5: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
@@ -438,13 +445,14 @@ cvp_configlets:
     Port-Channel1000\n   description MLAG_PEER_A-LEAF6_Po1000\n   no shutdown\n   switchport\n
     \  switchport mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport
     trunk group MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_A-SPINE1_Ethernet5\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.33/31\n!\ninterface
-    Ethernet2\n   description P2P_LINK_TO_A-SPINE2_Ethernet5\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.35/31\n!\ninterface Ethernet3\n
-    \  description P2P_LINK_TO_A-SPINE3_Ethernet5\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.37/31\n!\ninterface Ethernet4\n   description
-    P2P_LINK_TO_A-SPINE4_Ethernet5\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.39/31\n!\ninterface Ethernet5\n   description MLAG_PEER_A-LEAF6_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.33/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet2\n   description P2P_LINK_TO_A-SPINE2_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.35/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet3\n   description P2P_LINK_TO_A-SPINE3_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.37/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet4\n   description P2P_LINK_TO_A-SPINE4_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.39/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet5\n   description MLAG_PEER_A-LEAF6_Ethernet5\n
     \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet6\n   description
     MLAG_PEER_A-LEAF6_Ethernet6\n   no shutdown\n   channel-group 1000 mode active\n!\ninterface
     Ethernet7\n   description HostF_NIC1\n   no shutdown\n   channel-group 7 mode
@@ -456,24 +464,24 @@ cvp_configlets:
     10.70.70.1/24\n!\ninterface Vlan3002\n   description MLAG_PEER_L3_iBGP: vrf DEV\n
     \  no shutdown\n   mtu 1500\n   vrf DEV\n   ip address 192.0.0.0/31\n!\ninterface
     Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip
-    address 192.0.0.0/31\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no shutdown\n
-    \  mtu 1500\n   no autostate\n   ip address 169.254.0.0/31\n!\ninterface Vxlan1\n
-    \  description A-LEAF5_VTEP\n   vxlan source-interface Loopback0\n   vxlan virtual-router
-    encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan
-    70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan mlag source-interface Loopback1\n!\nmac
-    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
-    routing\nip routing vrf DEV\n!\nip extcommunity-list regexp evpn-imported permit
-    RT.*\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 10.0.0.0/24
-    eq 32\n   seq 20 permit 10.1.1.0/24 eq 32\n!\nmlag configuration\n   domain-id
-    A-LEAF56\n   local-interface Vlan4094\n   peer-address 169.254.0.1\n   peer-address
-    heartbeat 172.100.100.110\n   peer-link Port-Channel1000\n   dual-primary detection
-    delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay
-    non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map RM-CONN-2-BGP permit
-    10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-OUT
-    deny 10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT permit
-    20\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx
-    1200 multiplier 3\n!\nrouter bgp 65156\n   router-id 10.0.0.15\n   distance bgp
-    20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    address 192.0.0.0/31\n   pim ipv4 sparse-mode\n!\ninterface Vlan4094\n   description
+    MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 169.254.0.0/31\n!\ninterface
+    Vxlan1\n   description A-LEAF5_VTEP\n   vxlan source-interface Loopback0\n   vxlan
+    virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n
+    \  vxlan vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan mlag source-interface
+    Loopback1\n!\nmac address-table aging-time 1800\n!\nip virtual-router mac-address
+    00:1c:73:00:00:01\n!\nip routing\nip routing vrf DEV\n!\nip extcommunity-list
+    regexp evpn-imported permit RT.*\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
+    \  seq 10 permit 10.0.0.0/24 eq 32\n   seq 20 permit 10.1.1.0/24 eq 32\n!\nmlag
+    configuration\n   domain-id A-LEAF56\n   local-interface Vlan4094\n   peer-address
+    169.254.0.1\n   peer-address heartbeat 172.100.100.110\n   peer-link Port-Channel1000\n
+    \  dual-primary detection delay 5 action errdisable all-interfaces\n   reload-delay
+    mlag 300\n   reload-delay non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map
+    RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map
+    RM-MLAG-PEER-OUT deny 10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT
+    permit 20\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200
+    min-rx 1200 multiplier 3\n!\nrouter bgp 65156\n   router-id 10.0.0.15\n   distance
+    bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
     4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
     \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
     bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
@@ -506,8 +514,9 @@ cvp_configlets:
     MLAG-IPV4-PEER activate\n   !\n   vrf DEV\n      rd 10.0.0.15:50002\n      route-target
     import evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
     10.0.0.15\n      neighbor 192.0.0.1 peer group MLAG-IPV4-PEER\n      redistribute
-    connected\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n   !\n
+    \  vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-LEAF6: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\ndhcp
@@ -531,13 +540,14 @@ cvp_configlets:
     Port-Channel1000\n   description MLAG_PEER_A-LEAF5_Po1000\n   no shutdown\n   switchport\n
     \  switchport mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport
     trunk group MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_A-SPINE1_Ethernet6\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.41/31\n!\ninterface
-    Ethernet2\n   description P2P_LINK_TO_A-SPINE2_Ethernet6\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.43/31\n!\ninterface Ethernet3\n
-    \  description P2P_LINK_TO_A-SPINE3_Ethernet6\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.45/31\n!\ninterface Ethernet4\n   description
-    P2P_LINK_TO_A-SPINE4_Ethernet6\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.47/31\n!\ninterface Ethernet5\n   description MLAG_PEER_A-LEAF5_Ethernet5\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.41/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet2\n   description P2P_LINK_TO_A-SPINE2_Ethernet6\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.43/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet3\n   description P2P_LINK_TO_A-SPINE3_Ethernet6\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.45/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet4\n   description P2P_LINK_TO_A-SPINE4_Ethernet6\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.47/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet5\n   description MLAG_PEER_A-LEAF5_Ethernet5\n
     \  no shutdown\n   channel-group 1000 mode active\n!\ninterface Ethernet6\n   description
     MLAG_PEER_A-LEAF5_Ethernet6\n   no shutdown\n   channel-group 1000 mode active\n!\ninterface
     Ethernet7\n   description HostF_NIC2\n   no shutdown\n   channel-group 7 mode
@@ -549,24 +559,24 @@ cvp_configlets:
     10.70.70.1/24\n!\ninterface Vlan3002\n   description MLAG_PEER_L3_iBGP: vrf DEV\n
     \  no shutdown\n   mtu 1500\n   vrf DEV\n   ip address 192.0.0.1/31\n!\ninterface
     Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip
-    address 192.0.0.1/31\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no shutdown\n
-    \  mtu 1500\n   no autostate\n   ip address 169.254.0.1/31\n!\ninterface Vxlan1\n
-    \  description A-LEAF6_VTEP\n   vxlan source-interface Loopback0\n   vxlan virtual-router
-    encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan
-    70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan mlag source-interface Loopback1\n!\nmac
-    address-table aging-time 1800\n!\nip virtual-router mac-address 00:1c:73:00:00:01\n!\nip
-    routing\nip routing vrf DEV\n!\nip extcommunity-list regexp evpn-imported permit
-    RT.*\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 10.0.0.0/24
-    eq 32\n   seq 20 permit 10.1.1.0/24 eq 32\n!\nmlag configuration\n   domain-id
-    A-LEAF56\n   local-interface Vlan4094\n   peer-address 169.254.0.0\n   peer-address
-    heartbeat 172.100.100.109\n   peer-link Port-Channel1000\n   dual-primary detection
-    delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay
-    non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map RM-CONN-2-BGP permit
-    10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-OUT
-    deny 10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT permit
-    20\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx
-    1200 multiplier 3\n!\nrouter bgp 65156\n   router-id 10.0.0.16\n   distance bgp
-    20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
+    address 192.0.0.1/31\n   pim ipv4 sparse-mode\n!\ninterface Vlan4094\n   description
+    MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 169.254.0.1/31\n!\ninterface
+    Vxlan1\n   description A-LEAF6_VTEP\n   vxlan source-interface Loopback0\n   vxlan
+    virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n
+    \  vxlan vlan 70 vni 10070\n   vxlan vrf DEV vni 50002\n   vxlan mlag source-interface
+    Loopback1\n!\nmac address-table aging-time 1800\n!\nip virtual-router mac-address
+    00:1c:73:00:00:01\n!\nip routing\nip routing vrf DEV\n!\nip extcommunity-list
+    regexp evpn-imported permit RT.*\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
+    \  seq 10 permit 10.0.0.0/24 eq 32\n   seq 20 permit 10.1.1.0/24 eq 32\n!\nmlag
+    configuration\n   domain-id A-LEAF56\n   local-interface Vlan4094\n   peer-address
+    169.254.0.0\n   peer-address heartbeat 172.100.100.109\n   peer-link Port-Channel1000\n
+    \  dual-primary detection delay 5 action errdisable all-interfaces\n   reload-delay
+    mlag 300\n   reload-delay non-mlag 330\n!\narp aging timeout default 1500\n!\nroute-map
+    RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map
+    RM-MLAG-PEER-OUT deny 10\n   match extcommunity evpn-imported\n!\nroute-map RM-MLAG-PEER-OUT
+    permit 20\n   set origin incomplete\n!\nrouter bfd\n   multihop interval 1200
+    min-rx 1200 multiplier 3\n!\nrouter bgp 65156\n   router-id 10.0.0.16\n   distance
+    bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths
     4 ecmp 4\n   no bgp default ipv4-unicast\n   neighbor LOCAL-EVPN-PEERS peer group\n
     \  neighbor LOCAL-EVPN-PEERS update-source Loopback0\n   neighbor LOCAL-EVPN-PEERS
     bfd\n   neighbor LOCAL-EVPN-PEERS ebgp-multihop 3\n   neighbor LOCAL-EVPN-PEERS
@@ -599,8 +609,9 @@ cvp_configlets:
     MLAG-IPV4-PEER activate\n   !\n   vrf DEV\n      rd 10.0.0.16:50002\n      route-target
     import evpn 50002:50002\n      route-target export evpn 50002:50002\n      router-id
     10.0.0.16\n      neighbor 192.0.0.0 peer group MLAG-IPV4-PEER\n      redistribute
-    connected\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n
-    \  !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    connected\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n   !\n
+    \  vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-LEAF7: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\ndhcp
@@ -857,23 +868,24 @@ cvp_configlets:
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\ninterface Ethernet1\n   description P2P_LINK_TO_A-LEAF1_Ethernet1\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.0/31\n!\ninterface
-    Ethernet2\n   description P2P_LINK_TO_A-LEAF2_Ethernet1\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.8/31\n!\ninterface Ethernet3\n
-    \  description P2P_LINK_TO_A-LEAF3_Ethernet1\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.16/31\n!\ninterface Ethernet4\n   description
-    P2P_LINK_TO_A-LEAF4_Ethernet1\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.24/31\n!\ninterface Ethernet5\n   description P2P_LINK_TO_A-LEAF5_Ethernet1\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.32/31\n!\ninterface
-    Ethernet6\n   description P2P_LINK_TO_A-LEAF6_Ethernet1\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.40/31\n!\ninterface Ethernet7\n
-    \  description P2P_LINK_TO_A-LEAF7_Ethernet1\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.48/31\n!\ninterface Ethernet8\n   description
-    P2P_LINK_TO_A-LEAF8_Ethernet1\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.56/31\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
-    \  no shutdown\n   ip address 10.0.0.111/32\n!\ninterface Management1\n   description
-    oob_management\n   no shutdown\n   ip address 172.100.100.101/24\n!\nmac address-table
-    aging-time 1800\n!\nip routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.0/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet2\n   description P2P_LINK_TO_A-LEAF2_Ethernet1\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.8/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet3\n   description P2P_LINK_TO_A-LEAF3_Ethernet1\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.16/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet4\n   description P2P_LINK_TO_A-LEAF4_Ethernet1\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.24/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet5\n   description P2P_LINK_TO_A-LEAF5_Ethernet1\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.32/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet6\n   description P2P_LINK_TO_A-LEAF6_Ethernet1\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.40/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet7\n   description P2P_LINK_TO_A-LEAF7_Ethernet1\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.48/31\n!\ninterface
+    Ethernet8\n   description P2P_LINK_TO_A-LEAF8_Ethernet1\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 192.168.0.56/31\n!\ninterface Loopback0\n
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.111/32\n!\ninterface
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.101/24\n!\nmac
+    address-table aging-time 1800\n!\nip routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
     \  seq 10 permit 10.0.0.0/24 eq 32\n!\narp aging timeout default 1500\n!\nroute-map
     RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter
     bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65100\n
@@ -914,9 +926,9 @@ cvp_configlets:
     192.168.0.57 description A-LEAF8_Ethernet1\n   redistribute connected route-map
     RM-CONN-2-BGP\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n
     \  !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n      neighbor
-    LOCAL-IPV4-PEERS activate\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    LOCAL-IPV4-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n   !\n
+    \  vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-SPINE2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -931,23 +943,24 @@ cvp_configlets:
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\ninterface Ethernet1\n   description P2P_LINK_TO_A-LEAF1_Ethernet2\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.2/31\n!\ninterface
-    Ethernet2\n   description P2P_LINK_TO_A-LEAF2_Ethernet2\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.10/31\n!\ninterface Ethernet3\n
-    \  description P2P_LINK_TO_A-LEAF3_Ethernet2\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.18/31\n!\ninterface Ethernet4\n   description
-    P2P_LINK_TO_A-LEAF4_Ethernet2\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.26/31\n!\ninterface Ethernet5\n   description P2P_LINK_TO_A-LEAF5_Ethernet2\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.34/31\n!\ninterface
-    Ethernet6\n   description P2P_LINK_TO_A-LEAF6_Ethernet2\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.42/31\n!\ninterface Ethernet7\n
-    \  description P2P_LINK_TO_A-LEAF7_Ethernet2\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.50/31\n!\ninterface Ethernet8\n   description
-    P2P_LINK_TO_A-LEAF8_Ethernet2\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.58/31\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
-    \  no shutdown\n   ip address 10.0.0.112/32\n!\ninterface Management1\n   description
-    oob_management\n   no shutdown\n   ip address 172.100.100.102/24\n!\nmac address-table
-    aging-time 1800\n!\nip routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.2/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet2\n   description P2P_LINK_TO_A-LEAF2_Ethernet2\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.10/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet3\n   description P2P_LINK_TO_A-LEAF3_Ethernet2\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.18/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet4\n   description P2P_LINK_TO_A-LEAF4_Ethernet2\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.26/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet5\n   description P2P_LINK_TO_A-LEAF5_Ethernet2\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.34/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet6\n   description P2P_LINK_TO_A-LEAF6_Ethernet2\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.42/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet7\n   description P2P_LINK_TO_A-LEAF7_Ethernet2\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.50/31\n!\ninterface
+    Ethernet8\n   description P2P_LINK_TO_A-LEAF8_Ethernet2\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 192.168.0.58/31\n!\ninterface Loopback0\n
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.112/32\n!\ninterface
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.102/24\n!\nmac
+    address-table aging-time 1800\n!\nip routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
     \  seq 10 permit 10.0.0.0/24 eq 32\n!\narp aging timeout default 1500\n!\nroute-map
     RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter
     bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65100\n
@@ -988,9 +1001,9 @@ cvp_configlets:
     192.168.0.59 description A-LEAF8_Ethernet2\n   redistribute connected route-map
     RM-CONN-2-BGP\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n
     \  !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n      neighbor
-    LOCAL-IPV4-PEERS activate\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    LOCAL-IPV4-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n   !\n
+    \  vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-SPINE3: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -1005,23 +1018,24 @@ cvp_configlets:
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\ninterface Ethernet1\n   description P2P_LINK_TO_A-LEAF1_Ethernet3\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.4/31\n!\ninterface
-    Ethernet2\n   description P2P_LINK_TO_A-LEAF2_Ethernet3\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.12/31\n!\ninterface Ethernet3\n
-    \  description P2P_LINK_TO_A-LEAF3_Ethernet3\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.20/31\n!\ninterface Ethernet4\n   description
-    P2P_LINK_TO_A-LEAF4_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.28/31\n!\ninterface Ethernet5\n   description P2P_LINK_TO_A-LEAF5_Ethernet3\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.36/31\n!\ninterface
-    Ethernet6\n   description P2P_LINK_TO_A-LEAF6_Ethernet3\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.44/31\n!\ninterface Ethernet7\n
-    \  description P2P_LINK_TO_A-LEAF7_Ethernet3\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.52/31\n!\ninterface Ethernet8\n   description
-    P2P_LINK_TO_A-LEAF8_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.60/31\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
-    \  no shutdown\n   ip address 10.0.0.113/32\n!\ninterface Management1\n   description
-    oob_management\n   no shutdown\n   ip address 172.100.100.103/24\n!\nmac address-table
-    aging-time 1800\n!\nip routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.4/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet2\n   description P2P_LINK_TO_A-LEAF2_Ethernet3\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.12/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet3\n   description P2P_LINK_TO_A-LEAF3_Ethernet3\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.20/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet4\n   description P2P_LINK_TO_A-LEAF4_Ethernet3\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.28/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet5\n   description P2P_LINK_TO_A-LEAF5_Ethernet3\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.36/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet6\n   description P2P_LINK_TO_A-LEAF6_Ethernet3\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.44/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet7\n   description P2P_LINK_TO_A-LEAF7_Ethernet3\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.52/31\n!\ninterface
+    Ethernet8\n   description P2P_LINK_TO_A-LEAF8_Ethernet3\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 192.168.0.60/31\n!\ninterface Loopback0\n
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.113/32\n!\ninterface
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.103/24\n!\nmac
+    address-table aging-time 1800\n!\nip routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
     \  seq 10 permit 10.0.0.0/24 eq 32\n!\narp aging timeout default 1500\n!\nroute-map
     RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter
     bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65100\n
@@ -1062,9 +1076,9 @@ cvp_configlets:
     192.168.0.61 description A-LEAF8_Ethernet3\n   redistribute connected route-map
     RM-CONN-2-BGP\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n
     \  !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n      neighbor
-    LOCAL-IPV4-PEERS activate\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    LOCAL-IPV4-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n   !\n
+    \  vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
   AVD_A-SPINE4: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr
     -cvaddr=172.100.100.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata
     -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n!\nvlan
@@ -1079,23 +1093,24 @@ cvp_configlets:
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\ninterface Ethernet1\n   description P2P_LINK_TO_A-LEAF1_Ethernet4\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.6/31\n!\ninterface
-    Ethernet2\n   description P2P_LINK_TO_A-LEAF2_Ethernet4\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.14/31\n!\ninterface Ethernet3\n
-    \  description P2P_LINK_TO_A-LEAF3_Ethernet4\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.22/31\n!\ninterface Ethernet4\n   description
-    P2P_LINK_TO_A-LEAF4_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.30/31\n!\ninterface Ethernet5\n   description P2P_LINK_TO_A-LEAF5_Ethernet4\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.38/31\n!\ninterface
-    Ethernet6\n   description P2P_LINK_TO_A-LEAF6_Ethernet4\n   no shutdown\n   mtu
-    1500\n   no switchport\n   ip address 192.168.0.46/31\n!\ninterface Ethernet7\n
-    \  description P2P_LINK_TO_A-LEAF7_Ethernet4\n   no shutdown\n   mtu 1500\n   no
-    switchport\n   ip address 192.168.0.54/31\n!\ninterface Ethernet8\n   description
-    P2P_LINK_TO_A-LEAF8_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n
-    \  ip address 192.168.0.62/31\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n
-    \  no shutdown\n   ip address 10.0.0.114/32\n!\ninterface Management1\n   description
-    oob_management\n   no shutdown\n   ip address 172.100.100.104/24\n!\nmac address-table
-    aging-time 1800\n!\nip routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.6/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet2\n   description P2P_LINK_TO_A-LEAF2_Ethernet4\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.14/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet3\n   description P2P_LINK_TO_A-LEAF3_Ethernet4\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.22/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet4\n   description P2P_LINK_TO_A-LEAF4_Ethernet4\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.30/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet5\n   description P2P_LINK_TO_A-LEAF5_Ethernet4\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.38/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet6\n   description P2P_LINK_TO_A-LEAF6_Ethernet4\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.46/31\n
+    \  pim ipv4 sparse-mode\n!\ninterface Ethernet7\n   description P2P_LINK_TO_A-LEAF7_Ethernet4\n
+    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.0.54/31\n!\ninterface
+    Ethernet8\n   description P2P_LINK_TO_A-LEAF8_Ethernet4\n   no shutdown\n   mtu
+    1500\n   no switchport\n   ip address 192.168.0.62/31\n!\ninterface Loopback0\n
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 10.0.0.114/32\n!\ninterface
+    Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.104/24\n!\nmac
+    address-table aging-time 1800\n!\nip routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n
     \  seq 10 permit 10.0.0.0/24 eq 32\n!\narp aging timeout default 1500\n!\nroute-map
     RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter
     bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65100\n
@@ -1136,9 +1151,9 @@ cvp_configlets:
     192.168.0.63 description A-LEAF8_Ethernet4\n   redistribute connected route-map
     RM-CONN-2-BGP\n   !\n   address-family evpn\n      neighbor LOCAL-EVPN-PEERS activate\n
     \  !\n   address-family ipv4\n      no neighbor LOCAL-EVPN-PEERS activate\n      neighbor
-    LOCAL-IPV4-PEERS activate\n!\nmanagement api http-commands\n   protocol https\n
-    \  no shutdown\n   !\n   vrf default\n      no shutdown\n!\nagent KernelFib environment
-    KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
+    LOCAL-IPV4-PEERS activate\n!\nrouter multicast\n   ipv4\n      routing\n      software-forwarding
+    sfe\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n   !\n
+    \  vrf default\n      no shutdown\n!\nagent KernelFib environment KERNELFIB_PROGRAM_ALL_ECMP='true'\n\n!\nend\n"
 cvp_topology:
   A_LEAFS:
     devices:

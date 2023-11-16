@@ -60,3 +60,14 @@ all:
           ansible_host: 172.100.100.205
         A-HOST-F:
           ansible_host: 172.100.100.206
+
+    MULTICAST_GROUP:
+      children:
+        A_SPINES:
+      hosts:
+        A-LEAF1:
+        A-LEAF2:
+        A-LEAF3:
+        A-LEAF4:
+        A-LEAF5:
+        A-LEAF6:

@@ -49,6 +49,8 @@
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
+  - [Router Multicast](#router-multicast)
+  - [PIM Sparse Mode](#pim-sparse-mode)
 - [Filters](#filters)
   - [Prefix-lists](#prefix-lists)
   - [Route-maps](#route-maps)
@@ -403,6 +405,7 @@ interface Ethernet1
    mtu 1500
    no switchport
    ip address 192.168.0.25/31
+   pim ipv4 sparse-mode
 !
 interface Ethernet2
    description P2P_LINK_TO_A-SPINE2_Ethernet4
@@ -410,6 +413,7 @@ interface Ethernet2
    mtu 1500
    no switchport
    ip address 192.168.0.27/31
+   pim ipv4 sparse-mode
 !
 interface Ethernet3
    description P2P_LINK_TO_A-SPINE3_Ethernet4
@@ -417,6 +421,7 @@ interface Ethernet3
    mtu 1500
    no switchport
    ip address 192.168.0.29/31
+   pim ipv4 sparse-mode
 !
 interface Ethernet4
    description P2P_LINK_TO_A-SPINE4_Ethernet4
@@ -424,6 +429,7 @@ interface Ethernet4
    mtu 1500
    no switchport
    ip address 192.168.0.31/31
+   pim ipv4 sparse-mode
 !
 interface Ethernet5
    description MLAG_PEER_A-LEAF3_Ethernet5
@@ -582,6 +588,7 @@ interface Vlan4093
    no shutdown
    mtu 1500
    ip address 192.0.0.1/31
+   pim ipv4 sparse-mode
 !
 interface Vlan4094
    description MLAG_PEER
@@ -908,6 +915,36 @@ router bfd
 
 ```eos
 ```
+
+### Router Multicast
+
+#### IP Router Multicast Summary
+
+- Routing for IPv4 multicast is enabled.
+- Software forwarding by the Software Forwarding Engine (SFE)
+
+#### Router Multicast Device Configuration
+
+```eos
+!
+router multicast
+   ipv4
+      routing
+      software-forwarding sfe
+```
+
+
+### PIM Sparse Mode
+
+#### PIM Sparse Mode enabled interfaces
+
+| Interface Name | VRF Name | IP Version | DR Priority | Local Interface |
+| -------------- | -------- | ---------- | ----------- | --------------- |
+| Ethernet1 | - | IPv4 | - | - |
+| Ethernet2 | - | IPv4 | - | - |
+| Ethernet3 | - | IPv4 | - | - |
+| Ethernet4 | - | IPv4 | - | - |
+| Vlan4093 | - | IPv4 | - | - |
 
 ## Filters
 

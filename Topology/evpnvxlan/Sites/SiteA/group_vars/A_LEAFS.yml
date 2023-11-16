@@ -60,12 +60,6 @@ l3leaf:
       bgp_as: 65112
       filter:
         tags: [ blue, orange ]
-      structured_config:
-        vxlan_interface:
-          Vxlan1:
-            vxlan:
-              source_interface: Loopback0
-              mlag_source_interface: Loopback1
       nodes:
         - name: A-LEAF1
           id: 1
@@ -87,12 +81,6 @@ l3leaf:
       bgp_as: 65134
       filter:
         tags: [ blue, orange, yellow ]
-      structured_config:
-        vxlan_interface:
-          Vxlan1:
-            vxlan:
-              source_interface: Loopback0
-              mlag_source_interface: Loopback1
       nodes:
         - name: A-LEAF3
           id: 3
@@ -114,12 +102,6 @@ l3leaf:
       bgp_as: 65156
       filter:
         tags: [ brown ]
-      structured_config:
-        vxlan_interface:
-          Vxlan1:
-            vxlan:
-              source_interface: Loopback0
-              mlag_source_interface: Loopback1
       nodes:
         - name: A-LEAF5
           id: 5

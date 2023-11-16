@@ -378,7 +378,6 @@ interface Ethernet7
    mtu 1500
    no switchport
    ip address unnumbered loopback0
-   pim ipv4 sparse-mode
    isis enable 100
    isis circuit-type level-2
    isis metric 10
@@ -390,7 +389,6 @@ interface Ethernet8
    mtu 1500
    no switchport
    ip address unnumbered loopback0
-   pim ipv4 sparse-mode
    isis enable 100
    isis circuit-type level-2
    isis metric 10
@@ -674,8 +672,6 @@ router multicast
 | Ethernet4 | - | IPv4 | - | - |
 | Ethernet5 | - | IPv4 | - | - |
 | Ethernet6 | - | IPv4 | - | - |
-| Ethernet7 | - | IPv4 | - | - |
-| Ethernet8 | - | IPv4 | - | - |
 
 ## VRF Instances
 

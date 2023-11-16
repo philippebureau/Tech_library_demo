@@ -150,6 +150,10 @@ router_bgp:
     - learned
 service_routing_protocols_model: multi-agent
 ip_routing: true
+router_multicast:
+  ipv4:
+    routing: true
+    software_forwarding: sfe
 vlan_internal_order:
   allocation: ascending
   range:
@@ -225,6 +229,9 @@ vlan_interfaces:
   shutdown: false
   mtu: 1500
   ip_address: 192.0.0.0/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Vlan4094
   description: MLAG_PEER
   shutdown: false
@@ -318,6 +325,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.17/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Ethernet2
   peer: A-SPINE2
   peer_interface: Ethernet3
@@ -327,6 +337,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.19/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Ethernet3
   peer: A-SPINE3
   peer_interface: Ethernet3
@@ -336,6 +349,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.21/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Ethernet4
   peer: A-SPINE4
   peer_interface: Ethernet3
@@ -345,6 +361,9 @@ ethernet_interfaces:
   mtu: 1500
   type: routed
   ip_address: 192.168.0.23/31
+  pim:
+    ipv4:
+      sparse_mode: true
 - name: Ethernet7
   peer: HostC
   peer_interface: NIC1
@@ -423,6 +442,7 @@ vxlan_interface:
     vxlan:
       udp_port: 4789
       source_interface: Loopback0
+      mlag_source_interface: Loopback1
       virtual_router_encapsulation_mac_address: mlag-system-id
       vlans:
       - id: 50
@@ -436,7 +456,6 @@ vxlan_interface:
         vni: 50002
       - name: PROD
         vni: 50001
-      mlag_source_interface: Loopback1
 dhcp_relay:
   tunnel_requests_disabled: true
 ip_extcommunity_lists_regexp:

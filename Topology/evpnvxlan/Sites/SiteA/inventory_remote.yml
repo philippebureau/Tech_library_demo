@@ -60,3 +60,15 @@ all:
           ansible_host: 10.255.51.93
         A-HOST-F:
           ansible_host: 10.255.22.218
+
+    MULTICAST_GROUP:
+      children:
+        A_SPINES:
+      hosts:
+        A-LEAF1:
+        A-LEAF2:
+        A-LEAF3:
+        A-LEAF4:
+        A-LEAF5:
+        A-LEAF6:
+
