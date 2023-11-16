@@ -83,13 +83,6 @@ l3leaf:
     - group: B-LEAF56
       filter:
         tags: [ purple, black ]
-      structured_config:
-        port_channel_interfaces:
-          - name: Port-Channel7
-            evpn_ethernet_segment:
-              identifier: 0000:0000:0025:0026:0007
-              route_target: 00:25:00:26:00:07
-            lacp_id: 0025.0026.0007
       nodes:
         - name: B-LEAF5
           id: 5
@@ -99,6 +92,26 @@ l3leaf:
             - Ethernet5
             - Ethernet5
             - Ethernet5
+          structured_config:
+            ethernet_interfaces:
+              - name: Ethernet7
+                description: B-SW1
+                mode: trunk
+                vlans: 40, 80
+                spanning_tree_bpduguard: disabled
+                # spanning_tree_portfast: network
+                link_tracking_groups:
+                  - name: ES-LINKS
+                    direction: downstream
+                evpn_ethernet_segment:
+                  identifier: 0000:0000:0025:0026:0007
+                  redundancy: single-active
+                  route_target: 00:25:00:26:00:07
+                  designated_forwarder_election:
+                    algorithm: preference
+                    preference_value: 2000
+                eos_cli: |
+                  spanning-tree portfast
         - name: B-LEAF6
           id: 6
           mgmt_ip: 172.100.100.123/24
@@ -107,6 +120,26 @@ l3leaf:
             - Ethernet6
             - Ethernet6
             - Ethernet6
+          structured_config:
+            ethernet_interfaces:
+              - name: Ethernet7
+                description: B-SW1
+                mode: trunk
+                vlans: 40, 80
+                spanning_tree_bpduguard: disabled
+                # spanning_tree_portfast: network
+                link_tracking_groups:
+                  - name: ES-LINKS
+                    direction: downstream
+                evpn_ethernet_segment:
+                  identifier: 0000:0000:0025:0026:0007
+                  redundancy: single-active
+                  route_target: 00:25:00:26:00:07
+                  designated_forwarder_election:
+                    algorithm: preference
+                    preference_value: 1000
+                eos_cli: |
+                  spanning-tree portfast
     - group: B-LEAF78
       filter:
         tags: [ blue, green, red, brown ]

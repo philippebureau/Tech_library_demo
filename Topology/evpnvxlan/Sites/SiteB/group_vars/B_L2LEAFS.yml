@@ -4,18 +4,17 @@ type: l2leaf
 l2leaf:
   defaults:
     platform: vEOS-LAB
-    uplink_interfaces:
-      - Ethernet1
-      - Ethernet2
-    uplink_switches:
-      - B-LEAF5
-      - B-LEAF6
   nodes:
     - name: B-SW1
       id: 1
       mgmt_ip: 172.100.100.139/24
-      uplink_switch_interfaces:
-        - Ethernet7
-        - Ethernet7
       filter:
         tags: [ purple, black ]
+      structured_config:
+        ethernet_interfaces:
+          - name: Ethernet1
+            description: B-LEAF5
+            mode: trunk
+          - name: Ethernet2
+            description: B-LEAF6
+            mode: trunk

@@ -25,7 +25,6 @@
   - [MAC Address Table Device Configuration](#mac-address-table-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
-  - [Port-Channel Interfaces](#port-channel-interfaces)
 - [Routing](#routing)
   - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [IP Routing](#ip-routing)
@@ -269,8 +268,8 @@ mac address-table aging-time 1800
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 | B-LEAF5_Ethernet7 | *trunk | *40,80 | *- | *- | 1 |
-| Ethernet2 | B-LEAF6_Ethernet7 | *trunk | *40,80 | *- | *- | 1 |
+| Ethernet1 |  B-LEAF5 | trunk | - | - | - | - |
+| Ethernet2 |  B-LEAF6 | trunk | - | - | - | - |
 | Ethernet3 |  HostL | access | 40 | - | - | - |
 | Ethernet4 |  HostM | access | 80 | - | - | - |
 
@@ -281,14 +280,14 @@ mac address-table aging-time 1800
 ```eos
 !
 interface Ethernet1
-   description B-LEAF5_Ethernet7
-   no shutdown
-   channel-group 1 mode active
+   description B-LEAF5
+   switchport mode trunk
+   switchport
 !
 interface Ethernet2
-   description B-LEAF6_Ethernet7
-   no shutdown
-   channel-group 1 mode active
+   description B-LEAF6
+   switchport mode trunk
+   switchport
 !
 interface Ethernet3
    description HostL
@@ -305,28 +304,6 @@ interface Ethernet4
    switchport mode access
    switchport
    spanning-tree portfast
-```
-
-### Port-Channel Interfaces
-
-#### Port-Channel Interfaces Summary
-
-##### L2
-
-| Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
-| --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | B-LEAF5_Po7 | switched | trunk | 40,80 | - | - | - | - | - | - |
-
-#### Port-Channel Interfaces Device Configuration
-
-```eos
-!
-interface Port-Channel1
-   description B-LEAF5_Po7
-   no shutdown
-   switchport
-   switchport trunk allowed vlan 40,80
-   switchport mode trunk
 ```
 
 ## Routing

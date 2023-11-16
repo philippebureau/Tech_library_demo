@@ -333,11 +333,8 @@ cvp_configlets:
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\nvlan 40\n   name Purple\n!\nvlan 80\n   name Black\n!\nvrf instance
     DEV\n!\nvrf instance PROD\n!\nlink tracking group ES-LINKS\n   recovery delay
-    300\n!\ninterface Port-Channel7\n   description B-SW1_Po1\n   no shutdown\n   switchport\n
-    \  switchport trunk allowed vlan 40,80\n   switchport mode trunk\n   evpn ethernet-segment\n
-    \     identifier 0000:0000:0025:0026:0007\n      route-target import 00:25:00:26:00:07\n
-    \  lacp system-id 0025.0026.0007\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet5\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
+    300\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet5\n   no
+    shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
     \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
     metric 10\n   isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
     Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet5\n   no shutdown\n   mtu
@@ -352,7 +349,11 @@ cvp_configlets:
     \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
     \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
     \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
-    B-SW1_Ethernet1\n   no shutdown\n   channel-group 7 mode active\n!\ninterface
+    B-SW1\n   switchport trunk allowed vlan 40, 80\n   switchport mode trunk\n   switchport\n
+    \  evpn ethernet-segment\n      identifier 0000:0000:0025:0026:0007\n      redundancy
+    single-active\n      designated-forwarder election algorithm preference 2000\n
+    \     route-target import 00:25:00:26:00:07\n   spanning-tree bpduguard disable\n
+    \  link tracking group ES-LINKS downstream\n   spanning-tree portfast\n\n!\ninterface
     Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
     10.0.0.25/32\n   isis enable 100\n   isis passive\n!\ninterface Loopback1\n   description
     VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.25/32\n   isis
@@ -409,11 +410,8 @@ cvp_configlets:
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\nvlan 40\n   name Purple\n!\nvlan 80\n   name Black\n!\nvrf instance
     DEV\n!\nvrf instance PROD\n!\nlink tracking group ES-LINKS\n   recovery delay
-    300\n!\ninterface Port-Channel7\n   description B-SW1_Po1\n   no shutdown\n   switchport\n
-    \  switchport trunk allowed vlan 40,80\n   switchport mode trunk\n   evpn ethernet-segment\n
-    \     identifier 0000:0000:0025:0026:0007\n      route-target import 00:25:00:26:00:07\n
-    \  lacp system-id 0025.0026.0007\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet6\n
-    \  no shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
+    300\n!\ninterface Ethernet1\n   description P2P_LINK_TO_B-SPINE1_Ethernet6\n   no
+    shutdown\n   mtu 1500\n   no switchport\n   ip address unnumbered loopback0\n
     \  pim ipv4 sparse-mode\n   isis enable 100\n   isis circuit-type level-2\n   isis
     metric 10\n   isis network point-to-point\n   link tracking group ES-LINKS upstream\n!\ninterface
     Ethernet2\n   description P2P_LINK_TO_B-SPINE2_Ethernet6\n   no shutdown\n   mtu
@@ -428,7 +426,11 @@ cvp_configlets:
     \  ip address unnumbered loopback0\n   pim ipv4 sparse-mode\n   isis enable 100\n
     \  isis circuit-type level-2\n   isis metric 10\n   isis network point-to-point\n
     \  link tracking group ES-LINKS upstream\n!\ninterface Ethernet7\n   description
-    B-SW1_Ethernet2\n   no shutdown\n   channel-group 7 mode active\n!\ninterface
+    B-SW1\n   switchport trunk allowed vlan 40, 80\n   switchport mode trunk\n   switchport\n
+    \  evpn ethernet-segment\n      identifier 0000:0000:0025:0026:0007\n      redundancy
+    single-active\n      designated-forwarder election algorithm preference 1000\n
+    \     route-target import 00:25:00:26:00:07\n   spanning-tree bpduguard disable\n
+    \  link tracking group ES-LINKS downstream\n   spanning-tree portfast\n\n!\ninterface
     Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address
     10.0.0.26/32\n   isis enable 100\n   isis passive\n!\ninterface Loopback1\n   description
     VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 10.2.2.26/32\n   isis
@@ -989,14 +991,12 @@ cvp_configlets:
     AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTxvxMJkL/JFZ8dHFkeHb4r+E8JQ7ScqU/TRO1cBhQd98sZMuazglCSQNzOriRs9AdwZ2HdCz741HTIH7uIU7wRBfCyCHThy/FS66vvP42rMyV+/v2VuU0u6eylZg2fERjHKHpu0HYFZvlR/dxa1uNBGDGXvfXmAwBLlrV1aNXgmiejoCYpupGLu20OWQac2tYUwiVS7vNSCMEvHCTUQ/HITEn5xXhxyP/xVYIX4rXwKQdPogWc2pdJMvNt75VvIdunEthf5ZotPBq923Hvn474199W+Wp0AEPyh/JidRQSRM/X5VA1Yhj8umt8APg6RW1hvco6JwMEM6MUZN0dyvm18S35FRlsFtpypY2s8DFrIgEMf8uQxBz98wDt3aAiHiVK7zxOOrRgvibJuZYy1ZRNlOiMwGyl8ZHhSJO5HHXWVTi1YOwf0Nu/WB37KJbdc50lj0iCygPIP+X4UfIoyb+KHx4PNAC/G/+D/gxfs848QMhp2aZHvixzkGYtx0KfE=
     root@buildkitsandbox\nusername service shell /bin/bash secret sha512 $6$87aMed0EkMv1qiNN$3nKVoCOnYY7LXNcvJnyqJTt2QeODvm61.mYNU/PiTs4WFtVWyZ.IneelQQEyHiqYEUoLgStcfjXqWo2Cx697/1\n!\nclock
     timezone EST\n!\nvlan 40\n   name Purple\n!\nvlan 80\n   name Black\n!\ninterface
-    Port-Channel1\n   description B-LEAF5_Po7\n   no shutdown\n   switchport\n   switchport
-    trunk allowed vlan 40,80\n   switchport mode trunk\n!\ninterface Ethernet1\n   description
-    B-LEAF5_Ethernet7\n   no shutdown\n   channel-group 1 mode active\n!\ninterface
-    Ethernet2\n   description B-LEAF6_Ethernet7\n   no shutdown\n   channel-group
-    1 mode active\n!\ninterface Ethernet3\n   description HostL\n   no shutdown\n
-    \  switchport access vlan 40\n   switchport mode access\n   switchport\n   spanning-tree
-    portfast\n!\ninterface Ethernet4\n   description HostM\n   no shutdown\n   switchport
-    access vlan 80\n   switchport mode access\n   switchport\n   spanning-tree portfast\n!\ninterface
+    Ethernet1\n   description B-LEAF5\n   switchport mode trunk\n   switchport\n!\ninterface
+    Ethernet2\n   description B-LEAF6\n   switchport mode trunk\n   switchport\n!\ninterface
+    Ethernet3\n   description HostL\n   no shutdown\n   switchport access vlan 40\n
+    \  switchport mode access\n   switchport\n   spanning-tree portfast\n!\ninterface
+    Ethernet4\n   description HostM\n   no shutdown\n   switchport access vlan 80\n
+    \  switchport mode access\n   switchport\n   spanning-tree portfast\n!\ninterface
     Management1\n   description oob_management\n   no shutdown\n   ip address 172.100.100.139/24\n!\nmac
     address-table aging-time 1800\n!\nip routing\n!\narp aging timeout default 1500\n!\nmanagement
     api http-commands\n   protocol https\n   no shutdown\n   !\n   vrf default\n      no

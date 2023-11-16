@@ -27,27 +27,16 @@ management_api_http:
   enable_vrfs:
   - name: default
   enable_https: true
+vlans:
+- id: 80
+  name: Black
+  tenant: DEV_TENANT
+- id: 40
+  name: Purple
+  tenant: PROD_TENANT
+ip_igmp_snooping:
+  globally_enabled: true
 ethernet_interfaces:
-- name: Ethernet1
-  peer: B-LEAF5
-  peer_interface: Ethernet7
-  peer_type: l3leaf
-  description: B-LEAF5_Ethernet7
-  shutdown: false
-  type: port-channel-member
-  channel_group:
-    id: 1
-    mode: active
-- name: Ethernet2
-  peer: B-LEAF6
-  peer_interface: Ethernet7
-  peer_type: l3leaf
-  description: B-LEAF6_Ethernet7
-  shutdown: false
-  type: port-channel-member
-  channel_group:
-    id: 1
-    mode: active
 - name: Ethernet3
   peer: HostL
   peer_type: network_port
@@ -66,22 +55,12 @@ ethernet_interfaces:
   mode: access
   vlans: '80'
   spanning_tree_portfast: edge
-port_channel_interfaces:
-- name: Port-Channel1
-  description: B-LEAF5_Po7
-  type: switched
-  shutdown: false
+- name: Ethernet1
+  description: B-LEAF5
   mode: trunk
-  vlans: 40,80
-vlans:
-- id: 80
-  name: Black
-  tenant: DEV_TENANT
-- id: 40
-  name: Purple
-  tenant: PROD_TENANT
-ip_igmp_snooping:
-  globally_enabled: true
+- name: Ethernet2
+  description: B-LEAF6
+  mode: trunk
 daemon_terminattr:
   cvaddrs:
   - 172.100.100.5:9910

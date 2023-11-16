@@ -226,26 +226,23 @@ ethernet_interfaces:
       sparse_mode: true
   ip_address: unnumbered loopback0
 - name: Ethernet7
-  peer: B-SW1
-  peer_interface: Ethernet2
-  peer_type: l2leaf
-  description: B-SW1_Ethernet2
-  shutdown: false
-  type: port-channel-member
-  channel_group:
-    id: 7
-    mode: active
-port_channel_interfaces:
-- name: Port-Channel7
-  description: B-SW1_Po1
-  type: switched
-  shutdown: false
+  description: B-SW1
   mode: trunk
-  vlans: 40,80
+  vlans: 40, 80
+  spanning_tree_bpduguard: disabled
+  link_tracking_groups:
+  - name: ES-LINKS
+    direction: downstream
   evpn_ethernet_segment:
     identifier: 0000:0000:0025:0026:0007
+    redundancy: single-active
     route_target: 00:25:00:26:00:07
-  lacp_id: 0025.0026.0007
+    designated_forwarder_election:
+      algorithm: preference
+      preference_value: 1000
+  eos_cli: 'spanning-tree portfast
+
+    '
 loopback_interfaces:
 - name: Loopback0
   description: EVPN_Overlay_Peering

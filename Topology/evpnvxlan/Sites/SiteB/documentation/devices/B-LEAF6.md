@@ -32,7 +32,6 @@
   - [MAC Address Table Device Configuration](#mac-address-table-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
-  - [Port-Channel Interfaces](#port-channel-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
   - [VLAN Interfaces](#vlan-interfaces)
   - [VXLAN Interface](#vxlan-interface)
@@ -336,7 +335,7 @@ mac address-table aging-time 1800
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet7 | B-SW1_Ethernet2 | *trunk | *40,80 | *- | *- | 7 |
+| Ethernet7 |  B-SW1 | trunk | 40, 80 | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -348,6 +347,7 @@ mac address-table aging-time 1800
 | Ethernet2 | ES-LINKS | upstream |
 | Ethernet3 | ES-LINKS | upstream |
 | Ethernet4 | ES-LINKS | upstream |
+| Ethernet7 | ES-LINKS | downstream |
 
 ##### IPv4
 
@@ -366,6 +366,20 @@ mac address-table aging-time 1800
 | Ethernet2 | - | 100 | 10 | point-to-point | level-2 | - | - |
 | Ethernet3 | - | 100 | 10 | point-to-point | level-2 | - | - |
 | Ethernet4 | - | 100 | 10 | point-to-point | level-2 | - | - |
+
+##### EVPN Multihoming
+
+####### EVPN Multihoming Summary
+
+| Interface | Ethernet Segment Identifier | Multihoming Redundancy Mode | Route Target |
+| --------- | --------------------------- | --------------------------- | ------------ |
+| Ethernet7 | 0000:0000:0025:0026:0007 | single-active | 00:25:00:26:00:07 |
+
+####### Designated Forwarder Election Summary
+
+| Interface | Algorithm | Preference Value | Dont Preempt | Hold time | Subsequent Hold Time | Candidate Reachability Required |
+| --------- | --------- | ---------------- | ------------ | --------- | -------------------- | ------------------------------- |
+| Ethernet7 | preference | 1000 | False | - | - | False |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -424,43 +438,19 @@ interface Ethernet4
    link tracking group ES-LINKS upstream
 !
 interface Ethernet7
-   description B-SW1_Ethernet2
-   no shutdown
-   channel-group 7 mode active
-```
-
-### Port-Channel Interfaces
-
-#### Port-Channel Interfaces Summary
-
-##### L2
-
-| Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
-| --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel7 | B-SW1_Po1 | switched | trunk | 40,80 | - | - | - | - | - | 0000:0000:0025:0026:0007 |
-
-##### EVPN Multihoming
-
-####### EVPN Multihoming Summary
-
-| Interface | Ethernet Segment Identifier | Multihoming Redundancy Mode | Route Target |
-| --------- | --------------------------- | --------------------------- | ------------ |
-| Port-Channel7 | 0000:0000:0025:0026:0007 | all-active | 00:25:00:26:00:07 |
-
-#### Port-Channel Interfaces Device Configuration
-
-```eos
-!
-interface Port-Channel7
-   description B-SW1_Po1
-   no shutdown
-   switchport
-   switchport trunk allowed vlan 40,80
+   description B-SW1
+   switchport trunk allowed vlan 40, 80
    switchport mode trunk
+   switchport
    evpn ethernet-segment
       identifier 0000:0000:0025:0026:0007
+      redundancy single-active
+      designated-forwarder election algorithm preference 1000
       route-target import 00:25:00:26:00:07
-   lacp system-id 0025.0026.0007
+   spanning-tree bpduguard disable
+   link tracking group ES-LINKS downstream
+   spanning-tree portfast
+
 ```
 
 ### Loopback Interfaces
